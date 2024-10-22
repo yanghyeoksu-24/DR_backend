@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>레시피/게시판 관리</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+  <link rel="stylesheet" href="./../../css/manager/registerProduct.css">
+</head>
+
+<body>
+  <a href="./../../html/manager/dashBoard.html">
+    <img class="manager-logoImg" src="./../../image/logo.png">
+  </a>
+  <div id="manager-dashBoardBox">
+
+    <div id="dashBoard-list">
+      <ul>
+        <a href="./../../html/manager/dashBoard.html">
+        <li id="dashBoard-admin">
+          <img id="dashBoard-profile" src="./../../image/basicProfile.png">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          이재서
+        </li>
+        </a>
+        <a href="./../../html/manager/manageUser.html">
+          <li id="dashBoard-user">회원관리</li>
+        </a>
+        <a href="./../../html/manager/manageBoard.html">
+        <li id="dashBoard-board">게시글/레시피 관리</li>
+        </a>
+        <a href="./../../html/manager/manageComment.html">
+        <li id="dashBoard-comment">댓글관리</li>
+        </a>
+        <a href="./../../html/manager/managePoint.html">
+        <li id="dashBoard-point">포인트관리</li>
+        </a>
+        <a href="./../../html/manager/manageReport.html">
+        <li id="dashBoard-report">신고관리</li>
+        </a>
+        <a href="./../../html/manager/manageProduct.html">
+        <li id="dashBoard-product">상품관리</li>
+        </a>
+      </ul>
+    </div>
+
+    <div id="manage-member">
+      <div id="manage-memberTop">
+        <p id="manage-memberBold">상품 등록</p>
+      </div>
+
+      <div id="manage-register">
+
+        <div id="register-left">
+          <div class="register-left-con">
+              상품명
+          </div>
+          <div id="register-left-img">
+            상품 이미지 등록
+          </div>
+          <div class="register-left-con">
+            갯수
+          </div>
+          <div class="register-left-con">
+            상품코드
+          </div>
+          <div class="register-left-con">
+
+          </div>
+          <div class="register-left-con">
+            소모 포인트
+          </div>
+        </div>
+
+        <div id="register-right">
+          <div class="register-right-con">
+            <input type="text" name="productName" placeholder="ex&#41; 비타500">
+          </div>
+          <div id="register-right-img">
+            <input type="file" class="real-upload" accept="image/*" required multiple>
+            <div class="upload"></div>
+
+          </div>
+          <div class="register-right-con">
+            <input type="text" name="productNumber" placeholder="ex&#41; 10개">
+          </div>
+          <div class="register-right-con">
+            <input type="text" name="productCode" placeholder="ex&#41; F51K5">
+            &nbsp;
+            <button id="numberUp">+</button>
+          </div>
+          <div class="register-right-con" id="targetDiv">
+            
+          </div>
+          <div class="register-right-con">
+            <input type="text" name="productPoint"  placeholder="ex&#41; 500">
+          </div>
+        </div>
+
+      </div>
+
+      <a href="./../../html/manager/manageProduct.html">
+        <button id="memberOut">상품 등록</button>
+      </a>
+      
+    </div>
+
+
+  </div>
+
+
+  <script src="./../../js/manager/registerProduct.js"></script>
+</body>
+
+</html>

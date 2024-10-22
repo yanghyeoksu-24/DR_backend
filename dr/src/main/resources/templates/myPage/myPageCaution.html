@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DR - 회원탈퇴 주의사항</title>
+    <link rel="stylesheet" href="./../../css/myPage/myPageCaution.css">
+    <script defer src="./../../js/myPage/myPageCaution.js"></script>
+    <link rel="stylesheet" href="../../css/main/header.css">
+    <link rel="stylesheet" href="../../css/main/footer.css">
+    <!-- 네비바 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
+    <!-- 제이쿼리 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script defer src="../../js/main/header.js"></script>
+</head>
+
+<body>
+    <header>
+        <!-- 비로그인 헤더 -->
+        <!-- <div class="main-headerContainer">
+            <div class="main-headerTop">
+              <a href="../../html/main/main.html"><img src="/image/logo.png" id="main-logo"></a>
+              <div class="main-searchBar">
+                <select class="main-dropDown">
+                  <option value="꿀팁 게시판">꿀팁 게시판</option>
+                  <option value="나만의 레시피">나만의 레시피</option>
+                  <option value="챗봇 레시피">챗봇 레시피</option>
+                  <option value="자유 게시판">자유 게시판</option>
+                </select>
+                <input type="text" class="main-searchInput" placeholder="로그인 후 이용 가능합니다" readonly>
+                <img src="../../image/searchButton.png" id="main-searchBtn">
+              </div>
+              <div class="main-visitorBtn">
+                <a href="#로그인 페이지로">
+                  <div class="main-login">로그인</div>
+                </a>
+                <a href="#회원가입 페이지로#">
+                  <div class="main-join">회원가입</div>
+                </a>
+              </div>
+            </div> -->
+
+        <!--비로그인 네비바 -->
+        <!-- <div class="main-headerNav">
+          <ul class="main-navMenu">
+            <li id="main-chatBot"><a href="#로그인 페이지로">냉장봇</a></li>
+            <li id="main-rank"><a href="#로그인 페이지로">환경기여 랭킹</a></li>
+            <li id="main-recipe">
+              레시피
+              <ul class="main-recipeList">
+                <li><a href="#로그인 페이지로">챗봇레시피</a></li>
+                <li><a href="#로그인 페이지로">나만의레시피</a></li>
+              </ul>
+            </li>
+            <li id="main-board">
+              게시판
+              <ul class="main-boardList">
+                <li><a href="#로그인 페이지로">자유게시판</a></li>
+                <li><a href="#로그인 페이지로">꿀팁게시판</a></li>
+              </ul>
+            </li>
+            <li id="main-shop"><a href="#로그인 페이지로">포인트샵</a></li>
+            <li id="main-myPage">
+              마이페이지
+              <ul class="main-myPageList">
+                <li><a href="#로그인 페이지로">내 정보</a></li>
+                <li><a href="#로그인 페이지로">찜 목록</a></li>
+                <li><a href="#로그인 페이지로">내가 쓴 레시피</a></li>
+                <li><a href="#로그인 페이지로">내가 쓴 게시글</a></li>
+                <li><a href="#로그인 페이지로">신고 받은 글</a></li>
+                <li><a href="#로그인 페이지로">출석체크</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div> -->
+
+        <!-- 로그인 헤더 -->
+        <div class="main-headerContainer">
+            <div class="main-headerTop">
+                <a href="../../html/main/main.html"><img src="./../../image/logo.png" id="main-logo"></a>
+                <div class="main-searchBar">
+                    <select class="main-dropDown">
+                <option value="꿀팁 게시판">꿀팁 게시판</option>
+                <option value="나만의 레시피">나만의 레시피</option>
+                <option value="챗봇 레시피">챗봇 레시피</option>
+                <option value="자유 게시판">자유 게시판</option>
+              </select>
+                    <input type="text" class="main-searchInput">
+                    <img src="../../image/searchButton.png" id="main-searchBtn">
+                </div>
+                <div class="main-welcomeUser">
+                    <div class="main-profile">
+                        <img src="../../image/basicProfile.png">
+                    </div>
+                    <div class="main-welcome">정승환님 환영합니다</div>
+                    <a href="#로그아웃!!#">
+                        <div class="main-logout">로그아웃</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 로그인 네비바 -->
+            <div class="main-headerNav">
+                <ul class="main-navMenu">
+                    <li id="main-chatBot"><a href="./../../html/chatBot/nangjangbot.html">냉장봇</a></li>
+                    <li id="main-rank"><a href="./../../html/rank/userRank.html">환경기여 랭킹</a></li>
+                    <li id="main-recipe">
+                        레시피
+                        <ul class="main-recipeList">
+                            <li><a href="./../../html/recipe/chatBotRecipeList.html">챗봇레시피</a></li>
+                            <li><a href="./../../html/recipe/myRecipeList.html">나만의레시피</a></li>
+                        </ul>
+                    </li>
+                    <li id="main-board">
+                        게시판
+                        <ul class="main-boardList">
+                            <li><a href="./../../html/board/freeBoardList.html">자유게시판</a></li>
+                            <li><a href="./../../html/board/honeyBoardList.html">꿀팁게시판</a></li>
+                        </ul>
+                    </li>
+                    <li id="main-shop"><a href="./../../html/shop/pointShop.html">포인트샵</a></li>
+                    <li id="main-myPage">
+                        마이페이지
+                        <ul class="main-myPageList">
+                            <li><a href="./../../html/myPage/myPageInformation.html">내 정보</a></li>
+                            <li><a href="./../../html/myPage/myPageSteamedList.html">찜 목록</a></li>
+                            <li><a href="./../../html/myPage/myPageMyRecipe.html">내가 쓴 레시피</a></li>
+                            <li><a href="./../../html/myPage/myPageMyPost.html">내가 쓴 게시글</a></li>
+                            <li><a href="./../../html/myPage/myPageMyComplaint.html">신고 받은 글</a></li>
+                            <li><a href="./../../html/myPage/myPageCheck.html">출석체크</a></li>
+                            <li><a href="./../../html/myPage/myPageMyPoint.html">포인트 내역</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- 회원 탈퇴 타이틀-->
+        <div class="myPage-cautionTitle">
+            <span style="color: #317FF0;">회원</span>
+            <span style="color: #EBAA39;">탈퇴</span>
+        </div>
+        <!-- 회원 탈퇴 내용 -->
+        <form action="" method="">
+            <div class="myPage-cautionWrap">
+                <div class="myPage-cautionCheck">
+                    회원 탈퇴를 신청하기 전, 다음 내용을 꼭 확인해주세요.
+                </div>
+                <div class="myPage-cautionCheckText">
+                    <ul>
+                        <li>• 고객 정보 및 개인형 서비스 이용 기록은 개인 정보보호 처리 방침 기준에 따라 삭제됩니다.</li>
+                        <li style="margin-top: 10px; margin-bottom: 10px;">• 회원 탈퇴 시 더 이상 <u>맛있는 재활용 서비스</u> 사용이 불가능하며, 맛있는 재활용 공식 사이트에서도 탈퇴 처리됩니다. </li>
+                    </ul>
+                </div>
+                <div class="myPage-cautionInput">
+                    <input type="checkbox" id="myPage-input" name="check-input">&nbsp;안내 사항을 모두 확인하였으며, 이에 동의합니다.
+                </div>
+            </div>
+            <div class="myPage-cautionButton">
+                <button type="button" id="myPage-CButton" class="myPage-cautionOk">회원 탈퇴</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="./../../html/myPage/myPageInformation.html"><button class="memberOut-caution-cancel">돌아가기</a></button>
+            </div>
+        </form>
+    </main>
+    <!-- 푸터 -->
+    <footer>
+        <div class="main-footerContainer">
+            <div id="main-footerText">
+                <p><strong><a href="./../../html/main/terms.html">이용약관</a> | <a href="./../../html/main/privacyPolicy.html">개인정보처리방침</a></strong></p>
+                <br>
+                <p>(04377)서울특별시 강남구 테헤란로 146 현익빌딩, <br>(06236)서울특별시 강남구 테헤란로26길 12 제일비전타워</p>
+                <p>대표이사 : 정승환 | 사업자등록번호 : 13-72011641</p>
+                <p>사업자명 : ㈜맛있는 재활용 | 대표이메일 : shjeong19943@gmail.com</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
