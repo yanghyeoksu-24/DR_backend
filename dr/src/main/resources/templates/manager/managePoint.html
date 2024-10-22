@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>포인트관리</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+  <link rel="stylesheet" href="./../../css/manager/managePoint.css">
+</head>
+
+<body>
+  <a href="./../../html/manager/dashBoard.html">
+    <img class="manager-logoImg" src="./../../image/logo.png">
+  </a>
+  <div id="manager-dashBoardBox">
+
+    <div id="dashBoard-list">
+      <ul>
+        <a href="./../../html/manager/dashBoard.html">
+        <li id="dashBoard-admin">
+          <img id="dashBoard-profile" src="./../../image/basicProfile.png">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          이재서
+        </li>
+        </a>
+        <a href="./../../html/manager/manageUser.html">
+          <li id="dashBoard-user">회원관리</li>
+        </a>
+        <a href="./../../html/manager/manageBoard.html">
+        <li id="dashBoard-board">게시글/레시피 관리</li>
+        </a>
+        <a href="./../../html/manager/manageComment.html">
+        <li id="dashBoard-comment">댓글관리</li>
+        </a>
+        <a href="./../../html/manager/managePoint.html">
+        <li id="dashBoard-point">포인트관리</li>
+        </a>
+        <a href="./../../html/manager/manageReport.html">
+        <li id="dashBoard-report">신고관리</li>
+        </a>
+        <a href="./../../html/manager/manageProduct.html">
+        <li id="dashBoard-product">상품관리</li>
+        </a>
+      </ul>
+    </div>
+
+    <div id="manage-member">
+      <div id="manage-memberTop">
+        <p id="manage-memberBold">포인트 관리</p>
+        <form id="manager-select">
+          <select>
+            <option value="0">전체선택</option>
+            <option value="1">1월</option>
+            <option value="2">2월</option>
+            <option value="3">3월</option>
+            <option value="4">4월</option>
+            <option value="5">5월</option>
+            <option value="6">6월</option>
+            <option value="7">7월</option>
+            <option value="8">8월</option>
+            <option value="9">9월</option>
+            <option value="10">10월</option>
+            <option value="11">11월</option>
+            <option value="12">12월</option>
+          </select>
+        </form>
+        
+        <button id="memberPause">포인트 회수</button>
+        <button id="memberOut">선택 삭제</button>
+      </div>
+      <div id="manage-memberList">
+        <ul id="manage-memberUl">
+          <li id="manage-memberTitle">
+            <input id="title-check" type="checkbox" value="전체선택">
+            <span id="title-num">No.</span>
+            <span id="title-name">이름</span>
+            <span id="title-email">이메일</span>
+            <span id="title-points">포인트 내용</span>
+            <span id="title-point">포인트</span>
+            <span id="title-date">일시</span>
+            <span id="title-sum">포인트 합</span>
+          </li>
+
+          <li>
+            <input type="checkbox" value="1번">
+            <span class="point-num">101</span>
+            <span class="point-name">이재서</span>
+            <span class="point-email">jaeseo1227@gmail.com</span>
+            <span class="point-check">출석체크</span>
+            <span class="point-point">200</span>
+            <span class="point-date">2024-10-01 15:57:26</span>
+            <span class="point-sum">600</span>
+        </li>
+        <li>
+          <input type="checkbox" value="2번">
+          <span class="point-num">102</span>
+          <span class="point-name">김민수</span>
+          <span class="point-email">minsu@example.com</span>
+          <span class="point-check">이벤트참여</span>
+          <span class="point-point">150</span>
+          <span class="point-date">2024-10-02 10:00:00</span>
+          <span class="point-sum">750</span>
+        </li>
+        <li>
+          <input type="checkbox" value="3번">
+          <span class="point-num">103</span>
+          <span class="point-name">박지현</span>
+          <span class="point-email">jihyun@example.com</span>
+          <span class="point-check">상품구매</span>
+          <span class="point-point">300</span>
+          <span class="point-date">2024-10-03 12:30:00</span>
+          <span class="point-sum">300</span>
+        </li>
+        <li>
+          <input type="checkbox" value="4번">
+          <span class="point-num">104</span>
+          <span class="point-name">최영수</span>
+          <span class="point-email">youngsoo@example.com</span>
+          <span class="point-check">리뷰작성</span>
+          <span class="point-point">100</span>
+          <span class="point-date">2024-10-04 14:20:00</span>
+          <span class="point-sum">400</span>
+        </li>
+        <li>
+          <input type="checkbox" value="5번">
+          <span class="point-num">105</span>
+          <span class="point-name">이수진</span>
+          <span class="point-email">sujin@example.com</span>
+          <span class="point-check">출석체크</span>
+          <span class="point-point">250</span>
+          <span class="point-date">2024-10-05 09:15:00</span>
+          <span class="point-sum">650</span>
+        </li>
+        <li>
+          <input type="checkbox" value="6번">
+          <span class="point-num">106</span>
+          <span class="point-name">홍길동</span>
+          <span class="point-email">gildong@example.com</span>
+          <span class="point-check">이벤트참여</span>
+          <span class="point-point">175</span>
+          <span class="point-date">2024-10-06 11:00:00</span>
+          <span class="point-sum">575</span>
+        </li>
+        <li>
+          <input type="checkbox" value="7번">
+          <span class="point-num">107</span>
+          <span class="point-name">이민호</span>
+          <span class="point-email">minho@example.com</span>
+          <span class="point-check">상품구매</span>
+          <span class="point-point">400</span>
+          <span class="point-date">2024-10-07 13:45:00</span>
+          <span class="point-sum">400</span>
+        </li>
+        <li>
+          <input type="checkbox" value="8번">
+          <span class="point-num">108</span>
+          <span class="point-name">정하늘</span>
+          <span class="point-email">haneul@example.com</span>
+          <span class="point-check">리뷰작성</span>
+          <span class="point-point">50</span>
+          <span class="point-date">2024-10-08 16:30:00</span>
+          <span class="point-sum">350</span>
+        </li>
+        <li>
+          <input type="checkbox" value="9번">
+          <span class="point-num">109</span>
+          <span class="point-name">김하나</span>
+          <span class="point-email">hana@example.com</span>
+          <span class="point-check">출석체크</span>
+          <span class="point-point">300</span>
+          <span class="point-date">2024-10-09 08:00:00</span>
+          <span class="point-sum">300</span>
+        </li>
+        <li>
+          <input type="checkbox" value="10번">
+          <span class="point-num">110</span>
+          <span class="point-name">이정민</span>
+          <span class="point-email">jeongmin@example.com</span>
+          <span class="point-check">이벤트참여</span>
+          <span class="point-point">225</span>
+          <span class="point-date">2024-10-10 10:10:00</span>
+          <span class="point-sum">525</span>
+        </li>
+        <li>
+          <input type="checkbox" value="11번">
+          <span class="point-num">111</span>
+          <span class="point-name">최원영</span>
+          <span class="point-email">wonyoung@example.com</span>
+          <span class="point-check">상품구매</span>
+          <span class="point-point">150</span>
+          <span class="point-date">2024-10-11 12:20:00</span>
+          <span class="point-sum">150</span>
+        </li>
+        <li>
+          <input type="checkbox" value="12번">
+          <span class="point-num">112</span>
+          <span class="point-name">이소희</span>
+          <span class="point-email">sohee@example.com</span>
+          <span class="point-check">리뷰작성</span>
+          <span class="point-point">175</span>
+          <span class="point-date">2024-10-12 14:30:00</span>
+          <span class="point-sum">425</span>
+        </li>
+        <li>
+          <input type="checkbox" value="13번">
+          <span class="point-num">113</span>
+          <span class="point-name">김기범</span>
+          <span class="point-email">gibeom@example.com</span>
+          <span class="point-check">출석체크</span>
+          <span class="point-point">120</span>
+          <span class="point-date">2024-10-13 16:45:00</span>
+          <span class="point-sum">120</span>
+        </li>
+        <li>
+          <input type="checkbox" value="14번">
+          <span class="point-num">114</span>
+          <span class="point-name">박지민</span>
+          <span class="point-email">jimin@example.com</span>
+          <span class="point-check">이벤트참여</span>
+          <span class="point-point">300</span>
+          <span class="point-date">2024-10-14 18:00:00</span>
+          <span class="point-sum">300</span>
+        </li>
+        <li>
+          <input type="checkbox" value="15번">
+          <span class="point-num">115</span>
+          <span class="point-name">김이범</span>
+          <span class="point-email">gibeom@example.com</span>
+          <span class="point-check">출석체크</span>
+          <span class="point-point">120</span>
+          <span class="point-date">2024-10-13 16:45:00</span>
+          <span class="point-sum">120</span>
+        </li>
+        <li>
+          <input type="checkbox" value="16번">
+          <span class="point-num">116</span>
+          <span class="point-name">미지민</span>
+          <span class="point-email">jimin@example.com</span>
+          <span class="point-check">이벤트참여</span>
+          <span class="point-point">300</span>
+          <span class="point-date">2024-10-14 18:00:00</span>
+          <span class="point-sum">300</span>
+        </li>
+        <li>
+          <input type="checkbox" value="17번">
+          <span class="point-num">117</span>
+          <span class="point-name">김기범</span>
+          <span class="point-email">gibeom@example.com</span>
+          <span class="point-check">출석체크</span>
+          <span class="point-point">120</span>
+          <span class="point-date">2024-10-13 16:45:00</span>
+          <span class="point-sum">120</span>
+        </li>
+        <li>
+          <input type="checkbox" value="18번">
+          <span class="point-num">118</span>
+          <span class="point-name">박지민</span>
+          <span class="point-email">jimin@example.com</span>
+          <span class="point-check">이벤트참여</span>
+          <span class="point-point">300</span>
+          <span class="point-date">2024-10-14 18:00:00</span>
+          <span class="point-sum">300</span>
+        </li>
+        <li>
+          <input type="checkbox" value="18번">
+          <span class="point-num">118</span>
+          <span class="point-name">박지민</span>
+          <span class="point-email">jimin@example.com</span>
+          <span class="point-check">이벤트참여</span>
+          <span class="point-point">300</span>
+          <span class="point-date">2024-10-14 18:00:00</span>
+          <span class="point-sum">300</span>
+        </li>
+   
+       
+        </ul>
+
+        <div id="pagination"></div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <script src="./../../js/manager/managePoint.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DR - 이메일 찾기 완료</title>
+  <link rel="stylesheet" href="./../../css/user/emailFindFinish.css">
+  <link rel="stylesheet" href="../../css/main/header.css">
+  <link rel="stylesheet" href="../../css/main/footer.css">
+  <!-- 네비바 폰트 -->
+  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
+  <!-- 제이쿼리 -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script defer src="../../js/main/header.js"></script>
+</head>
+
+<body>
+  <header>
+    <!-- 비로그인 헤더 -->
+    <div class="main-headerContainer">
+      <div class="main-headerTop">
+        <a href="../../html/main/main.html"><img src="./../../image/logo.png" id="main-logo"></a>
+        <div class="main-searchBar">
+          <select class="main-dropDown">
+            <option value="꿀팁 게시판">꿀팁 게시판</option>
+            <option value="나만의 레시피">나만의 레시피</option>
+            <option value="챗봇 레시피">챗봇 레시피</option>
+            <option value="자유 게시판">자유 게시판</option>
+          </select>
+          <input type="text" class="main-searchInput" placeholder="로그인 후 이용 가능합니다" readonly>
+          <img src="../../image/searchButton.png" id="main-searchBtn">
+        </div>
+        <div class="main-visitorBtn">
+          <form action="../../html/user/login.html" method="">
+            <button class="main-login">로그인</button>
+          </form>
+          <form action="../../html/user/login.html" method="">
+            <button class="main-join">회원가입</button>
+          </form>
+        </div>
+      </div>
+
+      <!--비로그인 네비바 -->
+      <div class="main-headerNav">
+        <ul class="main-navMenu">
+          <li id="main-chatBot"><a href="../../html/user/login.html">냉장봇</a></li>
+          <li id="main-rank"><a href="../../html/user/login.html">환경기여 랭킹</a></li>
+          <li id="main-recipe">
+            레시피
+            <ul class="main-recipeList">
+              <li><a href="../../html/user/login.html">챗봇레시피</a></li>
+              <li><a href="../../html/user/login.html">나만의레시피</a></li>
+            </ul>
+          </li>
+          <li id="main-board">
+            게시판
+            <ul class="main-boardList">
+              <li><a href="../../html/user/login.html">자유게시판</a></li>
+              <li><a href="../../html/user/login.html">꿀팁게시판</a></li>
+            </ul>
+          </li>
+          <li id="main-shop"><a href="../../html/user/login.html">포인트샵</a></li>
+          <li id="main-myPage">
+            마이페이지
+            <ul class="main-myPageList">
+              <li><a href="../../html/user/login.html">내 정보</a></li>
+              <li><a href="../../html/user/login.html">찜 목록</a></li>
+              <li><a href="../../html/user/login.html">내가 쓴 레시피</a></li>
+              <li><a href="../../html/user/login.html">내가 쓴 게시글</a></li>
+              <li><a href="../../html/user/login.html">신고 받은 글</a></li>
+              <li><a href="../../html/user/login.html">출석체크</a></li>
+              <li><a href="../../html/user/login.html">포인트내역</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 로그인 헤더 -->
+      <!-- <div class="main-headerContainer">
+      <div class="main-headerTop">
+        <a href="../../html/main/main.html"><img src="../../image/logo.png" id="main-logo"></a>
+        <div class="main-searchBar">
+          <select class="main-dropDown">
+            <option value="꿀팁 게시판">꿀팁 게시판</option>
+            <option value="나만의 레시피">나만의 레시피</option>
+            <option value="챗봇 레시피">챗봇 레시피</option>
+            <option value="자유 게시판">자유 게시판</option>
+          </select>
+          <input type="text" class="main-searchInput">
+          <img src="../../image/searchButton.png" id="main-searchBtn">
+        </div>
+        <div class="main-welcomeUser">
+          <div class="main-profile">
+            <img src="../../image/basicProfile.png">
+          </div>
+          <div class="main-welcome">정승환님 환영합니다</div>
+          <a href="#로그아웃!!#">
+            <div class="main-logout">로그아웃</div>
+          </a>
+        </div>
+      </div> -->
+
+      <!-- 로그인 네비바 -->
+      <!-- <div class="main-headerNav">
+        <ul class="main-navMenu">
+          <li id="main-chatBot"><a href="#냉장봇 페이지로">냉장봇</a></li>
+          <li id="main-rank"><a href="#랭킹 페이지로">환경기여 랭킹</a></li>
+          <li id="main-recipe">
+            레시피
+            <ul class="main-recipeList">
+              <li><a href="#챗봇레시피 페이지로">챗봇레시피</a></li>
+              <li><a href="#나만의레시피 페이지로">나만의레시피</a></li>
+            </ul>
+          </li>
+          <li id="main-board">
+            게시판
+            <ul class="main-boardList">
+              <li><a href="#자유게시판 페이지로">자유게시판</a></li>
+              <li><a href="#꿀팁게시판 페이지로">꿀팁게시판</a></li>
+            </ul>
+          </li>
+          <li id="main-shop"><a href="#포인트샵 페이지로">포인트샵</a></li>
+          <li id="main-myPage">
+            마이페이지
+            <ul class="main-myPageList">
+              <li><a href="#내 정보 페지이로">내 정보</a></li>
+              <li><a href="#찜 목록 페이지로">찜 목록</a></li>
+              <li><a href="#내가 쓴 레시피 페이지로">내가 쓴 레시피</a></li>
+              <li><a href="#내가 쓴 게시글 페이지로">내가 쓴 게시글</a></li>
+              <li><a href="#신고 받은 글 페이지로">신고 받은 글</a></li>
+              <li><a href="#출석체크 페이지로">출석체크</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div> -->
+  </header>
+  <main>
+    <div class="emailfindfinish-container">
+      <div class="emailfindfinish-title">
+        <span class="emailfindfinish-leftTitle">이메일</span>
+        <span class="emailfindfinish-rightTitle">찾기</span>
+      </div>
+      <div class="emailfindfinish-box">
+        <!-- Spring에서 받아온 이메일을 보여줌 -->
+        <span class="emailfindfinish-message">찾으신 이메일은 다음과 같습니다:</span>
+        <div class="emailfindfinish-email">
+          <!-- 스프링에서 넘겨받은 이메일 값 예시 -->
+          ${양혁수 체고} <!-- 스프링에서 이메일 변수를 넣어줌 -->
+        </div>
+        <span>항상 감사합니다.</span>
+      </div>
+    </div>
+    <br>
+    <div class="emailfindfinish-finishButton">
+      <button class="emailfindfinish-loginButton" onclick="location.href='./login.html'">로그인</button>
+      <button class="emailfindfinish-pwButton" onclick="location.href='./PwFind.html'">비밀번호 찾기</button>
+    </div>
+  </main>
+  <!-- 푸터 -->
+  <footer>
+    <div class="main-footerContainer">
+      <div id="main-footerText">
+        <p><strong><a href="../../html/main/terms.html">이용약관</a> | <a href="../../html/main/privacyPolicy.html">개인정보처리방침</a></strong></p>
+        <br>
+        <p>(04377)서울특별시 강남구 테헤란로 146 현익빌딩, <br>(06236)서울특별시 강남구 테헤란로26길 12 제일비전타워</p>
+        <p>대표이사 : 정승환 | 사업자등록번호 : 13-72011641</p>
+        <p>사업자명 : ㈜맛있는 재활용 | 대표이메일 : shjeong19943@gmail.com</p>
+      </div>
+    </div>
+  </footer>
+  <script src="./../../js/user/emailFindFinish.js" defer></script>
+</body>
+
+</html>

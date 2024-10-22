@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>레시피/게시판 관리</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+  <link rel="stylesheet" href="./../../css/manager/manageReport.css">
+</head>
+
+<body>
+  <a href="./../../html/manager/dashBoard.html">
+    <img class="manager-logoImg" src="./../../image/logo.png">
+  </a>
+  <div id="manager-dashBoardBox">
+
+    <div id="dashBoard-list">
+      <ul>
+        <a href="./../../html/manager/dashBoard.html">
+        <li id="dashBoard-admin">
+          <img id="dashBoard-profile" src="./../../image/basicProfile.png">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          이재서
+        </li>
+        </a>
+        <a href="./../../html/manager/manageUser.html">
+          <li id="dashBoard-user">회원관리</li>
+        </a>
+        <a href="./../../html/manager/manageBoard.html">
+        <li id="dashBoard-board">게시글/레시피 관리</li>
+        </a>
+        <a href="./../../html/manager/manageComment.html">
+        <li id="dashBoard-comment">댓글관리</li>
+        </a>
+        <a href="./../../html/manager/managePoint.html">
+        <li id="dashBoard-point">포인트관리</li>
+        </a>
+        <a href="./../../html/manager/manageReport.html">
+        <li id="dashBoard-report">신고관리</li>
+        </a>
+        <a href="./../../html/manager/manageProduct.html">
+        <li id="dashBoard-product">상품관리</li>
+        </a>
+      </ul>
+    </div>
+
+    <div id="manage-member">
+      <div id="manage-memberTop">
+        <p id="manage-memberBold">신고 관리</p>
+        <button id="memberOut">삭제</button>
+      </div>
+      <div id="manage-memberList">
+        <ul id="manage-memberUl">
+          <li id="manage-memberTitle">
+            <input id="title-check" type="checkbox" value="전체선택">
+            <span id="title-num">유저번호</span>
+            <span id="title-name">이름</span>
+            <span id="title-con">내용</span>
+            <span id="title-reason">사유</span>
+            <span id="title-type">신고대상</span>
+            <span id="title-date">신고 날짜</span>
+          </li>
+
+          <li>
+            <input type="checkbox" value="1번">
+            <span class="report-num">101</span>
+            <span class="report-name">이재서</span>
+            <span class="report-con">으흐흐흐...</span>
+            <span class="report-type1">음란물</span>
+            <span class="report-type2">게시글</span>
+            <span class="report-date">2024-10-06 15:57:26</span>
+          </li>
+          <li>
+            <input type="checkbox" value="2번">
+            <span class="report-num">102</span>
+            <span class="report-name">김민수</span>
+            <span class="report-con">이거 진짜 웃겨요!</span>
+            <span class="report-type1">욕설</span>
+            <span class="report-type2">댓글</span>
+            <span class="report-date">2024-10-07 10:12:30</span>
+          </li>
+          <li>
+            <input type="checkbox" value="3번">
+            <span class="report-num">103</span>
+            <span class="report-name">박지현</span>
+            <span class="report-con">불쾌감을 주는 내용이에요.</span>
+            <span class="report-type1">비방</span>
+            <span class="report-type2">게시글</span>
+            <span class="report-date">2024-10-07 11:45:00</span>
+          </li>
+          <li>
+            <input type="checkbox" value="4번">
+            <span class="report-num">104</span>
+            <span class="report-name">최영수</span>
+            <span class="report-con">이런 글은 왜 올리는 건가요?</span>
+            <span class="report-type1">도배</span>
+            <span class="report-type2">댓글</span>
+            <span class="report-date">2024-10-08 14:20:00</span>
+          </li>
+          <li>
+            <input type="checkbox" value="5번">
+            <span class="report-num">105</span>
+            <span class="report-name">이수진</span>
+            <span class="report-con">이런 내용은 부적절해요.</span>
+            <span class="report-type1">음란물</span>
+            <span class="report-type2">게시글</span>
+            <span class="report-date">2024-10-08 15:30:00</span>
+          </li>
+          <li>
+            <input type="checkbox" value="6번">
+            <span class="report-num">106</span>
+            <span class="report-name">홍길동</span>
+            <span class="report-con">이건 너무 심각해요!</span>
+            <span class="report-type1">비방</span>
+            <span class="report-type2">댓글</span>
+            <span class="report-date">2024-10-09 09:05:00</span>
+          </li>
+          <li>
+            <input type="checkbox" value="7번">
+            <span class="report-num">107</span>
+            <span class="report-name">이민호</span>
+            <span class="report-con">이 글은 즉시 삭제해야 해요.</span>
+            <span class="report-type1">욕설</span>
+            <span class="report-type2">게시글</span>
+            <span class="report-date">2024-10-09 12:15:00</span>
+          </li>
+          <li>
+            <input type="checkbox" value="8번">
+            <span class="report-num">108</span>
+            <span class="report-name">정하늘</span>
+            <span class="report-con">이 댓글은 불쾌해요.</span>
+            <span class="report-type1">음란물</span>
+            <span class="report-type2">댓글</span>
+            <span class="report-date">2024-10-10 10:30:00</span>
+          </li>
+          <li>
+            <input type="checkbox" value="9번">
+            <span class="report-num">109</span>
+            <span class="report-name">김하나</span>
+            <span class="report-con">이런 글은 필요 없어요.</span>
+            <span class="report-type1">도배</span>
+            <span class="report-type2">게시글</span>
+            <span class="report-date">2024-10-10 11:45:00</span>
+          </li>
+          <li>
+            <input type="checkbox" value="10번">
+            <span class="report-num">110</span>
+            <span class="report-name">이정민</span>
+            <span class="report-con">이런 내용은 적절하지 않아요.</span>
+            <span class="report-type1">비방</span>
+            <span class="report-type2">댓글</span>
+            <span class="report-date">2024-10-10 13:00:00</span>
+          </li>
+          <li>
+            <input type="checkbox" value="11번">
+            <span class="report-num">111</span>
+            <span class="report-name">최원영</span>
+            <span class="report-con">이런 글은 즉시 삭제해야 합니다.</span>
+            <span class="report-type1">욕설</span>
+            <span class="report-type2">게시글</span>
+            <span class="report-date">2024-10-11 14:30:00</span>
+          </li>
+          <li>
+            <input type="checkbox" value="12번">
+            <span class="report-num">112</span>
+            <span class="report-name">이소희</span>
+            <span class="report-con">이건 정말 문제입니다.</span>
+            <span class="report-type1">음란물</span>
+            <span class="report-type2">댓글</span>
+            <span class="report-date">2024-10-11 15:45:00</span>
+          </li>
+          <li>
+            <input type="checkbox" value="13번">
+            <span class="report-num">113</span>
+            <span class="report-name">김기범</span>
+            <span class="report-con">이런 글은 왜 올리는 건가요?</span>
+            <span class="report-type1">비방</span>
+            <span class="report-type2">게시글</span>
+            <span class="report-date">2024-10-12 16:20:00</span>
+          </li>
+          <li>
+            <input type="checkbox" value="14번">
+            <span class="report-num">114</span>
+            <span class="report-name">박지민</span>
+            <span class="report-con">이런 내용은 정말 부적절합니다.</span>
+            <span class="report-type1">도배</span>
+            <span class="report-type2">댓글</span>
+            <span class="report-date">2024-10-12 17:30:00</span>
+          </li>
+          <li>
+            <input type="checkbox" value="15번">
+            <span class="report-num">115</span>
+            <span class="report-name">이유진</span>
+            <span class="report-con">이런 글은 즉시 삭제해야 합니다.</span>
+            <span class="report-type1">욕설</span>
+            <span class="report-type2">게시글</span>
+            <span class="report-date">2024-10-13 18:45:00</span>
+          </li>
+         
+
+        </ul>
+
+
+        <div id="pagination"></div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <script src="./../../js/manager/manageReport.js"></script>
+</body>
+
+</html>

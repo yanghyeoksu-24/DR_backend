@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+main {
+    width: 1100px;
+    margin: 0 auto;
+    height: 1500px;
+}
+
+li {
+    list-style: none;
+}
+
+.myPage-steamedListTitle {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 100px;
+    font-size: 35px;
+    margin-bottom: 30px;
+}
+
+
+/* ------- 왼쪽 마이페이지 메뉴바 ------*/
+
+#myPage-informationPage {
+    background-color: #ccc;
+    padding-top: 17px;
+    font-weight: bold;
+    font-size: 21px;
+}
+
+#myPage-informationThree {
+    color: #EBAA39;
+}
+
+.myPage-lengthBar {
+    margin-top: 43px;
+}
+
+
+/* 마이페이지 메뉴 스타일 */
+
+.myPage-lengthBar div {
+    font-size: 17px;
+    margin: 25px 0;
+    text-align: left;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ccc;
+    width: 170px;
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+
+/* 호버 시 글씨 색을 주황색으로 변경 */
+
+.myPage-lengthBar div:hover {
+    color: #EBAA39;
+    cursor: pointer;
+}
+
+
+/* 출석 체크의 보더선 제거 */
+
+.myPage-lengthBar div:last-child {
+    border-bottom: none;
+}
+
+
+/* -------왼쪽 마이페이지 메뉴바 ------ */
+
+.myPage-steamedListContainer {
+    display: flex;
+    width: 100%;
+}
+
+.myPage-pictureInside {
+    display: flex;
+}
+
+#myPage-pictureOne {
+    width: 250px;
+    height: 250px;
+    border-radius: 5px;
+}
+
+.myPage-pictureTitle {
+    font-weight: 700;
+    color: #000000;
+    font-size: 15px;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+.myPage-pictureName {
+    font-size: 13px;
+    color: #333333;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+.myPage-pictureListDelete {
+    border: none;
+    color: white;
+    background-color: #EBAA39;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 55px;
+    height: 33px;
+    font-weight: bold;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 95px;
+    margin-top: 10px;
+}
+
+
+/* 찜목록 글 및 이미지 */
+
+.myPage-pictureContainerReal {
+    position: relative;
+}
+
+.myPage-pictureWrap {
+    display: grid;
+    grid-template-columns: repeat(3, 290px);
+    /* 3개의 열로 구성 */
+    position: absolute;
+    top: -535px;
+    left: 245px;
+}
+
+.myPage-pictureprideTwo {
+    padding-right: 50px;
+}
+
+.myPage-pictureprideOne {
+    margin-bottom: 50px;
+}
+
+#pagination {
+    position: absolute;
+    top: 500px;
+    left: 582px;
+}

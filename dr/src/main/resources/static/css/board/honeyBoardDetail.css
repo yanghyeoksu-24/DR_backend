@@ -1,0 +1,250 @@
+body{
+  font-family: 'Cute Font', cursive;
+  margin: 0;
+  padding: 0;
+}
+/* 메인 넓이 수정 */
+main{
+  margin-top: 100px;
+  margin-bottom: 30px;
+}
+.honeyBoardDetail-mainContainer{
+  width: 1100px;
+  margin: 0 auto;
+}
+
+
+.honeyBoardDetail-infobox{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.honeyBoardDetail-infoFirst{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.honeyBoardDetail-infoInBox1 img{
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.honeyBoardDetail-writeName, .honeyBoardDetail-foodTitle{
+  margin-bottom: 10px;
+}
+.honeyBoardDetail-firstButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.honeyBoardDetail-buttonOne{
+  border-radius: 5px;
+  width: 80px;
+  height: 40px;
+  color: white;
+  background-color: #EBAA39;
+  margin-right: 10px;
+  border: none;
+  cursor: pointer;
+}
+/* .honeyBoardDetail-buttonOne:last-child{
+  margin-right: 0;
+} */
+.honeyBoardDetail-secondButton{
+  display: flex;
+  align-items: center;
+}
+.honeyBoardDetail-buttonTwo{
+  background-color: white;
+}
+.honeyBoardDetail-secondButton img{
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.honeyBoardDetail-buttonTwo{
+  border: 1px solid lightgrey;
+  width: 60px;
+  height: 30px;
+  cursor: pointer;
+  margin-left: 100px;
+}
+.honeyBoardDetail-writetext {
+  display: flex;
+  flex-direction: column; /* 요소들을 세로로 정렬 */
+  justify-content: center; /* 세로 정렬 시 가운데에 정렬 */
+  align-items: center; /* 가로 중앙 정렬 */
+  height: 350px; /* 음식 사진과 텍스트 부분의 높이 */
+  border-bottom: 1px solid black;
+  text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.honeyBoardDetail-writetext img {
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+.honeyBoardDetail-texts {
+  flex: 1; /* 텍스트가 남은 공간을 차지하도록 */
+  text-align: left; /* 텍스트는 왼쪽 정렬 */
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.honeyBoardDetail-recommendImg {
+  flex-basis: 100%; /* 한 줄을 차지하게 만듦 */
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  margin-top: 40px;
+}
+
+.honeyBoardDetail-recommendImg img {
+  width: 100px; /* 추천 이미지 크기 */
+  height: 100px;
+  cursor: pointer;
+}
+
+.honeyBoardDetail-writetext {
+  height: 500px; /* 전체 높이를 500px로 설정 */
+}
+
+/* 댓글부분 */
+.honeyBoardDetail-commentSection {
+  width: 1100px; /* 넓이를 1100px로 설정 */
+  margin: 20px auto; /* 중앙 정렬을 위해 마진 조정 */
+}
+
+.honeyBoardDetail-comment, .honeyBoardDetail-reply {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.honeyBoardDetail-commentUserImg, .honeyBoardDetail-replyUserImg {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.honeyBoardDetail-commentUserImg img, .honeyBoardDetail-replyUserImg img {
+  width: 100%;
+  height: 100%;
+}
+
+.honeyBoardDetail-commentContent, .honeyBoardDetail-replyContent {
+  flex-grow: 1;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.honeyBoardDetail-commentHeader, .honeyBoardDetail-replyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.honeyBoardDetail-commentUsername, .honeyBoardDetail-replyUsername {
+  font-weight: bold;
+}
+
+.honeyBoardDetail-commentTime, .honeyBoardDetail-replyTime {
+  font-size: 0.9em;
+  color: #888;
+}
+
+.honeyBoardDetail-commentText, .honeyBoardDetail-replyText {
+  font-size: 1em;
+}
+
+.honeyBoardDetail-reportBtn {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.honeyBoardDetail-buttonGroup {
+  display: flex;
+  justify-content: flex-end; /* 버튼을 오른쪽으로 이동 */
+  margin-top: 5px;
+}
+
+.honeyBoardDetail-editBtn, .honeyBoardDetail-deleteBtn {
+  background-color: #f0a500;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  margin-left: 10px; /* 버튼 사이 간격 */
+  cursor: pointer;
+  border-radius: 5px;
+}
+.honeyBoardDetail-reply {
+  margin-left: 50px; /* 대댓글 들여쓰기 */
+}
+
+.honeyBoardDetail-commentInput {
+  margin-top: 20px;
+  /* display: none; */
+}
+
+.honeyBoardDetail-commentInput textarea {
+  width: 98%;
+  height: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: none;
+}
+
+.honeyBoardDetail-commentActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.honeyBoardDetail-addBtn{
+  border-radius: 5px;
+  width: 80px;
+  height: 40px;
+  color: white;
+  background-color: #EBAA39;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* 추천 이미지 기본 상태 */
+#recommendImg {
+  transition: filter 0.3s ease; /* 색상 전환 효과 부드럽게 */
+}
+
+/* 파란색 효과 (추천 활성화 상태) */
+.recommend-active {
+  transition: filter 0.3s ease; /* 색상 전환 효과 부드럽게 */
+}
+
+/* 회색 효과 (추천 비활성화 상태) */
+.recommend-inactive {
+  filter: brightness(0.5) grayscale(100%); /* 회색 톤 */
+}
+
+/* 추천 수 스타일 */
+#recommendCount {
+  margin-left: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 40px;
+}
+

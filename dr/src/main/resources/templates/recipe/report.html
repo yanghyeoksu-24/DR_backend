@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./../../css/recipe/report.css">
+    <link rel="stylesheet" href="../../css/main/header.css">
+    <link rel="stylesheet" href="../../css/main/footer.css">
+    <!-- 네비바 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
+    <!-- 제이쿼리 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"></script>
+    <script defer src="../../js/main/header.js"></script>
+  
+    <title>DR - 신고창 페이지</title>
+</head>
+<body>
+  <header>
+    <div class="main-headerContainer">
+        <div class="main-headerTop">
+            <a href="../../html/main/main.html"><img src="../../image/logo.png" id="main-logo"></a>
+            <div class="main-searchBar">
+                <select class="main-dropDown">
+                    <option value="꿀팁 게시판">꿀팁 게시판</option>
+                    <option value="나만의 레시피">나만의 레시피</option>
+                    <option value="챗봇 레시피">챗봇 레시피</option>
+                    <option value="자유 게시판">자유 게시판</option>
+                </select>
+                <input type="text" class="main-searchInput">
+                <img src="../../image/searchButton.png" id="main-searchBtn">
+            </div>
+            <div class="main-welcomeUser">
+                <div class="main-profile">
+                    <img src="../../image/basicProfile.png">
+                </div>
+                <div class="main-welcome">정승환님 환영합니다</div>
+                <form action="#로그아웃!!" method="">
+                    <button class="main-logout">로그아웃</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 로그인 네비바 -->
+        <div class="main-headerNav">
+            <ul class="main-navMenu">
+                <li id="main-chatBot"><a href="../../html/chatBot/nangjangbot.html">냉장봇</a></li>
+                <li id="main-rank"><a href="../../html/rank/userRank.html">환경기여 랭킹</a></li>
+                <li id="main-recipe">
+                    레시피
+                    <ul class="main-recipeList">
+                        <li><a href="../../html/recipe/chatBotRecipeList.html">챗봇레시피</a></li>
+                        <li><a href="../../html/recipe/myRecipeList.html">나만의레시피</a></li>
+                    </ul>
+                </li>
+                <li id="main-board">
+                    게시판
+                    <ul class="main-boardList">
+                        <li><a href="../../html/board/freeBoardList.html">자유게시판</a></li>
+                        <li><a href="../../html/board/honeyBoardList.html">꿀팁게시판</a></li>
+                    </ul>
+                </li>
+                <li id="main-shop"><a href="../../html/shop/pointShop.html">포인트샵</a></li>
+                <li id="main-myPage">
+                    마이페이지
+                    <ul class="main-myPageList">
+                        <li><a href="../../html/myPage/myPageInformation.html">내 정보</a></li>
+                        <li><a href="../../html/myPage/myPageSteamedList.html">찜 목록</a></li>
+                        <li><a href="../../html/myPage/myPageMyRecipe.html">내가 쓴 레시피</a></li>
+                        <li><a href="../../html/myPage/myPageMyPost.html">내가 쓴 게시글</a></li>
+                        <li><a href="../../html/myPage/myPageMyComplaint.html">신고 받은 글</a></li>
+                        <li><a href="../../html/myPage/myPageCheck.html">출석체크</a></li>
+                        <li><a href="./../../html/myPage/myPageMyPoint.html">포인트 내역</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+    <main>
+    <div class="report-mainContainer">
+        <div class="report-mainBox">
+            <!-- 제목 부분 -->
+            <h1 class="report-text1">레시피/댓글 신고</h1>
+            <!-- 신고사유창 -->
+            <div class="report-outbox">
+                <form action="" method="">
+                    <label for="obscene">
+                        <input type="radio" name="reason" value="음란물" id="obscene"> <span class="report-text">음란물 내용을 포함하고 있습니다.</span>
+                    </label><br>
+
+                    <label for="spam">
+                        <input type="radio" name="reason" value="스팸 및 광고" id="spam"> <span class="report-text">스팸 및 광고 내용을 포함하고 있습니다.</span>
+                    </label><br>
+
+                    <label for="abusive">
+                        <input type="radio" name="reason" value="욕설 및 비방" id="abusive"> <span class="report-text">욕설 및 비방하는 내용을 포함하고 있습니다.</span>
+                    </label><br>
+
+                    <label for="falseInfo">
+                        <input type="radio" name="reason" value="허위 광고" id="falseInfo"> <span class="report-text">허위 정보 내용을 포함하고 있습니다.</span>
+                    </label><br>
+                    
+                    <!-- 기타 체크박스 및 입력 필드 -->
+                    <label for="other"><input type="radio" name="reason" value="other" > <span class="report-text">기타</span></label>
+                    <input type="text" name="otherReasonText" class="report-inputText" placeholder="신고 내용을 작성해주세요">
+                </form>
+            </div>
+
+            <!-- 신고 주의사항 -->
+            <div class="report-text2">
+                <p> • 허위 신고는 법적으로 처벌받을 수 있으며, 이에 대한 책임은 신고자에게 있습니다.</p>
+                <p> • 허위 신고를 할 경우, 계정 정지 및 법적 조치를 취할 수 있습니다. 신중하게 신고해주시기 바랍니다.</p>
+            </div>
+
+            <!-- 신고 버튼 -->
+            <div class="report-button">
+              <a href="./myDetailPage.html"><button class="back-button">취소</button></a>
+                <!-- <button class="back-button">취소</button> -->
+                <a href="./myDetailPage.html"><button class="right-button">신고</button></a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- 푸터 -->
+<footer>
+  <div class="main-footerContainer">
+    <div id="main-footerText">
+      <p><strong><a href="../../html/main/terms.html">이용약관</a> | <a href="../../html/main/privacyPolicy.html">개인정보처리방침</a></strong></p>
+      <br>
+      <p>(04377)서울특별시 강남구 테헤란로 146 현익빌딩, <br>(06236)서울특별시 강남구 테헤란로26길 12 제일비전타워</p>
+      <p>대표이사 : 정승환 | 사업자등록번호 : 13-72011641</p>
+      <p>사업자명 : ㈜맛있는 재활용 | 대표이메일 : shjeong19943@gmail.com</p>
+    </div>
+  </div>
+</footer>
+
+    <script src="./../../js/recipe/report.js" defer></script>
+</body>
+</html>

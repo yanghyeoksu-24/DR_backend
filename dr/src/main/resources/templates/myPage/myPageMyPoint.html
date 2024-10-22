@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DR - 내 포인트 내역</title>
+    <link rel="stylesheet" href="./../../css/myPage/myPageMyPoint.css">
+    <script defer src="./../../js/myPage/myPageMyPoint.js"></script>
+    <link rel="stylesheet" href="../../css/main/header.css">
+    <link rel="stylesheet" href="../../css/main/footer.css">
+    <!-- 네비바 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
+    <!-- 제이쿼리 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script defer src="../../js/main/header.js"></script>
+    <!-- 페이지네이션 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <!-- 비로그인 헤더 -->
+        <!-- <div class="main-headerContainer">
+        <div class="main-headerTop">
+          <a href="../../html/main/main.html"><img src="/image/logo.png" id="main-logo"></a>
+          <div class="main-searchBar">
+            <select class="main-dropDown">
+              <option value="꿀팁 게시판">꿀팁 게시판</option>
+              <option value="나만의 레시피">나만의 레시피</option>
+              <option value="챗봇 레시피">챗봇 레시피</option>
+              <option value="자유 게시판">자유 게시판</option>
+            </select>
+            <input type="text" class="main-searchInput" placeholder="로그인 후 이용 가능합니다" readonly>
+            <img src="../../image/searchButton.png" id="main-searchBtn">
+          </div>
+          <div class="main-visitorBtn">
+            <a href="#로그인 페이지로">
+              <div class="main-login">로그인</div>
+            </a>
+            <a href="#회원가입 페이지로#">
+              <div class="main-join">회원가입</div>
+            </a>
+          </div>
+        </div> -->
+
+        <!--비로그인 네비바 -->
+        <!-- <div class="main-headerNav">
+      <ul class="main-navMenu">
+        <li id="main-chatBot"><a href="#로그인 페이지로">냉장봇</a></li>
+        <li id="main-rank"><a href="#로그인 페이지로">환경기여 랭킹</a></li>
+        <li id="main-recipe">
+          레시피
+          <ul class="main-recipeList">
+            <li><a href="#로그인 페이지로">챗봇레시피</a></li>
+            <li><a href="#로그인 페이지로">나만의레시피</a></li>
+          </ul>
+        </li>
+        <li id="main-board">
+          게시판
+          <ul class="main-boardList">
+            <li><a href="#로그인 페이지로">자유게시판</a></li>
+            <li><a href="#로그인 페이지로">꿀팁게시판</a></li>
+          </ul>
+        </li>
+        <li id="main-shop"><a href="#로그인 페이지로">포인트샵</a></li>
+        <li id="main-myPage">
+          마이페이지
+          <ul class="main-myPageList">
+            <li><a href="#로그인 페이지로">내 정보</a></li>
+            <li><a href="#로그인 페이지로">찜 목록</a></li>
+            <li><a href="#로그인 페이지로">내가 쓴 레시피</a></li>
+            <li><a href="#로그인 페이지로">내가 쓴 게시글</a></li>
+            <li><a href="#로그인 페이지로">신고 받은 글</a></li>
+            <li><a href="#로그인 페이지로">출석체크</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div> -->
+
+        <!-- 로그인 헤더 -->
+        <div class="main-headerContainer">
+            <div class="main-headerTop">
+                <a href="../../html/main/main.html"><img src="./../../image/logo.png" id="main-logo"></a>
+                <div class="main-searchBar">
+                    <select class="main-dropDown">
+            <option value="꿀팁 게시판">꿀팁 게시판</option>
+            <option value="나만의 레시피">나만의 레시피</option>
+            <option value="챗봇 레시피">챗봇 레시피</option>
+            <option value="자유 게시판">자유 게시판</option>
+          </select>
+                    <input type="text" class="main-searchInput">
+                    <img src="../../image/searchButton.png" id="main-searchBtn">
+                </div>
+                <div class="main-welcomeUser">
+                    <div class="main-profile">
+                        <img src="../../image/basicProfile.png">
+                    </div>
+                    <div class="main-welcome">정승환님 환영합니다</div>
+                    <a href="#로그아웃!!#">
+                        <div class="main-logout">로그아웃</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 로그인 네비바 -->
+            <div class="main-headerNav">
+                <ul class="main-navMenu">
+                    <li id="main-chatBot"><a href="./../../html/chatBot/nangjangbot.html">냉장봇</a></li>
+                    <li id="main-rank"><a href="./../../html/rank/userRank.html">환경기여 랭킹</a></li>
+                    <li id="main-recipe">
+                        레시피
+                        <ul class="main-recipeList">
+                            <li><a href="./../../html/recipe/chatBotRecipeList.html">챗봇레시피</a></li>
+                            <li><a href="./../../html/recipe/myRecipeList.html">나만의레시피</a></li>
+                        </ul>
+                    </li>
+                    <li id="main-board">
+                        게시판
+                        <ul class="main-boardList">
+                            <li><a href="./../../html/board/freeBoardList.html">자유게시판</a></li>
+                            <li><a href="./../../html/board/honeyBoardList.html">꿀팁게시판</a></li>
+                        </ul>
+                    </li>
+                    <li id="main-shop"><a href="./../../html/shop/pointShop.html">포인트샵</a></li>
+                    <li id="main-myPage">
+                        마이페이지
+                        <ul class="main-myPageList">
+                            <li><a href="./../../html/myPage/myPageInformation.html">내 정보</a></li>
+                            <li><a href="./../../html/myPage/myPageSteamedList.html">찜 목록</a></li>
+                            <li><a href="./../../html/myPage/myPageMyRecipe.html">내가 쓴 레시피</a></li>
+                            <li><a href="./../../html/myPage/myPageMyPost.html">내가 쓴 게시글</a></li>
+                            <li><a href="./../../html/myPage/myPageMyComplaint.html">신고 받은 글</a></li>
+                            <li><a href="./../../html/myPage/myPageCheck.html">출석체크</a></li>
+                            <li><a href="./../../html/myPage/myPageMyPoint.html">포인트 내역</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- 신고 받은 글 타이틀-->
+        <div class="myPage-myPointTitleTop">
+            <span style="color: #317FF0;">포인트</span>
+            <span style="color: #EBAA39;">내역</span>
+        </div>
+        <!-- 왼쪽 마이페이지 네비바>-->
+        <div class="myPage-myPointMain">
+            <div class="myPage-myPointContainer">
+                <div class="myPage-lengthBar">
+                    <div id="myPage-informationPage">&nbsp;마이페이지</div>
+                    <div id="myPage-informationSecond"><a href="./../../html/myPage/myPageInformation.html">&nbsp;내 정보</a></div>
+                    <div id="myPage-informationThree"><a href="./../../html/myPage/myPageSteamedList.html">&nbsp;찜목록</a></div>
+                    <div id="myPage-informationForth"><a href="./../../html/myPage/myPageMyRecipe.html">&nbsp;내가 쓴 레시피</a></div>
+                    <div id="myPage-informationFifth"><a href="./../../html/myPage/myPageMyPost.html">&nbsp;내가 쓴 게시글</a></div>
+                    <div id="myPage-informationsisxth"><a href="./../../html/myPage/myPageMyComplaint.html">&nbsp;신고 받은 글</a></div>
+                    <div id="myPage-informationseventh"><a href="./../../html/myPage/myPageCheck.html">&nbsp;출석 체크</a></div>
+                    <div id="myPage-informationeighth"><a href="./../../html/myPage/myPageMyPoint.html">&nbsp;포인트 내역</a></div>
+                </div>
+            </div>
+            <!-- 신고 내역 -->
+            <div class="myPage-myPointWrap">
+                <div class="myPage-myPointTitleMain">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumber">순번</span>
+                            <div class="vertical-bar"></div>
+                            <span class="myPage-myPointTitleContent">포인트 내용</span>
+                            <div class="vertical-bar"></div>
+                            <span class="myPage-myPointTitleContentType">포인트</span>
+                            <div class="vertical-bar"></div>
+                            <span class="myPage-myPointTitleCause">일시</span>
+                            <div class="vertical-bar"></div>
+                            <span class="myPage-myPointTitleDate">총 포인트</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myPage-myPointTitleMainOne">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumberZero">1</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentOne">출석체크</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentTypeTwo">10</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleCauseThree">2024-10-14 15:57:23</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleDateFour">10</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myPage-myPointTitleMainOne">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumberZero">2</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentOne">이벤트</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentTypeTwo">30</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleCauseThree">2024-10-21 09:20:00</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleDateFour">40</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myPage-myPointTitleMainOne">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumberZero">3</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentOne">출석체크</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentTypeTwo">10</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleCauseThree">2024-10-22 11:01:02</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleDateFour">50</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myPage-myPointTitleMainOne">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumberZero">4</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentOne">랭킹 50등</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentTypeTwo">100</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleCauseThree">2024-11-25 11:20:02</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleDateFour">150</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myPage-myPointTitleMainOne">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumberZero">5</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentOne">출석체크</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentTypeTwo">10</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleCauseThree">2024-11-26 23:20:02</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleDateFour">160</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myPage-myPointTitleMainOne">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumberZero">6</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentOne">한달 개근</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentTypeTwo">200</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleCauseThree">2024-12-26 23:20:02</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleDateFour">360</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myPage-myPointTitleMainOne">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumberZero">7</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentOne">상품구매</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentTypeTwo">300</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleCauseThree">2024-12-27 08:04:02</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleDateFour">60</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myPage-myPointTitleMainOne">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumberZero">8</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentOne">10월 이벤트 참여</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentTypeTwo">200</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleCauseThree">2024-12-28 10:24:50</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleDateFour">260</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myPage-myPointTitleMainOne">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumberZero">9</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentOne">출석체크</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentTypeTwo">10</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleCauseThree">2024-12-28 12:24:50</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleDateFour">270</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myPage-myPointTitleMainOne">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumberZero">10</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentOne">랭킹 1등</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentTypeTwo">500</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleCauseThree">2025-01-28 23:22:18</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleDateFour">770</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myPage-myPointTitleMainOne">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumberZero">11</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentOne">출석체크</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentTypeTwo">10</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleCauseThree">2025-01-29 08:02:18</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleDateFour">780</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myPage-myPointTitleMainOne">
+                    <ul>
+                        <li>
+                            <span class="myPage-myPointTitleNumberZero">12</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentOne">출석체크</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleContentTypeTwo">10</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleCauseThree">2025-01-30 08:02:18</span>
+                            <div class="vertical-barSecond"></div>
+                            <span class="myPage-myPointTitleDateFour">790</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 페이지 네이션 -->
+        <div id="pagination"></div>
+    </main>
+
+</body>
+
+</html>

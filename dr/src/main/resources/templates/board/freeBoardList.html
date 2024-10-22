@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DR - 자유게시판 목록</title>
+  <link rel="stylesheet" href="./../../css/board/freeBoardList.css">
+  <link rel="stylesheet" href="../../css/main/header.css">
+  <link rel="stylesheet" href="../../css/main/footer.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+  <!-- 네비바 폰트 -->
+  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
+  <!-- 제이쿼리 -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <!-- 페이지네이션 -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+  <script defer src="../../js/main/header.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="main-headerContainer">
+      <div class="main-headerTop">
+        <a href="../../html/main/main.html"><img src="../../image/logo.png" id="main-logo"></a>
+        <div class="main-searchBar">
+          <select class="main-dropDown">
+            <option value="꿀팁 게시판">꿀팁 게시판</option>
+            <option value="나만의 레시피">나만의 레시피</option>
+            <option value="챗봇 레시피">챗봇 레시피</option>
+            <option value="자유 게시판">자유 게시판</option>
+          </select>
+          <input type="text" class="main-searchInput">
+          <img src="../../image/searchButton.png" id="main-searchBtn">
+        </div>
+        <div class="main-welcomeUser">
+          <div class="main-profile">
+            <img src="../../image/basicProfile.png">
+          </div>
+          <div class="main-welcome">정승환님 환영합니다</div>
+          <form action="#로그아웃!!" method="">
+            <button class="main-logout">로그아웃</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- 로그인 네비바 -->
+      <div class="main-headerNav">
+        <ul class="main-navMenu">
+          <li id="main-chatBot"><a href="../../html/chatBot/nangjangbot.html">냉장봇</a></li>
+          <li id="main-rank"><a href="../../html/rank/userRank.html">환경기여 랭킹</a></li>
+          <li id="main-recipe">
+            레시피
+            <ul class="main-recipeList">
+              <li><a href="../../html/recipe/chatBotRecipeList.html">챗봇레시피</a></li>
+              <li><a href="../../html/recipe/myRecipeList.html">나만의레시피</a></li>
+            </ul>
+          </li>
+          <li id="main-board">
+            게시판
+            <ul class="main-boardList">
+              <li><a href="../../html/board/freeBoardList.html">자유게시판</a></li>
+              <li><a href="../../html/board/honeyBoardList.html">꿀팁게시판</a></li>
+            </ul>
+          </li>
+          <li id="main-shop"><a href="../../html/shop/pointShop.html">포인트샵</a></li>
+          <li id="main-myPage">
+            마이페이지
+            <ul class="main-myPageList">
+              <li><a href="../../html/myPage/myPageInformation.html">내 정보</a></li>
+              <li><a href="../../html/myPage/myPageSteamedList.html">찜 목록</a></li>
+              <li><a href="../../html/myPage/myPageMyRecipe.html">내가 쓴 레시피</a></li>
+              <li><a href="../../html/myPage/myPageMyPost.html">내가 쓴 게시글</a></li>
+              <li><a href="../../html/myPage/myPageMyComplaint.html">신고 받은 글</a></li>
+              <li><a href="../../html/myPage/myPageCheck.html">출석체크</a></li>
+              <li><a href="./../../html/myPage/myPageMyPoint.html">포인트 내역</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="freeboardlist-container">
+
+      <div class="freeboardlist-title">
+        <span class="freeboardlist-leftTitle">자유</span>
+        <span class="freeboardlist-rightTitle">게시판</span>
+      </div>
+
+      <br>
+      <span class="freeboardlist-smallTitle">회원들의 이야기가 담긴 자유 게시판입니다.</span>
+      <br><br><br>
+
+      <div class="freeboardlist-rightButton">
+        <button class="freeboardlist-firstButton">최신순</button>
+        <button class="freeboardlist-thirdButton">추천순</button>
+      </div>
+      <br>
+
+      <div class="freeboardlist-row header">
+        <div class="freeboardlist-titleColumn">제목</div>
+        <div class="freeboardlist-nameColumn">닉네임</div>
+        <div class="freeboardlist-voteColumn">추천 수</div>
+        <div class="freeboardlist-dateColumn">날짜</div>
+      </div>
+
+      <div id="freeboardlist-page">
+        <a href="./../board/freeBoardDetail.html">
+          <div class="freeboardlist-row">
+            <div class="freeboardlist-titleColumn">이븐하게 익었어요</div>
+            <div class="freeboardlist-nameColumn">안성재</div>
+            <div class="freeboardlist-voteColumn">23,065</div>
+            <div class="freeboardlist-dateColumn">17/01/30</div>
+          </div>
+        </a>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">빠스 아니야 ?</div>
+          <div class="freeboardlist-nameColumn">백주부</div>
+          <div class="freeboardlist-voteColumn">12,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아야 ~</div>
+          <div class="freeboardlist-nameColumn">김승진</div>
+          <div class="freeboardlist-voteColumn">42,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아 배고파</div>
+          <div class="freeboardlist-nameColumn">양혁수</div>
+          <div class="freeboardlist-voteColumn">22,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">멀리서 응원할게요.</div>
+          <div class="freeboardlist-nameColumn">이재서</div>
+          <div class="freeboardlist-voteColumn">31,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">밥 뭐먹지</div>
+          <div class="freeboardlist-nameColumn">정승환</div>
+          <div class="freeboardlist-voteColumn">52,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">나 2팀장 송아성</div>
+          <div class="freeboardlist-nameColumn">송아성</div>
+          <div class="freeboardlist-voteColumn">72,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아야 ~</div>
+          <div class="freeboardlist-nameColumn">김승진</div>
+          <div class="freeboardlist-voteColumn">42,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아야 ~</div>
+          <div class="freeboardlist-nameColumn">김승진</div>
+          <div class="freeboardlist-voteColumn">42,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아야 ~</div>
+          <div class="freeboardlist-nameColumn">김승진</div>
+          <div class="freeboardlist-voteColumn">42,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아야 ~</div>
+          <div class="freeboardlist-nameColumn">김승진</div>
+          <div class="freeboardlist-voteColumn">42,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아야 ~</div>
+          <div class="freeboardlist-nameColumn">김승진</div>
+          <div class="freeboardlist-voteColumn">42,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아야 ~</div>
+          <div class="freeboardlist-nameColumn">김승진</div>
+          <div class="freeboardlist-voteColumn">42,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아야 ~</div>
+          <div class="freeboardlist-nameColumn">김승진</div>
+          <div class="freeboardlist-voteColumn">42,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아 배고파</div>
+          <div class="freeboardlist-nameColumn">양혁수</div>
+          <div class="freeboardlist-voteColumn">22,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">멀리서 응원할게요.</div>
+          <div class="freeboardlist-nameColumn">이재서</div>
+          <div class="freeboardlist-voteColumn">31,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아 배고파</div>
+          <div class="freeboardlist-nameColumn">양혁수</div>
+          <div class="freeboardlist-voteColumn">22,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">멀리서 응원할게요.</div>
+          <div class="freeboardlist-nameColumn">이재서</div>
+          <div class="freeboardlist-voteColumn">31,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아 배고파</div>
+          <div class="freeboardlist-nameColumn">양혁수</div>
+          <div class="freeboardlist-voteColumn">22,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">멀리서 응원할게요.</div>
+          <div class="freeboardlist-nameColumn">이재서</div>
+          <div class="freeboardlist-voteColumn">31,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">아 배고파</div>
+          <div class="freeboardlist-nameColumn">양혁수</div>
+          <div class="freeboardlist-voteColumn">22,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+
+        <div class="freeboardlist-row">
+          <div class="freeboardlist-titleColumn">멀리서 응원할게요.</div>
+          <div class="freeboardlist-nameColumn">이재서</div>
+          <div class="freeboardlist-voteColumn">31,065</div>
+          <div class="freeboardlist-dateColumn">17/01/30</div>
+        </div>
+        <div id="pagination"></div>
+
+        <a href="./../board/freeBoardWrite.html">
+          <button class="freeboardlist-writeButton">글 작성</button>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- 푸터 -->
+  <footer>
+    <div class="main-footerContainer">
+      <div id="main-footerText">
+        <p><strong><a href="../../html/main/terms.html">이용약관</a> | <a
+              href="../../html/main/privacyPolicy.html">개인정보처리방침</a></strong></p>
+        <br>
+        <p>(04377)서울특별시 강남구 테헤란로 146 현익빌딩, <br>(06236)서울특별시 강남구 테헤란로26길 12 제일비전타워</p>
+        <p>대표이사 : 정승환 | 사업자등록번호 : 13-72011641</p>
+        <p>사업자명 : ㈜맛있는 재활용 | 대표이메일 : shjeong19943@gmail.com</p>
+      </div>
+    </div>
+  </footer>
+  <script src="./../../js/board/freeBoardList.js"></script>
+</body>
+
+</html>

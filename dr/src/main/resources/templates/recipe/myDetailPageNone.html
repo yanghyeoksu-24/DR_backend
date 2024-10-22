@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./../../css/recipe/myDetailPageNone.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/main/main.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
+  <script defer src="../../js/main/main.js"></script>
+  <title>DR - 나만의 레시피 상세페이지(상대방)</title>
+</head>
+
+<body>
+  <header>
+    <div class="main-headerContainer">
+      <div class="main-headerTop">
+        <a href="../../html/main/main.html"><img src="/image/logo.png" id="main-logo"></a>
+        <div class="main-searchBar">
+          <select class="main-dropDown">
+            <option value="꿀팁 게시판">꿀팁 게시판</option>
+            <option value="나만의 레시피">나만의 레시피</option>
+            <option value="챗봇 레시피">챗봇 레시피</option>
+            <option value="자유 게시판">자유 게시판</option>
+          </select>
+          <input type="text" class="main-searchInput">
+          <img src="../../image/searchButton.png" id="main-searchBtn">
+        </div>
+        <div class="main-welcomeUser">
+          <div class="main-profile">
+            <img src="../../image/basicProfile.png">
+          </div>
+          <div class="main-welcome">정승환님 환영합니다</div>
+          <a href="#로그아웃!!#">
+            <div class="main-logout">로그아웃</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="main-headerNav">
+        <ul class="main-navMenu">
+          <li id="main-chatBot"><a href="#냉장봇 페이지로">냉장봇</a></li>
+          <li id="main-rank"><a href="#랭킹 페이지로">환경기여 랭킹</a></li>
+          <li id="main-recipe">
+            레시피
+            <ul class="main-recipeList">
+              <li><a href="#챗봇레시피 페이지로">챗봇레시피</a></li>
+              <li><a href="#나만의레시피 페이지로">나만의레시피</a></li>
+            </ul>
+          </li>
+          <li id="main-board">
+            게시판
+            <ul class="main-boardList">
+              <li><a href="#자유게시판 페이지로">자유게시판</a></li>
+              <li><a href="#꿀팁게시판 페이지로">꿀팁게시판</a></li>
+            </ul>
+          </li>
+          <li id="main-shop"><a href="#포인트샵 페이지로">포인트샵</a></li>
+          <li id="main-myPage">
+            마이페이지
+            <ul class="main-myPageList">
+              <li><a href="#내 정보 페지이로">내 정보</a></li>
+              <li><a href="#찜 목록 페이지로">찜 목록</a></li>
+              <li><a href="#내가 쓴 레시피 페이지로">내가 쓴 레시피</a></li>
+              <li><a href="#내가 쓴 게시글 페이지로">내가 쓴 게시글</a></li>
+              <li><a href="#신고 받은 글 페이지로">신고 받은 글</a></li>
+              <li><a href="#출석체크 페이지로">출석체크</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <!-- 메인 부분 -->
+  <main>
+    <div class="myDetailPageNone-mainContainer">
+      <div class="myDetailPageNone-mainBox">
+
+        <div class="myDetailPageNone-titlebox">
+          <p class="myDetailPageNone-foodTitle">숙주나물 무침</p>
+        </div>
+
+        <div class="myDetailPageNone-infobox">
+          <div class="myDetailPageNone-infoFirst">
+            <div class="myDetailPageNone-infoInBox1">
+              <img src="./../../image/basicProfile.png" alt="">
+            </div>
+            <div class="myDetailPageNone-infoInBox2">
+              <p class="myDetailPageNone-writeName">김찰수</p>
+              <p class="myDetailPageNone-date">2024-10-04 14:50</p>
+            </div>
+          </div>
+
+          <div class="myDetailPageNone-infoSecond">
+            <!-- <div class="myDetailPageNone-firstButton">
+              <button class="myDetailPageNone-buttonOne">수정</button>
+              <button class="myDetailPageNone-buttonOne">삭제</button>
+            </div> -->
+
+            <div class="myDetailPageNone-secondButton">
+              <div class="myDetailPageNone-buttonImg">
+                <img id="heartImage" src="./../../image/heartGray.png" alt="">
+              </div>
+
+              <button class="myDetailPageNone-buttonTwo">신고</button>
+            </div>
+          </div>
+        </div>
+        <!-- 글 내용 -->
+        <div class="myDetailPageNone-writetext">
+          <img src="./../../image/recipe/숙주나물무침.png" alt="">
+          <p class="myDetailPageNone-texts">
+            바쁜 일상 속에서 푸짐한 식탁을 차리는 건 쉽지 않죠. 하지만 걱정 마세요! 오늘 소개할 "아삭아삭 숙주나물 무침" 레시피는 단 5분 만에 뚝딱 만들 수 있는 초간단 요리입니다. 숙주나물은
+            섬유질이 풍부하여 다이어트에도 좋고, 비타민과 미네랄이 풍부하여 건강에도 이로운 채소입니다. 특히 숙주나물 무침은 밑반찬으로도 좋고, 시원한 술안주로도 손색없습니다. 아삭아삭 숙주나물 무침의
+            매력적인 식감과 풍부한 영양소를 함께 즐겨보세요!
+            숙주나물 무침은 밑반찬으로도 좋고, 술안주로도 손색없습니다. 밥과 함께 먹으면 든든한 한 끼 식사가 되고, 맥주나 소주와 함께 먹으면 시원한 술안주가 됩니다. 숙주나물 무침은 냉장 보관하면
+            3~4일 정도 보관 가능합니다.
+
+            오늘 저녁 식탁에 아삭아삭 숙주나물 무침을 올려보세요. 5분 만에 완성할 수 있는 초간단 레시피로 건강과 맛을 동시에 잡을 수 있습니다.
+            [출처] 아삭아삭 숙주나물 무침 레시피| 초간단 5분 완성 | 숙주나물 요리, 밑반찬, 술안주|작성자 소예공방
+            [출처] 아삭아삭 숙주나물 무침 레시피| 초간단 5분 완성 | 숙주나물 요리, 밑반찬, 술안주|작성자 소예공방
+          </p>
+
+          <div class="myDetailPageNone-recommendImg">
+            <img src="./../../image/recommend.png" alt="">
+          </div>
+        </div>
+
+        <!-- 댓글들 -->
+        <div class="myDetailPageNone-commentSection">
+            <div class="myDetailPageNone-comment">
+                <div class="myDetailPageNone-commentUserImg">
+                    <img src="./../../image/basicProfile.png" alt="User Image">
+                </div>
+                <div class="myDetailPageNone-commentContent">
+                    <div class="myDetailPageNone-commentHeader">
+                        <span class="myDetailPageNone-commentUsername">홍상철</span>
+                        <button class="myDetailPageNone-reportBtn">신고</button>
+                    </div>
+                    <div class="myDetailPageNone-commentText">그 뒤로는 크리스마스까지 공휴일 없음</div>
+                    <div class="myDetailPageNone-commentTime">14:53:14</div>
+                </div>
+            </div>
+        
+            <div class="myDetailPageNone-reply">
+                <div class="myDetailPageNone-replyUserImg">
+                    <img src="./../../image/basicProfile.png" alt="User Image">
+                </div>
+                <div class="myDetailPageNone-replyContent">
+                    <div class="myDetailPageNone-replyHeader">
+                        <span class="myDetailPageNone-replyUsername">김기찬</span>
+                        <button class="myDetailPageNone-reportBtn">신고</button>
+                    </div>
+                    <div class="myDetailPageNone-replyText">연차 3.5일 남았는데 잘 써야겠네영 ㅠ,ㅠ</div>
+                    <div class="myDetailPageNone-replyTime">15:03:25</div>
+                </div>
+            </div>
+        
+            <div class="myDetailPageNone-comment">
+                <div class="myDetailPageNone-commentUserImg">
+                    <img src="./../../image/basicProfile.png" alt="User Image">
+                </div>
+                <div class="myDetailPageNone-commentContent">
+                    <div class="myDetailPageNone-commentHeader">
+                        <span class="myDetailPageNone-commentUsername">박상희</span>
+                        <button class="myDetailPageNone-reportBtn">신고</button>
+                    </div>
+                    <div class="myDetailPageNone-commentText">이번에도 슬로...</div>
+                    <div class="myDetailPageNone-commentTime">14:53:14</div>
+                </div>
+            </div>
+        
+            <div class="myDetailPageNone-commentInput">
+                <textarea placeholder="댓글을 입력하세요..."></textarea>
+                <div class="myDetailPageNone-commentActions">
+                    <button class="myDetailPageNone-editBtn">수정</button>
+                    <button class="myDetailPageNone-deleteBtn">삭제</button>
+                </div>
+            </div>
+        </div>
+        
+      
+      
+      
+
+      </div>
+    </div>
+  </main>
+
+  <!-- 푸터 -->
+  <footer>
+    <div class="main-footerContainer">
+      <div id="main-footerText">
+        <p><strong><a href="#이용약관 페이지로">이용약관</a> | <a href="#개인정보처리방침 페이지로">개인정보처리방침</a></strong></p>
+        <br>
+        <p>(04377)서울특별시 강남구 테헤란로 146 현익빌딩, <br>(06236)서울특별시 강남구 테헤란로26길 12 제일비전타워</p>
+        <p>대표이사 : 정승환 | 사업자등록번호 : 13-72011641</p>
+        <p>사업자명 : ㈜맛있는 재활용 | 대표이메일 : shjeong19943@gmail.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./../../js/recipe/myDetailPageNone.js" defer></script>
+</body>
+
+</html>
