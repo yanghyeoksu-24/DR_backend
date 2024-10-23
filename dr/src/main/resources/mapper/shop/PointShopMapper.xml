@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dr.mapper.shop.PointShopMapper">
+    <select id="getMyPoint" parameterType="Long" resultType="PointShopDTO">
+        SELECT SUM(DP.POINT_GET) - SUM(DP.POINT_USE) AS "TOTAL_POINT"
+        FROM DR_USER DU JOIN DR_POINT DP ON DU.USER_NUMBER = DP.USER_NUMBER
+        WHERE DU.USER_NUMBER = #{userNumber}
+    </select>
+    
+    <select id="selectAllProduct" resultType="PointShopDTO">
+        SELECT DPH.PHOTO_LOCAL, DP.PRODUCT_NAME, DP.PRODUCT_PRICE, STOCK.PRODUCT_COUNT
+        FROM DR_PRODUCT DP
+                 JOIN DR_PHOTO DPH ON DP.PRODUCT_NUMBER = DPH.PRODUCT_NUMBER
+                 JOIN (
+            SELECT PRODUCT_NAME, COUNT(PRODUCT_NUMBER) AS PRODUCT_COUNT
+            FROM DR_PRODUCT
+            GROUP BY PRODUCT_NAME
+        ) STOCK ON DP.PRODUCT_NAME = STOCK.PRODUCT_NAME
+        GROUP BY DPH.PHOTO_LOCAL, DP.PRODUCT_NAME, DP.PRODUCT_PRICE, STOCK.PRODUCT_COUNT
+        ORDER BY DP.PRODUCT_PRICE
+    </select>
+</mapper>

@@ -20,6 +20,7 @@ a:active {
     outline: none;
 }
 
+
 /* 메인섹션 */
 .main-section1Container {
   width: 100%;
@@ -86,15 +87,15 @@ a:active {
   letter-spacing: -1.5px;
   font-size: 36px;
   margin: 10px 0;
-  color: #222222;
+  color: #404040;
 }
 
-#main-titleText {
+.main-titleText {
   color: #F44336;
 }
 
 .main-sectionSubTitle {
-  margin-top: 80px;
+  margin-top: 60px;
   font-size: 30px;
 }
 
