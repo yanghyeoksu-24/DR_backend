@@ -1,116 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>대시보드</title>
-  <link rel="stylesheet" href="./../../css/manager/dashBoard.css">
+  <link rel="stylesheet" th:href="@{/css/manager/dashBoard.css}">
 </head>
 
 <body>
-  <a href="./../../html/manager/dashBoard.html">
-    <img class="manager-logoImg" src="./../../image/logo.png">
-  </a>
-  <div id="manager-dashBoardBox">
+<a th:href="@{/html/manager/dashBoard.html}">
+  <img class="manager-logoImg" th:src="@{/image/logo.png}">
+</a>
+<div id="manager-dashBoardBox">
 
-    <div id="dashBoard-list">
-      <ul>
-        <a href="./../../html/manager/dashBoard.html">
+  <div id="dashBoard-list">
+    <ul>
+      <a th:href="@{/html/manager/dashBoard.html}">
         <li id="dashBoard-admin">
-          <img id="dashBoard-profile" src="./../../image/basicProfile.png">
+          <img id="dashBoard-profile" th:src="@{/image/basicProfile.png}">
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          이재서
+          <span th:text="${managerName}"></span>
         </li>
-        </a>
-        <a href="./../../html/manager/manageUser.html">
-          <li id="dashBoard-user">회원관리</li>
-        </a>
-        <a href="./../../html/manager/manageBoard.html">
+      </a>
+      <a th:href="@{/html/manager/manageUser.html}">
+        <li id="dashBoard-user">회원관리</li>
+      </a>
+      <a th:href="@{/html/manager/manageBoard.html}">
         <li id="dashBoard-board">게시글/레시피 관리</li>
-        </a>
-        <a href="./../../html/manager/manageComment.html">
+      </a>
+      <a th:href="@{/html/manager/manageComment.html}">
         <li id="dashBoard-comment">댓글관리</li>
-        </a>
-        <a href="./../../html/manager/managePoint.html">
+      </a>
+      <a th:href="@{/html/manager/managePoint.html}">
         <li id="dashBoard-point">포인트관리</li>
-        </a>
-        <a href="./../../html/manager/manageReport.html">
+      </a>
+      <a th:href="@{/html/manager/manageReport.html}">
         <li id="dashBoard-report">신고관리</li>
-        </a>
-        <a href="./../../html/manager/manageProduct.html">
+      </a>
+      <a th:href="@{/html/manager/manageProduct.html}">
         <li id="dashBoard-product">상품관리</li>
-        </a>
-      </ul>
-    </div>
+      </a>
+    </ul>
+  </div>
 
-    <div id="dashBoard-contentBox">
-      <div id="dashBoard-top">
-        <div class="dashBoard-top-box">
-            <a href="./../../html/manager/manageUser.html">
-            <span>총 회원수</span>
-            <span>56명</span>
-          </a>
-          </div>
-        <div class="dashBoard-top-box">
-          <a href="./../../html/manager/manageReport.html">
+  <div id="dashBoard-contentBox">
+    <div id="dashBoard-top">
+      <div class="dashBoard-top-box">
+        <a th:href="@{/html/manager/manageUser.html}">
+          <span>총 회원수</span>
+          <span>56명</span>
+        </a>
+      </div>
+      <div class="dashBoard-top-box">
+        <a th:href="@{/html/manager/manageReport.html}">
           <span>새로운 신고</span>
           <span>22건</span>
           <br><br><br>
-
           <span class="dashBoard-light">게시피/레시피 신고 12건<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            댓글 10건</span>
-            </a>
-        </div>
-
-        <div class="dashBoard-top-box">
-          <div class="dashBoard-calender">
-            <img id="dashBoard-calImg" src="./../../image/calendar.png">
-            <span class="dashBoard-date">2024.10.24</span>
-          </div>
-        </div>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              댓글 10건</span>
+        </a>
       </div>
 
-      <div id="dashBoard-bottom">
-        <div class="dashBoard-member">
-          <img src="./../../image/basicProfile.png">
-          <span>송아성</span>
-          <span>ahseonga11@gmail.com</span> 
-          <span>회원관리</span>
-        </div>
-        <div class="dashBoard-member">
-          <img src="./../../image/basicProfile.png">
-          <span>이재서</span>
-          <span>jaeseo1227@gmail.com</span>
-          <span>포인트관리</span>
-        </div>
-        <div class="dashBoard-member">
-          <img src="./../../image/basicProfile.png">
-          <span>정승환</span>
-          <span>jung123@gmail.com</span>
-          <span>댓글관리</span>
-        </div>
-        <div class="dashBoard-member">
-          <img src="./../../image/basicProfile.png">
-          <span>양혁수</span>
-          <span>hyeoksu32@gmail.com</span>
-          <span>신고관리</span>
-        </div>
-        <div class="dashBoard-member">
-          <img src="./../../image/basicProfile.png">
-          <span>김승진</span>
-          <span>kimsg0531@gmail.com</span>
-          <span>상품관리</span>
+      <div class="dashBoard-top-box">
+        <div class="dashBoard-calender">
+          <img id="dashBoard-calImg" th:src="@{/image/calendar.png}">
+          <span class="dashBoard-date">2024.10.24</span>
         </div>
       </div>
+    </div>
 
+    <div id="dashBoard-bottom">
+      <div class="dashBoard-member">
+        <img th:src="@{/image/basicProfile.png}">
+        <span>송아성</span>
+        <span>ahseonga11@gmail.com</span>
+        <span>회원관리</span>
+      </div>
+      <div class="dashBoard-member">
+        <img th:src="@{/image/basicProfile.png}">
+        <span>이재서</span>
+        <span>jaeseo1227@gmail.com</span>
+        <span>포인트관리</span>
+      </div>
+      <div class="dashBoard-member">
+        <img th:src="@{/image/basicProfile.png}">
+        <span>정승환</span>
+        <span>jung123@gmail.com</span>
+        <span>댓글관리</span>
+      </div>
+      <div class="dashBoard-member">
+        <img th:src="@{/image/basicProfile.png}">
+        <span>양혁수</span>
+        <span>hyeoksu32@gmail.com</span>
+        <span>신고관리</span>
+      </div>
+      <div class="dashBoard-member">
+        <img th:src="@{/image/basicProfile.png}">
+        <span>김승진</span>
+        <span>kimsg0531@gmail.com</span>
+        <span>상품관리</span>
+      </div>
     </div>
 
   </div>
 
+</div>
 
-  <script src="./../../js/manager/dashBoard.js"></script>
+<script th:src="@{/js/manager/dashBoard.js}"></script>
 </body>
 
 </html>
