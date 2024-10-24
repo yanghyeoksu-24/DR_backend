@@ -28,8 +28,6 @@
         M.MANAGER_SORT AS managerSort
         FROM
         DR_MANAGER M
-        WHERE
-        ROWNUM <= 5;
     </select>
 
 </mapper>

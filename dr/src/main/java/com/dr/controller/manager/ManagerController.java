@@ -57,13 +57,4 @@ public class ManagerController {
         return "/manager/dashBoard";
     }
 
-    // 3.회원관리
-    @GetMapping("/manageUser")
-    public String manageUser(){
-        return "/manager/manageUser";
-    }
-
-
-
-
 }
