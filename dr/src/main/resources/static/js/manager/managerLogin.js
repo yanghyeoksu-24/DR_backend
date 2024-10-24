@@ -5,8 +5,7 @@ const result = document.querySelector("#manager-none");
 const button = document.querySelector("#manager-loginButton");
 
 button.addEventListener("click", function() {
-  event.preventDefault(); 
-  let message = ""; 
+  let message = "";
 
   // 아이디가 비어있는지 확인
   if (id.value.trim() === "") {
@@ -21,10 +20,6 @@ button.addEventListener("click", function() {
   result.innerHTML = message;
   result.style.color = "red";
 
-  if(message === "") {
-    alert("@@@ 관리자님 환영합니다"); 
-    window.location.href = "./../../html/manager/dashBoard.html"; // 페이지 이동
-  }
 });
 
 // 2. 비밀번호 토글 
@@ -44,4 +39,5 @@ View.addEventListener("click", function() {
   noView.style.display = "inline"; 
   View.style.display = "none";     
 });
+
 
