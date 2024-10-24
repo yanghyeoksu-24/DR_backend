@@ -3,6 +3,7 @@ package com.dr.controller.rank;
 import com.dr.dto.rank.RankDTO;
 import com.dr.service.rank.RankService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/rank")
-@AllArgsConstructor
 public class RankController {
 
     private final RankService rankService;
