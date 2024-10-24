@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
@@ -17,70 +17,7 @@
 
   <title>DR - 나만의 레시피 작성</title>
 </head>
-
 <body>
-  <header>
-    <div class="main-headerContainer">
-        <div class="main-headerTop">
-          <a href="../../html/main/main.html"><img src="../../image/logo.png" id="main-logo"></a>
-          <div class="main-searchBar">
-            <select class="main-dropDown">
-              <option value="꿀팁 게시판">꿀팁 게시판</option>
-              <option value="나만의 레시피">나만의 레시피</option>
-              <option value="챗봇 레시피">챗봇 레시피</option>
-              <option value="자유 게시판">자유 게시판</option>
-            </select>
-            <input type="text" class="main-searchInput">
-            <img src="../../image/searchButton.png" id="main-searchBtn">
-          </div>
-          <div class="main-welcomeUser">
-            <div class="main-profile">
-              <img src="../../image/basicProfile.png">
-            </div>
-            <div class="main-welcome">정승환님 환영합니다</div>
-            <form action="#로그아웃!!" method="">
-              <button class="main-logout">로그아웃</button>
-            </form>
-          </div>
-        </div>
-  
-        <!-- 로그인 네비바 -->
-        <div class="main-headerNav">
-          <ul class="main-navMenu">
-            <li id="main-chatBot"><a href="../../html/chatBot/nangjangbot.html">냉장봇</a></li>
-            <li id="main-rank"><a href="../../html/rank/userRank.html">환경기여 랭킹</a></li>
-            <li id="main-recipe">
-              레시피
-              <ul class="main-recipeList">
-                <li><a href="../../html/recipe/chatBotRecipeList.html">챗봇레시피</a></li>
-                <li><a href="../../html/recipe/myRecipeList.html">나만의레시피</a></li>
-              </ul>
-            </li>
-            <li id="main-board">
-              게시판
-              <ul class="main-boardList">
-                <li><a href="../../html/board/freeBoardList.html">자유게시판</a></li>
-                <li><a href="../../html/board/honeyBoardList.html">꿀팁게시판</a></li>
-              </ul>
-            </li>
-            <li id="main-shop"><a href="../../html/shop/pointShop.html">포인트샵</a></li>
-            <li id="main-myPage">
-              마이페이지
-              <ul class="main-myPageList">
-                <li><a href="../../html/myPage/myPageInformation.html">내 정보</a></li>
-                <li><a href="../../html/myPage/myPageSteamedList.html">찜 목록</a></li>
-                <li><a href="../../html/myPage/myPageMyRecipe.html">내가 쓴 레시피</a></li>
-                <li><a href="../../html/myPage/myPageMyPost.html">내가 쓴 게시글</a></li>
-                <li><a href="../../html/myPage/myPageMyComplaint.html">신고 받은 글</a></li>
-                <li><a href="../../html/myPage/myPageCheck.html">출석체크</a></li>
-                <li><a href="./../../html/myPage/myPageMyPoint.html">포인트 내역</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-</header>
-
   <main>
     <div class="chatBotRecipeWriter-mainContainer">
       <div class="chatBotRecipeWriter-mainBox">
@@ -117,19 +54,6 @@
       </div>
     </div>
   </main>
-
-  <!-- 푸터 -->
-  <footer>
-    <div class="main-footerContainer">
-      <div id="main-footerText">
-        <p><strong><a href="../../html/main/terms.html">이용약관</a> | <a href="../../html/main/privacyPolicy.html">개인정보처리방침</a></strong></p>
-        <br>
-        <p>(04377)서울특별시 강남구 테헤란로 146 현익빌딩, <br>(06236)서울특별시 강남구 테헤란로26길 12 제일비전타워</p>
-        <p>대표이사 : 정승환 | 사업자등록번호 : 13-72011641</p>
-        <p>사업자명 : ㈜맛있는 재활용 | 대표이메일 : shjeong19943@gmail.com</p>
-      </div>
-    </div>
-  </footer>
   <script src="./../../js/recipe/chatBotRecipeWriter.js" defer></script>
 </body>
 
