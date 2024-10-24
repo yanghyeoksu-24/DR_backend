@@ -116,6 +116,7 @@ a {
   align-items: center;
   text-align: center;
   gap: 15px;
+  color: black;
 }
 
 #login-kakaoButton {
@@ -160,4 +161,8 @@ a {
   font-size: 0px;
   line-height: 0px;
   margin: 0px 16px;
+}
+
+.login-formTwo a{
+  color: #424242;
 }

@@ -8,6 +8,6 @@ import lombok.ToString;
 @Getter @Setter @ToString
 @NoArgsConstructor
 public class UserSessionDTO {
-    private Long userEmail;
-    private String loginEmail;
+    private Long userNumber;
+
 }
