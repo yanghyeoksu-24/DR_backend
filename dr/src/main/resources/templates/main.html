@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>맛있는 재활용</title>
+    <link rel="stylesheet" th:href="@{/css/main/main.css}"/>
+
+    <!-- 그래프 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <!-- 헤더 / 푸터 -->
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
+
+    <script defer th:src="@{/js/fragment/header.js}"></script>
+    <script defer th:src="@{/js/main/main.js}"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<header th:replace="~{/fragment/header :: header}"></header>
+
+<!-- 메인 -->
+<main>
+
+    <!-- 슬로건, 출처 -->
+    <section class="main-section1">
+        <div class="main-section1Container">
+            <div class="main-section1Frame">
+                <img th:src="@{/image/refrigerator.png}" id="main-refrigerator"/>
+                <img th:src="@{/image/font.png}" id="main-logoFont"/>
+                <p class="main-slogan">: 음식물 쓰레기 감소를 위한<br> 챗봇 레시피</p>
+                <p class="main-ourcesFrom">데이터 출처 : 공공데이터 포털<br> 계산식 출처 : 음식물의 에너지 소모량 및 온실가스 배출량 산정 연구(환경부,2010)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 월별 음식물쓰레기 배출량 -->
+    <section class="main-section2">
+        <div class="main-section2Container">
+            <div class="main-section2Frame">
+                <h1 class="main-sectionTitle">음<span class="main-titleText">쓰</span> NOW</h1>
+                <h2 class="main-sectionSubTitle" id="currentYearMonth"></h2>
+                <div class="main-sectionInfo">
+                    <span th:text="${totalWaste ?: 0} + ' kg = ' + (${totalPortion} ?: 0) + ' 인분'"></span>
+                </div>
+                <div class="main-blank"></div>
+
+                <!-- 그래프 -->
+                <canvas id="myChart" style="width:100%;max-width:950px"></canvas>
+
+                <div class="main-blank"></div>
+                <div class="main-blank"></div>
+                <div class="main-blank"></div>
+                <div class="main-resultTitleFrame">
+                    <div class="main-resultTitle">온실가스 배출량</div>
+                    <div class="main-resultTitle">에너지 소비량</div>
+                </div>
+                <div class="topResult">
+                    <div class="main-resultBox">
+                        <img th:src="@{/image/earth.png}"/>
+                        <div class="resultName">온실가스 배출량</div>
+                        <div class="main-result" th:text="${co2Emission ?: 0} + ' tCO2eq.'">143434 tCO2eq.</div>
+                    </div>
+                    <div class="main-resultBox">
+                        <img th:src="@{/image/tree.png}"/>
+                        <div class="resultName">소나무 1년 탄소흡수량</div>
+                        <div class="main-result" th:text="${treeAbsorption ?: 0} + ' 백만 그루'">17.3 백만 그루</div>
+                    </div>
+                    <div class="main-resultBox">
+                        <img th:src="@{/image/electricity.png}"/>
+                        <div class="resultName">전기에너지</div>
+                        <div class="main-result" th:text="${electricityConsumption ?: 0} + 'Gwh'">140.9Gwh</div>
+                    </div>
+                    <div class="main-resultBox">
+                        <img th:src="@{/image/washer.png}"/>
+                        <div class="resultName">세탁기 사용</div>
+                        <div class="main-result" th:text="${washingMachineUses ?: 0} + '백만 회'">1012.5백만 회</div>
+                    </div>
+                </div>
+                <div class="main-blank"></div>
+                <div class="main-resultTitle">
+                    처리비용
+                </div>
+                <div class="topResult">
+                    <div class="main-resultBox">
+                        <div class="resultName">수집/운반 처리비</div>
+                        <div class="main-result" th:text="${collectionCost ?: 0} + '억 원'">153.6억 원</div>
+                    </div>
+                    <div class="main-resultBox">
+                        <div class="resultName">처리장 공사비</div>
+                        <div class="main-result" th:text="${facilityCost ?: 0} + '억 원'">219369.6억 원</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 음쓰 계산기 -->
+    <section class="main-section3">
+        <div class="main-section3Container">
+            <div class="main-section3Frame">
+                <h1 class="main-sectionTitle">음<span class="main-titleText">쓰</span> 계산기</h1>
+                <div class="main-blank"></div>
+                <div class="main-resultTitle">음식물쓰레기 무게</div>
+
+                <div class="main-calculator">
+                    <form>
+                        <input type="number" id="main-qnt" class="main-weightInput" step="0.01" placeholder="kg 입력"> kg
+                    </form>
+                    <div class="main-equals"> =</div>
+                    <div id="main-portion" class="main-calcResult">0 인분</div>
+                </div>
+
+                <div class="main-blank"></div>
+                <div class="main-resultTitleFrame">
+                    <div class="main-resultTitle">온실가스 배출량</div>
+                    <div class="main-resultTitle">에너지 소비량</div>
+                </div>
+                <div class="topResult">
+                    <div class="main-resultBox">
+                        <img src="../../image/earth.png">
+                        <div class="resultName">온실가스 배출량</div>
+                        <div id="main-co2" class="main-result">0 kgCO2eq.</div>
+                    </div>
+                    <div class="main-resultBox">
+                        <img src="../../image/tree.png">
+                        <div class="resultName">소나무 1년 탄소흡수량</div>
+                        <div id="main-tree" class="main-result">0 그루</div>
+                    </div>
+                    <div class="main-resultBox">
+                        <img src="../../image/electricity.png">
+                        <div class="resultName">전기에너지</div>
+                        <div id="main-energy" class="main-result">0 kWh</div>
+                    </div>
+                    <div class="main-resultBox">
+                        <img src="../../image/washer.png">
+                        <div class="resultName">세탁기 사용</div>
+                        <div id="main-washingMachine" class="main-result">0 회</div>
+                    </div>
+                </div>
+
+                <div class="main-blank"></div>
+                <div class="main-resultTitle">처리비용</div>
+                <div class="topResult">
+                    <div class="main-resultBox">
+                        <div class="resultName">수집/운반 처리비</div>
+                        <div id="main-transCost" class="main-result">0 원</div>
+                    </div>
+                    <div class="main-resultBox">
+                        <div class="resultName">처리장 공사비</div>
+                        <div id="main-processCost" class="main-result">0 원</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 베스트, 워스트 지역 -->
+    <section class="main-section4">
+        <div class="main-section4Container">
+            <div class="main-section4Frame">
+                <h1 class="main-sectionTitle">전국 음<span class="main-titleText">쓰</span> 랭킹</h1>
+                <div class="main-blank"></div>
+                <div class="main-blank"></div>
+                <div class="main-bestAndWorst">
+                    <div class="main-boxTitle">BEST</div>
+                    <div class="main-boxTitle">WORST</div>
+                </div>
+                <div class="main-boxFrame">
+
+                    <!-- 베스트 -->
+                    <div class="main-bestBox">
+                        <div class="main-boxTable">
+                            <div class="main-boxTableText" id="main-tableTitle">
+                                <span>랭킹</span>
+                                <span>아파트/기관</span>
+                                <span>지역</span>
+                                <span>배출량(kg)</span>
+                            </div>
+                            <div class="main-boxTableText">
+                                <span>1</span>
+                                <span>중구청</span>
+                                <span>대전 중구</span>
+                                <span>0.0</span>
+                            </div>
+                            <div class="main-boxTableText">
+                                <span>2</span>
+                                <span>강화군청</span>
+                                <span>인천 강화군</span>
+                                <span>0.3</span>
+                            </div>
+                            <div class="main-boxTableText">
+                                <span>3</span>
+                                <span>터미널 수거장</span>
+                                <span>인천 강화군</span>
+                                <span>0.3</span>
+                            </div>
+                            <div class="main-boxTableText">
+                                <span>4</span>
+                                <span>부산동구청</span>
+                                <span>부산 동구</span>
+                                <span>1.0</span>
+                            </div>
+                            <div class="main-boxTableText">
+                                <span>5</span>
+                                <span>대구연경아이파크</span>
+                                <span>대구 동구</span>
+                                <span>1.1</span>
+                            </div>
+                            <div class="main-boxTableText">
+                                <span>6</span>
+                                <span>분당구청</span>
+                                <span>성남 분당</span>
+                                <span>1.3</span>
+                            </div>
+                            <div class="main-boxTableText">
+                                <span>7</span>
+                                <span>북구청</span>
+                                <span>울산 북구</span>
+                                <span>1.4</span>
+                            </div>
+                            <div class="main-boxTableText">
+                                <span>8</span>
+                                <span>중구청</span>
+                                <span>울산 중구</span>
+                                <span>1.8</span>
+                            </div>
+                            <div class="main-boxTableText">
+                                <span>9</span>
+                                <span>팔달구청</span>
+                                <span>수원 팔달구</span>
+                                <span>2.2</span>
+                            </div>
+                            <div class="main-boxTableText">
+                                <span>10</span>
+                                <span>영도구청</span>
+                                <span>부산 영도구</span>
+                                <span>2.7</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 워스트 -->
+                    <div class="main-worstBox">
+                        <div class="main-boxTable">
+                            <div class="main-boxTableTextWorst" id="main-tableTitleWorst">
+                                <span>랭킹</span>
+                                <span>아파트/기관</span>
+                                <span>지역</span>
+                                <span>배출량(kg)</span>
+                            </div>
+                            <div class="main-boxTableTextWorst">
+                                <span>2585</span>
+                                <span>잠실파크리오</span>
+                                <span>서울 송파구</span>
+                                <span>114625.1</span>
+                            </div>
+                            <div class="main-boxTableTextWorst">
+                                <span>2584</span>
+                                <span>잠실엘스</span>
+                                <span>서울 송파구</span>
+                                <span>100538.1</span>
+                            </div>
+                            <div class="main-boxTableTextWorst">
+                                <span>2583</span>
+                                <span>리센츠</span>
+                                <span>서울 송파구</span>
+                                <span>91853.0</span>
+                            </div>
+                            <div class="main-boxTableTextWorst">
+                                <span>2582</span>
+                                <span>화명롯데캐슬</span>
+                                <span>부산 북구</span>
+                                <span>89958.8</span>
+                            </div>
+                            <div class="main-boxTableTextWorst">
+                                <span>2581</span>
+                                <span>올림픽패밀리타운</span>
+                                <span>서울 송파구</span>
+                                <span>79436.6</span>
+                            </div>
+                            <div class="main-boxTableTextWorst">
+                                <span>2580</span>
+                                <span>잠실트리지움</span>
+                                <span>서울 송파구</span>
+                                <span>63993.3</span>
+                            </div>
+                            <div class="main-boxTableTextWorst">
+                                <span>2579</span>
+                                <span>매탄위브하늘채</span>
+                                <span>수원 영통구</span>
+                                <span>62194.9</span>
+                            </div>
+                            <div class="main-boxTableTextWorst">
+                                <span>2578</span>
+                                <span>잠실주공5단지</span>
+                                <span>서울 송파구</span>
+                                <span>61194.3</span>
+                            </div>
+                            <div class="main-boxTableTextWorst">
+                                <span>2577</span>
+                                <span>장미1차,2차</span>
+                                <span>서울 송파구</span>
+                                <span>56989.8</span>
+                            </div>
+                            <div class="main-boxTableTextWorst">
+                                <span>2576</span>
+                                <span>SK스카이뷰</span>
+                                <span>인천 미추홀구</span>
+                                <span>56733.7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+<!-- 푸터 -->
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
+</body>
+</html>
