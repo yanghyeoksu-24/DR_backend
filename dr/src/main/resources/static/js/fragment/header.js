@@ -39,3 +39,12 @@ $(document).ready(function () {
     }
   })
 });
+
+//a태그 post로 전송
+function postRequest(url) {
+  const form = document.createElement('form');
+  form.method = 'post';
+  form.action = url;
+  document.body.appendChild(form);
+  form.submit();
+}

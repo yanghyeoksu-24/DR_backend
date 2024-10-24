@@ -7,9 +7,6 @@
     <title>DR - 포인트샵</title>
     <link rel="stylesheet" th:href="@{/css/shop/pointShop.css}"/>
 
-    <!-- 그래프 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-
     <!-- 헤더 / 푸터 -->
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
@@ -35,7 +32,7 @@
 
     <!-- 내 포인트 -->
     <section class="pointShop-section1">
-        <div class="pointShop-myPoint" th:text="'내 포인트 : ' + ${myPoint.totalPoint} + ' point'"></div>
+        <div class="pointShop-myPoint" th:text="'내 포인트 : ' + *{myPoint} + ' point'"></div>
     </section>
 
     <!-- 상품 목록 -->
