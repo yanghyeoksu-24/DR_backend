@@ -88,9 +88,9 @@
             </div>
             <div class="main-welcomeUser">
                 <div class="main-profile">
-                    <img th:src="@{/image/basicProfile.png}">
+                    <img th:src="@{/image/photo/basicProfile.png}">
                 </div>
-                <div class="main-welcome">정승환님 환영합니다</div>
+                <div class="main-welcome" th:text="${userNickName + '님 환영합니다'}"></div>
                 <form action="#로그아웃!!" method="">
                     <button class="main-logout">로그아웃</button>
                 </form>
@@ -100,7 +100,7 @@
         <!-- 로그인 네비바 -->
         <div class="main-headerNav">
             <ul class="main-navMenu">
-                <li id="main-chatBot"><a th:href="@{/chatBot/nangjangbot}">냉장봇</a></li>
+                <li id="main-chatBot"><a href="#" onclick="postRequest('/chatBot/nangjangbot')">냉장봇</a></li>
                 <li id="main-rank"><a th:href="@{/rank/userRank}">환경기여 랭킹</a></li>
                 <li id="main-recipe">
                     레시피
@@ -116,7 +116,7 @@
                         <li><a th:href="@{/board/honeyBoardList}">꿀팁게시판</a></li>
                     </ul>
                 </li>
-                <li id="main-shop"><a th:href="@{/shop/pointShop}">포인트샵</a></li>
+                <li id="main-shop"><a href="#" onclick="postRequest('/shop/pointShop')">포인트샵</a></li>
                 <li id="main-myPage">
                     마이페이지
                     <ul class="main-myPageList">
