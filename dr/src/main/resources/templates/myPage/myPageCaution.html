@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DR - 회원탈퇴 주의사항</title>
-    <link rel="stylesheet" href="./../../css/myPage/myPageCaution.css">
-    <script defer src="./../../js/myPage/myPageCaution.js"></script>
-    <link rel="stylesheet" href="../../css/main/header.css">
-    <link rel="stylesheet" href="../../css/main/footer.css">
+    <link rel="stylesheet" th:href="@{/css/myPage/myPageCaution.css}">
+    <script defer th:src="@{/js/myPage/myPageCaution.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/main/header.css}">
+    <link rel="stylesheet" th:href="@{/css/main/footer.css}">
     <!-- 네비바 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script defer src="../../js/main/header.js"></script>
+    <script defer th:src="@{/js/main/header.js}"></script>
 </head>
 
 <body>
@@ -161,7 +161,7 @@
             </div>
             <div class="myPage-cautionButton">
                 <button type="button" id="myPage-CButton" class="myPage-cautionOk">회원 탈퇴</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="./../../html/myPage/myPageInformation.html"><button class="memberOut-caution-cancel">돌아가기</a></button>
+                <a th:href="@{/myPageInformation}"><button class="memberOut-caution-cancel">돌아가기</a></button>
             </div>
         </form>
     </main>
@@ -169,7 +169,7 @@
     <footer>
         <div class="main-footerContainer">
             <div id="main-footerText">
-                <p><strong><a href="./../../html/main/terms.html">이용약관</a> | <a href="./../../html/main/privacyPolicy.html">개인정보처리방침</a></strong></p>
+                <p><strong><a th:href="@{main/terms}">이용약관</a> | <a th:href="@{main/privacyPolicy}">개인정보처리방침</a></strong></p>
                 <br>
                 <p>(04377)서울특별시 강남구 테헤란로 146 현익빌딩, <br>(06236)서울특별시 강남구 테헤란로26길 12 제일비전타워</p>
                 <p>대표이사 : 정승환 | 사업자등록번호 : 13-72011641</p>
