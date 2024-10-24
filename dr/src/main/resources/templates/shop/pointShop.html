@@ -1,261 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DR - 포인트샵</title>
-  <link rel="stylesheet" href="../../css/shop/pointShop.css">
-  <link rel="stylesheet" href="../../css/main/header.css">
-  <link rel="stylesheet" href="../../css/main/footer.css">
-  <!-- 네비바 폰트 -->
-  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
-  <!-- 제이쿼리 -->
-  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
-  <script defer src="../../js/main/header.js"></script>
-  <script defer src="../../js/shop/pointShop.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DR - 포인트샵</title>
+    <link rel="stylesheet" th:href="@{/css/shop/pointShop.css}"/>
+
+    <!-- 그래프 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <!-- 헤더 / 푸터 -->
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
+
+    <script defer th:src="@{/js/fragment/header.js}"></script>
+    <script defer th:src="@{/js/shop/pointShop.js}"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <header>
-    <!-- 비로그인 헤더 -->
-    <!-- <div class="main-headerContainer">
-      <div class="main-headerTop">
-        <a href="../../html/main/main.html"><img src="/image/logo.png" id="main-logo"></a>
-        <div class="main-searchBar">
-          <select class="main-dropDown">
-            <option value="꿀팁 게시판">꿀팁 게시판</option>
-            <option value="나만의 레시피">나만의 레시피</option>
-            <option value="챗봇 레시피">챗봇 레시피</option>
-            <option value="자유 게시판">자유 게시판</option>
-          </select>
-          <input type="text" class="main-searchInput" placeholder="로그인 후 이용 가능합니다" readonly>
-          <img src="../../image/searchButton.png" id="main-searchBtn">
-        </div>
-        <div class="main-visitorBtn">
-          <form action="../../html/user/login.html" method="">
-            <button class="main-login">로그인</button>
-          </form>
-          <form action="../../html/user/login.html" method="">
-            <button class="main-join">회원가입</button>
-          </form>
-        </div>
-      </div> -->
+<!-- 헤더 -->
+<header th:replace="~{/fragment/header :: header}"></header>
 
-    <!--비로그인 네비바 -->
-    <!-- <div class="main-headerNav">
-      <ul class="main-navMenu">
-        <li id="main-chatBot"><a href="../../html/user/login.html">냉장봇</a></li>
-        <li id="main-rank"><a href="../../html/user/login.html">환경기여 랭킹</a></li>
-        <li id="main-recipe">
-          레시피
-          <ul class="main-recipeList">
-            <li><a href="../../html/user/login.html">챗봇레시피</a></li>
-            <li><a href="../../html/user/login.html">나만의레시피</a></li>
-          </ul>
-        </li>
-        <li id="main-board">
-          게시판
-          <ul class="main-boardList">
-            <li><a href="../../html/user/login.html">자유게시판</a></li>
-            <li><a href="../../html/user/login.html">꿀팁게시판</a></li>
-          </ul>
-        </li>
-        <li id="main-shop"><a href="../../html/user/login.html">포인트샵</a></li>
-        <li id="main-myPage">
-          마이페이지
-          <ul class="main-myPageList">
-            <li><a href="../../html/user/login.html">내 정보</a></li>
-            <li><a href="../../html/user/login.html">찜 목록</a></li>
-            <li><a href="../../html/user/login.html">내가 쓴 레시피</a></li>
-            <li><a href="../../html/user/login.html">내가 쓴 게시글</a></li>
-            <li><a href="../../html/user/login.html">신고 받은 글</a></li>
-            <li><a href="../../html/user/login.html">출석체크</a></li>
-            <li><a href="../../html/user/login.html">포인트 내역</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div> -->
-
-      <!-- 로그인 헤더 -->
-      <div class="main-headerContainer">
-        <div class="main-headerTop">
-          <a href="../../html/main/main.html"><img src="../../image/logo.png" id="main-logo"></a>
-          <div class="main-searchBar">
-            <select class="main-dropDown">
-              <option value="꿀팁 게시판">꿀팁 게시판</option>
-              <option value="나만의 레시피">나만의 레시피</option>
-              <option value="챗봇 레시피">챗봇 레시피</option>
-              <option value="자유 게시판">자유 게시판</option>
-            </select>
-            <input type="text" class="main-searchInput">
-            <img src="../../image/searchButton.png" id="main-searchBtn">
-          </div>
-          <div class="main-welcomeUser">
-            <div class="main-profile">
-              <img src="../../image/basicProfile.png">
-            </div>
-            <div class="main-welcome">정승환님 환영합니다</div>
-            <form action="#로그아웃!!" method="">
-              <button class="main-logout">로그아웃</button>
-            </form>
-          </div>
-        </div>
-  
-        <!-- 로그인 네비바 -->
-        <div class="main-headerNav">
-          <ul class="main-navMenu">
-            <li id="main-chatBot"><a href="../../html/chatBot/nangjangbot.html">냉장봇</a></li>
-            <li id="main-rank"><a href="../../html/rank/userRank.html">환경기여 랭킹</a></li>
-            <li id="main-recipe">
-              레시피
-              <ul class="main-recipeList">
-                <li><a href="../../html/recipe/chatBotRecipeList.html">챗봇레시피</a></li>
-                <li><a href="../../html/recipe/myRecipeList.html">나만의레시피</a></li>
-              </ul>
-            </li>
-            <li id="main-board">
-              게시판
-              <ul class="main-boardList">
-                <li><a href="../../html/board/freeBoardList.html">자유게시판</a></li>
-                <li><a href="../../html/board/honeyBoardList.html">꿀팁게시판</a></li>
-              </ul>
-            </li>
-            <li id="main-shop"><a href="../../html/shop/pointShop.html">포인트샵</a></li>
-            <li id="main-myPage">
-              마이페이지
-              <ul class="main-myPageList">
-                <li><a href="../../html/myPage/myPageInformation.html">내 정보</a></li>
-                <li><a href="../../html/myPage/myPageSteamedList.html">찜 목록</a></li>
-                <li><a href="../../html/myPage/myPageMyRecipe.html">내가 쓴 레시피</a></li>
-                <li><a href="../../html/myPage/myPageMyPost.html">내가 쓴 게시글</a></li>
-                <li><a href="../../html/myPage/myPageMyComplaint.html">신고 받은 글</a></li>
-                <li><a href="../../html/myPage/myPageCheck.html">출석체크</a></li>
-                <li><a href="../../html/myPage/myPageMyPoint.html">포인트 내역</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-  </header>
-
-  <main>
+<main>
     <div class="pointShop-titleContainer">
-      <div class="pointShop-pageTitle">포인트 <span>샵</span></div>
+        <div class="pointShop-pageTitle">포인트 <span>샵</span></div>
     </div>
 
     <!-- 내 포인트 -->
     <section class="pointShop-section1">
-      <div class="pointShop-myPoint">내 포인트 : 2900 point</div>
+        <div class="pointShop-myPoint" th:text="'내 포인트 : ' + ${myPoint.totalPoint} + ' point'"></div>
     </section>
 
     <!-- 상품 목록 -->
     <section class="pointShop-section2">
-      <div class="pointShop-productContainer">
-        <img src="../../image/shop/leftBtn.png" class="pointShop-leftBtn">
-        <div class="pointShop-productFrame">
-          <div class="pointShop-productList">
-            <div class="pointShop-product">
-              <div class="pointShop-productInfo">
-                <img src="../../image/shop/bita500.jpg" class="pointShop-product1">
-                <div class="pointShop-productName">비타500(100ml)</div>
-                <div class="pointShop-productText">
-                  <span class="pointShop-productPrice">500point</span>
-                  <span class="pointShop-productStock">재고 : 185ea</span>
+        <div class="pointShop-productContainer">
+            <img th:src="@{/image/shop/leftBtn.png}" class="pointShop-leftBtn">
+            <div class="pointShop-productFrame">
+                <div class="pointShop-productList" th:each="product : ${productList}">
+                    <div class="pointShop-product">
+                        <div class="pointShop-productInfo">
+                            <img th:src="@{/image/photo/} + ${product.photoLocal}" class="pointShop-productImage">
+                            <div class="pointShop-productName" th:text="${product.productName}"></div>
+                            <div class="pointShop-productText">
+                                <span class="pointShop-productPrice" th:text="${product.productPrice} + 'point'"></span>
+                                <span class="pointShop-productStock"
+                                      th:text="'재고 : ' + ${product.productCount} + 'ea'"></span>
+                            </div>
+                            <form action="#컨트롤러로" method="post" class="pointShop-productSubmit">
+                                <div>
+                                    <input type="number" class="pointShop-buyEa" min="1"> ea
+                                </div>
+                                <button class="pointShop-buyBtn">상품구매</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <form action="#컨트롤러로" method="" class="pointShop-productSubmit">
-                  <div><input type="number" class="pointShop-buyEa"> ea</div>
-                  <button class="pointShop-buyBtn">상품구매</button>
-                </form>
-              </div>
             </div>
-            <div class="pointShop-product">
-              <div class="pointShop-productInfo">
-                <img src="../../image/shop/hot6.jpg" class="pointShop-product2">
-                <div class="pointShop-productName">핫식스(250ml)</div>
-                <div class="pointShop-productText">
-                  <span class="pointShop-productPrice">1300point</span>
-                  <span class="pointShop-productStock">재고 : 77ea</span>
-                </div>
-                <form action="#컨트롤러로" method="" class="pointShop-productSubmit">
-                  <div><input type="number" class="pointShop-buyEa"> ea</div>
-                  <button class="pointShop-buyBtn">상품구매</button>
-                </form>
-              </div>
-            </div>
-            <div class="pointShop-product">
-              <div class="pointShop-productInfo">
-                <img src="../../image/shop/drYou.png" class="pointShop-product3">
-                <div class="pointShop-productName">닥터유 프로 단백질바(크런치)</div>
-                <div class="pointShop-productText">
-                  <span class="pointShop-productPrice">1500point</span>
-                  <span class="pointShop-productStock">재고 : 920ea</span>
-                </div>
-                <form action="#컨트롤러로" method="" class="pointShop-productSubmit">
-                  <div><input type="number" class="pointShop-buyEa"> ea</div>
-                  <button class="pointShop-buyBtn">상품구매</button>
-                </form>
-              </div>
-            </div>
-            <div class="pointShop-product">
-              <div class="pointShop-productInfo">
-                <img src="../../image/shop/iceCream.png" class="pointShop-product4">
-                <div class="pointShop-productName">빵또아</div>
-                <div class="pointShop-productText">
-                  <span class="pointShop-productPrice">2000point</span>
-                  <span class="pointShop-productStock">재고 : 331ea</span>
-                </div>
-                <form action="#컨트롤러로" method="" class="pointShop-productSubmit">
-                  <div><input type="number" class="pointShop-buyEa"> ea</div>
-                  <button class="pointShop-buyBtn">상품구매</button>
-                </form>
-              </div>
-            </div>
-            <div class="pointShop-product">
-              <div class="pointShop-productInfo">
-                <img src="../../image/shop/voucher.jpg" class="pointShop-product5">
-                <div class="pointShop-productName">GS25 상품권(3000원)</div>
-                <div class="pointShop-productText">
-                  <span class="pointShop-productPrice">3000point</span>
-                  <span class="pointShop-productStock">재고 : 1024ea</span>
-                </div>
-                <form action="#컨트롤러로" method="" class="pointShop-productSubmit">
-                  <div><input type="number" class="pointShop-buyEa"> ea</div>
-                  <button class="pointShop-buyBtn">상품구매</button>
-                </form>
-              </div>
-            </div>
-            <!-- 상품이 여러 개 추가될 예정 -->
-
-            <!-- 상품이 여러 개 추가될 예정 -->
-          </div>
+            <img th:src="@{/image/shop/rightBtn.png}" class="pointShop-rightBtn">
         </div>
-        <img src="../../image/shop/rightBtn.png" class="pointShop-rightBtn">
-      </div>
     </section>
+
 
     <!-- 안내문 -->
     <section class="pointShop-section3">
-      <div class="pointShop-noticeContainer">
-        <img src="../../image/shop/howToUse.png">
-        <img src="../../image/shop/precautions.png">
-      </div>
+        <div class="pointShop-noticeContainer">
+            <img th:src="@{/image/shop/howToUse.png}">
+            <img th:src="@{/image/shop/precautions.png}">
+        </div>
     </section>
-  </main>
-
-  <!-- 푸터 -->
-  <footer>
-    <div class="main-footerContainer">
-      <div id="main-footerText">
-        <p><strong><a href="../../html/main/terms.html">이용약관</a> | <a href="../../html/main/privacyPolicy.html">개인정보처리방침</a></strong></p>
-        <br>
-        <p>(04377)서울특별시 강남구 테헤란로 146 현익빌딩, <br>(06236)서울특별시 강남구 테헤란로26길 12 제일비전타워</p>
-        <p>대표이사 : 정승환 | 사업자등록번호 : 13-72011641</p>
-        <p>사업자명 : ㈜맛있는 재활용 | 대표이메일 : shjeong19943@gmail.com</p>
-      </div>
-    </div>
-  </footer>
+</main>
+<!-- 푸터 -->
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 </body>
 
 </html>
