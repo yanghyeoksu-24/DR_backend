@@ -1,221 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DR - API 회원가입</title>
-    <link rel="stylesheet" href="./../../css/user/apiJoin.css">
-    <link rel="stylesheet" href="../../css/main/header.css">
-    <link rel="stylesheet" href="../../css/main/footer.css">
+    <link rel="stylesheet" th:href="@{/css/user/apiJoin.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main/footer.css}"/>
     <!-- 네비바 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
     <!-- 제이쿼리 -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script defer src="../../js/main/header.js"></script>
-</head>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script defer th:src="@{/js/main/header.js}"></script>
 </head>
 
 <body>
-    <header>
-        <div class="main-headerContainer">
-            <div class="main-headerTop">
-                <a href="../../html/main/main.html"><img src="./../../image/logo.png" id="main-logo"></a>
-                <div class="main-searchBar">
-                    <select class="main-dropDown">
-            <option value="꿀팁 게시판">꿀팁 게시판</option>
-            <option value="나만의 레시피">나만의 레시피</option>
-            <option value="챗봇 레시피">챗봇 레시피</option>
-            <option value="자유 게시판">자유 게시판</option>
-          </select>
-                    <input type="text" class="main-searchInput" placeholder="로그인 후 이용 가능합니다" readonly>
-                    <img src="../../image/searchButton.png" id="main-searchBtn">
-                </div>
-                <div class="main-visitorBtn">
-                    <form action="../../html/user/login.html" method="">
-                        <button class="main-login">로그인</button>
-                    </form>
-                    <form action="../../html/user/join.html" method="">
-                        <button class="main-join">회원가입</button>
-                    </form>
-                </div>
-            </div>
 
-            <!--비로그인 네비바 -->
-            <div class="main-headerNav">
-                <ul class="main-navMenu">
-                    <li id="main-chatBot"><a href="../../html/user/login.html">냉장봇</a></li>
-                    <li id="main-rank"><a href="../../html/user/login.html">환경기여 랭킹</a></li>
-                    <li id="main-recipe">
-                        레시피
-                        <ul class="main-recipeList">
-                            <li><a href="../../html/user/login.html">챗봇레시피</a></li>
-                            <li><a href="../../html/user/login.html">나만의레시피</a></li>
-                        </ul>
-                    </li>
-                    <li id="main-board">
-                        게시판
-                        <ul class="main-boardList">
-                            <li><a href="../../html/user/login.html">자유게시판</a></li>
-                            <li><a href="../../html/user/login.html">꿀팁게시판</a></li>
-                        </ul>
-                    </li>
-                    <li id="main-shop"><a href="../../html/user/login.html">포인트샵</a></li>
-                    <li id="main-myPage">
-                        마이페이지
-                        <ul class="main-myPageList">
-                            <li><a href="../../html/user/login.html">내 정보</a></li>
-                            <li><a href="../../html/user/login.html">찜 목록</a></li>
-                            <li><a href="../../html/user/login.html">내가 쓴 레시피</a></li>
-                            <li><a href="../../html/user/login.html">내가 쓴 게시글</a></li>
-                            <li><a href="../../html/user/login.html">신고 받은 글</a></li>
-                            <li><a href="../../html/user/login.html">출석체크</a></li>
-                            <li><a href="../../html/user/login.html">포인트 내역</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- 로그인 헤더 -->
-            <!-- <div class="main-headerContainer">
-      <div class="main-headerTop">
-        <a href="../../html/main/main.html"><img src="../../image/logo.png" id="main-logo"></a>
-        <div class="main-searchBar">
-          <select class="main-dropDown">
-            <option value="꿀팁 게시판">꿀팁 게시판</option>
-            <option value="나만의 레시피">나만의 레시피</option>
-            <option value="챗봇 레시피">챗봇 레시피</option>
-            <option value="자유 게시판">자유 게시판</option>
-          </select>
-          <input type="text" class="main-searchInput">
-          <img src="../../image/searchButton.png" id="main-searchBtn">
+<main>
+    <div class="apijoin-container">
+        <div class="apijoin-title">
+            <span class="apijoin-leftTitle">회원</span>
+            <span class="apijoin-rightTitle">가입</span>
         </div>
-        <div class="main-welcomeUser">
-          <div class="main-profile">
-            <img src="../../image/basicProfile.png">
-          </div>
-          <div class="main-welcome">정승환님 환영합니다</div>
-          <a href="#로그아웃!!#">
-            <div class="main-logout">로그아웃</div>
-          </a>
-        </div>
-      </div> -->
-
-            <!-- 로그인 네비바 -->
-            <!-- <div class="main-headerNav">
-        <ul class="main-navMenu">
-          <li id="main-chatBot"><a href="#냉장봇 페이지로">냉장봇</a></li>
-          <li id="main-rank"><a href="#랭킹 페이지로">환경기여 랭킹</a></li>
-          <li id="main-recipe">
-            레시피
-            <ul class="main-recipeList">
-              <li><a href="#챗봇레시피 페이지로">챗봇레시피</a></li>
-              <li><a href="#나만의레시피 페이지로">나만의레시피</a></li>
-            </ul>
-          </li>
-          <li id="main-board">
-            게시판
-            <ul class="main-boardList">
-              <li><a href="#자유게시판 페이지로">자유게시판</a></li>
-              <li><a href="#꿀팁게시판 페이지로">꿀팁게시판</a></li>
-            </ul>
-          </li>
-          <li id="main-shop"><a href="#포인트샵 페이지로">포인트샵</a></li>
-          <li id="main-myPage">
-            마이페이지
-            <ul class="main-myPageList">
-              <li><a href="#내 정보 페지이로">내 정보</a></li>
-              <li><a href="#찜 목록 페이지로">찜 목록</a></li>
-              <li><a href="#내가 쓴 레시피 페이지로">내가 쓴 레시피</a></li>
-              <li><a href="#내가 쓴 게시글 페이지로">내가 쓴 게시글</a></li>
-              <li><a href="#신고 받은 글 페이지로">신고 받은 글</a></li>
-              <li><a href="#출석체크 페이지로">출석체크</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div> -->
-    </header>
-    <main>
-        <div class="apijoin-container">
-            <div class="apijoin-title">
-                <span class="apijoin-leftTitle">회원</span>
-                <span class="apijoin-rightTitle">가입</span>
+        <br>
+        <form action="" id="apijoinForm" class="apijoin-form">
+            <!-- 아이디(이메일) 필드 -->
+            <label for="userId" class="apijoin-label">아이디(이메일)</label>
+            <div class="input-withButton">
+                <input type="text" id="userId" name="userId" class="apijoin-input" placeholder="아이디를 입력하세요." required>
+                <button type="button" id="checkDuplicate" class="apijoin-eventButton">중복확인</button>
             </div>
+            <span class="error-message" id="userIdError"></span>
+
+            <!-- 이름 필드 -->
+            <label for="name" class="apijoin-label">닉네임</label>
+            <input type="text" id="name" name="name" class="apijoin-input" placeholder="이름을 입력하세요." required>
+            <span class="error-message" id="nameError"></span>
             <br>
-            <form action="" id="apijoinForm" class="apijoin-form">
-                <!-- 아이디(이메일) 필드 -->
-                <label for="userId" class="apijoin-label">아이디(이메일)</label>
-                <div class="input-withButton">
-                    <input type="text" id="userId" name="userId" class="apijoin-input" placeholder="아이디를 입력하세요." required>
-                    <button type="button" id="checkDuplicate" class="apijoin-eventButton">중복확인</button>
-                </div>
-                <span class="error-message" id="userIdError"></span>
-
-                <!-- 이름 필드 -->
-                <label for="name" class="apijoin-label">이름</label>
-                <input type="text" id="name" name="name" class="apijoin-input" placeholder="이름을 입력하세요." required>
-                <span class="error-message" id="nameError"></span>
-                <br>
-                <!-- 휴대폰 번호 필드 -->
-                <label for="phone" class="apijoin-label">휴대폰 번호</label>
-                <div class="input-withButton">
-                    <input type="text" id="phone" name="phone" class="apijoin-input" placeholder="하이픈(-)없이 숫자만 입력해주세요." required>
-                    <button type="button" id="sendCode" class="apijoin-eventButton">인증요청</button>
-                </div>
-                <span class="error-message" id="phoneError" style="display: block; color: red;"></span>
-
-                <!-- 인증번호 필드 -->
-                <label for="authCode" class="apijoin-label">인증번호</label>
-                <div class="input-withButton">
-                    <input type="text" id="authCode" name="authCode" class="apijoin-input" placeholder="인증번호를 입력해주세요." required>
-                    <button type="button" id="verifyCode" class="apijoin-eventButton">인증확인</button>
-                </div>
-                <span class="error-message" id="authCodeError"></span>
-                <br>
-                <!-- 약관 동의 체크박스 -->
-                <div class="apijoin-checkbox">
-                    <input type="checkbox" id="checkAll" name="checkAll" class="apijoin-checkboxInput">
-                    <label for="checkAll" class="signup-checkboxLabel">전체 동의(선택포함)</label>
-                </div>
-                <span class="error-message" id="termsError"></span>
-                <hr>
-                <div class="apijoin-checkbox">
-                    <input type="checkbox" id="checkAge" name="checkAge" class="apijoin-checkboxInput" required>
-                    <label for="checkAge" class="signup-checkboxLabel">[필수] 만 14세 이상입니다.</label>
-                </div>
-                <div class="apijoin-checkbox">
-                    <input type="checkbox" id="checkTerms" name="checkTerms" class="apijoin-checkboxInput" required>
-                    <label for="checkTerms" class="signup-checkboxLabel">[필수] 이용약관 확인</label>
-                </div>
-                <div class="apijoin-checkbox">
-                    <input type="checkbox" id="checkPrivacy" name="checkPrivacy" class="apijoin-checkboxInput" required>
-                    <label for="checkPrivacy" class="signup-checkboxLabel">[필수] 개인정보처리방침 확인</label>
-                </div>
-                <div class="apijoin-checkbox">
-                    <input type="checkbox" id="checkAds" name="checkAds" class="apijoin-checkboxInput">
-                    <label for="checkAds" class="signup-checkboxLabel">[선택] 광고성메세지 수신 동의</label>
-                </div>
-                <!-- 회원가입 버튼 -->
-                <button type="button" id="submitForm" class="apijoin-finishButton">회원가입</button>
-            </form>
-        </div>
-    </main>
-    <!-- 푸터 -->
-    <footer>
-        <div class="main-footerContainer">
-            <div id="main-footerText">
-                <p><strong><a href="../../html/main/terms.html">이용약관</a> | <a href="../../html/main/privacyPolicy.html">개인정보처리방침</a></strong></p>
-                <br>
-                <p>(04377)서울특별시 강남구 테헤란로 146 현익빌딩, <br>(06236)서울특별시 강남구 테헤란로26길 12 제일비전타워</p>
-                <p>대표이사 : 정승환 | 사업자등록번호 : 13-72011641</p>
-                <p>사업자명 : ㈜맛있는 재활용 | 대표이메일 : shjeong19943@gmail.com</p>
+            <!-- 휴대폰 번호 필드 -->
+            <label for="phone" class="apijoin-label">휴대폰 번호</label>
+            <div class="input-withButton">
+                <input type="text" id="phone" name="phone" class="apijoin-input" placeholder="하이픈(-)없이 숫자만 입력해주세요." required>
+                <button type="button" id="sendCode" class="apijoin-eventButton">인증요청</button>
             </div>
-        </div>
-    </footer>
+            <span class="error-message" id="phoneError" style="display: block; color: red;"></span>
 
-    <script src="./../../js/user/apiJoin.js" defer></script>
+            <!-- 인증번호 필드 -->
+            <label for="authCode" class="apijoin-label">인증번호</label>
+            <div class="input-withButton">
+                <input type="text" id="authCode" name="authCode" class="apijoin-input" placeholder="인증번호를 입력해주세요." required>
+                <button type="button" id="verifyCode" class="apijoin-eventButton">인증확인</button>
+            </div>
+            <span class="error-message" id="authCodeError"></span>
+            <br>
+            <!-- 약관 동의 체크박스 -->
+            <div class="apijoin-checkbox">
+                <input type="checkbox" id="checkAll" name="checkAll" class="apijoin-checkboxInput">
+                <label for="checkAll" class="signup-checkboxLabel">전체 동의(선택포함)</label>
+            </div>
+            <span class="error-message" id="termsError"></span>
+            <hr>
+            <div class="apijoin-checkbox">
+                <input type="checkbox" id="checkAge" name="checkAge" class="apijoin-checkboxInput" required>
+                <label for="checkAge" class="signup-checkboxLabel">[필수] 만 14세 이상입니다.</label>
+            </div>
+            <div class="apijoin-checkbox">
+                <input type="checkbox" id="checkTerms" name="checkTerms" class="apijoin-checkboxInput" required>
+                <label for="checkTerms" class="signup-checkboxLabel">[필수] 이용약관 확인</label>
+            </div>
+            <div class="apijoin-checkbox">
+                <input type="checkbox" id="checkPrivacy" name="checkPrivacy" class="apijoin-checkboxInput" required>
+                <label for="checkPrivacy" class="signup-checkboxLabel">[필수] 개인정보처리방침 확인</label>
+            </div>
+            <div class="apijoin-checkbox">
+                <input type="checkbox" id="checkAds" name="checkAds" class="apijoin-checkboxInput">
+                <label for="checkAds" class="signup-checkboxLabel">[선택] 광고성메세지 수신 동의</label>
+            </div>
+            <!-- 회원가입 버튼 -->
+            <button type="button" id="submitForm" class="apijoin-finishButton">회원가입</button>
+        </form>
+    </div>
+</main>
+
+<script th:src="@{/js/user/apiJoin.js}" defer></script>
 </body>
 
 </html>

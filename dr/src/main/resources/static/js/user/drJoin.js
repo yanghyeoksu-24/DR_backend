@@ -99,13 +99,35 @@ $(document).ready(function () {
     }
   });
 
-  // 인증요청 버튼 클릭 시 이벤트 처리
+  // 인증 요청 버튼 클릭 시 이벤트 처리
   $('#sendCode').on('click', function () {
     const phone = $('#phone').val().trim();
+    const phonePattern = /^[0-9]{10,11}$/; // 숫자만 10~11자리
     if (!phonePattern.test(phone)) {
       $('#phoneError').text("형식에 맞게 입력하세요.").css('color', 'red');
       return;
     }
+
+    // Ajax를 통해 서버에 인증 요청
+    $.ajax({
+      url: '/sms/send-code',
+      type: 'GET',
+      data: { pNum: phone },
+      success: function (response) {
+        if (response.status === 'success') {
+          alert(response.message); // 성공 메시지
+          $('#authCode').prop('disabled', false); // 인증 코드 입력 필드 활성화
+          $('#authCode').val(response.authCode); // 실제 인증 코드를 입력 필드에 채워넣음 (실제 서비스에서는 사용자가 직접 입력하게 해야 함)
+        } else {
+          alert(response.message); // 실패 메시지
+        }
+      },
+      error: function (xhr, status, error) {
+        console.log("에러 발생: " + error);
+        alert("서버와의 통신 중 오류가 발생했습니다.");
+      }
+    });
+  });
 
     // 여기에 인증 요청 로직을 추가
     // 예: 서버로 인증 요청을 보내는 Ajax 호출 등
@@ -229,4 +251,4 @@ $(document).ready(function () {
       alert('모든 필드를 올바르게 입력해 주세요.');
     }
   });
-});
+
