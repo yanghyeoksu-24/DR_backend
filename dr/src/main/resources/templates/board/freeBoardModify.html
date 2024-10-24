@@ -5,124 +5,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DR - 자유게시판 글 수정</title>
-  <link rel="stylesheet" href="./../../css/board/freeBoardModify.css">
-  <link rel="stylesheet" href="../../css/main/header.css">
-  <link rel="stylesheet" href="../../css/main/footer.css">
+  <link rel="stylesheet" th:href="@{/css/board/freeBoardModify.css}">
+  <link rel="stylesheet" th:href="@{/css/main/header.css}">
+  <link rel="stylesheet" th:href="@{/css/main/footer.css}">
   <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-  <!-- 네비바 폰트 -->
   <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
-  <!-- 제이쿼리 -->
+
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
-  <script defer src="../../js/main/header.js"></script>
+          crossorigin="anonymous"></script>
+  <script defer th:src="@{/js/main/header.js}"></script>
 </head>
 
 <body>
-  <header>
-    <div class="main-headerContainer">
-      <div class="main-headerTop">
-        <a href="../../html/main/main.html"><img src="../../image/logo.png" id="main-logo"></a>
-        <div class="main-searchBar">
-          <select class="main-dropDown">
-            <option value="꿀팁 게시판">꿀팁 게시판</option>
-            <option value="나만의 레시피">나만의 레시피</option>
-            <option value="챗봇 레시피">챗봇 레시피</option>
-            <option value="자유 게시판">자유 게시판</option>
-          </select>
-          <input type="text" class="main-searchInput">
-          <img src="../../image/searchButton.png" id="main-searchBtn">
-        </div>
-        <div class="main-welcomeUser">
-          <div class="main-profile">
-            <img src="../../image/basicProfile.png">
-          </div>
-          <div class="main-welcome">정승환님 환영합니다</div>
-          <form action="#로그아웃!!" method="">
-            <button class="main-logout">로그아웃</button>
-          </form>
-        </div>
+
+<main>
+  <div class="freeboardmodify-mainContainer">
+    <div class="freeboardmodify-mainBox">
+      <div class="freeboardmodify-title">
+        <span class="freeboardmodify-text1">자유게시판</span>
+        <span class="freeboardmodify-text2">글수정</span>
+      </div>
+      <br><br>
+
+      <div class="freeboardmodify-inputContainer">
+        <input type="text" class="freeboardmodify-titleInput" placeholder="제목을 입력하세요" th:value="${post.title}">
       </div>
 
-      <!-- 로그인 네비바 -->
-      <div class="main-headerNav">
-        <ul class="main-navMenu">
-          <li id="main-chatBot"><a href="../../html/chatBot/nangjangbot.html">냉장봇</a></li>
-          <li id="main-rank"><a href="../../html/rank/userRank.html">환경기여 랭킹</a></li>
-          <li id="main-recipe">
-            레시피
-            <ul class="main-recipeList">
-              <li><a href="../../html/recipe/chatBotRecipeList.html">챗봇레시피</a></li>
-              <li><a href="../../html/recipe/myRecipeList.html">나만의레시피</a></li>
-            </ul>
-          </li>
-          <li id="main-board">
-            게시판
-            <ul class="main-boardList">
-              <li><a href="../../html/board/freeBoardList.html">자유게시판</a></li>
-              <li><a href="../../html/board/honeyBoardList.html">꿀팁게시판</a></li>
-            </ul>
-          </li>
-          <li id="main-shop"><a href="../../html/shop/pointShop.html">포인트샵</a></li>
-          <li id="main-myPage">
-            마이페이지
-            <ul class="main-myPageList">
-              <li><a href="../../html/myPage/myPageInformation.html">내 정보</a></li>
-              <li><a href="../../html/myPage/myPageSteamedList.html">찜 목록</a></li>
-              <li><a href="../../html/myPage/myPageMyRecipe.html">내가 쓴 레시피</a></li>
-              <li><a href="../../html/myPage/myPageMyPost.html">내가 쓴 게시글</a></li>
-              <li><a href="../../html/myPage/myPageMyComplaint.html">신고 받은 글</a></li>
-              <li><a href="../../html/myPage/myPageCheck.html">출석체크</a></li>
-              <li><a href="./../../html/myPage/myPageMyPoint.html">포인트 내역</a></li>
-            </ul>
-          </li>
-        </ul>
+      <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+      <div id="contsEditor"></div>
+      <script>
+        const editor = new toastui.Editor({
+          el: document.querySelector('#contsEditor'),
+          previewStyle: 'vertical',
+          initialEditType: 'markdown',
+          height: '500px',
+          placeholder: '내용을 입력해 주세요.',
+          initialValue: /*[[${post.content}]]*/ '',  // 서버에서 가져온 내용으로 초기화
+        });
+      </script>
+      <div class="freeboardmodify-write">
+        <a th:href="@{/board/freeBoardList}">
+          <button class="freeboardmodify-writeButton">취소</button>
+        </a>
+        <a th:href="@{/board/freeBoardDetail(id=${post.id})}">
+          <button class="freeboardmodify-writeButton">수정</button>
+        </a>
       </div>
     </div>
-  </header>
-  <main>
-    <div class="freeboardmodify-mainContainer">
-      <div class="freeboardmodify-mainBox">
-        <div class="freeboardmodify-title">
-          <span class="freeboardmodify-text1">자유게시판</span>
-          <span class="freeboardmodify-text2">글수정</span>
-        </div>
-        <br><br>
+  </div>
+</main>
 
-        <div class="freeboardmodify-inputContainer">
-          <input type="text" class="freeboardmodify-titleInput" placeholder="제목을 입력하세요">
-        </div>
-
-        <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-        <div id="contsEditor"></div>
-        <script>
-          const editor = new toastui.Editor({
-            el: document.querySelector('#contsEditor'),
-            previewStyle: 'vertical',
-            initialEditType: 'markdown',
-            height: '500px',
-            placeholder: '내용을 입력해 주세요.',
-          });
-        </script>
-        <div class="freeboardmodify-write">
-          <a href="./../board/freeBoardList.html"><button class="freeboardmodify-writeButton">취소</button></a>
-          <a href="./../board/freeBoardDetail.html"><button class="freeboardmodify-writeButton">수정</button></a>
-        </div>
-      </div>
-    </div>
-  </main>
-  <!-- 푸터 -->
-  <footer>
-    <div class="main-footerContainer">
-      <div id="main-footerText">
-        <p><strong><a href="../../html/main/terms.html">이용약관</a> | <a href="../../html/main/privacyPolicy.html">개인정보처리방침</a></strong></p>
-        <br>
-        <p>(04377)서울특별시 강남구 테헤란로 146 현익빌딩, <br>(06236)서울특별시 강남구 테헤란로26길 12 제일비전타워</p>
-        <p>대표이사 : 정승환 | 사업자등록번호 : 13-72011641</p>
-        <p>사업자명 : ㈜맛있는 재활용 | 대표이메일 : shjeong19943@gmail.com</p>
-      </div>
-    </div>
-  </footer>
-  <script src="./../../js/board/freeBoardModify.js"></script>
+<script th:src="@{/js/board/freeBoardModify.js}"></script>
 </body>
 
 </html>
