@@ -18,7 +18,7 @@ public class PointShopService {
     private final PointShopMapper pointShopMapper;
 
     // 인터페이스의 내 포인트 조회 메소드 리턴
-    public PointShopDTO getMyPoint(Long userNumber) {
+    public Long getMyPoint(Long userNumber) {
         return pointShopMapper.getMyPoint(userNumber);
     }
 

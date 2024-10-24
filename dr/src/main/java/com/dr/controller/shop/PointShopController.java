@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -16,10 +17,11 @@ import java.util.List;
 public class PointShopController {
     private final PointShopService pointShopService;
 
-    @GetMapping("/pointShop") //하위경로
+    @PostMapping("/pointShop") //하위경로
     public String openPointShop(Model model) {
-        Long userNumber = 7L; // 임시로 하드코딩한 유저 번호 나중에 유저번호로 변경
-        PointShopDTO myPoint = pointShopService.getMyPoint(userNumber);
+        // 내 포인트 가져오기
+        Long userNumber = 55L; // 임시로 하드코딩한 유저 번호 나중에 유저번호로 변경
+        Long myPoint = pointShopService.getMyPoint(userNumber);
 
         // 상품 목록 가져오기
         List<PointShopDTO> productList = pointShopService.selectAllProduct();
