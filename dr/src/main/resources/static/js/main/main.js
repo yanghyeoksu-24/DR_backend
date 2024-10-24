@@ -15,7 +15,7 @@ function convert() {
   document.getElementById("main-transCost").innerHTML = round(qnt_kg * 182, 1) + " 원";
   document.getElementById("main-processCost").innerHTML = round(qnt_kg * 260000, 1) + " 원";
 
-  
+
 }
 
 // 이벤트 리스너 추가
@@ -23,4 +23,40 @@ document.addEventListener("DOMContentLoaded", function () {
   // 무게 입력 필드에 입력할 때마다 convert 함수가 실행되도록 이벤트 리스너를 추가
   var inputField = document.getElementById("main-qnt");
   inputField.addEventListener("input", convert);
+});
+
+// 현재 년, 월 가져오기
+const now = new Date();
+const year = now.getFullYear();
+const month = now.getMonth() + 1; // getMonth()는 0부터 시작하므로 1 추가
+document.getElementById('currentYearMonth').textContent = `${year}년 ${month}월 지역별 가구당 평균 음식물쓰레기 배출량`;
+
+// 그래프
+const xValues = ["서울시", "경기도", "강원도", "충청도", "경상도", "전라도", "제주도"];
+const yValues = [50, 25, 27, 31, 35, 29, 24];
+const barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145",
+  "#71491e",
+  "#711e66"
+];
+
+new Chart("myChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "단위(kg)"
+    }
+  }
 });
