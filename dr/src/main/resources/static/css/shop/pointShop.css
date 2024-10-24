@@ -91,11 +91,7 @@ img {
   flex-shrink: 0;
 }
 
-.pointShop-product1,
-.pointShop-product2,
-.pointShop-product3,
-.pointShop-product4,
-.pointShop-product5 {
+.pointShop-productImage {
   width: 255px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
