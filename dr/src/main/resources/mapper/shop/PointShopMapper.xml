@@ -4,7 +4,7 @@
     <select id="getMyPoint" parameterType="Long" resultType="PointShopDTO">
         SELECT SUM(DP.POINT_GET) - SUM(DP.POINT_USE) AS "TOTAL_POINT"
         FROM DR_USER DU JOIN DR_POINT DP ON DU.USER_NUMBER = DP.USER_NUMBER
-        WHERE DU.USER_NUMBER = #{userNumber}
+        WHERE DU.USER_NUMBER = #{userNumber} -- 로그인한 유저
     </select>
     
     <select id="selectAllProduct" resultType="PointShopDTO">

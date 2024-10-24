@@ -12,13 +12,12 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/shop")
+@RequestMapping("/shop") //최상위 경로
 public class PointShopController {
     private final PointShopService pointShopService;
 
-    @GetMapping("/pointShop")
+    @GetMapping("/pointShop") //하위경로
     public String openPointShop(Model model) {
-        // 유저의 포인트를 가져오는 부분은 유저 정보가 있어야 하므로 적절히 구현 (예: 세션에서 유저 ID를 가져오거나 파라미터로 받음)
         Long userNumber = 7L; // 임시로 하드코딩한 유저 번호 나중에 유저번호로 변경
         PointShopDTO myPoint = pointShopService.getMyPoint(userNumber);
 

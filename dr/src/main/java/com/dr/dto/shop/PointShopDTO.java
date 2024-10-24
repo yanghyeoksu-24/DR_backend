@@ -10,6 +10,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class PointShopDTO {
+    //포인트샵 페이지 필드
     private Long totalPoint;
     private String photoLocal;
     private String productName;
