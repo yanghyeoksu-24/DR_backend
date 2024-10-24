@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.dr.mapper.user.UserMapper">
+<mapper namespace="com.dr.mapper.user.UserMapper">
     <insert id="insertUser" parameterType="UserDTO">
         <selectKey keyProperty="userNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_USER.nextVal FROM DUAL
@@ -9,15 +9,9 @@
         VALUES(#{userNumber}, #{userEmail}, #{userPw}, #{userNickname}, #{userPhone}, #{userStatus})
     </insert>
 
-    <select id="selectEmail" resultType="Long">
-        SELECT USER_EMAIL
+    <select id="userLogin" resultType="UserDTO">
+        SELECT USER_NUMBER , USER_NICKNAME
         FROM DR_USER
-        WHERE LOGIN_EMAIL = #{loginEmail} AND USER_PW= #{userPw}
-    </select>
-
-    <select id="selectLoginInfo" resultType="UserSessionDTO">
-        SELECT USER_EMAIL, LOGIN_EMAIL
-        FROM DR_USER
-        WHERE LOGIN_EMAIL =#{loginEmail} AND USER_PW = #{userPw}
+        WHERE USER_EMAIL =#{userEmail} AND USER_PW = #{userPw}
     </select>
 </mapper>
