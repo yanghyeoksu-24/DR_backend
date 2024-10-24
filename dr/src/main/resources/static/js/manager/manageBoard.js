@@ -22,6 +22,13 @@ $(function () {
     masterCheckbox.prop('checked', allChecked);
   }
 
+  // 전체 선택 체크박스 클릭 시 selectAll() 함수 실행
+  masterCheckbox.on('click', selectAll);
+
+  // 각 개별 체크박스 클릭 시 updateMasterCheckbox 함수 실행
+  checkboxes.on('change', updateMasterCheckbox);
+
+
   // 페이지네이션 설정
   const container = $('#pagination');
   container.pagination({
@@ -36,12 +43,6 @@ $(function () {
       updateMasterCheckbox();
     }
   });
-
-  // 전체 선택 체크박스 클릭 시 selectAll() 함수 실행
-  masterCheckbox.on('click', selectAll);
-
-  // 각 개별 체크박스 클릭 시 updateMasterCheckbox 함수 실행
-  checkboxes.on('change', updateMasterCheckbox);
 
   // 처음 로드 시 첫 번째 페이지의 항목만 보여주기
   container.pagination('goToPage', 1);
