@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dr.mapper.manager.ManagerMapper">
+
+<!-- 1. 관리자 로그인-->
     <select id="managerLogin" resultType="ManagerSessionDTO">
         SELECT MANAGER_NAME
         FROM DR_MANAGER
         WHERE MANAGER_EMAIL = #{managerEmail} AND MANAGER_PW = #{managerPw}
     </select>
 
+<!-- 2. 대시보드-->
+    <select id="dashboardInfo" resultType="DashBoardDTO">
+        SELECT
+                (SELECT COUNT(*) FROM DR_USER) AS userAll,
+                (SELECT COUNT(*) FROM DR_SIREN) AS numAll,
+                (SELECT COUNT(*) FROM DR_SIREN WHERE SIREN_TYPE = '게시글') AS boardNum,
+                (SELECT COUNT(*) FROM DR_SIREN WHERE SIREN_TYPE = '레시피') AS recipeNum,
+                (SELECT COUNT(*) FROM DR_SIREN WHERE SIREN_TYPE = '댓글') AS replyNum,
+                SYSDATE AS today
+        FROM dual
+    </select>
+
+    <select id="managerInfo" resultType="ManagerDTO">
+        SELECT
+        M.MANAGER_NAME AS managerName,
+        M.MANAGER_EMAIL AS managerEmail,
+        M.MANAGER_SORT AS managerSort
+        FROM
+        DR_MANAGER M
+        WHERE
+        ROWNUM <= 5;
+    </select>
 
 </mapper>
