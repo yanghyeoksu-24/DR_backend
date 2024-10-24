@@ -1,22 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dr.mapper.shop.PointShopMapper">
-    <select id="getMyPoint" parameterType="Long" resultType="PointShopDTO">
+
+    <!-- 내 포인트 조회 -->
+    <select id="getMyPoint" parameterType="Long" resultType="Long">
         SELECT SUM(DP.POINT_GET) - SUM(DP.POINT_USE) AS "TOTAL_POINT"
-        FROM DR_USER DU JOIN DR_POINT DP ON DU.USER_NUMBER = DP.USER_NUMBER
-        WHERE DU.USER_NUMBER = #{userNumber} -- 로그인한 유저
+        FROM DR_USER DU
+                 JOIN DR_POINT DP ON DU.USER_NUMBER = DP.USER_NUMBER
+        WHERE DU.USER_NUMBER = #{userNumber} -- 현재 로그인 한 회원
     </select>
-    
+
+    <!-- 모든 상품 조회 -->
     <select id="selectAllProduct" resultType="PointShopDTO">
         SELECT DPH.PHOTO_LOCAL, DP.PRODUCT_NAME, DP.PRODUCT_PRICE, STOCK.PRODUCT_COUNT
         FROM DR_PRODUCT DP
                  JOIN DR_PHOTO DPH ON DP.PRODUCT_NUMBER = DPH.PRODUCT_NUMBER
-                 JOIN (
-            SELECT PRODUCT_NAME, COUNT(PRODUCT_NUMBER) AS PRODUCT_COUNT
-            FROM DR_PRODUCT
-            GROUP BY PRODUCT_NAME
-        ) STOCK ON DP.PRODUCT_NAME = STOCK.PRODUCT_NAME
+                 JOIN (SELECT PRODUCT_NAME, COUNT(PRODUCT_NUMBER) AS PRODUCT_COUNT
+                       FROM DR_PRODUCT
+                       GROUP BY PRODUCT_NAME) STOCK ON DP.PRODUCT_NAME = STOCK.PRODUCT_NAME
         GROUP BY DPH.PHOTO_LOCAL, DP.PRODUCT_NAME, DP.PRODUCT_PRICE, STOCK.PRODUCT_COUNT
         ORDER BY DP.PRODUCT_PRICE
     </select>
+
+    <!-- 유저의 선택 상품 및 갯수만큼의 코드 조회 -->
+    <select id="getProductCode" parameterType="PointShopDTO" resultType="String">
+        <![CDATA[
+        SELECT PRODUCT_CODE
+        FROM DR_PRODUCT
+        WHERE PRODUCT_NAME = #{pointShopDTO.productName} -- 유저가 선택한 상품
+        AND ROWNUM <= #{ea} ]]> -- 유저가 입력한 갯수
+    </select>
+
+    <!-- 유저의 핸드폰 번호 조회 -->
+    <select id="getUserPhone" parameterType="Long" resultType="String">
+        SELECT USER_PHONE
+        FROM DR_USER
+        WHERE USER_NUMBER = #{userNumber} -- 현재 로그인 한 회원
+    </select>
+
 </mapper>
