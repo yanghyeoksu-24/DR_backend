@@ -47,6 +47,7 @@ public class UserController {
             System.out.println(userLogin);
             session.setAttribute("userNumber", userLogin.getUserNumber());
             session.setAttribute("userNickName" , userLogin.getUserNickName());
+            session.setAttribute("photoLocal", userLogin.getPhotoLocal());
             return new RedirectView("/fragment/header");
         }else{
             return new RedirectView("/user/login");
@@ -61,6 +62,8 @@ public class UserController {
         String userNickName = (String)httpSession.getAttribute("userNickName");
         model.addAttribute("userNumber", userNumber);
         model.addAttribute("userNickName", userNickName);
+        model.addAttribute("photoLocal", (String)httpSession.getAttribute("photoLocal"));
+        System.out.println(httpSession.getAttribute("photoLocal"));
         return "/main";
     }
 

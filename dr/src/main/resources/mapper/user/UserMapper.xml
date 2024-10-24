@@ -10,8 +10,9 @@
     </insert>
 
     <select id="userLogin" resultType="UserDTO">
-        SELECT USER_NUMBER , USER_NICKNAME
-        FROM DR_USER
-        WHERE USER_EMAIL =#{userEmail} AND USER_PW = #{userPw}
+        SELECT DU.USER_NUMBER, DU.USER_NICKNAME, DP.PHOTO_LOCAL
+        FROM DR_USER DU
+                 LEFT JOIN DR_PHOTO DP ON DU.USER_NUMBER = DP.USER_NUMBER
+        WHERE DU.USER_EMAIL = #{userEmail} AND DU.USER_PW = #{userPw}
     </select>
 </mapper>
