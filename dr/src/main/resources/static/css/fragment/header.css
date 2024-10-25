@@ -177,14 +177,14 @@ li {
 .main-recipeList li a,
 .main-boardList li a,
 .main-myPageList li a,
-#main-chatBot a,
-#main-rank a,
-#main-shop a {
+.main-chatBot a,
+.main-rank a,
+.main-shop a {
   font-family: 'Cute Font', cursive;
   cursor: pointer;
 }
 
-#main-rank {
+.main-rank {
   color: #EBAA39;
 }
 
