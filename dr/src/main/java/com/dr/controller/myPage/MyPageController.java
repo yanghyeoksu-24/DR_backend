@@ -39,6 +39,7 @@ public class MyPageController {
     // -- 회원탈퇴 주의사항 페이지로 넘어가기 --
     @GetMapping("/myPageCaution")
     public String getUserCaution() {
+        
         //세션 가지고 있으니까 굳이 안넣어도 되는건가..?
 
         return "myPage/myPageCaution";
