@@ -13,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserMapper userMapper;
 
-    public UserDTO userLogin(String userEmail, String userPw) {
+    public UserSessionDTO userLogin(String userEmail, String userPw) {
         return userMapper.userLogin(userEmail, userPw).orElse(null);
     }
+
+
 
 
 }
