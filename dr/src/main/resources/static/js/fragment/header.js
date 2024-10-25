@@ -13,9 +13,9 @@ $(document).ready(function () {
   }
 
   // 각 메뉴에 대해 함수 호출
-  setupMenuToggle('#main-recipe', '.main-recipeList');
-  setupMenuToggle('#main-board', '.main-boardList');
-  setupMenuToggle('#main-myPage', '.main-myPageList');
+  setupMenuToggle('.main-recipe', '.main-recipeList');
+  setupMenuToggle('.main-board', '.main-boardList');
+  setupMenuToggle('.main-myPage', '.main-myPageList');
 
   // 다른 곳 클릭 시 모든 하위 메뉴 닫기
   $(document).on('click', function () {

@@ -14,7 +14,9 @@ public interface PointShopMapper {
     List<PointShopDTO> selectAllProduct();
 
     //유저의 선택 상품 및 갯수만큼 코드 조회
+    List<String> getProductCode(PointShopDTO pointShopDTO);
 
     //유저의 핸드폰 번호 조회
+    List<String> getUserPhone(Long userNumber);
 
 }

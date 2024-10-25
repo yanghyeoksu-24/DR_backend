@@ -28,7 +28,7 @@
         SELECT PRODUCT_CODE
         FROM DR_PRODUCT
         WHERE PRODUCT_NAME = #{pointShopDTO.productName} -- 유저가 선택한 상품
-        AND ROWNUM <= #{ea} ]]> -- 유저가 입력한 갯수
+        AND ROWNUM <= #{pointShopDTO.quantity} ]]> -- 유저가 입력한 갯수
     </select>
 
     <!-- 유저의 핸드폰 번호 조회 -->
@@ -37,5 +37,23 @@
         FROM DR_USER
         WHERE USER_NUMBER = #{userNumber} -- 현재 로그인 한 회원
     </select>
+
+    <!-- 유저가 사용한 포인트 테이블에 추가 -->
+    <insert id="inputUsePoint" parameterType="PointShopDTO">
+        INSERT INTO DR_POINT (POINT_NUMBER, POINT_NOTE, POINT_USE, USER_NUMBER)
+        VALUES (SEQ_POINT_NUMBER.NEXTVAL, '상품구매', #{totalCost}, #{userNumber})
+    </insert>
+
+    <!-- 유저에게 코드 전송후 삭제할 쿼리 -->
+    <delete id="deleteDode" parameterType="PointShopDTO">
+        <![CDATA[
+        DELETE FROM DR_PRODUCT
+        WHERE PRODUCT_CODE IN (
+        SELECT PRODUCT_CODE
+        FROM DR_PRODUCT
+        WHERE PRODUCT_NAME = #{pointShopDTO.productName}
+        AND ROWNUM <= #{pointShopDTO.quantity}
+        )]]>
+    </delete>
 
 </mapper>

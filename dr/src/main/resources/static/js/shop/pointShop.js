@@ -56,7 +56,7 @@ $(document).ready(function () {
             if (confirmPurchase) {
                 // 실제 구매 로직을 여기서 진행
                 $.ajax({
-                    url: '/api/purchase', // 서버의 구매 처리 URL
+                    url: '/shop/buy', // 서버의 구매 처리 URL
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({
