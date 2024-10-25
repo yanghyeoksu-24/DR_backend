@@ -20,10 +20,12 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/")
 public class UserController {
     private final UserService userService;
+
     @GetMapping("/user/drJoin")
     public String drJoinPage() {
         return "/user/drJoin";
     }
+
     @GetMapping("/user/login")
     public String loginPage() {
         return "/user/login";
@@ -37,39 +39,43 @@ public class UserController {
 //        return "redirect:/user/drJoin";
 //    }
 
+
+    //로그인 Controller
     @PostMapping("/user/login")
-    public RedirectView login(@RequestParam("userEmail") String userEmail, @RequestParam("userPw") String userPw, HttpSession session) {
+    public RedirectView login(@RequestParam("userEmail") String userEmail,
+                              @RequestParam("userPw") String userPw,
+                              HttpSession session) {
+        UserDTO userLogin = userService.userLogin(userEmail, userPw);
+        log.info("확인: {}", userLogin);
 
-
-        UserDTO userLogin = userService.userLogin(userEmail,userPw);
-        log.info("확인" + userLogin);
-        if(userLogin != null) {
+        if (userLogin != null) {
             System.out.println(userLogin);
             session.setAttribute("userNumber", userLogin.getUserNumber());
-            session.setAttribute("userNickName" , userLogin.getUserNickName());
+
+
+            // 로그인 성공 시 헤더로 리다이렉트
             return new RedirectView("/fragment/header");
-        }else{
+        } else {
+            // 로그인 실패 시 로그인 페이지로 리다이렉트
             return new RedirectView("/user/login");
-
         }
-
     }
-    
+
     @GetMapping("/fragment/header")
-    public String mainPage(HttpSession httpSession, Model model) {
-        long userNumber = (long)httpSession.getAttribute("userNumber");
-        String userNickName = (String)httpSession.getAttribute("userNickName");
-        model.addAttribute("userNumber", userNumber);
-        model.addAttribute("userNickName", userNickName);
-        return "/main";
-    }
+    public String mainPage(HttpSession httpSession) {
 
 
-    @GetMapping("/logout")
-    public RedirectView logout(HttpSession session) {
-        session.invalidate();
-
-        return new RedirectView("/user/login");
+        // 세션 정보를 사용하여 메인 페이지로 이동
+        return "/main"; // "/main"은 템플릿 이름으로, 해당 템플릿에서 세션 데이터를 사용할 수 있습니다.
     }
 
 }
+
+
+//    @GetMapping("/logout")
+//    public RedirectView logout(HttpSession session) {
+//        session.invalidate();
+//
+//        return new RedirectView("/user/login");
+//    }
+
