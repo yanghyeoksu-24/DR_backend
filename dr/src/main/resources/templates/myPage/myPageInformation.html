@@ -31,7 +31,7 @@
         <div class="myPage-containerBox">
             <div class="myPage-lengthBar">
                 <div id="myPage-informationPage">&nbsp;마이페이지</div>
-                <div id="myPage-informationSecond">&nbsp;내 정보</div>
+                <div id="myPage-informationSecond" th:href="@{/myPage/myPageInformation}">&nbsp;내 정보</div>
                 <div><a href="./../../html/myPage/myPageSteamedList.html">&nbsp;찜목록</a></div>
                 <div><a href="./../../html/myPage/myPageMyRecipe.html">&nbsp;내가 쓴 레시피</a></div>
                 <div><a href="./../../html/myPage/myPageMyPost.html">&nbsp;내가 쓴 게시글</a></div>
@@ -76,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <a href="./../../html/myPage/myPageCaution.html">
+        <a th:href="@{/myPage/myPageCaution}">
             <div class="myPage-outGo">회원탈퇴</div>
         </a>
         <div class="myPage-completeWrite" id="completeWriteBtn">수정완료</div>
