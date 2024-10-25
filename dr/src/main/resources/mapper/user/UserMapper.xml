@@ -9,6 +9,8 @@
         VALUES(#{userNumber}, #{userEmail}, #{userPw}, #{userNickname}, #{userPhone}, #{userStatus})
     </insert>
 
+
+
     <select id="userLogin" resultType="UserDTO">
         SELECT DU.USER_NUMBER, DU.USER_NICKNAME, DP.PHOTO_LOCAL
         FROM DR_USER DU
