@@ -13,6 +13,4 @@ public class UserDTO {
     private String userPw;
     private String userNickName;
     private String userPhone;
-    private String userStatus;
-    private String photoLocal;
 }
