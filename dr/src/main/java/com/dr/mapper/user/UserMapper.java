@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface UserMapper {
 //    void insertUser(UserDTO userDTO);
 
-    Optional<UserDTO> userLogin(@Param("userEmail") String userEmail, @Param("userPw") String userPw);
+    Optional<UserSessionDTO> userLogin(@Param("userEmail") String userEmail, @Param("userPw") String userPw);
+
 
 }
