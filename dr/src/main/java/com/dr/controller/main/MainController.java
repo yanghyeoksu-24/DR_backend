@@ -7,16 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes("userNumber")
 @RequestMapping("/")
 public class MainController {
     //메인페이지
     @GetMapping("/main")
-    public String openMain(HttpSession session) {
-        // 세션에서 userNumber 가져오기
-        Long userNumber = (Long) session.getAttribute("userNumber");
-
-        // 프로필사진, 닉네임 가져오기
+    public String openMain() {
         return "main";
     }
 

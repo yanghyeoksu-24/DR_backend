@@ -19,9 +19,7 @@ public class PointShopController {
 
     @PostMapping("/pointShop") //하위경로
     public String openPointShop(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model) {
-        // 세션에서 userNumber 가져오기
-
-        // null 체크 - 로그인하지 않았을 경우 처리
+        //로그인하지 않았을 경우 처리
         if (userNumber == null) {
             return "redirect:/user/login"; // 로그인 페이지로 리다이렉션
         }
@@ -56,7 +54,7 @@ public class PointShopController {
         System.out.println("Total Cost: " + pointShopDTO.getTotalCost());
 
         // 실제 비즈니스 로직 수행
-        // 예: 포인트 차감, 재고 업데이트 등
+        // 포인트 차감, 재고 업데이트 등
 
         // 응답으로 처리된 DTO 반환 (데이터가 필요하다면)
         return "/shop/pointShop";
