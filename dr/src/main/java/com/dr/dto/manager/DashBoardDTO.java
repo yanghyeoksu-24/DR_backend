@@ -17,5 +17,6 @@ public class DashBoardDTO {
     private int boardNum;
     private int recipeNum;
     private int replyNum;
-    private Date today;
+    private String today;
+
 }

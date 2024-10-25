@@ -1,10 +1,13 @@
 package com.dr.controller.manager;
 
+import com.dr.dto.manager.DashBoardDTO;
+import com.dr.dto.manager.ManagerDTO;
 import com.dr.dto.manager.ManagerSessionDTO;
 import com.dr.service.manager.ManagerService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.Manager;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
+import java.util.List;
+import java.util.Date;
 
 @Controller
 @Slf4j
@@ -51,10 +56,29 @@ public class ManagerController {
 
     // 2. 대시보드
     @GetMapping("/dashBoard")
-    public String dashboard(HttpSession session, Model model) {
+    public String dashboard(HttpSession session, Model model, ManagerDTO managerDTO , DashBoardDTO dashBoardDTO) {
+
         String managerName = (String) session.getAttribute("managerName");
         model.addAttribute("managerName", managerName);
-        return "/manager/dashBoard";
+
+        List<ManagerDTO> managerList = managerService.managerInfo();
+        dashBoardDTO = managerService.dashBoardInfo();
+
+        model.addAttribute("manager" , managerList);
+        model.addAttribute("dashBoard" ,dashBoardDTO);
+
+        return "manager/dashBoard";
+    }
+
+    // 3. 회원관리
+    @GetMapping("/manageUser")
+    public String manageUser() {
+
+
+
+
+
+        return "/manager/manageUser";
     }
 
 }
