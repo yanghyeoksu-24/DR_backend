@@ -5,10 +5,9 @@
         <selectKey keyProperty="userNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_USER.nextVal FROM DUAL
         </selectKey>
-        INSERT INTO DR_USER (USER_NUMBER,USER_EMAIL,USER_PW,USER_NICKNAME,USER_PHONE,USER_STATUS)
-        VALUES(#{userNumber}, #{userEmail}, #{userPw}, #{userNickname}, #{userPhone}, #{userStatus})
+        INSERT INTO DR_USER (USER_NUMBER,USER_EMAIL,USER_PW,USER_NICKNAME,USER_PHONE)
+        VALUES(#{userNumber}, #{userEmail}, #{userPw}, #{userNickName}, #{userPhone})
     </insert>
-
 
 
     <select id="userLogin" resultType="UserSessionDTO">
@@ -17,5 +16,4 @@
                  LEFT JOIN DR_PHOTO DP ON DU.USER_NUMBER = DP.USER_NUMBER
         WHERE DU.USER_EMAIL = #{userEmail} AND DU.USER_PW = #{userPw}
     </select>
-
 </mapper>
