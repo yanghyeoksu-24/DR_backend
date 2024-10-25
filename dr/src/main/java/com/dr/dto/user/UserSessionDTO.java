@@ -9,6 +9,6 @@ import lombok.ToString;
 @NoArgsConstructor
 public class UserSessionDTO {
     private Long userNumber;
-    private String nickName;
+    private String userNickName;
     private String photoLocal;
 }

@@ -6,11 +6,11 @@
             SELECT SEQ_USER.nextVal FROM DUAL
         </selectKey>
         INSERT INTO DR_USER (USER_NUMBER,USER_EMAIL,USER_PW,USER_NICKNAME,USER_PHONE)
-        VALUES(#{userNumber}, #{userEmail}, #{userPw}, #{userNickname}, #{userPhone})
+        VALUES(#{userNumber}, #{userEmail}, #{userPw}, #{userNickName}, #{userPhone})
     </insert>
-    
 
-    <select id="userLogin" resultType="UserDTO">
+
+    <select id="userLogin" resultType="UserSessionDTO">
         SELECT DU.USER_NUMBER, DU.USER_NICKNAME, DP.PHOTO_LOCAL
         FROM DR_USER DU
                  LEFT JOIN DR_PHOTO DP ON DU.USER_NUMBER = DP.USER_NUMBER
