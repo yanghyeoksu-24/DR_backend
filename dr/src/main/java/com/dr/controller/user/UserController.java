@@ -31,7 +31,7 @@ public class UserController {
         return "/user/login";
     }
 
-//    @PostMapping("/drjoin")
+//    @PostMapping("/user/drjoin")
 //    public String drjoin(UserDTO userDTO) {
 //        log.info("userDTO={}", userDTO);
 //        userService.registerUser(userDTO);
