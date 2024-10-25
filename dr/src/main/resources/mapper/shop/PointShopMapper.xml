@@ -39,13 +39,13 @@
     </select>
 
     <!-- 유저가 사용한 포인트 테이블에 추가 -->
-    <insert id="inputUsePoint" parameterType="PointShopDTO">
+    <insert id="insertUsePoint" parameterType="PointShopDTO">
         INSERT INTO DR_POINT (POINT_NUMBER, POINT_NOTE, POINT_USE, USER_NUMBER)
         VALUES (SEQ_POINT_NUMBER.NEXTVAL, '상품구매', #{totalCost}, #{userNumber})
     </insert>
 
     <!-- 유저에게 코드 전송후 삭제할 쿼리 -->
-    <delete id="deleteDode" parameterType="PointShopDTO">
+    <delete id="deleteCode" parameterType="PointShopDTO">
         <![CDATA[
         DELETE FROM DR_PRODUCT
         WHERE PRODUCT_CODE IN (

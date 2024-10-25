@@ -1,15 +1,22 @@
 package com.dr.controller.main;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+@SessionAttributes("userNumber")
 @RequestMapping("/")
 public class MainController {
     //메인페이지
     @GetMapping("/main")
-    public String openMain() {
+    public String openMain(HttpSession session) {
+        // 세션에서 userNumber 가져오기
+        Long userNumber = (Long) session.getAttribute("userNumber");
+
+        // 프로필사진, 닉네임 가져오기
         return "main";
     }
 

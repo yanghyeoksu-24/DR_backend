@@ -19,4 +19,9 @@ public interface PointShopMapper {
     //유저의 핸드폰 번호 조회
     List<String> getUserPhone(Long userNumber);
 
+    //유저가 사용한 포인트 회수 처리(사용컬럼 값 넣어서 행 추가)
+    void insertUsePoint(PointShopDTO pointShopDTO);
+
+    //유저에게 전송한 상품코드 삭제
+    void deleteCode(PointShopDTO pointShopDTO);
 }
