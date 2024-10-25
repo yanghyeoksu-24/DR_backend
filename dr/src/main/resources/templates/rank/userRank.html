@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script defer th:src="@{/js/main/header.js}"></script>
+    <script defer th:src="@{/js/fragment/header.js}"></script>
     <!-- 페이지네이션 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -48,7 +48,7 @@
         <!-- 1등 랭킹 -->
         <div class="userRankTypeOne" th:each="rank : ${fiftyRankList}">
             <div class="userRankRankingOne">
-                <!-- 1등 금메달, 2등 은메달, 3등 동메달 조건문 작성 -->
+                <!-- 1등 금메달, 2등 은메달, 3등 동메달 이미지 삽입 조건문 작성!! -->
                 <div th:if="${rank.rank == 1}">
                     <img class="userRankOneTwoThree" src="/image/myPage/goldMedal.png" alt="Gold Medal">
                 </div>

@@ -1,9 +1,9 @@
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-        <mapper namespace="com.dr.mapper.rank.RankMapper">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dr.mapper.rank.RankMapper">
 
-            <!-- 자기 자신 랭킹 조회 쿼리 -->
-            <select id="getRankList" parameterType="Long" resultType="RankDTO">
+<!-- 자기 자신 랭킹 조회 쿼리 -->
+<select id="getRankList" parameterType="Long" resultType="RankDTO">
                 SELECT
                 RANK_DATA.RANK,               -- 사용자 순위
                 RANK_DATA.USER_NICKNAME,       -- 사용자 닉네임
@@ -67,7 +67,4 @@
                 ) RANK_DATA
                 WHERE RANK_DATA.RANK <= 50 ]]>    -- 50위까지 필터링
             </select>
-
-
-
-        </mapper>
+</mapper>

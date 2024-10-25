@@ -117,7 +117,8 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-right: 90px;
+    padding-right: 84px;
+    padding-left: 7px;
 }
 
 .myPage-pictureImage {
@@ -156,8 +157,8 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 30px;
-    padding-right: 200px;
+    padding-right: 239px;
+    width: 173px;
 }
 
 .myPage-informationPhone {
@@ -197,8 +198,8 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 30px;
-    padding-right: 340px;
+    padding-right: 303px;
+    width: 109px;
 }
 
 .myPage-informationRank {
@@ -216,7 +217,7 @@ li {
     height: 80px;
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    padding-left: 25px;
 }
 
 .myPage-informationPoint {
@@ -239,8 +240,8 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 30px;
     padding-right: 340px;
+    width: 121px;
 }
 
 .myPage-outGo {
