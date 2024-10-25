@@ -41,7 +41,7 @@ public class UserController {
         if (userLogin != null) {
             // 세션에 사용자 정보를 설정
             session.setAttribute("userNumber", userLogin.getUserNumber());
-            session.setAttribute("userNickName", userLogin.getNickName());
+            session.setAttribute("userNickName", userLogin.getUserNickName());
             session.setAttribute("photoLocal", userLogin.getPhotoLocal()); // photoLocal 추가
 
             // 메인 페이지로 리다이렉트
