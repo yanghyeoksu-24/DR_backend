@@ -14,4 +14,5 @@ public class UserDTO {
     private String userNickName;
     private String userPhone;
     private String userStatus;
+    private String photoLocal;
 }
