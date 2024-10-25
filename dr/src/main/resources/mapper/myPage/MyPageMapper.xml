@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dr.mapper.myPage.MyPageMapper">
+    <!--  자기 자신 정보 확인(내정보) -->
+    <select id="getUserInfo" parameterType="Long" resultType="UserInfoDTO">
+        SELECT
+            U.USER_NICKNAME AS USER_NICKNAME,
+            U.USER_EMAIL AS USER_EMAIL,
+            U.USER_PHONE AS USER_PHONE,
+            NVL(S.ENVIRONMENT_SCORE, 0) AS ENVIRONMENT_SCORE,
+            NVL(R.ENVIRONMENT_RANK, 0) AS ENVIRONMENT_RANK,
+            NVL(P.TOTAL_POINTS, 0) AS TOTAL_POINTS,
+            COALESCE(PH.PHOTO_ORIGINAL, '기본프사.JPG') AS PHOTO
+        FROM
+            DR_USER U
+                LEFT JOIN
+            (SELECT
+                 USER_NUMBER,
+                 SUM(SCORE_GET) AS ENVIRONMENT_SCORE
+             FROM
+                 DR_SCORE
+             GROUP BY USER_NUMBER) S ON U.USER_NUMBER = S.USER_NUMBER
+                LEFT JOIN
+            (SELECT
+                 USER_NUMBER,
+                 DENSE_RANK() OVER (ORDER BY SUM(SCORE_GET) DESC) AS ENVIRONMENT_RANK
+             FROM
+                 DR_SCORE
+             GROUP BY USER_NUMBER) R ON U.USER_NUMBER = R.USER_NUMBER
+                LEFT JOIN
+            (SELECT
+                 USER_NUMBER,
+                 SUM(POINT_GET - POINT_USE) AS TOTAL_POINTS
+             FROM
+                 DR_POINT
+             GROUP BY USER_NUMBER) P ON U.USER_NUMBER = P.USER_NUMBER
+                LEFT JOIN
+            (SELECT
+                 USER_NUMBER,
+                 PHOTO_ORIGINAL
+             FROM
+                 (SELECT
+                      USER_NUMBER,
+                      PHOTO_ORIGINAL,
+                      ROW_NUMBER() OVER (PARTITION BY USER_NUMBER ORDER BY CASE WHEN PHOTO_ORIGINAL = '유저등록사진.JPG' THEN 1 ELSE 2 END) AS RN
+                  FROM
+                      DR_PHOTO
+                  WHERE
+                      PHOTO_ORIGINAL IN ('유저등록사진.JPG', '기본프사.JPG')
+                 )
+             WHERE RN = 1) PH ON U.USER_NUMBER = PH.USER_NUMBER
+        WHERE
+            U.USER_NUMBER = #{userNumber}
+    </select>
+</mapper>
