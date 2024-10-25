@@ -3,6 +3,7 @@ package com.dr.service.manager;
 import com.dr.dto.manager.DashBoardDTO;
 import com.dr.dto.manager.ManagerDTO;
 import com.dr.dto.manager.ManagerSessionDTO;
+import com.dr.dto.manager.ManagerUserDTO;
 import com.dr.mapper.manager.ManagerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,10 @@ public class ManagerService {
 
     public DashBoardDTO dashBoardInfo(){
         return managerMapper.dashBoardInfo();
+    }
+
+    public List<ManagerUserDTO> manageUser(){
+        return managerMapper.manageUser();
     }
 
 }
