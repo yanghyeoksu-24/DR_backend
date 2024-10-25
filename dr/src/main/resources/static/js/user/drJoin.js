@@ -214,16 +214,49 @@ $(document).ready(function () {
     togglePasswordVisibility(confirmPasswordInput, confirmPasswordToggleIcon);
   });
 
-  document.getElementById('submitForm').addEventListener('click', function(e) {
+  // 폼 제출 시 유효성 검사 함수
+  function validateForm() {
+    // 폼의 유효성 검사를 수행합니다. 필요한 검증 로직을 추가하세요.
+    let isValid = true;
 
+    // 이메일, 비밀번호, 인증 번호, 약관 동의 등의 필드가 유효한지 검사
+    if (!userIdRegex.test($('#userId').val().trim())) {
+      $('#userIdError').text("올바른 이메일을 입력하세요.").css({ "color": "red", "display": "block" });
+      isValid = false;
+    }
+    if (!validatePassword($('#password').val().trim())) {
+      $('#passwordError').text("비밀번호가 형식에 맞지 않습니다.").css("color", "red");
+      isValid = false;
+    }
+    if ($('#password').val().trim() !== $('#confirmPassword').val().trim()) {
+      $('#confirmPasswordError').text("비밀번호가 일치하지 않습니다.").css("color", "red");
+      isValid = false;
+    }
+    if (!phonePattern.test($('#phone').val().trim())) {
+      $('#phoneError').text("올바른 휴대폰 번호를 입력하세요.").css("color", "red");
+      isValid = false;
+    }
+    if ($('#authCode').val().trim() === "") {
+      $('#authCodeError').text("인증번호를 입력하세요.").css("color", "red");
+      isValid = false;
+    }
+    if (!$('#checkAge').is(':checked') || !$('#checkTerms').is(':checked') || !$('#checkPrivacy').is(':checked')) {
+      $('#termsError').text("필수 약관에 모두 동의해주세요.").css("color", "red");
+      isValid = false;
+    }
 
-    // 유효성 검사 함수 실행
+    return isValid;
+  }
+
+  // 폼 제출 버튼 클릭 시 유효성 검사 실행
+  $('#submitForm').on('click', function (e) {
+    e.preventDefault();  // 기본 제출 동작 막기
     if (validateForm()) {
-      // 유효성 검사가 통과되면 페이지 이동
-
+      // 모든 필드가 유효하면 회원가입 완료 메시지를 표시하고 페이지를 리다이렉트합니다.
+      alert("회원가입이 완료되었습니다.");
+      // 폼 제출 후, 서버로 이동할 경로를 지정하거나 원하는 동작을 추가합니다.
     } else {
-      // 유효성 검사 실패 시 경고 메시지
-      alert('모든 필드를 올바르게 입력해 주세요.');
+      alert("모든 필드를 올바르게 입력해 주세요.");
     }
   });
-});
+})
