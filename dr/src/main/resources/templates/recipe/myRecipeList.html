@@ -51,7 +51,7 @@
                     <div class="myRecipeList-inbox1">
                         <div class="myRecipeList-listbox">
                             <a th:href="@{/myDetailPage/{id}(id=${recipe.id})}">
-                                <img th:src="@{/image/recipe/{image}(image=${recipe.image})}" alt="">
+                                <img th:src="@{/image/recipe/{image} + ${recipe.image}}" alt="">
                             </a>
                             <p class="myRecipeList-foodTitle" th:text="${recipe.title}"></p>
                             <span class="myRecipeList-writer" th:text="${recipe.writer}"></span>
