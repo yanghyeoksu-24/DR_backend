@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dr.mapper.recipe.RecipeMapper">
 
-    <select id="MyRecipeAllPage" resultType="MyRecipeListDTO">
+    <select id="selectAllPage" resultType="MyRecipeListDTO">
     <![CDATA[
         SELECT RECIPE_TITLE, RECIPE_WRITER, RECIPE_WRITE_DATE, RECIPE_PHOTO
         FROM (
