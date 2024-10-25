@@ -40,8 +40,6 @@ public class UserController {
 //    }
 
 
-
-
     //로그인 Controller
     @PostMapping("/user/login")
     public RedirectView login(@RequestParam("userEmail") String userEmail,
@@ -53,8 +51,7 @@ public class UserController {
         if (userLogin != null) {
             System.out.println(userLogin);
             session.setAttribute("userNumber", userLogin.getUserNumber());
-            session.setAttribute("userNickName", userLogin.getUserNickName());
-            session.setAttribute("photoLocal", userLogin.getPhotoLocal());
+
 
             // 로그인 성공 시 헤더로 리다이렉트
             return new RedirectView("/fragment/header");
@@ -66,15 +63,7 @@ public class UserController {
 
     @GetMapping("/fragment/header")
     public String mainPage(HttpSession httpSession) {
-        // 세션에서 사용자 정보 가져오기
-        long userNumber = (long) httpSession.getAttribute("userNumber");
-        String userNickName = (String) httpSession.getAttribute("userNickName");
-        String photoLocal = (String) httpSession.getAttribute("photoLocal");
 
-        // 세션 정보를 사용하여 필요한 작업 수행
-        System.out.println("User Number: " + userNumber);
-        System.out.println("User Nickname: " + userNickName);
-        System.out.println("Photo Local: " + photoLocal);
 
         // 세션 정보를 사용하여 메인 페이지로 이동
         return "/main"; // "/main"은 템플릿 이름으로, 해당 템플릿에서 세션 데이터를 사용할 수 있습니다.
