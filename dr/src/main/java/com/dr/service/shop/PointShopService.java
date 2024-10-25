@@ -26,4 +26,9 @@ public class PointShopService {
     public List<PointShopDTO> selectAllProduct() {
         return pointShopMapper.selectAllProduct();
     }
+
+    // 인터페이스의 상품 코드 조회 메소드 리턴
+    public List<String> getProductCode(PointShopDTO pointShopDTO) {
+        return pointShopMapper.getProductCode(pointShopDTO);
+    }
 }

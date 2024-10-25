@@ -16,4 +16,7 @@ public class PointShopDTO {
     private String productName;
     private Long productPrice;
     private Long productCount;
+    private Long quantity;
+    private String userPhone;
+    private Long totalCost;
 }
