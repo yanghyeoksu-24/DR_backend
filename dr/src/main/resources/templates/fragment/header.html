@@ -36,9 +36,9 @@
 
             <div class="main-welcomeUser" th:if="${session.userNumber != null}">
                 <div class="main-profile">
-                    <img th:src="@{/image/photo/} + ${photoLocal}">
+                    <img th:src="@{/image/photo/} + ${session.photoLocal}">
                 </div>
-                <div class="main-welcome" th:text="${userNickName + '님 환영합니다'}"></div>
+                <div class="main-welcome" th:text="${session.userNickName + '님 환영합니다'}"></div>
                 <form action="@{/user/logout}" method="post">
                     <button class="main-logout">로그아웃</button>
                 </form>
