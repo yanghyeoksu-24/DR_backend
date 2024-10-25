@@ -10,16 +10,17 @@
     </select>
 
 <!-- 2. 대시보드-->
-    <select id="dashboardInfo" resultType="DashBoardDTO">
+    <select id="dashBoardInfo" resultType="DashBoardDTO">
         SELECT
                 (SELECT COUNT(*) FROM DR_USER) AS userAll,
                 (SELECT COUNT(*) FROM DR_SIREN) AS numAll,
                 (SELECT COUNT(*) FROM DR_SIREN WHERE SIREN_TYPE = '게시글') AS boardNum,
                 (SELECT COUNT(*) FROM DR_SIREN WHERE SIREN_TYPE = '레시피') AS recipeNum,
                 (SELECT COUNT(*) FROM DR_SIREN WHERE SIREN_TYPE = '댓글') AS replyNum,
-                SYSDATE AS today
-        FROM dual
+                TO_CHAR(SYSDATE, 'YYYY-MM-DD') AS today FROM DUAL
     </select>
+
+
 
     <select id="managerInfo" resultType="ManagerDTO">
         SELECT
