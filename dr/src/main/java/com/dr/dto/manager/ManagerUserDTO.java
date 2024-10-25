@@ -10,5 +10,9 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class ManagerUserDTO {
-
+    private int userNumber;
+    private String userNickName;
+    private String userStatus;
+    private String userPhone;
+    private String userEmail;
 }
