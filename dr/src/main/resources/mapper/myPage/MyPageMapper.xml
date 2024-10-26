@@ -52,4 +52,32 @@
         WHERE
             U.USER_NUMBER = #{userNumber}
     </select>
+
+    <!--  회원 탈퇴 -->
+    <delete id="deleteUser" parameterType="Long">
+        DELETE FROM DR_USER
+        WHERE USER_NUMBER = #{userNumber}
+    </delete>
+
+    <!--  내정보 포인트 내역 확인 -->
+    <select id="pointHistory" parameterType="Long" resultType="PointDetailDTO">
+        <![CDATA[
+        SELECT DP.POINT_NUMBER, DP.POINT_NOTE,
+        CASE WHEN DP.POINT_NOTE IN ('관리자회수', '상품구매') THEN -DP.POINT_USE
+        ELSE DP.POINT_GET END AS pointGet,
+        DP.POINT_DATE AS pointDate,
+        COALESCE((SELECT SUM(
+        CASE
+        WHEN DP2.POINT_NOTE IN ('신규가입', '출석체크', '랭킹', '개근') THEN DP2.POINT_GET
+        WHEN DP2.POINT_NOTE IN ('관리자회수', '상품구매') THEN -DP2.POINT_USE
+        ELSE 0
+        END)
+        FROM DR_POINT DP2
+        WHERE DP2.USER_NUMBER = DP.USER_NUMBER
+        AND DP2.POINT_DATE <= DP.POINT_DATE), 0) AS totalPoints
+        FROM DR_POINT DP
+        WHERE DP.USER_NUMBER = #{userNumber}
+        ORDER BY DP.POINT_DATE
+        ]]>
+    </select>
 </mapper>
