@@ -102,17 +102,13 @@ $(document).ready(function () {
 
     // Ajax를 통해 서버에 인증 요청
     $.ajax({
-      url: '/api/sms/send-code',
+      url: '/api/sms/send',  // URL 수정
       type: 'POST',
       contentType: 'application/json', // 반드시 application/json 설정
       data: JSON.stringify({ phoneNumber: phone }), // JSON 형식으로 데이터 전송
       success: function (response) {
-        if (response.status === 'success') {
-          alert(response.message); // 성공 메시지
-          $('#authCode').prop('disabled', false); // 인증 코드 입력 필드 활성화
-        } else {
-          alert(response.message); // 실패 메시지
-        }
+        alert(response); // 서버에서 반환된 메시지를 표시
+        $('#authCode').prop('disabled', false); // 인증 코드 입력 필드 활성화
       },
       error: function (xhr, status, error) {
         console.log("에러 발생: " + error);
