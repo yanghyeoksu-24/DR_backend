@@ -63,6 +63,6 @@ public class UserController {
     @GetMapping("/logout")
     public RedirectView logout(HttpSession session) {
         session.invalidate();
-        return new RedirectView("/user/login");
+        return new RedirectView("/main");
     }
 }
