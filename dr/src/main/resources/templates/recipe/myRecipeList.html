@@ -15,12 +15,10 @@
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
             crossorigin="anonymous"></script>
 
-
     <!-- 페이지네이션 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
-
 
     <title>DR - 나만의 레시피 목록</title>
 </head>
@@ -50,7 +48,7 @@
                 <div th:each="recipe : ${recipeList}" class="myRecipeList-outbox">
                     <div class="myRecipeList-inbox1">
                         <div class="myRecipeList-listbox">
-                            <a th:href="@{/myDetailPage/{id}(id=${recipe.id})}">
+                            <a th:href="@{/myDetailPage/{number}(number=${recipe.number})}">
                                 <img th:src="@{/image/recipe/{image} + ${recipe.image}}" alt="">
                             </a>
                             <p class="myRecipeList-foodTitle" th:text="${recipe.title}"></p>
