@@ -31,14 +31,17 @@ public class CoolSmsService {
         params.put("from", fromPhoneNumber);
         params.put("type", "sms");
         params.put("text", "인증번호는 [" + numStr + "] 입니다.");
+        params.put("app_version", "test app 1.2"); // 선택 사항
 
-        // 예외 처리 및 메시지 전송 시도
+        // 로그 추가
+        System.out.println("Sending SMS with params: " + params);
+
         try {
             coolsms.send(params);
             return numStr;
         } catch (CoolsmsException e) {
-            System.err.println("SMS 전송 실패: " + e.getMessage()); // 에러 메시지 출력
-            throw new Exception("Failed to send SMS: " + e.getMessage()); // 일반 Exception으로 전환하여 처리
+            System.err.println("SMS 전송 실패: " + e.getMessage());
+            throw new Exception("Failed to send SMS: " + e.getMessage());
         }
     }
 
