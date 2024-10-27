@@ -17,7 +17,7 @@
         ORDER BY R.RECIPE_WRITE_DATE DESC  -- 최신순 정렬
     </select>
 
-    <select id="selectAllPages" resultType="ChatBotRecipeListDTO">
+    <select id="selectAllPages1" resultType="ChatBotRecipeListDTO">
         SELECT R.RECIPE_NUMBER AS recipeNumber,  <!-- 레시피 번호 추가 -->
         R.RECIPE_TITLE AS recipeTitle,
         U.USER_NICKNAME AS userNickName,
@@ -31,6 +31,10 @@
         WHERE R.RECIPE_TYPE = '챗봇레시피'  -- 챗봇 레시피 필터링
         GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
         ORDER BY R.RECIPE_WRITE_DATE DESC  -- 최신순 정렬
+    </select>
+
+    <select id="myRecipeDetail" resultType="MyRecipeDetailDTO">
+        
     </select>
 
 </mapper>
