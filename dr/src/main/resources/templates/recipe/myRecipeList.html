@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/recipe/myRecipeList.css}" />
+    <link rel="stylesheet" th:href="@{/css/recipe/myRecipeList.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
     <script defer th:src="@{/js/fragment/header.js}"></script>
@@ -16,7 +16,7 @@
             crossorigin="anonymous"></script>
 
     <!-- 페이지네이션 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 
@@ -35,7 +35,9 @@
 
             <!-- 글작성,전체보기,최신순,추천순 버튼들 -->
             <div class="myRecipeList-button">
-                <a th:href="@{/myRecipeWriter}"><button class="myRecipeList-writeButton">글작성</button></a>
+                <a th:href="@{/myRecipeWriter}">
+                    <button class="myRecipeList-writeButton">글작성</button>
+                </a>
 
                 <div class="myRecipeList-rightButton">
                     <button class="myRecipeList-secondButton">최신순</button>
@@ -44,19 +46,15 @@
             </div>
 
             <!-- 나만의 레시피 목록 -->
-            <div class="myRecipeList-bigBox">
-                <div th:each="recipe : ${recipeList}" class="myRecipeList-outbox">
-                    <div class="myRecipeList-inbox1">
-                        <div class="myRecipeList-listbox">
-                            <a th:href="@{/myDetailPage/{number}(number=${recipe.number})}">
-                                <img th:src="@{/image/recipe/{image} + ${recipe.image}}" alt="">
-                            </a>
-                            <p class="myRecipeList-foodTitle" th:text="${recipe.title}"></p>
-                            <span class="myRecipeList-writer" th:text="${recipe.writer}"></span>
-                            <span class="myRecipeList-date" th:text="${recipe.date}"></span>
-                            <p class="myRecipeList-select" th:text="'추천수 ' + ${recipe.recommendations}"></p>
-                        </div>
-                    </div>
+            <div class="myRecipeList-outbox">
+                <div class="myRecipeList-listbox" th:each="recipeList : ${recipeList}">
+                    <a th:href="@{/recipe/myDetailPage}">
+                        <img th:src="@{${recipeList.photoOriginal}}" alt="레시피 이미지">
+                    </a>
+                        <p class="myRecipeList-foodTitle" th:text="${recipeList.recipeTitle}"></p>
+                        <span class="myRecipeList-writer" th:text="${recipeList.userNickName}"></span>
+                        <span class="myRecipeList-date" th:text="${recipeList.recipeWriteDate}"></span>
+                        <p class="myRecipeList-select" th:text="'추천수 ' + ${recipeList.goodCount}"></p>
                 </div>
             </div>
             <div id="pagination"></div>

@@ -1,5 +1,6 @@
 package com.dr.service.recipe;
 
+import com.dr.dto.recipe.ChatBotRecipeListDTO;
 import com.dr.dto.recipe.MyRecipeListDTO;
 import com.dr.mapper.recipe.RecipeMapper;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +15,12 @@ import java.util.List;
 public class RecipeService {
     private final RecipeMapper recipeMapper;
 
-//    public List<MyRecipeListDTO> findAllPage(int page, int amount) {
-//        return recipeMapper.selectAllPage(page, amount);
-//    }
-
     public List<MyRecipeListDTO> findAllRecipes() {
         return recipeMapper.selectAllPages();  // selectAllPage()는 페이지네이션 없이 전체 목록을 조회합니다.
+    }
+
+    public List<ChatBotRecipeListDTO> findAllRecipes1() {
+        return recipeMapper.selectAllPages1();  // selectAllPage()는 페이지네이션 없이 전체 목록을 조회합니다.
     }
 
 }
