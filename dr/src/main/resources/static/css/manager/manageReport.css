@@ -246,3 +246,15 @@ a {
   width: 20%;
 }
 
+#manager-logout {
+  position: absolute;
+  right: 3%;
+  top: 4%;
+  width: 70px;
+  height: 35px;
+  background-color: #EBAA39;
+  border: white;
+  border-radius: 7px;
+  color: white;
+  cursor: pointer;
+}
