@@ -77,7 +77,7 @@
         AND DP2.POINT_DATE <= DP.POINT_DATE), 0) AS totalPoints
         FROM DR_POINT DP
         WHERE DP.USER_NUMBER = #{userNumber}
-        ORDER BY DP.POINT_DATE
+        ORDER BY DP.POINT_DATE DESC
         ]]>
     </select>
 </mapper>
