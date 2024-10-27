@@ -19,27 +19,27 @@
     <div class="main-headerContainer">
         <div class="main-headerTop">
             <a th:href="@{/main}"><img th:src="@{/image/logo.png}" id="main-logo"></a>
-            <div class="main-searchBar">
-                <select class="main-dropDown">
+            <form th:action="@{/search}" method="get" class="main-searchBar">
+                <select name="boardType" class="main-dropDown">
                     <option value="꿀팁 게시판">꿀팁 게시판</option>
                     <option value="나만의 레시피">나만의 레시피</option>
                     <option value="챗봇 레시피">챗봇 레시피</option>
                     <option value="자유 게시판">자유 게시판</option>
                 </select>
 
-                <input type="text" class="main-searchInput" th:if="${session.userNumber != null}" placeholder="검색어를 입력하세요">
+                <input type="text" name="searchValue" class="main-searchInput" th:if="${session.userNumber != null}" placeholder="검색어를 입력하세요">
                 <input type="text" class="main-searchInput" th:unless="${session.userNumber != null}"
                        placeholder="로그인 후 이용 가능합니다" readonly>
 
-                <img th:src="@{/image/searchButton.png}" id="main-searchBtn">
-            </div>
+                <button><img th:src="@{/image/searchButton.png}" id="main-searchBtn"></button>
+            </form>
 
             <div class="main-welcomeUser" th:if="${session.userNumber != null}">
                 <div class="main-profile">
                     <img th:src="@{/image/photo/} + ${session.photoLocal}">
                 </div>
                 <div class="main-welcome" th:text="${session.userNickName + '님 환영합니다'}"></div>
-                <form action="@{/user/logout}" method="post">
+                <form th:action="@{/logout}" method="get">
                     <button class="main-logout">로그아웃</button>
                 </form>
             </div>

@@ -54,7 +54,7 @@ $(document).ready(function () {
         } else {
             const confirmPurchase = confirm(`정말로 구매 하시겠습니까?\n상품명: ${productName}\n갯수: ${quantity}개\n총 필요 포인트: ${totalCost} 포인트\n해당 포인트가 차감됩니다`);
             if (confirmPurchase) {
-                // 실제 구매 로직을 여기서 진행
+                // 실제 구매 로직
                 $.ajax({
                     url: '/shop/buy', // 서버의 구매 처리 URL
                     type: 'POST',
