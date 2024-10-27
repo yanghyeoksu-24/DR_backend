@@ -1,5 +1,18 @@
 package com.dr.dto.manager;
 
-public class ManagerUserDTO {
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+public class ManagerUserDTO {
+    private int userNumber;
+    private String userNickName;
+    private String userStatus;
+    private String userPhone;
+    private String userEmail;
 }

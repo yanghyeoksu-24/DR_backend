@@ -31,4 +31,31 @@
         DR_MANAGER M
     </select>
 
+<!-- 3. 회원관리-->
+    <select id="manageUser" resultType="ManagerUserDTO">
+        SELECT
+            U.USER_NUMBER,
+            U.USER_NICKNAME,
+            U.USER_STATUS,
+            U.USER_PHONE,
+            U.USER_EMAIL
+        FROM
+            DR_USER U
+        ORDER BY
+            U.USER_NUMBER
+    </select>
+
+    <delete id="userOut" parameterType="Integer">
+        DELETE
+        FROM DR_USER U
+        WHERE U.USER_NUMBER = #{userNumber}
+    </delete>
+
+    <update id="userPause" parameterType="Integer">
+        UPDATE DR_USER
+        SET USER_STATUS = '7일정지'
+        WHERE USER_NUMBER = #{userNumber}
+    </update>
+
+
 </mapper>

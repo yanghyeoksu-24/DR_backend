@@ -2,221 +2,94 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>회원관리</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원관리</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
-  <link rel="stylesheet" href="./../../css/manager/manageUser.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <link rel="stylesheet" href="./../../css/manager/manageUser.css">
 </head>
 
 <body>
-  <a href="./../../html/manager/dashBoard.html">
+<a th:href="@{/manager/dashBoard}">
     <img class="manager-logoImg" src="./../../image/logo.png">
-  </a>
-  <div id="manager-dashBoardBox">
+</a>
+<div id="manager-dashBoardBox">
     <div id="dashBoard-list">
-      <ul>
-        <a href="./../../html/manager/dashBoard.html">
-        <li id="dashBoard-admin">
-          <img id="dashBoard-profile" src="./../../image/basicProfile.png">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          이재서
-        </li>
-        </a>
-        <a href="./../../html/manager/manageUser.html">
-          <li id="dashBoard-user">회원관리</li>
-        </a>
-        <a href="./../../html/manager/manageBoard.html">
-        <li id="dashBoard-board">게시글/레시피 관리</li>
-        </a>
-        <a href="./../../html/manager/manageComment.html">
-        <li id="dashBoard-comment">댓글관리</li>
-        </a>
-        <a href="./../../html/manager/managePoint.html">
-        <li id="dashBoard-point">포인트관리</li>
-        </a>
-        <a href="./../../html/manager/manageReport.html">
-        <li id="dashBoard-report">신고관리</li>
-        </a>
-        <a href="./../../html/manager/manageProduct.html">
-        <li id="dashBoard-product">상품관리</li>
-        </a>
-      </ul>
+        <ul>
+            <a th:href="@{/manager/dashBoard}">
+                <li id="dashBoard-admin">
+                    <img id="dashBoard-profile" th:src="@{/image/basicProfile.png}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span th:text="${session.managerName}"></span>
+                </li>
+            </a>
+            <a th:href="@{/manager/manageUser}">
+                <li id="dashBoard-user">회원관리</li>
+            </a>
+            <a th:href="@{/manager/manageBoard}">
+                <li id="dashBoard-board">게시글 관리</li>
+            </a>
+            <a th:href="@{/manager/manageRecipe}">
+                <li id="dashBoard-recipe">레시피 관리</li>
+            </a>
+            <a th:href="@{/manager/manageComment}">
+                <li id="dashBoard-comment">댓글관리</li>
+            </a>
+            <a th:href="@{/manager/managePoint}">
+                <li id="dashBoard-point">포인트관리</li>
+            </a>
+            <a th:href="@{/manager/manageReport}">
+                <li id="dashBoard-report">신고관리</li>
+            </a>
+            <a th:href="@{/manager/manageProduct}">
+                <li id="dashBoard-product">상품관리</li>
+            </a>
+        </ul>
     </div>
 
     <div id="manage-member">
-      <div id="manage-memberTop">
-        <p id="manage-memberBold">회원 관리</p>
-        <button id="memberPause">회원정지</button>
-        <button id="memberOut">회원탈퇴</button>
-      </div>
-      <div id="manage-memberList">
-        <ul id="manage-memberUl">
-          <li id="manage-memberTitle">
-            <input id="title-check" type="checkbox" value="전체선택">
-            <span id="title-num">No.</span>
-            <span id="title-name">이름</span>
-            <span id="title-div">구분</span>
-            <span id="title-phone">전화번호</span>
-            <span id="title-email">이메일</span>
-            <span id="title-point">포인트 합</span>
-          </li>
+        <div id="manage-memberTop">
+            <p id="manage-memberBold">회원 관리</p>
+                <button id="memberPause">회원정지</button>
+                <button id="memberOut">회원탈퇴</button>
+        </div>
 
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">101</span>
-            <span class="con-name">이재서</span>
-            <span class="con-div">일반회원</span>
-            <span class="con-phone">010-4750-1923</span>
-            <span class="con-email">jaeseo1227@gmail.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">102</span>
-            <span class="con-name">김민수</span>
-            <span class="con-div">정지회원(7일)</span>
-            <span class="con-phone">010-2345-6789</span>
-            <span class="con-email">minsu@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">103</span>
-            <span class="con-name">박지현</span>
-            <span class="con-div">탈퇴회원</span>
-            <span class="con-phone">010-3456-7890</span>
-            <span class="con-email">jihyun@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">104</span>
-            <span class="con-name">최영수</span>
-            <span class="con-div">정지회원(7일)</span>
-            <span class="con-phone">010-4567-8901</span>
-            <span class="con-email">youngsoo@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">105</span>
-            <span class="con-name">이수진</span>
-            <span class="con-div">탈퇴회원</span>
-            <span class="con-phone">010-5678-9012</span>
-            <span class="con-email">sujin@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">106</span>
-            <span class="con-name">홍길동</span>
-            <span class="con-div">일반회원</span>
-            <span class="con-phone">010-6789-0123</span>
-            <span class="con-email">gildong@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">107</span>
-            <span class="con-name">이민호</span>
-            <span class="con-div">탈퇴회원</span>
-            <span class="con-phone">010-7890-1234</span>
-            <span class="con-email">minho@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">108</span>
-            <span class="con-name">정하늘</span>
-            <span class="con-div">정지회원(7일)</span>
-            <span class="con-phone">010-8901-2345</span>
-            <span class="con-email">haneul@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">109</span>
-            <span class="con-name">김하나</span>
-            <span class="con-div">탈퇴회원</span>
-            <span class="con-phone">010-9012-3456</span>
-            <span class="con-email">hana@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">110</span>
-            <span class="con-name">이정민</span>
-            <span class="con-div">일반회원</span>
-            <span class="con-phone">010-0123-4567</span>
-            <span class="con-email">jeongmin@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">111</span>
-            <span class="con-name">최원영</span>
-            <span class="con-div">탈퇴회원</span>
-            <span class="con-phone">010-1234-5678</span>
-            <span class="con-email">wonyoung@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">112</span>
-            <span class="con-name">이소희</span>
-            <span class="con-div">정지회원(7일)</span>
-            <span class="con-phone">010-2345-6789</span>
-            <span class="con-email">sohee@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">113</span>
-            <span class="con-name">김기범</span>
-            <span class="con-div">탈퇴회원</span>
-            <span class="con-phone">010-3456-7890</span>
-            <span class="con-email">gibeom@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">114</span>
-            <span class="con-name">박지민</span>
-            <span class="con-div">정지회원(7일)</span>
-            <span class="con-phone">010-4567-8901</span>
-            <span class="con-email">jimin@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          <li>
-            <input type="checkbox" value="전체선택">
-            <span class="con-num">115</span>
-            <span class="con-name">이유진</span>
-            <span class="con-div">탈퇴회원</span>
-            <span class="con-phone">010-5678-9012</span>
-            <span class="con-email">yujin@example.com</span>
-            <span class="con-point">600</span>
-          </li>
-          
-       
-        
-        
-        </ul>
+        <div id="manage-memberList">
+            <ul id="manage-memberUl">
+                <li id="manage-memberTitle">
+                    <input id="title-check" type="checkbox" value="전체선택">
+                    <span id="title-num">No.</span>
+                    <span id="title-name">이름</span>
+                    <span id="title-div">구분</span>
+                    <span id="title-phone">전화번호</span>
+                    <span id="title-email">이메일</span>
+                </li>
 
-      
-        <div id="pagination"></div>
+                <li th:each="userList : ${userList}">
+                    <input type="checkbox" th:value="${userList.userNumber}">
+                    <span class="con-num" th:text="${userList.userNumber}"></span>
+                    <span class="con-name" th:text="${userList.userNickName}"></span>
+                    <span class="con-div" th:text="${userList.userStatus}"></span>
+                    <span class="con-phone" th:text="${userList.userPhone}"></span>
+                    <span class="con-email" th:text="${userList.userEmail}"></span>
+                </li>
 
-      </div>
+            </ul>
+
+            <div id="pagination"></div>
+        </div>
     </div>
 
 
-  </div>
+</div>
+<form th:action="@{/manager/managerLogout}" method="get">
+    <button id="manager-logout">로그아웃</button>
+</form>
 
-
-  <script src="./../../js/manager/manageUser.js"></script>
+<script src="./../../js/manager/manageUser.js"></script>
 </body>
 
 </html>

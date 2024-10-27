@@ -3,6 +3,7 @@ package com.dr.service.manager;
 import com.dr.dto.manager.DashBoardDTO;
 import com.dr.dto.manager.ManagerDTO;
 import com.dr.dto.manager.ManagerSessionDTO;
+import com.dr.dto.manager.ManagerUserDTO;
 import com.dr.mapper.manager.ManagerMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,7 @@ class ManagerServiceTest {
 
     // 1. 관리자 로그인
     @Test
-    void managerLogin() {
+    public void managerLogin() {
         // given
         ManagerSessionDTO dto = new ManagerSessionDTO();
         dto.setManagerName("송아성");
@@ -45,7 +46,7 @@ class ManagerServiceTest {
 
     // 2. 대시보드
     @Test
-    void managerDashBoard() {
+    public void managerDashBoard() {
         // given
         DashBoardDTO expectedDashBoardDTO = new DashBoardDTO();
         expectedDashBoardDTO.setUserAll(60); // 예상 사용자 수
@@ -70,4 +71,21 @@ class ManagerServiceTest {
         ManagerDTO actualManagerDTO = managerList.get(0); // 0번째 인덱스 가져오기
         assertEquals(expectedManagerDTO.getManagerName(), actualManagerDTO.getManagerName()); // 관리자 이름 비교
     }
+
+    // 3. 회원 관리
+    @Test
+    public void manageUser(){
+        ManagerUserDTO managerUserDTO = new ManagerUserDTO();
+        managerUserDTO.setUserEmail("manager1@dr.com");
+
+        doReturn(List.of(managerUserDTO)).when(managerMapper).manageUser();
+
+        List<ManagerUserDTO> userLists = managerService.manageUser();
+
+        assertNotNull(userLists);
+
+        ManagerUserDTO userList  = userLists.get(0);
+        assertEquals(managerUserDTO.getUserEmail(), userList.getUserEmail());
+    }
+
 }

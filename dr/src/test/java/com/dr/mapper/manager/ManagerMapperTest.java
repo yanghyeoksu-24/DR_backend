@@ -3,6 +3,7 @@ package com.dr.mapper.manager;
 import com.dr.dto.manager.DashBoardDTO;
 import com.dr.dto.manager.ManagerDTO;
 import com.dr.dto.manager.ManagerSessionDTO;
+import com.dr.dto.manager.ManagerUserDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,8 @@ class ManagerMapperTest {
     ManagerSessionDTO managerSessionDTO;
     List<ManagerDTO> managerList;
     DashBoardDTO dashBoardDTO;
-    ManagerDTO managerDTO;
+    List<ManagerUserDTO> managerUserList;
+    ManagerUserDTO managerUserDTO;
 
     @BeforeEach
     void setUp() {
@@ -59,5 +61,19 @@ class ManagerMapperTest {
         assertEquals(60, dashBoardDTO.getUserAll());
 
         assertEquals("송아성", managerDTO.getManagerName());
+    }
+
+    //3. 회원 관리
+    @Test
+    void manageUser(){
+        //when
+        managerUserList = managerMapper.manageUser();
+
+        managerUserDTO = managerUserList.get(3);
+
+        //then
+        assertNotNull(managerUserDTO);
+
+        assertEquals("닉네임4" , managerUserDTO.getUserNickName());
     }
 }
