@@ -20,12 +20,6 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
-//    @GetMapping("/myRecipeList")
-//    public String MyRecipeList(){
-//
-//        return "recipe/myRecipeList";
-//    }
-
     @GetMapping("/myRecipeList")
     public String MyRecipeList(Model model) {
         // 전체 레시피 목록 조회
@@ -36,5 +30,6 @@ public class RecipeController {
 
         return "recipe/myRecipeList";  // myRecipeList.html로 데이터 전달
     }
+
 
 }

@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dr.mapper.recipe.RecipeMapper">
-
-<!--    <select id="selectAllPage" resultType="MyRecipeListDTO">-->
-<!--    <![CDATA[-->
-<!--        SELECT RECIPE_TITLE, RECIPE_WRITER, RECIPE_WRITE_DATE, RECIPE_PHOTO-->
-<!--        FROM (-->
-<!--                 SELECT ROWNUM AS RNUM, RECIPE_TITLE, RECIPE_WRITER, RECIPE_WRITE_DATE, RECIPE_PHOTO-->
-<!--                 FROM (-->
-<!--                          SELECT R.RECIPE_TITLE,-->
-<!--                                 U.USER_NICKNAME AS RECIPE_WRITER,-->
-<!--                                 R.RECIPE_WRITE_DATE,-->
-<!--                                 P.PHOTO_LOCAL AS RECIPE_PHOTO-->
-<!--                          FROM DR_RECIPE R-->
-<!--                                   JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER-->
-<!--                                   LEFT JOIN DR_PHOTO P ON R.RECIPE_NUMBER = P.RECIPE_NUMBER-->
-<!--                          WHERE R.RECIPE_TYPE = '나만의레시피'  &#45;&#45; 나만의 레시피 필터링-->
-<!--                          ORDER BY R.RECIPE_WRITE_DATE DESC  &#45;&#45; 최신순 정렬-->
-<!--                      )-->
-<!--                 WHERE ROWNUM <= #{page} * #{amount}  &#45;&#45; 페이지네이션 처리-->
-<!--             )-->
-<!--        WHERE RNUM > (#{page} - 1) * #{amount}  &#45;&#45; 페이지네이션 처리-->
-<!--        ]]>-->
-<!--</select>-->
-
-
-
     <select id="selectAllPages" resultType="MyRecipeListDTO">
         SELECT R.RECIPE_NUMBER AS recipeNumber,  <!-- 레시피 번호 추가 -->
         R.RECIPE_TITLE AS recipeTitle,
@@ -38,6 +13,22 @@
         LEFT JOIN DR_PHOTO P ON R.RECIPE_NUMBER = P.RECIPE_NUMBER
         LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '나만의레시피'  -- 나만의 레시피 필터링
+        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
+        ORDER BY R.RECIPE_WRITE_DATE DESC  -- 최신순 정렬
+    </select>
+
+    <select id="selectAllPages" resultType="ChatBotRecipeListDTO">
+        SELECT R.RECIPE_NUMBER AS recipeNumber,  <!-- 레시피 번호 추가 -->
+        R.RECIPE_TITLE AS recipeTitle,
+        U.USER_NICKNAME AS userNickName,
+        R.RECIPE_WRITE_DATE AS recipeWriteDate,
+        P.PHOTO_LOCAL AS photoOriginal,
+        COUNT(G.GOOD_NUMBER) AS goodCount  -- 추천수 조회
+        FROM DR_RECIPE R
+        JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
+        LEFT JOIN DR_PHOTO P ON R.RECIPE_NUMBER = P.RECIPE_NUMBER
+        LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
+        WHERE R.RECIPE_TYPE = '챗봇레시피'  -- 챗봇 레시피 필터링
         GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
         ORDER BY R.RECIPE_WRITE_DATE DESC  -- 최신순 정렬
     </select>

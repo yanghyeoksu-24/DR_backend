@@ -1,308 +1,67 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./../../css/recipe/chatBotRecipeList.css">
-    <link rel="stylesheet" href="../../css/main/header.css">
-    <link rel="stylesheet" href="../../css/main/footer.css">
+    <link rel="stylesheet" th:href="@{/css/recipe/chatBotRecipeList.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
+    <script defer th:src="@{/js/fragment/header.js}"></script>
+
     <!-- 네비바 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script defer src="../../js/main/header.js"></script>
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
 
     <!-- 페이지네이션 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 
     <title>DR - 챗봇 레시피 목록</title>
 </head>
-
 <body>
-    <main>
-        <div class="chatBotRecipeList-mainContainer">
-            <div class="chatBotRecipeList-mainBox">
-                <!-- 나만의 레시피 목록 제목 -->
-                <!-- <p class="chatBotRecipeList-text1">나만의 레시피</p> -->
-
-                <div class="chatBotRecipeList-title">
-                    <span class="chatBotRecipeList-text1">챗봇</span>
-                    <span class="chatBotRecipeList-text2">레시피</span>
-                </div>
-
-                <!-- 글작성,전체보기,최신순,추천순 버튼들 -->
-                <div class="chatBotRecipeList-button">
-                    <!-- <button class="chatBotRecipeList-writeButton">글작성</button> -->
-                    <a href="./chatBotRecipeWriter.html"><button class="chatBotRecipeList-writeButton">글작성</button></a>
-
-                    <div class="chatBotRecipeList-rightButton">
-                        <!-- <button class="chatBotRecipeList-firstButton">전체보기</button> -->
-                        <button class="chatBotRecipeList-secondButton">최신순</button>
-                        <button class="chatBotRecipeList-thirdButton">추천순</button>
-                    </div>
-
-                </div>
-
-                <!-- 나만의 레시피 목록들 첫번째 줄-->
-                <div class="chatBotRecipeList-bigBox">
-                    <div class="chatBotRecipeList-outbox">
-                        <div class="chatBotRecipeList-inbox1">
-                            <div class="chatBotRecipeList-listbox">
-                                <a href="./chatBotDetailPage.html"><img src="./../../image/recipe/떡만두국.png" alt=""></a>
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox2">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox3">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox4">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- 나만의 레시피 목록 2번째 줄 -->
-                    <div class="chatBotRecipeList-outbox">
-                        <div class="chatBotRecipeList-inbox1">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox2">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox3">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox4">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- 나만의 레시피 목록 3번째 줄 -->
-                    <div class="chatBotRecipeList-outbox">
-                        <div class="chatBotRecipeList-inbox1">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox2">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox3">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox4">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- 나만의 레시피 목록 4번째 줄 -->
-                    <div class="chatBotRecipeList-outbox">
-                        <div class="chatBotRecipeList-inbox1">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox2">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox3">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox4">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- 나만의 레시피 목록 5번째 줄 -->
-                    <div class="chatBotRecipeList-outbox">
-                        <div class="chatBotRecipeList-inbox1">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox2">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox3">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-                        <div class="chatBotRecipeList-inbox4">
-                            <div class="chatBotRecipeList-listbox">
-                                <img src="./../../image/recipe/떡만두국.png" alt="">
-
-                                <p class="chatBotRecipeList-foodTitle">떡만두국</p>
-                                <span class="chatBotRecipeList-writer">그미네</span>
-                                <span class="chatBotRecipeList-date">2024-10-08</span>
-                                <p class="chatBotRecipeList-select">추천수 18</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-                <div id="pagination"></div>
-
-
-
-
-
+<header th:replace="~{/fragment/header :: header}"></header>
+<main>
+    <div class="chatBotRecipeList-mainContainer">
+        <div class="chatBotRecipeList-mainBox">
+            <!-- 나만의 레시피 목록 제목 -->
+            <div class="chatBotRecipeList-title">
+                <span class="chatBotRecipeList-text1">나만의</span>
+                <span class="chatBotRecipeList-text2">레시피</span>
             </div>
-        </div>
-    </main>
-    <script src="./../../js/recipe/chatBotRecipeList.js" defer></script>
-</body>
 
+            <!-- 글작성,전체보기,최신순,추천순 버튼들 -->
+            <div class="chatBotRecipeList-button">
+                <a th:href="@{/chatBotRecipeWriter}">
+                    <button class="chatBotRecipeList-writeButton">글작성</button>
+                </a>
+
+                <div class="chatBotRecipeList-rightButton">
+                    <button class="chatBotRecipeList-secondButton">최신순</button>
+                    <button class="chatBotRecipeList-thirdButton">추천순</button>
+                </div>
+            </div>
+
+            <!-- 나만의 레시피 목록 -->
+            <div class="chatBotRecipeList-outbox">
+                <div class="chatBotRecipeList-listbox" th:each="recipeList : ${recipeList}">
+                    <a th:href="@{/recipe/chatBOtDetailPage}">
+                        <img th:src="@{${recipeList.photoOriginal}}" alt="레시피 이미지">
+                    </a>
+                    <p class="chatBotRecipeList-foodTitle" th:text="${recipeList.recipeTitle}"></p>
+                    <span class="chatBotRecipeList-writer" th:text="${recipeList.userNickName}"></span>
+                    <span class="chatBotRecipeList-date" th:text="${recipeList.recipeWriteDate}"></span>
+                    <p class="chatBotRecipeList-select" th:text="'추천수 ' + ${recipeList.goodCount}"></p>
+                </div>
+            </div>
+            <div id="pagination"></div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
+<script th:src="@{/js/recipe/chatBotRecipeList.js}" defer></script>
+</body>
 </html>
