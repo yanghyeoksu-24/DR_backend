@@ -6,9 +6,13 @@ import com.dr.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -17,7 +21,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class UserController {
     private final UserService userService;
 
-    // 회원가입 페이지 이동
+    // dr회원가입 페이지 이동
     @GetMapping("/user/drJoin")
     public String drJoinPage() {
         return "/user/drJoin";
@@ -29,11 +33,42 @@ public class UserController {
         return "/user/login";
     }
 
+    // api회원가입 페이지 이동
+    @GetMapping("/user/apijoin")
+    public String apijoinPage() {
+        return "/user/apijoin";
+    }
+
+
+    //drjoin 회원가입 요청 컨트롤러
     @PostMapping("/user/drJoin")
     public String join(@ModelAttribute UserDTO userDTO) {
-       userService.registerUser(userDTO);
+        userService.registerUser(userDTO);
+
         return "/user/login";
     }
+
+
+    // 이메일 중복 확인 요청 처리
+    @GetMapping("/api/user/checkEmail")
+    @ResponseBody // 특정 메서드만 JSON 형식 응답 반환
+    public ResponseEntity<Boolean> checkEmailExists(@RequestParam("userEmail") String userEmail) {
+        boolean exists = userService.isEmailExists(userEmail);
+        return ResponseEntity.ok(exists);
+    }
+
+
+    @PostMapping("/api/user/checkPhone")
+    @ResponseBody
+    public Map<String, Boolean> checkPhone(@RequestBody Map<String, String> request) {
+        String userPhone = request.get("userPhone");
+        boolean exists = userService.isPhoneExists(userPhone);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("exists", exists);
+        return response;
+    }
+
+
 
 
     // 로그인 요청 처리
@@ -66,3 +101,4 @@ public class UserController {
         return new RedirectView("/main");
     }
 }
+

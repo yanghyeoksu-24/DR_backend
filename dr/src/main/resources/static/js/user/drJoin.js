@@ -24,16 +24,34 @@ $(document).ready(function () {
         }
     });
 
-    // 중복확인 버튼 클릭 시 이벤트 처리
     $('#checkDuplicate').on('click', function () {
         const userIdValue = $('#userEmail').val().trim();
+
+        // 이메일 형식 검사
         if (!userIdRegex.test(userIdValue)) {
             $("#userIdError").text("형식에 맞게 입력해주세요.").css({"color": "red", "display": "block"});
             return;
         }
 
-        // 여기는 중복 체크를 서버에 요청하는 부분이 필요하지만, 예시로 성공 메시지 표시
-        $("#userIdError").text("사용 가능한 이메일입니다.").css({"color": "green", "display": "block"});
+        // 이메일 중복 확인 요청
+        $.ajax({
+            url: '/api/user/checkEmail', // 이메일 중복 확인 API 경로
+            type: 'GET',
+            data: {userEmail: userIdValue},
+            success: function (response) {
+                if (response) {
+                    // 중복된 이메일일 경우
+                    $("#userIdError").text("이미 존재하는 이메일입니다.").css({"color": "red", "display": "block"});
+                } else {
+                    // 사용 가능한 이메일일 경우
+                    $("#userIdError").text("사용 가능한 이메일입니다.").css({"color": "green", "display": "block"});
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("에러 발생: " + error);
+                alert("서버와의 통신 중 오류가 발생했습니다.");
+            }
+        });
     });
 
     // 비밀번호 정규표현식 검사 함수
@@ -77,6 +95,16 @@ $(document).ready(function () {
 
     $('#sendCode').on('click', function () {
         const phone = $('#userPhone').val().trim();
+
+        // 휴대폰 번호 형식 검사
+        if (!phonePattern.test(phone)) {
+            $('#phoneError').text("올바른 휴대폰 번호를 입력하세요. (하이픈 없이 10~11자리 숫자)").css("color", "red");
+            return; // 유효하지 않은 번호면 요청을 보내지 않음
+        } else {
+            $('#phoneError').text(""); // 오류 메시지 초기화
+        }
+
+        // 유효한 번호일 경우에만 인증 요청
         $.ajax({
             url: '/api/sms/send',
             type: 'POST',
@@ -186,4 +214,100 @@ $(document).ready(function () {
             toggleIcon.src = "/image/noView.png"; // 아이콘 변경 (예시)
         }
     }
+
+    function showAlertAndRedirect() {
+        alert("회원가입이 완료되었습니다.");
+        return true; // 폼이 정상적으로 제출되도록 true 반환
+    }
+
+
+    $(document).ready(function () {
+        let phoneAlertShown = false; // 중복 전화번호에 대한 alert 표시 여부
+        let isRequesting = false; // 인증 요청 중복 방지 변수
+
+        // 전화번호 중복 확인
+        $('#userPhone').on('blur', function () {
+            const userPhone = $(this).val().trim();
+            const phonePattern = /^[0-9]{10,11}$/; // 하이픈 없이 숫자만 10~11자리
+
+            if (!phonePattern.test(userPhone)) {
+                $('#phoneError').text("올바른 형식의 휴대폰 번호를 입력하세요.").css('color', 'red');
+                phoneAlertShown = false; // 오류 상태 초기화
+                return;
+            }
+
+            $.ajax({
+                url: '/api/user/checkPhone', // 중복 체크를 위한 API 엔드포인트
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({userPhone: userPhone}),
+                success: function (response) {
+                    if (response.exists) {
+                        // 중복 전화번호에 대한 alert가 이미 표시되지 않았으면 표시
+                        if (!phoneAlertShown) {
+                            alert("전화번호가 이미 존재합니다.");
+                            phoneAlertShown = true; // alert 표시 상태 업데이트
+                        }
+                        $('#phoneError').text("전화번호가 이미 존재합니다.").css('color', 'red');
+                        // 인증 요청 버튼 비활성화
+                        $('#sendCode').prop('disabled', true);
+                    } else {
+                        $('#phoneError').text(""); // 오류 메시지 초기화
+                        phoneAlertShown = false; // 중복 상태 초기화
+                        // 인증 요청 버튼 활성화
+                        $('#sendCode').prop('disabled', false);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("에러 발생: " + error);
+                    alert("서버와의 통신 중 오류가 발생했습니다.");
+                }
+            });
+        });
+
+        // 인증 요청 버튼 클릭 이벤트
+        $('#sendCode').on('click', function () {
+            const userPhone = $('#userPhone').val().trim();
+            const phonePattern = /^[0-9]{10,11}$/; // 하이픈 없이 숫자만 10~11자리
+
+            if (!phonePattern.test(userPhone)) {
+                alert("올바른 형식의 휴대폰 번호를 입력하세요.");
+                return;
+            }
+
+            // 전화번호가 중복된 경우 인증 요청을 하지 않음
+            if ($('#phoneError').text() === "전화번호가 이미 존재합니다.") {
+                alert("이 전화번호는 이미 사용 중입니다. 인증 요청을 할 수 없습니다.");
+                return;
+            }
+
+            // 인증 요청이 진행 중인지 확인
+            if (isRequesting) {
+                return; // 이미 요청 중이면 아무것도 하지 않음
+            }
+
+            // 인증 요청 중 상태 업데이트
+            isRequesting = true;
+
+            // 인증 요청 로직 추가
+            $.ajax({
+                url: '/api/sms/send', // 인증 요청을 위한 API 엔드포인트
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({phoneNumber: userPhone}),
+                success: function (response) {
+                    alert("인증 코드가 발송되었습니다.");
+                },
+                error: function (xhr, status, error) {
+                    console.error("인증 요청 중 에러 발생: " + error);
+                    alert("인증 요청 중 오류가 발생했습니다.");
+                },
+                complete: function () {
+                    // 요청 완료 후 상태 초기화
+                    isRequesting = false;
+                }
+            });
+        });
+    });
 });
+
