@@ -21,4 +21,8 @@ public interface ManagerMapper {
 
    List <ManagerUserDTO> manageUser();
 
+   boolean userOut(Integer userNumber);
+
+   boolean userPause(Integer userNumber);
+
 }

@@ -80,13 +80,12 @@ class ManagerServiceTest {
 
         doReturn(List.of(managerUserDTO)).when(managerMapper).manageUser();
 
-        List<ManagerUserDTO> userLists = managerService.manageUser(); // 관리자 정보 가져오기
+        List<ManagerUserDTO> userLists = managerService.manageUser();
 
         assertNotNull(userLists);
 
         ManagerUserDTO userList  = userLists.get(0);
-        assertEquals();
-
+        assertEquals(managerUserDTO.getUserEmail(), userList.getUserEmail());
     }
 
 }

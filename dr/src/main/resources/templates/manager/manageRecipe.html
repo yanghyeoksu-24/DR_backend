@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레시피/게시판 관리</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <link rel="stylesheet" th:href="@{/css/manager/manageBoard.css}">
+</head>
+
+<body>
+<a th:href="@{/manager/dashBoard}">
+    <img class="manager-logoImg" th:src="@{/image/logo.png}">
+</a>
+
+<div id="manager-dashBoardBox">
+    <div id="dashBoard-list">
+        <ul>
+            <a th:href="@{/manager/dashBoard}">
+                <li id="dashBoard-admin">
+                    <img id="dashBoard-profile" th:src="@{/image/basicProfile.png}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span th:text="${session.managerName}"></span>
+                </li>
+            </a>
+            <a th:href="@{/manager/manageUser}">
+                <li id="dashBoard-user">회원관리</li>
+            </a>
+            <a th:href="@{/manager/manageBoard}">
+                <li id="dashBoard-board">게시글 관리</li>
+            </a>
+            <a th:href="@{/manager/manageRecipe}">
+                <li id="dashBoard-recipe">레시피 관리</li>
+            </a>
+            <a th:href="@{/manager/manageComment}">
+                <li id="dashBoard-comment">댓글관리</li>
+            </a>
+            <a th:href="@{/manager/managePoint}">
+                <li id="dashBoard-point">포인트관리</li>
+            </a>
+            <a th:href="@{/manager/manageReport}">
+                <li id="dashBoard-report">신고관리</li>
+            </a>
+            <a th:href="@{/manager/manageProduct}">
+                <li id="dashBoard-product">상품관리</li>
+            </a>
+        </ul>
+    </div>
+
+    <div id="manage-member">
+        <div id="manage-memberTop">
+            <p id="manage-memberBold">레시피 관리</p>
+            <button id="memberOut">삭제</button>
+        </div>
+        <div id="manage-memberList">
+            <ul id="manage-memberUl">
+                <li id="manage-memberTitle">
+                    <input id="title-check" type="checkbox" value="전체선택">
+                    <span id="title-num">No.</span>
+                    <span id="title-title">제목</span>
+                    <span id="title-name">작성자</span>
+                    <span id="title-good">추천수</span>
+                    <span id="title-date">작성일</span>
+                    <span id="title-type">종류</span>
+                </li>
+
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">101</span>
+                    <span class="con-con">안녕하세요 !!오랜만이에요</span>
+                    <span class="con-name">이재서</span>
+                    <span class="con-good">323</span>
+                    <span class="con-date">2024-10-06 15:57:26</span>
+                    <span class="con-type">꿀팁레시피</span>
+
+                </li>
+
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">102</span>
+                    <span class="con-con">오늘 날씨가 좋네요</span>
+                    <span class="con-name">김민수</span>
+                    <span class="con-good">215</span>
+                    <span class="con-date">2024-10-06 16:00:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">103</span>
+                    <span class="con-con">이번 주말에 뭐 해요?</span>
+                    <span class="con-name">박지현</span>
+                    <span class="con-good">180</span>
+                    <span class="con-date">2024-10-06 16:05:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">104</span>
+                    <span class="con-con">영화 보러 가고 싶어요</span>
+                    <span class="con-name">최영수</span>
+                    <span class="con-good">400</span>
+                    <span class="con-date">2024-10-06 16:10:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">105</span>
+                    <span class="con-con">점심 뭐 먹었어요?</span>
+                    <span class="con-name">이수진</span>
+                    <span class="con-good">290</span>
+                    <span class="con-date">2024-10-06 16:15:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">106</span>
+                    <span class="con-con">다음 주에 여행 가요</span>
+                    <span class="con-name">홍길동</span>
+                    <span class="con-good">150</span>
+                    <span class="con-date">2024-10-06 16:20:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">107</span>
+                    <span class="con-con">새로 생긴 카페 가보고 싶어요</span>
+                    <span class="con-name">이민호</span>
+                    <span class="con-good">260</span>
+                    <span class="con-date">2024-10-06 16:25:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">108</span>
+                    <span class="con-con">운동 시작했어요</span>
+                    <span class="con-name">정하늘</span>
+                    <span class="con-good">310</span>
+                    <span class="con-date">2024-10-06 16:30:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">109</span>
+                    <span class="con-con">책 읽는 게 재밌어요</span>
+                    <span class="con-name">김하나</span>
+                    <span class="con-good">230</span>
+                    <span class="con-date">2024-10-06 16:35:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">110</span>
+                    <span class="con-con">요즘 드라마 재미있어요</span>
+                    <span class="con-name">이정민</span>
+                    <span class="con-good">175</span>
+                    <span class="con-date">2024-10-06 16:40:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">111</span>
+                    <span class="con-con">친구들과 만날 계획이에요</span>
+                    <span class="con-name">최원영</span>
+                    <span class="con-good">315</span>
+                    <span class="con-date">2024-10-06 16:45:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">112</span>
+                    <span class="con-con">주말에 바다 가고 싶어요</span>
+                    <span class="con-name">이소희</span>
+                    <span class="con-good">290</span>
+                    <span class="con-date">2024-10-06 16:50:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">113</span>
+                    <span class="con-con">새로운 취미를 찾고 있어요</span>
+                    <span class="con-name">김기범</span>
+                    <span class="con-good">300</span>
+                    <span class="con-date">2024-10-06 16:55:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">114</span>
+                    <span class="con-con">가을에 단풍 구경 가고 싶어요</span>
+                    <span class="con-name">박지민</span>
+                    <span class="con-good">220</span>
+                    <span class="con-date">2024-10-06 17:00:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+                <li>
+                    <input type="checkbox" class="con-check" value="전체선택">
+                    <span class="con-num">115</span>
+                    <span class="con-con">요리하는 걸 좋아해요</span>
+                    <span class="con-name">이유진</span>
+                    <span class="con-good">310</span>
+                    <span class="con-date">2024-10-06 17:05:00</span>
+                    <span class="con-type">자유게시판</span>
+                </li>
+            </ul>
+            <div id="pagination"></div>
+        </div>
+    </div>
+</div>
+<form th:action="@{/manager/managerLogout}" method="get">
+    <button id="manager-logout">로그아웃</button>
+</form>
+
+<script th:src="@{/js/manager/manageBoard.js}"></script>
+</body>
+
+</html>

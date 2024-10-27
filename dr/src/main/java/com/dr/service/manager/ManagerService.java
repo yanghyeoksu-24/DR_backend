@@ -33,4 +33,13 @@ public class ManagerService {
         return managerMapper.manageUser();
     }
 
+    public boolean userOut(Integer userNumber) {
+        return managerMapper.userOut(userNumber);
+    }
+
+    public boolean userPause(Integer userNumber) {
+        return managerMapper.userPause(userNumber);
+    }
+
+
 }

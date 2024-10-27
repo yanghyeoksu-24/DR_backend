@@ -45,4 +45,17 @@
             U.USER_NUMBER
     </select>
 
+    <delete id="userOut" parameterType="Integer">
+        DELETE
+        FROM DR_USER U
+        WHERE U.USER_NUMBER = #{userNumber}
+    </delete>
+
+    <update id="userPause" parameterType="Integer">
+        UPDATE DR_USER
+        SET USER_STATUS = '7일정지'
+        WHERE USER_NUMBER = #{userNumber}
+    </update>
+
+
 </mapper>

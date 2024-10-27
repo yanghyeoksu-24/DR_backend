@@ -46,3 +46,57 @@
     // 처음 로드 시 첫 번째 페이지의 항목만 보여주기
     container.pagination('goToPage', 1);
   });
+
+
+  document.getElementById('memberOut').addEventListener('click', function() {
+    // 체크된 체크박스들의 value 값 수집
+    const selectedUserNumbers = Array.from(document.querySelectorAll('#manage-memberUl input[type="checkbox"]:checked'))
+        .map(checkbox => checkbox.value);
+
+    if (selectedUserNumbers.length === 0) {
+      alert("탈퇴할 사용자를 선택하세요.");
+      return;
+    }
+
+    // AJAX 요청을 통해 체크된 userNumber 값들을 서버에 전송
+    $.ajax({
+      type: "POST",
+      url: "/manager/userOut",
+      contentType: "application/json",
+      data: JSON.stringify({ userNumber: selectedUserNumbers }), // 배열을 JSON으로 변환
+      success: function(response) {
+        alert("선택된 사용자가 탈퇴 처리되었습니다.");
+        window.location.href = "/manager/manageUser"; // 리다이렉션
+      },
+      error: function() {
+        alert("탈퇴 처리에 실패했습니다.");
+      }
+    });
+  });
+
+  document.getElementById('memberPause').addEventListener('click', function() {
+    // 체크된 체크박스들의 value 값 수집
+    const selectedUserNumbers = Array.from(document.querySelectorAll('#manage-memberUl input[type="checkbox"]:checked'))
+        .map(checkbox => checkbox.value);
+
+    if (selectedUserNumbers.length === 0) {
+      alert("정지할 사용자를 선택하세요.");
+      return;
+    }
+
+    // AJAX 요청을 통해 체크된 userNumber 값들을 서버에 전송
+    $.ajax({
+      type: "POST",
+      url: "/manager/userPause",
+      contentType: "application/json",
+      data: JSON.stringify({ userNumber: selectedUserNumbers }), // 배열을 JSON으로 변환
+      success: function(response) {
+        alert("선택된 사용자가 정지 처리되었습니다.");
+        window.location.href = "/manager/manageUser"; // 리다이렉션
+      },
+      error: function() {
+        alert("정지 처리에 실패했습니다.");
+      }
+    });
+  });
+

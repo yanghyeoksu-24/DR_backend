@@ -161,38 +161,47 @@ a {
 
 #title-num {
   position: absolute;
-  left: 33.8%;
+  left: 31.5%;
   top: 19.5%;
 }
 
 #title-title {
   position: absolute;
-  left: 47%;
+  left: 42%;
   top: 19.5%;
 }
 
 #title-name {
   position: absolute;
-  left: 63.7%;
+  left: 59%;
   top: 19.5%;
 }
 
 #title-good {
   position: absolute;
-  left: 74%;
+  left: 69%;
   top: 19.5%;
 }
 
 #title-date {
   position: absolute;
-  left: 85%;
+  left: 80%;
+  top: 19.5%;
+}
+
+#title-type {
+  position: absolute;
+  left: 90%;
   top: 19.5%;
 }
 
 
 
+
+
+
 .con-num {
- width: 20%;
+ width: 15%;
  text-align: center;
 }
 
@@ -212,6 +221,9 @@ width: 10%;
   width: 20%;
 }
 
+.con-type {
+  width: 13%;
+}
 
 
 #manage-pages {
@@ -239,6 +251,20 @@ width: 10%;
   bottom: 4%;
   right: 40%;
 }
+
+#manager-logout {
+  position: absolute;
+  right: 3%;
+  top: 4%;
+  width: 70px;
+  height: 35px;
+  background-color: #EBAA39;
+  border: white;
+  border-radius: 7px;
+  color: white;
+  cursor: pointer;
+}
+
 
 
 
