@@ -6,6 +6,7 @@ import com.dr.service.myPage.MyPageService;
 import com.dr.service.rank.RankService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/myPage")
 @SessionAttributes("userNumber")
+@Slf4j
 public class MyPageController {
 
     private final MyPageService myPageService;
@@ -53,6 +55,7 @@ public class MyPageController {
 
         //세션 종료
         session.invalidate();
+        log.info("세션 종료됨: userNumber={}", userNumber);
 
         return "redirect:/myPage/myPageDelete";
     }
