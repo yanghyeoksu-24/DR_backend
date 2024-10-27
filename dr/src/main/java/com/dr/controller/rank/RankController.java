@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/rank")
+@SessionAttributes("userNumber")
 public class RankController {
 
     private final RankService rankService;
