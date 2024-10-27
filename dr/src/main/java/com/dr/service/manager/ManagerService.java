@@ -1,9 +1,6 @@
 package com.dr.service.manager;
 
-import com.dr.dto.manager.DashBoardDTO;
-import com.dr.dto.manager.ManagerDTO;
-import com.dr.dto.manager.ManagerSessionDTO;
-import com.dr.dto.manager.ManagerUserDTO;
+import com.dr.dto.manager.*;
 import com.dr.mapper.manager.ManagerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,6 +36,22 @@ public class ManagerService {
 
     public boolean userPause(Integer userNumber) {
         return managerMapper.userPause(userNumber);
+    }
+
+    public List<ManagerBoardDTO> showBoard(){
+        return managerMapper.showBoard();
+    }
+
+    public boolean boardDelete(Integer boardNumber) {
+        return managerMapper.boardDelete(boardNumber);
+    }
+
+    public List<ManagerRecipeDTO> showRecipe(){
+        return managerMapper.showRecipe();
+    }
+
+    public boolean recipeDelete(Integer recipeNumber) {
+        return managerMapper.recipeDelete(recipeNumber);
     }
 
 

@@ -57,5 +57,60 @@
         WHERE USER_NUMBER = #{userNumber}
     </update>
 
+<!-- 4. 게시판 관리-->
+    <select id="showBoard" parameterType="ManagerBoardDTO">
+        SELECT
+            B.BOARD_NUMBER,
+            B.BOARD_TITLE,
+            U.USER_NICKNAME,
+            COUNT(G.GOOD_NUMBER) AS goodCount,
+            B.BOARD_WRITE_DATE,
+            B.BOARD_TYPE
+        FROM
+            DR_BOARD B
+                JOIN
+            DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
+                LEFT JOIN
+            DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
+        GROUP BY
+            B.BOARD_NUMBER, B.BOARD_TITLE, U.USER_NICKNAME, B.BOARD_WRITE_DATE, B.BOARD_TYPE
+        ORDER BY
+            B.BOARD_WRITE_DATE DESC
+    </select>
+
+    <delete id="boardDelete" parameterType="Integer">
+        DELETE
+        FROM DR_BOARD B
+        WHERE B.BOARD_NUMBER = #{boardNumber}
+    </delete>
+
+    <!-- 5. 레시피 관리-->
+    <select id="showRecipe" parameterType="ManagerRecipeDTO">
+        SELECT
+            R.RECIPE_NUMBER,
+            R.RECIPE_TITLE,
+            U.USER_NICKNAME,
+            COUNT(G.GOOD_NUMBER) AS goodCount,
+            R.RECIPE_WRITE_DATE,
+            R.RECIPE_TYPE
+        FROM
+            DR_RECIPE R
+                JOIN
+            DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
+                LEFT JOIN
+            DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
+        GROUP BY
+            R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, R.RECIPE_TYPE
+        ORDER BY
+            R.RECIPE_WRITE_DATE DESC
+    </select>
+
+    <delete id="recipeDelete" parameterType="Integer">
+        DELETE
+        FROM DR_RECIPE R
+        WHERE R.RECIPE_NUMBER = #{recipeNumber}
+    </delete>
+
+
 
 </mapper>
