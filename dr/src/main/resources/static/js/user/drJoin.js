@@ -223,6 +223,7 @@ $(document).ready(function () {
 
     $(document).ready(function () {
         let phoneAlertShown = false; // 중복 전화번호에 대한 alert 표시 여부
+        let isRequesting = false; // 인증 요청 중복 방지 변수
 
         // 전화번호 중복 확인
         $('#userPhone').on('blur', function () {
@@ -280,8 +281,15 @@ $(document).ready(function () {
                 return;
             }
 
-            // 인증 요청 로직 추가 (여기에 AJAX 요청 등을 추가)
-            // 예시:
+            // 인증 요청이 진행 중인지 확인
+            if (isRequesting) {
+                return; // 이미 요청 중이면 아무것도 하지 않음
+            }
+
+            // 인증 요청 중 상태 업데이트
+            isRequesting = true;
+
+            // 인증 요청 로직 추가
             $.ajax({
                 url: '/api/sms/send', // 인증 요청을 위한 API 엔드포인트
                 type: 'POST',
@@ -293,8 +301,13 @@ $(document).ready(function () {
                 error: function (xhr, status, error) {
                     console.error("인증 요청 중 에러 발생: " + error);
                     alert("인증 요청 중 오류가 발생했습니다.");
+                },
+                complete: function () {
+                    // 요청 완료 후 상태 초기화
+                    isRequesting = false;
                 }
             });
         });
     });
 });
+
