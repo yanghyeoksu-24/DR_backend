@@ -27,4 +27,9 @@ public class MainController {
         return "main/terms";
     }
 
+    //검색창
+    @GetMapping("/search")
+    public String search(){
+        return "main";
+    }
 }

@@ -30,14 +30,14 @@ $(document).ready(function () {
   });
 
   // 로그아웃 안내창
-  $('.main-logout').on('click', function () {
+  $('.main-logout').on('click', function (e) {
+    e.preventDefault(); // 기본 폼 제출 방지
     let check = confirm('로그아웃 하시겠습니까?');
     if (check) {
-      alert = ('로그아웃 되었습니다');
-    } else {
-      return;
+      // 로그아웃 요청을 보내기 위해 폼을 제출
+      $(this).closest('form').submit();
     }
-  })
+  });
 });
 
 //a태그 post로 전송
