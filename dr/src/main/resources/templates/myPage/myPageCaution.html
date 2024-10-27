@@ -27,7 +27,7 @@
             <span style="color: #EBAA39;">탈퇴</span>
         </div>
         <!-- 회원 탈퇴 내용 -->
-        <form action="" method="">
+        <form th:action="@{/myPage/myPageDelete}" method="post" id="myPageDeleteForm">
             <div class="myPage-cautionWrap">
                 <div class="myPage-cautionCheck">
                     회원 탈퇴를 신청하기 전, 다음 내용을 꼭 확인해주세요.
@@ -44,7 +44,9 @@
             </div>
             <div class="myPage-cautionButton">
                 <button type="button" id="myPage-CButton" class="myPage-cautionOk">회원 탈퇴</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a th:href="@{/myPageInformation}"><button class="memberOut-caution-cancel">돌아가기</a></button>
+                <a th:href="@{/myPage/myPageInformation}">
+                    <button type="button" class="memberOut-caution-cancel">돌아가기</button>
+                </a>
             </div>
         </form>
     </main>

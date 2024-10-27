@@ -1,10 +1,12 @@
 package com.dr.dto.rank;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
-@Component
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class RankDTO {
     private int rank;              // 사용자 순위
     private String userNickname;   // 사용자 닉네임
