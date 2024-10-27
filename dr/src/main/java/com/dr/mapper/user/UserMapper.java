@@ -15,4 +15,7 @@ public interface UserMapper {
 
 
     boolean checkEmailExists(String userEmail);
+
+
+    boolean checkPhoneExists(String userPhone);
 }

@@ -18,6 +18,10 @@ public class UserService {
         return userMapper.checkEmailExists(userEmail);
     }
 
+    public boolean isPhoneExists(String userPhone) {
+        return userMapper.checkPhoneExists(userPhone);
+    }
+
 
     public void registerUser(UserDTO userDTO) {
         userMapper.insertUser(userDTO);
