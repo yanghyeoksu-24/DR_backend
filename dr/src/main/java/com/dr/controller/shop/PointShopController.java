@@ -39,7 +39,7 @@ public class PointShopController {
     }
 
     @PostMapping("/buy")
-    public String userBuyProducts(@RequestBody PointShopDTO pointShopDTO, HttpSession session) {
+    public String userBuyProducts(@RequestBody PointShopDTO pointShopDTO, HttpSession session) { //@RequestBody 로 DTO에 구매상품,갯수,총액 저장(ajax로 전송받은 데이터)
         // 세션에서 사용자 정보 가져오기
         Long userNumber = (Long) session.getAttribute("userNumber");
 
@@ -48,16 +48,22 @@ public class PointShopController {
             return "redirect:/user/login"; // 로그인 페이지로 리다이렉션
         }
 
-        // pointShopDTO에 데이터가 정상적으로 매핑되었는지 확인
-        System.out.println("Product Name: " + pointShopDTO.getProductName());
-        System.out.println("Quantity: " + pointShopDTO.getQuantity());
-        System.out.println("Total Cost: " + pointShopDTO.getTotalCost());
+        // 상품코드 가져오기
+        List<String> code = pointShopService.getProductCode(pointShopDTO);
+        System.out.println(code);
+        // 상품코드 보낼 유저 핸드폰 가져오기
+        String phone = pointShopService.getUserPhone(userNumber);
+        System.out.println(phone);
+        // 상품코드 문자로 전송
 
-        // 실제 비즈니스 로직 수행
-        // 포인트 차감, 재고 업데이트 등
+        // 전송끝난 코드 테이블에서 삭제
+        pointShopService.deleteCode(pointShopDTO);
 
-        // 응답으로 처리된 DTO 반환 (데이터가 필요하다면)
-        return "/shop/pointShop";
+        // 포인트 테이블에 사용한 포인트 행 추가
+        pointShopDTO.setUserNumber(userNumber);
+        pointShopService.insertUsePoint(pointShopDTO);
+
+        return "shop/pointShop";
     }
 
 }

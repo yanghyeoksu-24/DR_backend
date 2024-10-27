@@ -27,8 +27,8 @@
         <![CDATA[
         SELECT PRODUCT_CODE
         FROM DR_PRODUCT
-        WHERE PRODUCT_NAME = #{pointShopDTO.productName} -- 유저가 선택한 상품
-        AND ROWNUM <= #{pointShopDTO.quantity} ]]> -- 유저가 입력한 갯수
+        WHERE PRODUCT_NAME = #{productName} -- 유저가 선택한 상품
+        AND ROWNUM <= #{quantity} ]]> -- 유저가 입력한 갯수
     </select>
 
     <!-- 유저의 핸드폰 번호 조회 -->
@@ -51,8 +51,8 @@
         WHERE PRODUCT_CODE IN (
         SELECT PRODUCT_CODE
         FROM DR_PRODUCT
-        WHERE PRODUCT_NAME = #{pointShopDTO.productName}
-        AND ROWNUM <= #{pointShopDTO.quantity}
+        WHERE PRODUCT_NAME = #{productName}
+        AND ROWNUM <= #{quantity}
         )]]>
     </delete>
 
