@@ -20,21 +20,21 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
+//    @GetMapping("/myRecipeList")
+//    public String MyRecipeList(){
+//
+//        return "recipe/myRecipeList";
+//    }
+
     @GetMapping("/myRecipeList")
-    public String MyRecipeList(
-            @RequestParam(defaultValue = "1") int page,      // 기본 페이지 번호
-            Model model
-    ) {
-        int amount = 20;  // 페이지당 20개 항목
+    public String MyRecipeList(Model model) {
+        // 전체 레시피 목록 조회
+        List<MyRecipeListDTO> recipeList = recipeService.findAllRecipes();
 
-        // 레시피 목록을 가져옵니다.
-        List<MyRecipeListDTO> recipeList = recipeService.findAllPage(page, amount);
-
-        // 모델에 레시피 목록을 추가합니다.
+        // 모델에 레시피 목록 추가
         model.addAttribute("recipeList", recipeList);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("amount", amount);
 
-        return "recipe/myRecipeList";  // 레시피 목록 페이지로 이동
+        return "recipe/myRecipeList";  // myRecipeList.html로 데이터 전달
     }
+
 }

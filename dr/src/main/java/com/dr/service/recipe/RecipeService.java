@@ -14,8 +14,12 @@ import java.util.List;
 public class RecipeService {
     private final RecipeMapper recipeMapper;
 
-    // 페이지 번호와 항목 수를 파라미터로 받는 메서드
-    public List<MyRecipeListDTO> findAllPage(int page, int amount) {
-        return recipeMapper.selectAllPage(page, amount);
+//    public List<MyRecipeListDTO> findAllPage(int page, int amount) {
+//        return recipeMapper.selectAllPage(page, amount);
+//    }
+
+    public List<MyRecipeListDTO> findAllRecipes() {
+        return recipeMapper.selectAllPages();  // selectAllPage()는 페이지네이션 없이 전체 목록을 조회합니다.
     }
+
 }

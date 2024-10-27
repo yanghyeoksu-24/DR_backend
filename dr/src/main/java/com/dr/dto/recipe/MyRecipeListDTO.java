@@ -10,11 +10,10 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class MyRecipeListDTO {
-    private String title;       //레시피제목
-    private Long id;              // 레시피 ID
-    private String image;       // 이미지 경로
-    private String recipeTitle;    // 레시피 제목
-    private String writer;         // 작성자
-    private String date;           // 작성일
-    private int recommendations;         // 추천수
+    private Long recipeNumber;           // 레시피 번호 (ID 대신 사용)
+    private String recipeTitle;          // 레시피 제목
+    private String photoOriginal;          // 이미지 경로
+    private String userNickName;          // 작성자
+    private String recipeWriteDate;            // 작성일
+    private int goodCount;     // 추천수
 }
