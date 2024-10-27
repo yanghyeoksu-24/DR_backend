@@ -25,7 +25,7 @@
             <span class="drjoin-rightTitle">가입</span>
         </div>
         <br>
-        <form id="drjoinForm" class="drjoin-form" th:action="@{/user/drJoin}" method="post">
+        <form id="drjoinForm" class="drjoin-form" th:action="@{/user/drJoin}" method="post"  onsubmit="return showAlertAndRedirect()">
             <!-- 아이디(이메일) 필드 -->
             <label for="userEmail" class="drjoin-label">아이디(이메일)</label>
             <div class="input-withButton">
@@ -62,7 +62,7 @@
                    required><br>
             <span class="error-message" id="nameError"></span>
             <br>
-            <!-- 휴대폰 번호 필드 -->
+            <!-- 전화번호 필드 -->
             <label for="userPhone" class="drjoin-label">휴대폰 번호</label>
             <div class="input-withButton">
                 <input type="text" id="userPhone" name="userPhone" class="drjoin-input"
@@ -70,6 +70,7 @@
                 <button type="button" id="sendCode" class="drjoin-eventButton">인증요청</button>
             </div>
             <p class="error-message" id="phoneError"></p>
+
             <br>
             <!-- 인증번호 필드 -->
             <label for="authCode" class="drjoin-label">인증번호</label>
