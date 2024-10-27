@@ -15,6 +15,14 @@
         WHERE USER_EMAIL = #{userEmail}
     </select>
 
+
+    <select id="checkPhoneExists" parameterType="String" resultType="boolean">
+        SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
+        FROM DR_USER
+        WHERE USER_PHONE = #{userPhone}
+    </select>
+
+
     <select id="userLogin" resultType="UserSessionDTO">
         SELECT DU.USER_NUMBER, DU.USER_NICKNAME, DP.PHOTO_LOCAL
         FROM DR_USER DU

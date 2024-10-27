@@ -25,7 +25,7 @@
             <span class="drjoin-rightTitle">가입</span>
         </div>
         <br>
-        <form id="drjoinForm" class="drjoin-form" th:action="@{/user/drJoin}" method="post">
+        <form id="drjoinForm" class="drjoin-form" th:action="@{/user/drJoin}" method="post"  onsubmit="return showAlertAndRedirect()">
             <!-- 아이디(이메일) 필드 -->
             <label for="userEmail" class="drjoin-label">아이디(이메일)</label>
             <div class="input-withButton">
@@ -36,7 +36,7 @@
             <!-- 이메일 중복 오류 메시지 표시 -->
             <span class="error-message" id="userIdError"
                   th:text="${param.error == 'emailExists' ? '이메일이 이미 존재합니다.' : ''}"></span>
-
+            <br>
 
             <!-- 비밀번호 필드 -->
             <label for="userPw" class="drjoin-label">비밀번호</label>
@@ -46,7 +46,7 @@
                 <img th:src="@{/image/noView.png}" id="passwordToggle" class="toggle-password" alt="비밀번호 보기/숨기기">
             </div>
             <span class="error-message" id="passwordError"></span>
-
+            <br>
             <!-- 비밀번호 확인 필드 -->
             <label for="confirmPassword" class="drjoin-label">비밀번호 확인</label>
             <div class="input-withButton">
@@ -55,14 +55,14 @@
                 <img th:src="@{/image/noView.png}" id="confirmPasswordToggle" class="toggle-password" alt="비밀번호 보기/숨기기">
             </div>
             <span class="error-message" id="confirmPasswordError"></span>
-
+            <br>
             <!-- 닉네임 필드 -->
             <label for="userNickName" class="drjoin-label">닉네임</label>
             <input type="text" id="userNickName" name="userNickName" class="drjoin-input" placeholder="이름을 입력하세요."
-                   required>
+                   required><br>
             <span class="error-message" id="nameError"></span>
-
-            <!-- 휴대폰 번호 필드 -->
+            <br>
+            <!-- 전화번호 필드 -->
             <label for="userPhone" class="drjoin-label">휴대폰 번호</label>
             <div class="input-withButton">
                 <input type="text" id="userPhone" name="userPhone" class="drjoin-input"
@@ -71,6 +71,7 @@
             </div>
             <p class="error-message" id="phoneError"></p>
 
+            <br>
             <!-- 인증번호 필드 -->
             <label for="authCode" class="drjoin-label">인증번호</label>
             <div class="input-withButton">
@@ -79,7 +80,7 @@
                 <button type="button" id="verifyCode" class="drjoin-eventButton">인증확인</button>
             </div>
             <span class="error-message" id="authCodeError"></span>
-
+            <br>
             <!-- 약관 동의 체크박스 -->
             <div class="drjoin-checkbox">
                 <input type="checkbox" id="checkAll" name="checkAll" class="drjoin-checkboxInput" required>

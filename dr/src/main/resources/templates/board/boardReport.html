@@ -5,19 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/board/boardReport.css}">
-    <link rel="stylesheet" th:href="@{/css/main/header.css}">
-    <link rel="stylesheet" th:href="@{/css/main/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
+    <script defer th:src="@{/js/fragment/header.js}"></script>
     <!-- 네비바 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script defer th:src="@{/js/main/header.js}"></script>
 
     <title>DR - 게시글/댓글 신고창 페이지</title>
 </head>
 
 <body>
+<header th:replace="~{/fragment/header :: header}"></header>
 <main>
     <div class="boardreport-mainContainer">
         <div class="boardreport-mainBox">
@@ -65,7 +66,7 @@
         </div>
     </div>
 </main>
-
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 <script th:src="@{/js/board/boardReport.js}" defer></script>
 </body>
 

@@ -5,19 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/board/freeBoardDetail.css}">
-    <link rel="stylesheet" th:href="@{/css/main/header.css}">
-    <link rel="stylesheet" th:href="@{/css/main/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
+    <script defer th:src="@{/js/fragment/header.js}"></script>
     <!-- 네비바 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script defer th:src="@{/js/main/header.js}"></script>
 
     <title>DR - 자유게시판 상세페이지</title>
 </head>
 
 <body>
+<header th:replace="~{/fragment/header :: header}"></header>
 <!-- 메인 부분 -->
 <main>
     <div class="freeBoardDetail-mainContainer">
@@ -149,7 +150,7 @@
         </div>
     </div>
 </main>
-
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 <script th:src="@{/js/board/freeBoardDetail.js}" defer></script>
 </body>
 

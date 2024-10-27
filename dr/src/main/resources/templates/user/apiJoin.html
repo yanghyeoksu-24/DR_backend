@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DR - API 회원가입</title>
     <link rel="stylesheet" th:href="@{/css/user/apiJoin.css}"/>
-    <link rel="stylesheet" th:href="@{/css/main/header.css}"/>
-    <link rel="stylesheet" th:href="@{/css/main/footer.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
+    <script defer th:src="@{/js/fragment/header.js}"></script>
     <!-- 네비바 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
     <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script defer th:src="@{/js/main/header.js}"></script>
 </head>
 
 <body>
-
+<header th:replace="~{/fragment/header :: header}"></header>
 <main>
     <div class="apijoin-container">
         <div class="apijoin-title">
@@ -33,20 +33,21 @@
                 <button type="button" id="checkDuplicate" class="apijoin-eventButton">중복확인</button>
             </div>
             <span class="error-message" id="userIdError"></span>
-
-            <!-- 이름 필드 -->
+            <br>
+            <!-- 닉네임 필드 -->
             <label for="name" class="apijoin-label">닉네임</label>
             <input type="text" id="name" name="name" class="apijoin-input" placeholder="이름을 입력하세요." required>
             <span class="error-message" id="nameError"></span>
             <br>
             <!-- 휴대폰 번호 필드 -->
+            <br>
             <label for="phone" class="apijoin-label">휴대폰 번호</label>
             <div class="input-withButton">
                 <input type="text" id="phone" name="phone" class="apijoin-input" placeholder="하이픈(-)없이 숫자만 입력해주세요." required>
                 <button type="button" id="sendCode" class="apijoin-eventButton">인증요청</button>
             </div>
             <span class="error-message" id="phoneError" style="display: block; color: red;"></span>
-
+            <br>
             <!-- 인증번호 필드 -->
             <label for="authCode" class="apijoin-label">인증번호</label>
             <div class="input-withButton">
@@ -83,7 +84,7 @@
         </form>
     </div>
 </main>
-
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 <script th:src="@{/js/user/apiJoin.js}" defer></script>
 </body>
 
