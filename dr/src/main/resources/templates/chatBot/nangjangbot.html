@@ -30,9 +30,9 @@
   <main>
     <!-- 사이드바 -->
     <div id="nangjangbot-sideBar">
-      <img src="../../image/nangjangbot/close.png" id="nangjangbot-closeBtn">
+      <img th:src="@{/image/nangjangbot/close.png}" id="nangjangbot-closeBtn">
       <div id="nangjangbot-newChatContainer">
-        <a href="../../html/chatBot/nangjangbot.html"><img src="../../image/nangjangbot/newChat.png" id="nangjangbot-newChatBtn"></a>
+        <a th:href="@{/chatBot/nangjangbot}"><img th:src="@{/image/nangjangbot/newChat.png}" id="nangjangbot-newChatBtn"></a>
         <div id="nangjangbot-newChat">새 채팅</div>
       </div>
 
