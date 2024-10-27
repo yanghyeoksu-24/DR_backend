@@ -9,9 +9,10 @@ import java.util.Optional;
 
 @Mapper
 public interface UserMapper {
-//    void insertUser(UserDTO userDTO);
+    void insertUser(UserDTO userDTO);
 
     Optional<UserSessionDTO> userLogin(@Param("userEmail") String userEmail, @Param("userPw") String userPw);
 
 
+    boolean checkEmailExists(String userEmail);
 }
