@@ -39,6 +39,7 @@ public class ManagerController {
         return "/manager/managerLogin";
     }
 
+    // 1. 로그인
     @PostMapping("/managerLogin")
     public RedirectView login(@RequestParam("managerEmail") String managerEmail, @RequestParam("managerPw") String managerPw, HttpSession session) {
         log.info("로그인 시도: {}", managerEmail);
@@ -70,7 +71,7 @@ public class ManagerController {
         return "manager/dashBoard";
     }
 
-    // 3. 회원관리
+    // 3-1. 회원관리
     @GetMapping("/manageUser")
     public String manageUser(Model model) {
         List<ManagerUserDTO> userList = managerService.manageUser();
@@ -79,7 +80,7 @@ public class ManagerController {
         return "/manager/manageUser";
     }
 
-    // 회원탈퇴
+    // 3-2. 회원탈퇴
     @PostMapping("/userOut")
     public ResponseEntity<?> deleteUser(@RequestBody Map<String, List<Integer>> request) {
         List<Integer> userNumbers = request.get("userNumber");
@@ -98,7 +99,7 @@ public class ManagerController {
         }
     }
 
-    //회원정지
+    // 3-3. 회원정지
     @PostMapping("/userPause")
     public ResponseEntity<?> updateUser(@RequestBody Map<String, List<Integer>> request) {
         List<Integer> userNumbers = request.get("userNumber");
@@ -118,7 +119,7 @@ public class ManagerController {
         }
     }
 
-    //4. 게시판 관리
+    //4-1. 게시판 관리
     @GetMapping("/manageBoard")
     public String showBoard(Model model) {
     List<ManagerBoardDTO> boardList = managerService.showBoard();
@@ -126,6 +127,7 @@ public class ManagerController {
         return "/manager/manageBoard";
     }
 
+    //4-2. 게시판 삭제
     @PostMapping("/boardDelete")
     public ResponseEntity<?> boardDelete(@RequestBody Map<String, List<Integer>> request) {
         List<Integer> boardLists = request.get("boardNumber");
@@ -144,7 +146,7 @@ public class ManagerController {
         }
     }
 
-    //4. 레시피 관리
+    //5-1. 레시피 관리
     @GetMapping("/manageRecipe")
     public String showRecipe(Model model) {
         List<ManagerRecipeDTO> recipeList = managerService.showRecipe();
@@ -152,6 +154,7 @@ public class ManagerController {
         return "/manager/manageRecipe";
     }
 
+    //5-2. 레시피 삭제
     @PostMapping("/recipeDelete")
     public ResponseEntity<?> recipeDelete(@RequestBody Map<String, List<Integer>> request) {
         List<Integer> recipeLists = request.get("recipeNumber");
@@ -170,7 +173,7 @@ public class ManagerController {
         }
     }
 
-    // 5. 댓글 관리
+    // 6-1. 댓글 관리
     @GetMapping("/manageComment")
     public String showComment(Model model) {
         List<ManagerCommentDTO> replyList = managerService.showReply();
@@ -178,6 +181,7 @@ public class ManagerController {
         return "/manager/manageComment";
     }
 
+    // 6-2. 댓글 삭제
     @PostMapping("/replyDelete")
     public ResponseEntity<?> replyDelete(@RequestBody Map<String, List<Integer>> request) {
         List<Integer> replyLists = request.get("replyNumber");
@@ -196,7 +200,7 @@ public class ManagerController {
         }
     }
 
-    // 6. 포인트 관리
+    // 7-1. 포인트 관리
     @GetMapping("/managePoint")
     public String showPoint(@RequestParam(value = "month", required = false) Integer month, Model model) {
         List<ManagerPointDTO> pointList = managerService.showPoint();
@@ -221,6 +225,7 @@ public class ManagerController {
         return "/manager/managePoint";
     }
 
+    // 7-2. 포인트 삭제
     @PostMapping("/pointDelete")
     public ResponseEntity<?> pointDelete(@RequestBody Map<String, List<Integer>> request) {
         List<Integer> pointLists = request.get("pointNumber");
@@ -239,6 +244,7 @@ public class ManagerController {
         }
     }
 
+    // 7-3. 포인트 회수
     @PostMapping("/takePoint")
     public ResponseEntity<?> takePoint(@RequestBody Map<String, List<Integer>> request) {
         List<Integer> takePoints = request.get("pointNumber");
@@ -257,7 +263,7 @@ public class ManagerController {
         }
     }
 
-    // 7. 신고 관리
+    // 8-1. 신고 관리
     @GetMapping("/manageReport")
     public String showReport(Model model) {
         List<ManagerReportDTO> reportList = managerService.showReport();
@@ -265,6 +271,7 @@ public class ManagerController {
         return "/manager/manageReport";
     }
 
+    // 8-2. 신고 삭제
     @PostMapping("/deleteReport")
     public ResponseEntity<?> deleteReport(@RequestBody Map<String, List<Integer>> request) {
         List<Integer> sirenLists = request.get("sirenNumber");
@@ -283,7 +290,7 @@ public class ManagerController {
         }
     }
 
-    //8. 상품 관리
+    //9-1. 상품 관리
     @GetMapping("/manageProduct")
     public String showProduct(Model model) {
         List<ManagerProductDTO> productList = managerService.showProduct();
@@ -291,6 +298,7 @@ public class ManagerController {
         return "/manager/manageProduct";
     }
 
+    //9-2. 상품 삭제
     @PostMapping("/deleteProduct")
     public ResponseEntity<?> deleteProduct(@RequestBody Map<String, List<String>> request) {
         List<String> productLists = request.get("productName");
@@ -309,15 +317,13 @@ public class ManagerController {
         }
     }
 
+    // 9-3. 상품 등록
 
 
 
 
 
-
-
-
-
+    // 9-4. 상품 수정
 
 
 
