@@ -39,11 +39,8 @@ public class PointShopController {
     }
 
     @PostMapping("/buy")
-    public String userBuyProducts(@RequestBody PointShopDTO pointShopDTO, HttpSession session) { //@RequestBody 로 DTO에 구매상품,갯수,총액 저장(ajax로 전송받은 데이터)
-        // 세션에서 사용자 정보 가져오기
-        Long userNumber = (Long) session.getAttribute("userNumber");
-
-        // null 체크 - 로그인하지 않았을 경우 처리
+    public String userBuyProducts(@RequestBody PointShopDTO pointShopDTO, @SessionAttribute(value = "userNumber", required = false) Long userNumber) { //@RequestBody 로 DTO에 구매상품,갯수,총액 저장(ajax로 전송받은 데이터)
+        //로그인하지 않았을 경우 처리
         if (userNumber == null) {
             return "redirect:/user/login"; // 로그인 페이지로 리다이렉션
         }
