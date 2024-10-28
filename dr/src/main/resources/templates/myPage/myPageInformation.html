@@ -42,7 +42,8 @@
             <!-- 마이페이지 이미지 사진 -->
             <div class="myPage-pictureImage">
                 <div class="myPage-profile">
-                    <img id="profileImage" src="./../../image/basicProfile.png" alt="프로필 이미지" width="150" height="150">
+                    <img id="profileImage" th:src="@{/image/photo/} + ${userInfo.photo}"
+                         alt="프로필 이미지" width="150" height="150">
                     <input type="file" id="imageUpload" style="display: none;">
                     <!-- 이미지 업로드 버튼 (수레바퀴 이미지) -->
                     <img src="./../../image/sawtooth.png" alt="이미지 변경" id="uploadIcon" style="width: 20px; height: 20px; cursor: pointer; margin-top: 10px;">

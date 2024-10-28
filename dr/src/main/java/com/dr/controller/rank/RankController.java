@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
@@ -23,9 +24,7 @@ public class RankController {
 
     // 사용자 랭킹 페이지
     @GetMapping("/userRank")
-    public String getUserRank(HttpSession session, Model model) {
-        // 세션에서 userNumber 가져오고..
-        Long userNumber = (Long) session.getAttribute("userNumber");
+    public String getUserRank(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model, HttpSession session) {
 
         // 세션에 userNumber가 없는 경우 로그인 페이지로 리다이렉트
         if (userNumber == null) {

@@ -173,7 +173,9 @@ li {
     /* 넘치는 텍스트 숨기기 */
     text-overflow: ellipsis;
     /* 넘치는 텍스트를 생략(...) 처리 */
+    cursor: pointer !important;
 }
+
 
 .myPage-myPostTitleContentTypeTwo {
     font-size: 20px;
