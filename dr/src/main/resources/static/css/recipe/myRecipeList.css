@@ -100,12 +100,12 @@ main{
     font-size: 10px;
 }
 .myRecipeList-listbox {
-    width: 250px;
+    width: 265px;
     height: 265px;
 }
 
 .myRecipeList-listbox img{
-    width: 250px;
+    width: 265px;
     height: 265px;
     border-radius: 5px;
 }

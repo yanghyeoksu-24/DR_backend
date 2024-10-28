@@ -1,6 +1,7 @@
 package com.dr.mapper.recipe;
 
 import com.dr.dto.recipe.ChatBotRecipeListDTO;
+import com.dr.dto.recipe.MyRecipeDetailDTO;
 import com.dr.dto.recipe.MyRecipeListDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,4 +14,8 @@ public interface RecipeMapper {
     List<MyRecipeListDTO> selectAllPages();
 
     List<ChatBotRecipeListDTO> selectAllPages1();
+
+    MyRecipeDetailDTO selectMyRecipeDetail(@Param("recipeNumber") Long recipeNumber);
+
+
 }
