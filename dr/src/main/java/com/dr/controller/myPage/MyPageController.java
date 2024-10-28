@@ -2,6 +2,7 @@ package com.dr.controller.myPage;
 
 import com.dr.dto.myPage.PointDetailDTO;
 import com.dr.dto.myPage.UserInfoDTO;
+import com.dr.dto.myPage.UserRecipeDTO;
 import com.dr.service.myPage.MyPageService;
 import com.dr.service.rank.RankService;
 import jakarta.servlet.http.HttpSession;
@@ -50,6 +51,9 @@ public class MyPageController {
     @PostMapping("/myPageDelete")
     public String deleteUser(@SessionAttribute(value = "userNumber", required = false) Long userNumber,HttpSession session) {
 
+        if (userNumber == null) {
+            return "redirect:/user/login"; // 로그인 페이지로 리다이렉트
+        }
 
         myPageService.deleteUser(userNumber);
 
@@ -62,11 +66,8 @@ public class MyPageController {
 
     // -- 회원탈퇴 완료 페이지 --
     @GetMapping("/myPageDelete")
-    public String getDeleteConfirmation(HttpSession session, Model model) {
-        // 세션 정보가 없음을 확인
-        if (session.getAttribute("userNumber") == null) {
-            // 세션 정보가 없으면 추가적인 처리를 할 수 있음
-        }
+    public String getDeleteConfirmation() {
+
         return "myPage/myPageDelete";
     }
 
@@ -84,5 +85,24 @@ public class MyPageController {
 
         return "myPage/myPageMyPoint";
     }
+
+    // -- 내정보 내가 쓴 레시피 확인 -- //
+    @GetMapping("/myPageMyRecipe")
+    public String getUserRecipes(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model) {
+
+        // 세션에 userNumber가 없는 경우 로그인 페이지로 리다이렉트
+        if (userNumber == null) {
+            return "redirect:/user/login";
+        }
+
+        // 사용자가 쓴 레시피 목록 가져오기
+        List<UserRecipeDTO> userRecipes = myPageService.getUserRecipe(userNumber);
+        model.addAttribute("userRecipes", userRecipes);
+
+        return "myPage/myPageMyRecipe";
+    }
+
+
+
 
         }
