@@ -16,4 +16,6 @@ public class SearchDTO {
     private String userNickName;
     private String photoLocal;
     private long goodCount;
+    private String boardWriteDate;
+    private String recipeWriteDate;
 }
