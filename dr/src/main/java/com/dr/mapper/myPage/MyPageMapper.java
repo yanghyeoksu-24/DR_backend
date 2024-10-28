@@ -2,6 +2,7 @@ package com.dr.mapper.myPage;
 
 import com.dr.dto.myPage.PointDetailDTO;
 import com.dr.dto.myPage.UserInfoDTO;
+import com.dr.dto.myPage.UserRecipeDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,4 +19,6 @@ public interface MyPageMapper {
     // 내 정보 포인트 내역 확인
     List<PointDetailDTO> pointHistory(@Param("userNumber") Long userNumber);
 
+    //내 정보 내가 쓴 레시피 목록 확인
+    List<UserRecipeDTO> getUserRecipe(@Param("userNumber") Long userNumber);
 }
