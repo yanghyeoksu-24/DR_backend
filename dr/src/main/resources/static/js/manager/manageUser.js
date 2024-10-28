@@ -74,6 +74,8 @@
     });
   });
 
+
+
   document.getElementById('memberPause').addEventListener('click', function() {
     // 체크된 체크박스들의 value 값 수집
     const selectedUserNumbers = Array.from(document.querySelectorAll('#manage-memberUl input[type="checkbox"]:checked'))

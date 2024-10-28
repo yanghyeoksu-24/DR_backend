@@ -93,32 +93,6 @@ $(document).ready(function () {
     // 휴대폰 번호 유효성 검사 정규표현식 (하이픈 없이 숫자만 10~11자리)
     const phonePattern = /^[0-9]{10,11}$/;
 
-    $('#sendCode').on('click', function () {
-        const phone = $('#userPhone').val().trim();
-
-        // 휴대폰 번호 형식 검사
-        if (!phonePattern.test(phone)) {
-            $('#phoneError').text("올바른 휴대폰 번호를 입력하세요. (하이픈 없이 10~11자리 숫자)").css("color", "red");
-            return; // 유효하지 않은 번호면 요청을 보내지 않음
-        } else {
-            $('#phoneError').text(""); // 오류 메시지 초기화
-        }
-
-        // 유효한 번호일 경우에만 인증 요청
-        $.ajax({
-            url: '/api/sms/send',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({phoneNumber: phone}),
-            success: function (response) {
-                alert(response);
-            },
-            error: function (xhr, status, error) {
-                console.error("에러 발생: " + error);
-                alert("서버와의 통신 중 오류가 발생했습니다.");
-            }
-        });
-    });
 
     // 인증번호 확인
     $('#verifyCode').on('click', function () {
@@ -223,8 +197,6 @@ $(document).ready(function () {
     }
 
     // 인증 요청 버튼 클릭 이벤트
-
-
     $('#sendCode').on('click', function () {
         let isRequesting = false; // 인증 요청 중복 방지 변수
         const userPhone = $('#userPhone').val().trim();

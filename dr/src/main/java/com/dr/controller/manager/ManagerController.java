@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class ManagerController {
     private final ManagerService managerService;
 
-    // 1. 로그인
+    // 1-1. 로그인 실패시
     @GetMapping("/managerLogin")
     public String login(HttpSession session , Model model) {
         String loginError = (String) session.getAttribute("loginError");
@@ -39,7 +39,7 @@ public class ManagerController {
         return "/manager/managerLogin";
     }
 
-    // 1. 로그인
+    // 1-2. 로그인 버튼 눌렀을 때
     @PostMapping("/managerLogin")
     public RedirectView login(@RequestParam("managerEmail") String managerEmail, @RequestParam("managerPw") String managerPw, HttpSession session) {
         log.info("로그인 시도: {}", managerEmail);
@@ -98,6 +98,9 @@ public class ManagerController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일부 사용자 삭제에 실패했습니다.");
         }
     }
+
+
+
 
     // 3-3. 회원정지
     @PostMapping("/userPause")
