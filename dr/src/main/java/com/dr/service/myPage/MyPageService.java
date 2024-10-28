@@ -2,6 +2,7 @@ package com.dr.service.myPage;
 
 import com.dr.dto.myPage.PointDetailDTO;
 import com.dr.dto.myPage.UserInfoDTO;
+import com.dr.dto.myPage.UserRecipeDTO;
 import com.dr.mapper.myPage.MyPageMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,10 @@ public class MyPageService {
     public List<PointDetailDTO> pointHistory(Long userNumber) {
         return myPageMapper.pointHistory(userNumber);
 
+    }
+
+    // userNumber를 사용하여 내가 쓴 레시피 목록 확인!
+    public List<UserRecipeDTO> getUserRecipe(Long userNumber) {
+        return myPageMapper.getUserRecipe(userNumber);
     }
 }
