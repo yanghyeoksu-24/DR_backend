@@ -46,123 +46,15 @@
         <!-- 내가 쓴 레시피 이미지 및 글 맨 위-->
         <div class="myPage-myRecipeContainerReal">
             <div class="myPage-myRecipeWrap">
-                <div class="myPage-myRecipeprideOne">
-                    <div clss="myPage-myRecipeLeft"><img id="myPage-myRecipeOne" src="./../../image/myPage/egg.jpg"></div>
-                    <div class="myPage-myRecipeInside">
-                        <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle">숙주나물 무침</div>
-                            <div class="myPage-myRecipeName">2024-10-03</div>
-                            <div class="myPage-myRecipeListDelete">추천수 43</div>
-                        </div>
+                <div th:each="recipe : ${userRecipes}" class="myPage-myRecipeprideOne">
+                    <div class="myPage-myRecipeLeft">
+                        <img id="myPage-myRecipeOne" th:src="@{/image/myPage/{photo}(photo=${recipe.recipePhoto})}" alt="레시피 사진">
                     </div>
-                </div>
-                <div class="myPage-myRecipeprideOne">
-                    <div clss="myPage-myRecipeLeft"><img id="myPage-myRecipeOne" src="./../../image/myPage/sausage.jpg"></div>
                     <div class="myPage-myRecipeInside">
                         <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle">숙주나물 무침</div>
-                            <div class="myPage-myRecipeName">2024-10-03</div>
-                            <div class="myPage-myRecipeListDelete">추천수 43</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="myPage-myRecipeprideOne">
-                    <div clss="myPage-myRecipeLeft"><img id="myPage-myRecipeOne" src="./../../image/myPage/appetizer.jpg"></div>
-                    <div class="myPage-myRecipeInside">
-                        <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle">숙주나물 무침</div>
-                            <div class="myPage-myRecipeName">2024-10-03</div>
-                            <div class="myPage-myRecipeListDelete">추천수 43</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="myPage-myRecipeprideOne">
-                    <div clss="myPage-myRecipeLeft"><img id="myPage-myRecipeOne" src="./../../image/myPage/tofu.jpg"></div>
-                    <div class="myPage-myRecipeInside">
-                        <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle">숙주나물 무침</div>
-                            <div class="myPage-myRecipeName">2024-10-03</div>
-                            <div class="myPage-myRecipeListDelete">추천수 43</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="myPage-myRecipeprideOne">
-                    <div clss="myPage-myRecipeLeft"><img id="myPage-myRecipeOne" src="./../../image/myPage/appetizer.jpg"></div>
-                    <div class="myPage-myRecipeInside">
-                        <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle">숙주나물 무침</div>
-                            <div class="myPage-myRecipeName">2024-10-03</div>
-                            <div class="myPage-myRecipeListDelete">추천수 43</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="myPage-myRecipeprideOne">
-                    <div clss="myPage-myRecipeLeft"><img id="myPage-myRecipeOne" src="./../../image/myPage/egg.jpg"></div>
-                    <div class="myPage-myRecipeInside">
-                        <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle">숙주나물 무침</div>
-                            <div class="myPage-myRecipeName">2024-10-03</div>
-                            <div class="myPage-myRecipeListDelete">추천수 43</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="myPage-myRecipeprideOne">
-                    <div clss="myPage-myRecipeLeft"><img id="myPage-myRecipeOne" src="./../../image/myPage/egg.jpg"></div>
-                    <div class="myPage-myRecipeInside">
-                        <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle">숙주나물 무침</div>
-                            <div class="myPage-myRecipeName">2024-10-03</div>
-                            <div class="myPage-myRecipeListDelete">추천수 43</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="myPage-myRecipeprideOne">
-                    <div clss="myPage-myRecipeLeft"><img id="myPage-myRecipeOne" src="./../../image/myPage/egg.jpg"></div>
-                    <div class="myPage-myRecipeInside">
-                        <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle">숙주나물 무침</div>
-                            <div class="myPage-myRecipeName">2024-10-03</div>
-                            <div class="myPage-myRecipeListDelete">추천수 43</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="myPage-myRecipeprideOne">
-                    <div clss="myPage-myRecipeLeft"><img id="myPage-myRecipeOne" src="./../../image/myPage/egg.jpg"></div>
-                    <div class="myPage-myRecipeInside">
-                        <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle">숙주나물 무침</div>
-                            <div class="myPage-myRecipeName">2024-10-03</div>
-                            <div class="myPage-myRecipeListDelete">추천수 43</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="myPage-myRecipeprideOne">
-                    <div clss="myPage-myRecipeLeft"><img id="myPage-myRecipeOne" src="./../../image/myPage/egg.jpg"></div>
-                    <div class="myPage-myRecipeInside">
-                        <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle">숙주나물 무침</div>
-                            <div class="myPage-myRecipeName">2024-10-03</div>
-                            <div class="myPage-myRecipeListDelete">추천수 43</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="myPage-myRecipeprideOne">
-                    <div clss="myPage-myRecipeLeft"><img id="myPage-myRecipeOne" src="./../../image/myPage/egg.jpg"></div>
-                    <div class="myPage-myRecipeInside">
-                        <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle">숙주나물 무침</div>
-                            <div class="myPage-myRecipeName">2024-10-03</div>
-                            <div class="myPage-myRecipeListDelete">추천수 43</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="myPage-myRecipeprideOne">
-                    <div clss="myPage-myRecipeLeft"><img id="myPage-myRecipeOne" src="./../../image/myPage/egg.jpg"></div>
-                    <div class="myPage-myRecipeInside">
-                        <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle">숙주나물 무침</div>
-                            <div class="myPage-myRecipeName">2024-10-03</div>
-                            <div class="myPage-myRecipeListDelete">추천수 43</div>
+                            <div class="myPage-myRecipeMiddleTitle" th:text="${recipe.recipeTitle}">레시피 제목</div>
+                            <div class="myPage-myRecipeName" th:text="${recipe.recipeWriteDate}">작성일</div>
+                            <div class="myPage-myRecipeListDelete" th:text="'추천수 ' + ${recipe.goodCount}">추천수 0</div>
                         </div>
                     </div>
                 </div>

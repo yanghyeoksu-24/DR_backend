@@ -2,13 +2,16 @@ package com.dr.controller.myPage;
 
 import com.dr.dto.myPage.PointDetailDTO;
 import com.dr.dto.myPage.UserInfoDTO;
+import com.dr.dto.myPage.UserRecipeDTO;
 import com.dr.service.myPage.MyPageService;
 import com.dr.service.rank.RankService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -16,15 +19,15 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/myPage")
 @SessionAttributes("userNumber")
+@Slf4j
 public class MyPageController {
 
     private final MyPageService myPageService;
 
     // -- 내 정보 확인하기 --
     @GetMapping("/myPageInformation")
-    public String getUserInfo(HttpSession session, Model model) {
-        // 세션에서 userNumber 가져오고..
-        Long userNumber = (Long) session.getAttribute("userNumber");
+    public String getUserInfo(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model) {
+
         // 세션에 userNumber가 없는 경우 로그인 페이지로 리다이렉트
         if (userNumber == null) {
             return "redirect:/user/login";
@@ -39,31 +42,39 @@ public class MyPageController {
 
     // -- 회원탈퇴 주의사항 페이지로 넘어가기 --
     @GetMapping("/myPageCaution")
-    public String getUserCaution() {
+    public String getUserCaution(@SessionAttribute(value = "userNumber", required = false) Long userNumber) {
 
         return "myPage/myPageCaution";
     }
 
-    // -- 회원 탈퇴 처리 -- //
+    // 회원탈퇴 처리 메서드
     @PostMapping("/myPageDelete")
-    public String deleteUser(HttpSession session) {
-        Long userNumber = (Long) session.getAttribute("userNumber");
+    public String deleteUser(@SessionAttribute(value = "userNumber", required = false) Long userNumber,HttpSession session) {
 
-        // 회원탈퇴 서비스 호출
+        if (userNumber == null) {
+            return "redirect:/user/login"; // 로그인 페이지로 리다이렉트
+        }
+
         myPageService.deleteUser(userNumber);
 
-        // 세션 종료
-       session.invalidate();
+        //세션 종료
+        session.invalidate();
+        log.info("세션 종료됨: userNumber={}", userNumber);
 
-        // 회원 탈퇴 완료 페이지로!
-        return "/myPage/myPageDelete";
+        return "redirect:/myPage/myPageDelete";
+    }
+
+    // -- 회원탈퇴 완료 페이지 --
+    @GetMapping("/myPageDelete")
+    public String getDeleteConfirmation() {
+
+        return "myPage/myPageDelete";
     }
 
     // -- 내정보 포인트 내역 확인 -- //
     @GetMapping("/myPageMyPoint")
-    public String getPointHistory(HttpSession session, Model model) {
-        // 세션에서 userNumber 가져오고..
-        Long userNumber = (Long) session.getAttribute("userNumber");
+    public String getPointHistory(@SessionAttribute(value = "userNumber", required = false) Long userNumber,HttpSession session, Model model) {
+
         // 세션에 userNumber가 없는 경우 로그인 페이지로 리다이렉트
         if (userNumber == null) {
             return "redirect:/user/login";
@@ -74,5 +85,24 @@ public class MyPageController {
 
         return "myPage/myPageMyPoint";
     }
+
+    // -- 내정보 내가 쓴 레시피 확인 -- //
+    @GetMapping("/myPageMyRecipe")
+    public String getUserRecipes(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model) {
+
+        // 세션에 userNumber가 없는 경우 로그인 페이지로 리다이렉트
+        if (userNumber == null) {
+            return "redirect:/user/login";
+        }
+
+        // 사용자가 쓴 레시피 목록 가져오기
+        List<UserRecipeDTO> userRecipes = myPageService.getUserRecipe(userNumber);
+        model.addAttribute("userRecipes", userRecipes);
+
+        return "myPage/myPageMyRecipe";
+    }
+
+
+
 
         }
