@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="userRankImageOne">
-                <img class="userRankOneImgSet" th:src="@{${rank.photoLocal}}" alt="User Image">
+                <img class="userRankOneImgSet" th:src="@{/image/photo/} + ${rank.photoLocal}" alt="User Image">
             </div>
             <div class="userRankNameOne" th:text="${rank.userNickname}">이강철</div>
             <div class="userRankNameContributingScoreOne" th:text="${rank.scoreGet} + '점'">5000점</div>

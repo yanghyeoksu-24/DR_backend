@@ -2,6 +2,7 @@ package com.dr.service.myPage;
 
 import com.dr.dto.myPage.PointDetailDTO;
 import com.dr.dto.myPage.UserInfoDTO;
+import com.dr.dto.myPage.UserPostDTO;
 import com.dr.dto.myPage.UserRecipeDTO;
 import com.dr.mapper.myPage.MyPageMapper;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,10 @@ public class MyPageService {
     // userNumber를 사용하여 내가 쓴 레시피 목록 확인!
     public List<UserRecipeDTO> getUserRecipe(Long userNumber) {
         return myPageMapper.getUserRecipe(userNumber);
+    }
+
+    // userNumber를 사용하여 내가 쓴 게시글 목록 확인!
+    public List<UserPostDTO> getUserPost(Long userNumber) {
+        return myPageMapper.getUserPost(userNumber);
     }
 }
