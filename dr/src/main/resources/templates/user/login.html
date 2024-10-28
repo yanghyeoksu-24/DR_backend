@@ -33,11 +33,11 @@
             <input type="text" name="userEmail" id="login-loginId" placeholder="아이디 또는 이메일주소">
             <input type="password" name="userPw" id="login-loginPw" placeholder="비밀번호">
             <img class="login-formTogleOne" th:src="@{/image/view.png}" alt="보이기" style="cursor: pointer;">
-            <img class="login-formTogleTwo" th:src="@{/image/noView.png}" alt="숨기기" style="cursor: pointer; display: none;">
+            <img class="login-formTogleTwo" th:src="@{/image/noView.png}" alt="숨기기"
+                 style="cursor: pointer; display: none;">
             <p id="login-none"></p>
             <button type="submit" id="login-loginButton" class="login-button">로그인</button>
         </form>
-
 
 
         <br><br>
@@ -61,11 +61,27 @@
             <button id="login-naverButton">네이버 계정으로 로그인</button>
         </div>
 
+
     </div>
 
 </main>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 <script th:src="@{/js/user/login.js}"></script>
 </body>
+<script th:inline="javascript">
+    // URL에서 쿼리 매개변수를 읽어오는 함수
+    function getQueryParam(param) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(param);
+    }
 
+    // 로그인 실패 시 알림을 표시
+    document.addEventListener("DOMContentLoaded", function () {
+        const errorMessage = getQueryParam("error");
+
+        if (errorMessage) {
+            alert(errorMessage); // 로그인 실패 메시지 표시
+        }
+    });
+</script>
 </html>

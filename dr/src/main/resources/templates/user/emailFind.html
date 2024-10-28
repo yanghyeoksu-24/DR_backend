@@ -9,9 +9,7 @@
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
   <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
   <script defer th:src="@{/js/fragment/header.js}"></script>
-  <!-- 네비바 폰트 -->
   <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
-  <!-- 제이쿼리 -->
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
@@ -23,7 +21,9 @@
       <span class="emailfind-leftTitle">이메일</span>
       <span class="emailfind-rightTitle">찾기</span>
     </div>
-    <form action="" id="apijoinForm" class="emailfind-form">
+    <form id="apijoinForm" action="/user/emailFindOk" method="post">
+      <!-- 폼 필드들 -->
+    </form>
       <!-- 휴대폰 번호 필드 -->
       <label for="phone" class="emailfind-label">휴대폰 번호</label>
       <div class="input-withButton">
