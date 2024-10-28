@@ -10,7 +10,7 @@
             NVL(S.ENVIRONMENT_SCORE, 0) AS ENVIRONMENT_SCORE,
             NVL(R.ENVIRONMENT_RANK, 0) AS ENVIRONMENT_RANK,
             NVL(P.TOTAL_POINTS, 0) AS TOTAL_POINTS,
-            COALESCE(PH.PHOTO_ORIGINAL, '기본프사.JPG') AS PHOTO
+            PH.PHOTO_LOCAL AS PHOTO
         FROM
             DR_USER U
                 LEFT JOIN
@@ -37,18 +37,12 @@
                 LEFT JOIN
             (SELECT
                  USER_NUMBER,
-                 PHOTO_ORIGINAL
+                 PHOTO_LOCAL
              FROM
-                 (SELECT
-                      USER_NUMBER,
-                      PHOTO_ORIGINAL,
-                      ROW_NUMBER() OVER (PARTITION BY USER_NUMBER ORDER BY CASE WHEN PHOTO_ORIGINAL = '유저등록사진.JPG' THEN 1 ELSE 2 END) AS RN
-                  FROM
-                      DR_PHOTO
-                  WHERE
-                      PHOTO_ORIGINAL IN ('유저등록사진.JPG', '기본프사.JPG')
-                 )
-             WHERE RN = 1) PH ON U.USER_NUMBER = PH.USER_NUMBER
+                 DR_PHOTO
+             WHERE
+                 PHOTO_LOCAL IS NOT NULL
+            ) PH ON U.USER_NUMBER = PH.USER_NUMBER
         WHERE
             U.USER_NUMBER = #{userNumber}
     </select>
@@ -104,5 +98,24 @@
             R.USER_NUMBER = #{userNumber}
         ORDER BY
             R.RECIPE_WRITE_DATE DESC
+    </select>
+
+    <!-- 내정보 내가 쓴 게시글 목록 -->
+    <select id="getUserPost" parameterType="Long" resultType="UserPostDTO">
+        SELECT
+            ROW_NUMBER() OVER (ORDER BY B.BOARD_WRITE_DATE DESC) AS MY_POST_SEQ,
+            B.BOARD_TITLE AS MY_POST_TITLE,
+            B.BOARD_TYPE AS MY_POST_TYPE,
+            NVL(GOOD_COUNT.LIKES, 0) AS MY_POSTGOOD_COUNT,
+            TO_CHAR(B.BOARD_WRITE_DATE, 'YYYY-MM-DD') AS MY_POST_WRITE_DATE
+        FROM DR_BOARD B
+        LEFT JOIN (
+            SELECT
+                 BOARD_NUMBER, COUNT(*) AS LIKES
+        FROM DR_GOOD
+        GROUP BY BOARD_NUMBER
+        ) GOOD_COUNT ON B.BOARD_NUMBER = GOOD_COUNT.BOARD_NUMBER
+        WHERE B.USER_NUMBER = #{userNumber}
+        ORDER BY B.BOARD_WRITE_DATE DESC
     </select>
 </mapper>

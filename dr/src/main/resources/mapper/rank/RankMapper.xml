@@ -3,42 +3,36 @@
 <mapper namespace="com.dr.mapper.rank.RankMapper">
 
 <!-- 자기 자신 랭킹 조회 쿼리 -->
-<select id="getRankList" parameterType="Long" resultType="RankDTO">
-                SELECT
-                RANK_DATA.RANK,               -- 사용자 순위
-                RANK_DATA.USER_NICKNAME,       -- 사용자 닉네임
-                RANK_DATA.PHOTO_LOCAL,         -- 사용자 프로필 사진 (가장 최신 사진)
-                RANK_DATA.SCORE_GET            -- 사용자 환경 기여 점수 합계
-                FROM (
-                SELECT
+    <select id="getRankList" parameterType="Long" resultType="RankDTO">
+        SELECT
+            RANK_DATA.RANK,               -- 사용자 순위
+            RANK_DATA.USER_NICKNAME,       -- 사용자 닉네임
+            RANK_DATA.PHOTO_LOCAL,         -- 사용자 프로필 사진 (가장 최신 사진)
+            RANK_DATA.SCORE_GET            -- 사용자 환경 기여 점수 합계
+            FROM ( SELECT
                 DENSE_RANK() OVER (ORDER BY SUM(S.SCORE_GET) DESC) AS RANK,
                 U.USER_NICKNAME,
                 LP.PHOTO_LOCAL,
                 SUM(S.SCORE_GET) AS SCORE_GET,
                 U.USER_NUMBER
-                FROM
-                DR_USER U
-                JOIN
-                DR_SCORE S ON U.USER_NUMBER = S.USER_NUMBER
+            FROM DR_USER U
+                JOIN DR_SCORE S ON U.USER_NUMBER = S.USER_NUMBER
                 LEFT JOIN (
                 SELECT
                 P.USER_NUMBER,
                 P.PHOTO_LOCAL,
                 ROW_NUMBER() OVER (PARTITION BY P.USER_NUMBER ORDER BY P.PHOTO_UPLOAD DESC) AS RN
-                FROM
-                DR_PHOTO P
+                FROM DR_PHOTO P
                 ) LP ON U.USER_NUMBER = LP.USER_NUMBER AND LP.RN = 1
-                GROUP BY
-                U.USER_NICKNAME, LP.PHOTO_LOCAL, U.USER_NUMBER
+                GROUP BY U.USER_NICKNAME, LP.PHOTO_LOCAL, U.USER_NUMBER
                 ) RANK_DATA
-                WHERE
-                RANK_DATA.USER_NUMBER = #{userNumber}
-            </select>
+                WHERE RANK_DATA.USER_NUMBER = #{userNumber}
+    </select>
 
-            <!-- 50위까지의 사용자 랭킹 조회 -->
-            <select id="fiftyRankList" resultType="RankDTO">
-                <![CDATA[
-                SELECT
+    <!-- 50위까지의 사용자 랭킹 조회 -->
+    <select id="fiftyRankList" resultType="RankDTO">
+        <![CDATA[
+            SELECT
                 RANK_DATA.RANK,               -- 사용자 순위
                 RANK_DATA.USER_NICKNAME,       -- 사용자 닉네임
                 RANK_DATA.PHOTO_LOCAL,         -- 사용자 프로필 사진 (가장 최신 사진)
@@ -50,10 +44,8 @@
                 LP.PHOTO_LOCAL,                                              -- 최신 사진
                 SUM(S.SCORE_GET) AS SCORE_GET,                               -- 점수 합계
                 U.USER_NUMBER                                                -- 사용자 번호
-                FROM
-                DR_USER U                                                    -- 사용자 테이블
-                JOIN
-                DR_SCORE S ON U.USER_NUMBER = S.USER_NUMBER                  -- 점수 테이블과 조인
+                FROM DR_USER U                                                    -- 사용자 테이블
+                JOIN DR_SCORE S ON U.USER_NUMBER = S.USER_NUMBER                  -- 점수 테이블과 조인
                 LEFT JOIN (
                 SELECT
                 P.USER_NUMBER,
@@ -62,9 +54,8 @@
                 FROM
                 DR_PHOTO P
                 ) LP ON U.USER_NUMBER = LP.USER_NUMBER AND LP.RN = 1             -- 사용자별로 최신 사진만 선택
-                GROUP BY
-                U.USER_NICKNAME, LP.PHOTO_LOCAL, U.USER_NUMBER               -- 닉네임, 프로필 사진, 사용자 번호로 그룹화
+                GROUP BY U.USER_NICKNAME, LP.PHOTO_LOCAL, U.USER_NUMBER               -- 닉네임, 프로필 사진, 사용자 번호로 그룹화
                 ) RANK_DATA
                 WHERE RANK_DATA.RANK <= 50 ]]>    -- 50위까지 필터링
-            </select>
+    </select>
 </mapper>
