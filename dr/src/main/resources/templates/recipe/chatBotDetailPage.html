@@ -4,15 +4,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./../../css/recipe/chatBotDetailPage.css">
-  <link rel="stylesheet" href="../../css/main/header.css">
-  <link rel="stylesheet" href="../../css/main/footer.css">
+  <link rel="stylesheet" th:href="@{/css/recipe/chatBotDetailPage.css}"/>
+  <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
+  <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
+  <script defer th:src="@{/js/fragment/header.js}"></script>
   <!-- 네비바 폰트 -->
   <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
   <!-- 제이쿼리 -->
-  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
-  <script defer src="../../js/main/header.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"
+          integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+          crossorigin="anonymous"></script>
+
+  <!-- 페이지네이션 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 
   <title>DR - 나만의 레시피 상세페이지</title>
 </head>
