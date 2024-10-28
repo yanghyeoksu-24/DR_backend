@@ -1,9 +1,6 @@
 package com.dr.controller.manager;
 
-import com.dr.dto.manager.DashBoardDTO;
-import com.dr.dto.manager.ManagerDTO;
-import com.dr.dto.manager.ManagerSessionDTO;
-import com.dr.dto.manager.ManagerUserDTO;
+import com.dr.dto.manager.*;
 import com.dr.service.manager.ManagerService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -72,7 +69,7 @@ public class ManagerController {
 
     // 3. 회원관리
     @GetMapping("/manageUser")
-    public String manageUser(ManagerDTO managerDTO, Model model , @SessionAttribute(value = "managerName") String managerName ) {
+    public String manageUser(Model model) {
         List<ManagerUserDTO> userList = managerService.manageUser();
         model.addAttribute("userList" , userList);
 
@@ -120,9 +117,56 @@ public class ManagerController {
 
     //4. 게시판 관리
     @GetMapping("/manageBoard")
-    public String manageBoard(){
+    public String showBoard(Model model) {
+    List<ManagerBoardDTO> boardList = managerService.showBoard();
+    model.addAttribute("boardList" , boardList);
         return "/manager/manageBoard";
     }
+
+    @PostMapping("/boardDelete")
+    public ResponseEntity<?> boardDelete(@RequestBody Map<String, List<Integer>> request) {
+        List<Integer> boardLists = request.get("boardNumber");
+        boolean allDeleted = true;
+
+        for (Integer boardList : boardLists) {
+            if (!managerService.boardDelete(boardList)) {
+                allDeleted = false; // 하나라도 실패하면 false
+            }
+        }
+
+        if (allDeleted) {
+            return ResponseEntity.ok("선택된 게시글이 삭제되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일부 사용자 삭제에 실패했습니다.");
+        }
+    }
+
+    //4. 레시피 관리
+    @GetMapping("/manageRecipe")
+    public String showRecipe(Model model) {
+        List<ManagerRecipeDTO> recipeList = managerService.showRecipe();
+        model.addAttribute("recipeList" , recipeList);
+        return "/manager/manageRecipe";
+    }
+
+    @PostMapping("/recipeDelete")
+    public ResponseEntity<?> recipeDelete(@RequestBody Map<String, List<Integer>> request) {
+        List<Integer> recipeLists = request.get("recipeNumber");
+        boolean allDeleted = true;
+
+        for (Integer recipeList : recipeLists) {
+            if (!managerService.recipeDelete(recipeList)) {
+                allDeleted = false; // 하나라도 실패하면 false
+            }
+        }
+
+        if (allDeleted) {
+            return ResponseEntity.ok("선택된 레피시가 삭제되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일부 사용자 삭제에 실패했습니다.");
+        }
+    }
+
 
 
 

@@ -47,3 +47,29 @@ $(function () {
   // 처음 로드 시 첫 번째 페이지의 항목만 보여주기
   container.pagination('goToPage', 1);
 });
+
+document.getElementById('memberOut').addEventListener('click', function() {
+  // 체크된 체크박스들의 value 값 수집
+  const selectedBoardNumbers = Array.from(document.querySelectorAll('#manage-memberUl input[type="checkbox"]:checked'))
+      .map(checkbox => checkbox.value);
+
+  if (selectedBoardNumbers.length === 0) {
+    alert("삭제할 게시글을 선택하세요.");
+    return;
+  }
+
+  // AJAX 요청을 통해 체크된 userNumber 값들을 서버에 전송
+  $.ajax({
+    type: "POST",
+    url: "/manager/boardDelete",
+    contentType: "application/json",
+    data: JSON.stringify({ boardNumber: selectedBoardNumbers }), // 배열을 JSON으로 변환
+    success: function(response) {
+      alert("선택된 게시글이 삭제 처리되었습니다.");
+      window.location.href = "/manager/manageBoard"; // 리다이렉션
+    },
+    error: function() {
+      alert("삭제 처리에 실패했습니다.");
+    }
+  });
+});

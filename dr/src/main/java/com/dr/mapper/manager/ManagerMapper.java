@@ -1,9 +1,6 @@
 package com.dr.mapper.manager;
 
-import com.dr.dto.manager.DashBoardDTO;
-import com.dr.dto.manager.ManagerDTO;
-import com.dr.dto.manager.ManagerSessionDTO;
-import com.dr.dto.manager.ManagerUserDTO;
+import com.dr.dto.manager.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,5 +21,13 @@ public interface ManagerMapper {
    boolean userOut(Integer userNumber);
 
    boolean userPause(Integer userNumber);
+
+   List <ManagerBoardDTO> showBoard();
+
+   boolean boardDelete(Integer boardNumber);
+
+   List <ManagerRecipeDTO> showRecipe();
+
+   boolean recipeDelete(Integer recipeNumber);
 
 }
