@@ -97,7 +97,7 @@ $(document).ready(function () {
         const phone = $('#userPhone').val().trim();
 
         // 휴대폰 번호 형식 검사
-        if (!phonePattern.test(phone)) {
+        if (!phonePattern.test(콜)) {
             $('#phoneError').text("올바른 휴대폰 번호를 입력하세요. (하이픈 없이 10~11자리 숫자)").css("color", "red");
             return; // 유효하지 않은 번호면 요청을 보내지 않음
         } else {
@@ -189,6 +189,7 @@ $(document).ready(function () {
             alert("올바른 휴대폰 번호를 입력하세요.");
             return;
         }
+        showAlertAndRedirect();
     });
 
     // 비밀번호 토글 기능 추가
@@ -265,47 +266,48 @@ $(document).ready(function () {
             });
         });
 
-        // 인증 요청 버튼 클릭 이벤트
-        $('#sendCode').on('click', function () {
-            const userPhone = $('#userPhone').val().trim();
-            const phonePattern = /^[0-9]{10,11}$/; // 하이픈 없이 숫자만 10~11자리
+        document.addEventListener('DOMContentLoaded', function () {
+            const sendCodeButton = document.getElementById('sendCode');
+            let isRequestInProgress = false; // 인증 요청 진행 중 플래그
 
-            if (!phonePattern.test(userPhone)) {
-                alert("올바른 형식의 휴대폰 번호를 입력하세요.");
-                return;
-            }
-
-            // 전화번호가 중복된 경우 인증 요청을 하지 않음
-            if ($('#phoneError').text() === "전화번호가 이미 존재합니다.") {
-                alert("이 전화번호는 이미 사용 중입니다. 인증 요청을 할 수 없습니다.");
-                return;
-            }
-
-            // 인증 요청이 진행 중인지 확인
-            if (isRequesting) {
-                return; // 이미 요청 중이면 아무것도 하지 않음
-            }
-
-            // 인증 요청 중 상태 업데이트
-            isRequesting = true;
-
-            // 인증 요청 로직 추가
-            $.ajax({
-                url: '/api/sms/send', // 인증 요청을 위한 API 엔드포인트
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({phoneNumber: userPhone}),
-                success: function (response) {
-                    alert("인증 코드가 발송되었습니다.");
-                },
-                error: function (xhr, status, error) {
-                    console.error("인증 요청 중 에러 발생: " + error);
-                    alert("인증 요청 중 오류가 발생했습니다.");
-                },
-                complete: function () {
-                    // 요청 완료 후 상태 초기화
-                    isRequesting = false;
+            // 인증 요청 버튼 클릭 이벤트 리스너
+            sendCodeButton.addEventListener('click', function () {
+                if (isRequestInProgress) {
+                    return; // 이미 요청이 진행 중이면 아무 것도 하지 않음
                 }
+
+                isRequestInProgress = true; // 요청 진행 중임을 표시
+
+                // 인증 요청 로직 (여기서는 간단한 alert로 대체)
+                alert("인증 요청이 전송되었습니다.");
+
+                // 서버에 인증 요청을 보내는 로직 추가
+                const userPhone = document.getElementById('userPhone').value;
+
+                // 예시: 서버에 인증 요청 보내기
+                fetch('/api/sendAuthCode', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({userPhone: userPhone})
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // 요청 성공 시 처리
+                            alert("인증 코드가 전송되었습니다.");
+                        } else {
+                            // 요청 실패 시 처리
+                            alert("인증 요청에 실패했습니다.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("에러 발생:", error);
+                        alert("서버와의 통신 중 오류가 발생했습니다.");
+                    })
+                    .finally(() => {
+                        isRequestInProgress = false; // 요청 완료 후 플래그 초기화
+                    });
             });
         });
     });
