@@ -1,6 +1,7 @@
 package com.dr.mapper.user;
 
 import com.dr.dto.user.EmailFindDTO;
+import com.dr.dto.user.PwFindDTO;
 import com.dr.dto.user.UserDTO;
 import com.dr.dto.user.UserSessionDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,4 +22,7 @@ public interface UserMapper {
     boolean checkPhoneExists(String userPhone);
 
     EmailFindDTO userEmailFind(String userPhone);
+
+    // 비밀번호 찾기 메서드
+    int userPwFind(PwFindDTO pwFindDTO);
 }

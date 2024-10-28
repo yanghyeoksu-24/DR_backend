@@ -1,104 +1,102 @@
 $(document).ready(function () {
-  // 이메일 형식 유효성 검사
-  const userIdInput = $("#userId");
-  const userIdError = $("#userIdError");
+    // 아이디 정규표현식: 이메일 형식 검사
+    const userIdRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  // 이메일 정규표현식
-  const userIdRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    // 휴대폰 번호 유효성 검사 정규표현식 (하이픈 없이 숫자만 10~11자리)
+    const userPhonePattern = /^[0-9]{10,11}$/;
 
-  // 이메일 입력 필드 blur 이벤트
-  userIdInput.on("blur", function () {
-    const userIdValue = $(this).val();
+    // 비밀번호 찾기 요청
+    $('#pwFindForm').on('submit', function (event) {
+        event.preventDefault(); // 폼 제출 이벤트 방지
 
-    if (!userIdRegex.test(userIdValue)) {
-      userIdError.text("형식에 맞게 이메일을 입력해주세요.")
-        .css({ "color": "red", "display": "block" });  // 에러 메시지 표시
-    } else {
-      userIdError.text("").hide();  // 에러 메시지 숨김
-    }
-  });
+        const userEmailValue = $('#userEmail').val().trim();
+        const userPhoneValue = $('#userPhone').val().trim();
 
-  // 휴대폰 번호 유효성 검사 정규표현식 (하이픈 없이 숫자만 10~11자리)
-  const phonePattern = /^[0-9]{10,11}$/;
+        // 유효성 검사
+        if (!userIdRegex.test(userEmailValue)) {
+            alert("올바른 이메일 형식을 입력하세요.");
+            return;
+        }
 
-  // 휴대폰 번호 입력 필드에 대한 blur 이벤트
-  $('#phone').on('blur', function () {
-    const phone = $(this).val().trim();
-    if (!phone) {
-      $('#phoneError').text("휴대폰 번호를 입력하세요.").css('color', 'red');
-      return;
-    }
-    if (!phonePattern.test(phone)) {
-      $('#phoneError').text("형식에 맞게 입력하세요.").css('color', 'red');
-    } else {
-      $('#phoneError').text("");
-    }
-  });
+        if (!userPhonePattern.test(userPhoneValue)) {
+            $('#phoneError').text("형식에 맞게 입력하세요.").css('color', 'red');
+            return;
+        }
 
-  // 인증요청 버튼 클릭 시 이벤트 처리
-  $('#sendCode').on('click', function () {
-    const phone = $('#phone').val().trim();
-    if (!phonePattern.test(phone)) {
-      $('#phoneError').text("형식에 맞는 휴대폰 번호를 입력하세요.").css('color', 'red');
-      return;
-    }
+        // AJAX 요청을 통해 전화번호와 이메일 확인
+        $.ajax({
+            url: '/user/PwFind',
+            type: 'POST',
+            contentType: 'application/json', // JSON 형식으로 전송
+            data: JSON.stringify({
+                userEmail: userEmailValue,
+                userPhone: userPhoneValue
+            }),
+            success: function (response) {
+                alert(response.message); // 서버에서 보낸 메시지 표시
+                window.location.href = response.redirectUrl; // 서버의 리다이렉트 URL로 이동
+            },
+            error: function (xhr, status, error) {
+                console.error("에러 발생: " + error);
+                alert("서버와의 통신 중 오류가 발생했습니다.");
+            }
+        });
+    });
 
-    // 인증 요청 로직 추가 (Ajax 또는 다른 인증 처리)
-    alert("인증이 요청되었습니다");
+    // 인증요청 버튼 클릭 시 이벤트 처리
+    $('#sendCode').on('click', function () {
+        const userPhone = $('#userPhone').val().trim();
 
-    // 인증번호 입력 필드 활성화
-    $('#authCode').prop('disabled', false);
-  });
+        // 휴대폰 번호 형식 검사
+        if (!userPhonePattern.test(userPhone)) {
+            $('#phoneError').text("형식에 맞게 입력하세요.").css('color', 'red');
+            return;
+        }
 
-  // 인증번호 확인 버튼 클릭 시 이벤트 처리
-  $('#verifyCode').on('click', function () {
-    const authCode = $('#authCode').val().trim();
-    if (!authCode) {
-      $('#authCodeError').text("인증번호를 입력하세요.").css('color', 'red');
-      return;
-    }
+        // 유효한 번호일 경우에만 인증 요청
+        $.ajax({
+            url: '/api/sms/send',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({phoneNumber: userPhone}),
+            success: function (response) {
+                alert("인증 코드가 발송되었습니다.");
+                $('#authCode').prop('disabled', false); // 인증번호 입력 필드 활성화
+            },
+            error: function (xhr, status, error) {
+                console.error("에러 발생: " + error);
+                alert("서버와의 통신 중 오류가 발생했습니다.");
+            }
+        });
+    });
 
-    // 인증번호 확인 로직 추가 (서버와 연동)
-    alert("인증이 확인되었습니다");
+    // 인증번호 확인
+    $('#verifyCode').on('click', function () {
+        const authCode = $('#authCode').val().trim();
+        if (!authCode) {
+            $('#authCodeError').text("인증번호를 입력하세요.").css('color', 'red');
+            return;
+        }
 
-    // 인증 성공 시 처리 (예: 인증 완료 메시지 표시)
-    $('#authCodeError').text("인증이 완료되었습니다.").css('color', 'green');
-  });
-
-  // 인증완료 버튼 클릭 시 유효성 검사 후 페이지 이동
-  $('.pwfind-finishButton').on('click', function (event) {
-    event.preventDefault(); // 기본 폼 제출 방지
-
-    // 유효성 검사 플래그
-    let isValid = true;
-
-    // 이메일 유효성 검사
-    const userIdValue = $("#userId").val();
-    if (!userIdRegex.test(userIdValue)) {
-      isValid = false;
-      $('#userIdError').text("형식에 맞는 이메일을 입력해주세요.").css('color', 'red');
-    }
-
-    // 휴대폰 번호 유효성 검사
-    const phoneValue = $("#phone").val().trim();
-    if (!phonePattern.test(phoneValue)) {
-      isValid = false;
-      $('#phoneError').text("형식에 맞는 휴대폰 번호를 입력해주세요.").css('color', 'red');
-    }
-
-    // 인증번호 유효성 검사
-    const authCodeValue = $("#authCode").val().trim();
-    if (authCodeValue === "") {
-      isValid = false;
-      $('#authCodeError').text("인증번호를 입력하세요.").css('color', 'red');
-    }
-
-    // 유효성 검사가 통과되었는지 확인
-    if (isValid) {
-      alert("비밀번호 변경 페이지로 이동합니다.");
-      window.location.href = './PwReset.html'; // 비밀번호 재설정 페이지로 이동
-    } else {
-      alert("형식에 맞지 않습니다. 다시 입력해주세요.");
-    }
-  });
+        $.ajax({
+            url: '/api/sms/verify',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({authCode: authCode}),
+            success: function (response) {
+                if (response === "인증이 완료되었습니다.") {
+                    $('#authCodeError').text(response).css('color', 'green');
+                } else if (response === "인증번호가 만료되었습니다. 다시 시도해 주세요.") {
+                    $('#authCodeError').text(response).css('color', 'orange');
+                    alert("인증번호가 만료되었습니다. 다시 요청해주세요.");
+                } else {
+                    $('#authCodeError').text(response).css('color', 'red');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("에러 발생: " + error);
+                alert("서버와의 통신 중 오류가 발생했습니다.");
+            }
+        });
+    });
 });
