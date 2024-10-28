@@ -14,7 +14,7 @@
         LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '나만의레시피'  -- 나만의 레시피 필터링
         GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
-        ORDER BY R.RECIPE_WRITE_DATE DESC  -- 최신순 정렬
+        ORDER BY R.RECIPE_WRITE_DATE   -- 최신순 정렬
     </select>
 
     <select id="selectAllPages1" resultType="ChatBotRecipeListDTO">
@@ -30,11 +30,31 @@
         LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '챗봇레시피'  -- 챗봇 레시피 필터링
         GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
-        ORDER BY R.RECIPE_WRITE_DATE DESC  -- 최신순 정렬
+        ORDER BY R.RECIPE_WRITE_DATE   -- 최신순 정렬
     </select>
 
     <select id="myRecipeDetail" resultType="MyRecipeDetailDTO">
-        
+        SELECT
+            R.RECIPE_NUMBER,                     -- 레시피 번호
+            U.USER_NICKNAME,                     -- 작성자
+            TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD'),  -- 작성일 (시간 제외)
+            R.RECIPE_TITLE,                      -- 레시피 제목
+            R.RECIPE_TEXT,                       -- 레시피 내용
+            RP.PHOTO_LOCAL,                      -- 글에 등록된 사진 경로
+            UP.PHOTO_LOCAL                       -- 작성자의 프로필 사진
+        FROM
+            DR_RECIPE R
+                JOIN
+            DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
+                LEFT JOIN
+            DR_PHOTO RP ON R.RECIPE_NUMBER = RP.RECIPE_NUMBER
+                LEFT JOIN
+            DR_PHOTO UP ON U.USER_NUMBER = UP.USER_NUMBER  -- 작성자의 프로필 사진
+        WHERE
+            R.RECIPE_NUMBER = #{recipeNumber}
+          AND
+            R.RECIPE_TYPE = '나만의레시피';
     </select>
+
 
 </mapper>

@@ -100,12 +100,12 @@ main{
     font-size: 10px;
 }
 .chatBotRecipeList-listbox {
-    width: 250px;
+    width: 265px;
     height: 265px;
 }
 
 .chatBotRecipeList-listbox img{
-    width: 250px;
+    width: 265px;
     height: 265px;
     border-radius: 5px;
 }
