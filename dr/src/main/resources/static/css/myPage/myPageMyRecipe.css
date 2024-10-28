@@ -84,6 +84,7 @@ li {
     width: 250px;
     height: 250px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .myPage-myRecipeWrap {
