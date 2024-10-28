@@ -21,9 +21,8 @@
       <span class="emailfind-leftTitle">이메일</span>
       <span class="emailfind-rightTitle">찾기</span>
     </div>
-    <form id="apijoinForm" action="/user/emailFindOk" method="post">
+    <form id="apijoinForm" th:action="@{/user/emailFindOk}" method="post">
       <!-- 폼 필드들 -->
-    </form>
       <!-- 휴대폰 번호 필드 -->
       <label for="phone" class="emailfind-label">휴대폰 번호</label>
       <div class="input-withButton">
@@ -40,7 +39,7 @@
       </div>
       <span class="error-message" id="authCodeError"></span>
       <!-- 인증완료 버튼 -->
-      <button type="button" id="finishButton" class="emailfind-finishButton">인증완료</button>
+      <button id="finishButton" class="emailfind-finishButton">인증완료</button>
     </form>
   </div>
 </main>

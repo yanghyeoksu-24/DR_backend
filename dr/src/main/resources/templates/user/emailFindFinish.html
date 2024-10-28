@@ -28,7 +28,7 @@
       <span class="emailfindfinish-message">찾으신 이메일은 다음과 같습니다:</span>
       <div class="emailfindfinish-email">
         <!-- 스프링에서 넘겨받은 이메일 값 출력 -->
-        <span th:text="${'찾으신 이메일은'+userEmail +'입니다'}"></span> <!-- 스프링의 email 변수를 사용 -->
+        <span th:text="${'찾으신 이메일은'+userEmail.userEmail +'입니다'}"></span> <!-- 스프링의 email 변수를 사용 -->
       </div>
       <span>항상 감사합니다.</span>
     </div>
