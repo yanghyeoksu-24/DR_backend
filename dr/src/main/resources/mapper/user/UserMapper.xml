@@ -30,4 +30,10 @@
         WHERE DU.USER_EMAIL = #{userEmail}
           AND DU.USER_PW = #{userPw}
     </select>
+
+    <select id="userEmailFind" parameterType="String" resultType="EmailFindDTO">
+        SELECT U.USER_EMAIL
+        FROM DR_USER U
+        WHERE U.USER_PHONE = #{userPhone}
+    </select>
 </mapper>

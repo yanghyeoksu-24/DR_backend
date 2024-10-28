@@ -1,5 +1,6 @@
 package com.dr.controller.user;
 
+import com.dr.dto.user.EmailFindDTO;
 import com.dr.dto.user.UserDTO;
 import com.dr.dto.user.UserSessionDTO;
 import com.dr.service.user.UserService;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -35,9 +37,35 @@ public class UserController {
 
     // api회원가입 페이지 이동
     @GetMapping("/user/apijoin")
-    public String apijoinPage() {
-        return "/user/apijoin";
+    public String apiJoinPage() {
+        return "/user/apiJoin";
     }
+
+    // 아이디 찾기 페이지 이동
+    @GetMapping("/user/emailFind")
+    public String emailFindPage() {
+        return "/user/emailFind";
+    }
+
+    // 아이디 찾기 완료 페이지 이동
+    @PostMapping("/user/emailFindOk")
+    public String emailFindPage(@RequestParam("phone") String userPhone, Model model) {
+        EmailFindDTO userEmail = userService.userFindEmail(userPhone);
+
+        if (userEmail == null) {
+            return "redirect:/user/emailFind"; // 전화번호가 일치하지 않으면 다시 이메일 찾기 페이지로 리다이렉트
+        }
+
+        model.addAttribute("userEmail", userEmail);
+        return "/user/emailFindFinish"; // 이메일 찾기 완료 페이지로 이동
+    }
+
+
+
+
+
+
+
 
 
     //drjoin 회원가입 요청 컨트롤러
