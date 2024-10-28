@@ -33,28 +33,39 @@
         ORDER BY R.RECIPE_WRITE_DATE   -- 최신순 정렬
     </select>
 
-    <select id="myRecipeDetail" resultType="MyRecipeDetailDTO">
+    <select id="selectMyRecipeDetail" resultType="MyRecipeDetailDTO">
         SELECT
-            R.RECIPE_NUMBER,                     -- 레시피 번호
-            U.USER_NICKNAME,                     -- 작성자
-            TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD'),  -- 작성일 (시간 제외)
-            R.RECIPE_TITLE,                      -- 레시피 제목
-            R.RECIPE_TEXT,                       -- 레시피 내용
-            RP.PHOTO_LOCAL,                      -- 글에 등록된 사진 경로
-            UP.PHOTO_LOCAL                       -- 작성자의 프로필 사진
+            R.RECIPE_NUMBER,                    -- 레시피 번호
+            U.USER_NICKNAME,                    -- 작성자
+            TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,  -- 작성일
+            R.RECIPE_TITLE,                     -- 레시피 제목
+            R.RECIPE_TEXT,                      -- 레시피 내용
+            P.PHOTO_ORINGAL,                    -- 레시피 사진
+            UP.PHOTO_LOCAL,                     -- 작성자 프로필 사진
+            COUNT(G.GOOD_NUMBER) AS goodCount    -- 좋아요 수
         FROM
             DR_RECIPE R
-                JOIN
-            DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
-                LEFT JOIN
-            DR_PHOTO RP ON R.RECIPE_NUMBER = RP.RECIPE_NUMBER
-                LEFT JOIN
-            DR_PHOTO UP ON U.USER_NUMBER = UP.USER_NUMBER  -- 작성자의 프로필 사진
+                JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
+                LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
+                LEFT JOIN (SELECT PHOTO_LOCAL AS PHOTO_ORINGAL, RECIPE_NUMBER
+                           FROM DR_PHOTO
+                           WHERE ROWNUM = 1) P ON P.RECIPE_NUMBER = R.RECIPE_NUMBER
+                LEFT JOIN (SELECT PHOTO_LOCAL AS PHOTO_LOCAL, USER_NUMBER
+                           FROM DR_PHOTO
+                           WHERE ROWNUM = 1) UP ON UP.USER_NUMBER = U.USER_NUMBER
         WHERE
             R.RECIPE_NUMBER = #{recipeNumber}
-          AND
-            R.RECIPE_TYPE = '나만의레시피';
+          AND R.RECIPE_TYPE = '나만의레시피'
+        GROUP BY
+            R.RECIPE_NUMBER,
+            U.USER_NICKNAME,
+            R.RECIPE_WRITE_DATE,
+            R.RECIPE_TITLE,
+            R.RECIPE_TEXT,
+            P.PHOTO_ORINGAL,
+            UP.PHOTO_LOCAL
     </select>
+
 
 
 </mapper>

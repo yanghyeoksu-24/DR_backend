@@ -24,140 +24,110 @@
 </head>
 
 <body>
-  <!-- 메인 부분 -->
-  <main>
-    <div class="myDetailPage-mainContainer">
-      <div class="myDetailPage-mainBox">
-        <div class="myDetailPage-infobox">
-          <div class="myDetailPage-infoFirst">
-            <div class="myDetailPage-infoInBox1">
-              <img src="./../../image/basicProfile.png" alt="">
-            </div>
-            <div class="myDetailPage-infoInBox2">
-              <p class="myDetailPage-writeName">김찰수</p>
-              <p class="myDetailPage-foodTitle">숙주나물 무침</p>
-              <p class="myDetailPage-date">2024-10-04 14:50</p>
-            </div>
+<!-- 메인 부분 -->
+<main>
+  <div class="myDetailPage-mainContainer">
+    <div class="myDetailPage-mainBox">
+      <div class="myDetailPage-infobox">
+        <div class="myDetailPage-infoFirst">
+          <div class="myDetailPage-infoInBox1">
+            <img th:src="@{|/images/${user.profileImage}|}" alt="">
           </div>
-
-          <div class="myDetailPage-infoSecond">
-            <div class="myDetailPage-firstButton">
-              <a href="./myRecipeModify.html"><button class="myDetailPage-buttonOne">수정</button></a>
-              <a href="./myRecipeList.html"><button id="deleteButton" class="myDetailPage-buttonOne">삭제</button></a>
-            </div>
-
-            <div class="myDetailPage-secondButton">
-              <div class="myDetailPage-buttonImg">
-                <img id="heartImage" src="./../../image/heartGray.png" alt="">
-              </div>
-
-              <a href="./report.html"><button class="myDetailPage-buttonTwo">신고</button></a>
-            </div>
+          <div class="myDetailPage-infoInBox2">
+            <p class="myDetailPage-writeName" th:text="${recipeDetail.userNickName}"></p>
+            <p class="myDetailPage-foodTitle" th:text="${recipeDetail.recipeTitle}"></p>
+            <p class="myDetailPage-date" th:text="${recipeDetail.recipeWriteDate}"></p>
           </div>
         </div>
 
-        <!-- 글 내용 -->
-        <div class="myDetailPage-writetext">
-          <p class="myDetailPage-texts">
-            바쁜 일상 속에서 푸짐한 식탁을 차리는 건 쉽지 않죠. 하지만 걱정 마세요! 오늘 소개할 "아삭아삭 숙주나물 무침" 레시피는 단 5분 만에 뚝딱 만들 수 있는 초간단 요리입니다. 숙주나물은
-            섬유질이 풍부하여 다이어트에도 좋고, 비타민과 미네랄이 풍부하여 건강에도 이로운 채소입니다. 특히 숙주나물 무침은 밑반찬으로도 좋고, 시원한 술안주로도 손색없습니다. 아삭아삭 숙주나물 무침의
-            매력적인 식감과 풍부한 영양소를 함께 즐겨보세요!
-            숙주나물 무침은 밑반찬으로도 좋고, 술안주로도 손색없습니다. 밥과 함께 먹으면 든든한 한 끼 식사가 되고, 맥주나 소주와 함께 먹으면 시원한 술안주가 됩니다. 숙주나물 무침은 냉장 보관하면
-            3~4일 정도 보관 가능합니다.
-            오늘 저녁 식탁에 아삭아삭 숙주나물 무침을 올려보세요. 5분 만에 완성할 수 있는 초간단 레시피로 건강과 맛을 동시에 잡을 수 있습니다.
-            [출처] 아삭아삭 숙주나물 무침 레시피| 초간단 5분 완성 | 숙주나물 요리, 밑반찬, 술안주|작성자 소예공방
-          </p>
-          <img src="./../../image/recipe/숙주나물무침.png" alt="">
-
-          <div class="myDetailPage-recommendImg">
-            <img src="./../../image/recommend.png" id="recommendImg" class="recommend-inactive" alt="">
-            <!-- 추천 수를 표시할 요소 -->
-            <p id="recommendCount">추천수: 0</p>
+        <div class="myDetailPage-infoSecond">
+          <div class="myDetailPage-firstButton">
+            <a th:href="@{/myRecipeModify/{id}(id=${recipe.id})}"><button class="myDetailPage-buttonOne">수정</button></a>
+            <a th:href="@{/myRecipeList}"><button id="deleteButton" class="myDetailPage-buttonOne">삭제</button></a>
           </div>
 
+          <div class="myDetailPage-secondButton">
+            <div class="myDetailPage-buttonImg">
+              <img id="heartImage" th:src="@{|/images/${recipe.isLiked ? 'heartRed.png' : 'heartGray.png'}|}" alt="">
+            </div>
+            <a th:href="@{/report/{id}(id=${recipe.id})}"><button class="myDetailPage-buttonTwo">신고</button></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 글 내용 -->
+      <div class="myDetailPage-writetext">
+        <p class="myDetailPage-texts" th:text="${recipe.description}">
+          바쁜 일상 속에서 푸짐한 식탁을 차리는 건 쉽지 않죠...
+        </p>
+        <img th:src="@{|/images/recipe/${recipe.image}|}" alt="">
+
+        <div class="myDetailPage-recommendImg">
+          <img th:src="@{|/images/recommend.png|}" id="recommendImg" class="recommend-inactive" alt="">
+          <p id="recommendCount" th:text="'추천수: ' + ${recipeDetail.recommendCount}">추천수: 0</p>
+        </div>
+      </div>
+
+      <!-- 댓글들 -->
+      <div class="myDetailPage-commentSection">
+        <div class="myDetailPage-commentInput" id="commentInput">
+          <textarea placeholder="댓글을 입력하세요..." rows="3"></textarea>
+          <div class="myDetailPage-commentActions">
+            <button class="myDetailPage-addBtn" onclick="submitComment()">등록</button>
+          </div>
         </div>
 
-        <!-- 댓글들 -->
-        <div class="myDetailPage-commentSection">
-          <div class="myDetailPage-commentInput" id="commentInput">
-            <textarea placeholder="댓글을 입력하세요..." rows="3"></textarea>
-            <div class="myDetailPage-commentActions">
-                <button class="myDetailPage-addBtn" onclick="submitComment()">등록</button>
-            </div>
-          </div>
-          <!-- 첫 번째 댓글: 홍상철 -->
+        <!-- 댓글 리스트 반복문 시작 -->
+        <div th:each="comment : ${comments}">
           <div class="myDetailPage-comment">
             <div class="myDetailPage-commentUserImg">
-              <img src="./../../image/basicProfile.png" alt="User Image">
+              <img th:src="@{|/images/${comment.user.profileImage}|}" alt="User Image">
             </div>
-            <div class="myDetailPage-commentContent" id="commentContent1">
+            <div class="myDetailPage-commentContent">
               <div class="myDetailPage-commentHeader">
-                <span class="myDetailPage-commentUsername">홍상철</span>
-                <a href="./report.html"><button class="myDetailPage-reportBtn">신고</button></a>
+                <span class="myDetailPage-commentUsername" th:text="${comment.user.name}">홍상철</span>
+                <a th:href="@{/report/{id}(id=${comment.id})}"><button class="myDetailPage-reportBtn">신고</button></a>
               </div>
-              <div class="myDetailPage-commentText" id="commentText1">그 뒤로는 크리스마스까지 공휴일 없음</div>
-              <div class="myDetailPage-commentTime">14:53:14</div>
+              <div class="myDetailPage-commentText" th:text="${comment.text}">그 뒤로는 크리스마스까지 공휴일 없음</div>
+              <div class="myDetailPage-commentTime" th:text="${comment.time}">14:53:14</div>
 
               <!-- 신고 버튼 밑에 수정 및 삭제 버튼 추가 -->
-              <div class="myDetailPage-buttonGroup" id="buttonGroup1">
-                <button class="myDetailPage-editBtn" onclick="editComment(1)">수정</button>
-                <button class="myDetailPage-deleteBtn" id="deleteButtons">삭제</button>
+              <div class="myDetailPage-buttonGroup">
+                <button class="myDetailPage-editBtn" onclick="editComment(/* Add relevant ID */)">수정</button>
+                <button class="myDetailPage-deleteBtn" onclick="deleteComment(/* Add relevant ID */)">삭제</button>
               </div>
 
               <!-- 댓글 수정 입력창, 기본적으로 숨김 상태 -->
-              <div class="myDetailPage-commentInput" id="editInput1" style="display:none;">
-                <textarea id="editTextarea1" placeholder="댓글을 입력하세요..."></textarea>
+              <div class="myDetailPage-commentInput" style="display:none;">
+                <textarea th:text="${comment.editText}" placeholder="댓글을 입력하세요..."></textarea>
                 <div class="myDetailPage-commentActions">
-                  <button class="myDetailPage-editBtn" onclick="saveComment(1)">저장</button>
-                  <button class="myDetailPage-deleteBtn" onclick="cancelEdit(1)">취소</button>
+                  <button class="myDetailPage-editBtn" onclick="saveComment(/* Add relevant ID */)">저장</button>
+                  <button class="myDetailPage-deleteBtn" onclick="cancelEdit(/* Add relevant ID */)">취소</button>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- 두 번째 댓글: 김기찬 -->
-          <div class="myDetailPage-reply">
+          <!-- 답글 반복문 -->
+          <div class="myDetailPage-reply" th:each="reply : ${comment.replies}">
             <div class="myDetailPage-replyUserImg">
-              <img src="./../../image/basicProfile.png" alt="User Image">
+              <img th:src="@{|/images/${reply.user.profileImage}|}" alt="User Image">
             </div>
             <div class="myDetailPage-replyContent">
               <div class="myDetailPage-replyHeader">
-                <span class="myDetailPage-replyUsername">김기찬</span>
+                <span class="myDetailPage-replyUsername" th:text="${reply.user.name}">김기찬</span>
                 <button class="myDetailPage-reportBtn">신고</button>
               </div>
-              <div class="myDetailPage-replyText">연차 3.5일 남았는데 잘 써야겠네영 ㅠ,ㅠ</div>
-              <div class="myDetailPage-replyTime">15:03:25</div>
+              <div class="myDetailPage-replyText" th:text="${reply.text}">연차 3.5일 남았는데 잘 써야겠네영 ㅠ,ㅠ</div>
+              <div class="myDetailPage-replyTime" th:text="${reply.time}">15:03:25</div>
             </div>
           </div>
-
-          <!-- 세 번째 댓글: 박상희 -->
-          <div class="myDetailPage-comment">
-            <div class="myDetailPage-commentUserImg">
-              <img src="./../../image/basicProfile.png" alt="User Image">
-            </div>
-            <div class="myDetailPage-commentContent">
-              <div class="myDetailPage-commentHeader">
-                <span class="myDetailPage-commentUsername">박상희</span>
-                <button class="myDetailPage-reportBtn">신고</button>
-              </div>
-              <div class="myDetailPage-commentText">이번에도 슬로...</div>
-              <div class="myDetailPage-commentTime">14:53:14</div>
-            </div>
-          </div>
-
-          <!-- 댓글 입력창 -->
-          <!-- <div class="myDetailPage-commentInput" id="commentInput">
-            <textarea placeholder="댓글을 입력하세요..."></textarea>
-            <div class="myDetailPage-commentActions">
-              <button class="myDetailPage-editBtn">수정</button>
-              <button id="deleteButtons" class="myDetailPage-deleteBtn">삭제</button>
-            </div>
-          </div> -->
         </div>
+        <!-- 댓글 리스트 반복문 끝 -->
       </div>
     </div>
-  </main>
-  <script src="./../../js/recipe/myDetailPage.js" defer></script>
+  </div>
+</main>
+<script src="./../../js/recipe/myDetailPage.js" defer></script>
 </body>
-
 </html>
