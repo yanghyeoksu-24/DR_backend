@@ -1,6 +1,7 @@
 package com.dr.controller.recipe;
 
 import com.dr.dto.recipe.ChatBotRecipeListDTO;
+import com.dr.dto.recipe.MyRecipeDetailDTO;
 import com.dr.dto.recipe.MyRecipeListDTO;
 import com.dr.service.recipe.RecipeService;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +41,17 @@ public class RecipeController {
         // 모델에 레시피 목록 추가
         model.addAttribute("recipeList", recipeList);
 
-        return "recipe/chatBotRecipeList";  // myRecipeList.html로 데이터 전달
+        return "recipe/chatBotRecipeList";  // chatBotRecipeList.html로 데이터 전달
     }
 
+    @GetMapping("/myDetailPage")
+    public String myDetailPage(@RequestParam("recipeNumber") Long recipeNumber, Model model) {
+        // 특정 레시피의 상세 정보 조회
+        MyRecipeDetailDTO recipeDetail = recipeService.findMyRecipeDetail(recipeNumber);
 
+        // 모델에 레시피 상세 정보 추가
+        model.addAttribute("recipeDetail", recipeDetail);
+
+        return "recipe/myDetailPage";  // myDetailPage.html로 데이터 전달
+    }
 }
