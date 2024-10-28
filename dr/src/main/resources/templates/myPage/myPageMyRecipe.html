@@ -48,7 +48,7 @@
             <div class="myPage-myRecipeWrap">
                 <div th:each="recipe : ${userRecipes}" class="myPage-myRecipeprideOne">
                     <div class="myPage-myRecipeLeft">
-                        <img id="myPage-myRecipeOne" th:src="@{/image/myPage/{photo}(photo=${recipe.recipePhoto})}" alt="레시피 사진">
+                            <img id="myPage-myRecipeOne" th:src="@{/image/myPage/{photo}(photo=${recipe.recipePhoto})}" alt="레시피 사진">
                     </div>
                     <div class="myPage-myRecipeInside">
                         <div class="myPage-myRecipeSide">
