@@ -111,6 +111,96 @@
         WHERE R.RECIPE_NUMBER = #{recipeNumber}
     </delete>
 
+<!-- 6. 댓글관리-->
+    <select id="showReply" parameterType="ManagerCommentDTO">
+        select R.REPLY_NUMBER , R.REPLY_TEXT , U.USER_NICKNAME , U.USER_PHONE , R.REPLY_WRITE_DATE
+        from DR_REPLY R
+        JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
+        ORDER BY R.REPLY_WRITE_DATE DESC
+    </select>
+
+    <delete id="replyDelete" parameterType="Integer">
+        DELETE
+        FROM DR_REPLY RE
+        WHERE RE.REPLY_NUMBER = #{replyNumber}
+    </delete>
+
+<!-- 7. 포인트 관리-->
+    <select id="showPoint" parameterType="ManagerPointDTO">
+        SELECT
+            P.POINT_NUMBER,
+            U.USER_NICKNAME,
+            U.USER_EMAIL,
+            P.POINT_NOTE,
+            P.POINT_GET,
+            P.POINT_DATE,
+            SUM(P.POINT_GET) OVER (PARTITION BY U.USER_NUMBER, U.USER_EMAIL) AS POINT_SUM
+        FROM
+            DR_POINT P
+                JOIN
+            DR_USER U ON P.USER_NUMBER = U.USER_NUMBER
+        ORDER BY
+            P.POINT_DATE DESC
+
+    </select>
+
+    <delete id="pointDelete" parameterType="Integer">
+        DELETE
+        FROM DR_POINT P
+        WHERE P.POINT_NUMBER = #{pointNumber}
+    </delete>
+
+    <update id="takePoint" parameterType="Integer">
+        UPDATE DR_POINT
+        SET POINT_GET = NULL
+        WHERE POINT_NUMBER = #{pointNumber}
+    </update>
+
+    <!-- 8. 신고 관리-->
+    <select id="showReport" parameterType="ManagerReportDTO">
+        SELECT
+            S.SIREN_NUMBER,
+            U.USER_NICKNAME,
+            U.USER_EMAIL,
+            S.SIREN_REASON,
+            S.SIREN_TYPE,
+            S.SIREN_DATE
+        FROM
+            DR_SIREN S
+                JOIN
+            DR_USER U ON S.USER_NUMBER = U.USER_NUMBER
+        ORDER BY
+            S.SIREN_DATE
+    </select>
+
+    <delete id="reportDelete" parameterType="Integer">
+        DELETE
+        FROM DR_SIREN S
+        WHERE S.SIREN_NUMBER = #{sirenNumber}
+    </delete>
+
+<!-- 9. 상품관리-->
+    <select id="showProduct" parameterType="ManagerProductDTO">
+        SELECT
+            P.PRODUCT_NAME,
+            P.PRODUCT_PRICE,
+            COUNT(*) AS PRODUCT_COUNT
+        FROM
+            DR_PRODUCT P
+        GROUP BY
+            P.PRODUCT_NAME,
+            P.PRODUCT_PRICE
+        ORDER BY
+            P.PRODUCT_NAME
+    </select>
+
+    <delete id="productDelete" parameterType="String">
+        DELETE
+        FROM DR_PRODUCT P
+        WHERE P.PRODUCT_NAME= #{productName}
+    </delete>
+
+
 
 
 </mapper>

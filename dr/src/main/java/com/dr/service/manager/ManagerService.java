@@ -54,5 +54,41 @@ public class ManagerService {
         return managerMapper.recipeDelete(recipeNumber);
     }
 
+    public List<ManagerCommentDTO> showReply(){
+        return managerMapper.showReply();
+    }
+
+    public boolean replyDelete(Integer replyNumber) {
+        return managerMapper.replyDelete(replyNumber);
+    }
+
+    public List<ManagerPointDTO> showPoint(){
+        return managerMapper.showPoint();
+    }
+
+    public boolean pointDelete(Integer pointNumber) {
+        return managerMapper.pointDelete(pointNumber);
+    }
+
+    public boolean takePoint(Integer PointNumber) {
+        return managerMapper.takePoint(PointNumber);
+    }
+
+    public List<ManagerReportDTO> showReport(){
+        return managerMapper.showReport();
+    }
+
+    public boolean reportDelete(Integer sirenNumber) {
+        return managerMapper.reportDelete(sirenNumber);
+    }
+
+    public List<ManagerProductDTO> showProduct(){
+        return managerMapper.showProduct();
+    }
+
+    public boolean productDelete(String productName) {
+        return managerMapper.productDelete(productName);
+    }
+
 
 }
