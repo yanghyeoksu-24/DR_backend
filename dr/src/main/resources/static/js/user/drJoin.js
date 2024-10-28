@@ -97,7 +97,7 @@ $(document).ready(function () {
         const phone = $('#userPhone').val().trim();
 
         // 휴대폰 번호 형식 검사
-        if (!phonePattern.test(콜)) {
+        if (!phonePattern.test(phone)) {
             $('#phoneError').text("올바른 휴대폰 번호를 입력하세요. (하이픈 없이 10~11자리 숫자)").css("color", "red");
             return; // 유효하지 않은 번호면 요청을 보내지 않음
         } else {
@@ -229,33 +229,30 @@ $(document).ready(function () {
         // 전화번호 중복 확인
         $('#userPhone').on('blur', function () {
             const userPhone = $(this).val().trim();
-            const phonePattern = /^[0-9]{10,11}$/; // 하이픈 없이 숫자만 10~11자리
+            const phonePattern = /^[0-9]{10,11}$/;
 
             if (!phonePattern.test(userPhone)) {
                 $('#phoneError').text("올바른 형식의 휴대폰 번호를 입력하세요.").css('color', 'red');
-                phoneAlertShown = false; // 오류 상태 초기화
+                phoneAlertShown = false;
                 return;
             }
 
             $.ajax({
-                url: '/api/user/checkPhone', // 중복 체크를 위한 API 엔드포인트
+                url: '/api/user/checkPhone',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({userPhone: userPhone}),
                 success: function (response) {
                     if (response.exists) {
-                        // 중복 전화번호에 대한 alert가 이미 표시되지 않았으면 표시
                         if (!phoneAlertShown) {
                             alert("전화번호가 이미 존재합니다.");
-                            phoneAlertShown = true; // alert 표시 상태 업데이트
+                            phoneAlertShown = true;
                         }
                         $('#phoneError').text("전화번호가 이미 존재합니다.").css('color', 'red');
-                        // 인증 요청 버튼 비활성화
                         $('#sendCode').prop('disabled', true);
                     } else {
-                        $('#phoneError').text(""); // 오류 메시지 초기화
-                        phoneAlertShown = false; // 중복 상태 초기화
-                        // 인증 요청 버튼 활성화
+                        $('#phoneError').text("");
+                        phoneAlertShown = false;
                         $('#sendCode').prop('disabled', false);
                     }
                 },
@@ -266,50 +263,6 @@ $(document).ready(function () {
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const sendCodeButton = document.getElementById('sendCode');
-            let isRequestInProgress = false; // 인증 요청 진행 중 플래그
-
-            // 인증 요청 버튼 클릭 이벤트 리스너
-            sendCodeButton.addEventListener('click', function () {
-                if (isRequestInProgress) {
-                    return; // 이미 요청이 진행 중이면 아무 것도 하지 않음
-                }
-
-                isRequestInProgress = true; // 요청 진행 중임을 표시
-
-                // 인증 요청 로직 (여기서는 간단한 alert로 대체)
-                alert("인증 요청이 전송되었습니다.");
-
-                // 서버에 인증 요청을 보내는 로직 추가
-                const userPhone = document.getElementById('userPhone').value;
-
-                // 예시: 서버에 인증 요청 보내기
-                fetch('/api/sendAuthCode', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({userPhone: userPhone})
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            // 요청 성공 시 처리
-                            alert("인증 코드가 전송되었습니다.");
-                        } else {
-                            // 요청 실패 시 처리
-                            alert("인증 요청에 실패했습니다.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error("에러 발생:", error);
-                        alert("서버와의 통신 중 오류가 발생했습니다.");
-                    })
-                    .finally(() => {
-                        isRequestInProgress = false; // 요청 완료 후 플래그 초기화
-                    });
-            });
-        });
     });
 });
 

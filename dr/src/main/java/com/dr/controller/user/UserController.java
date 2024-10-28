@@ -94,7 +94,7 @@ public class UserController {
     @PostMapping("/user/drJoin")
     public String join(@ModelAttribute UserDTO userDTO) {
         userService.registerUser(userDTO);
-        return "/user/login";
+        return "redirect:/user/login";
     }
 
 
@@ -110,7 +110,7 @@ public class UserController {
     @PostMapping("/api/user/checkPhone")
     @ResponseBody
     public Map<String, Boolean> checkPhone(@RequestBody Map<String, String> request) {
-        String userPhone = request.get("userPhone");
+        String userPhone = request.get("phoneNumber");
         boolean exists = userService.isPhoneExists(userPhone);
         Map<String, Boolean> response = new HashMap<>();
         response.put("exists", exists);
