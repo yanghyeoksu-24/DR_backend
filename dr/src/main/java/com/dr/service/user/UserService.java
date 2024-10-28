@@ -1,5 +1,6 @@
 package com.dr.service.user;
 
+import com.dr.dto.user.EmailFindDTO;
 import com.dr.dto.user.UserDTO;
 import com.dr.dto.user.UserSessionDTO;
 import com.dr.mapper.user.UserMapper;
@@ -30,6 +31,10 @@ public class UserService {
 
     public UserSessionDTO userLogin(String userEmail, String userPw) {
         return userMapper.userLogin(userEmail, userPw).orElse(null);
+    }
+
+    public EmailFindDTO userFindEmail(String userPhone) {
+        return userMapper.userEmailFind(userPhone);
     }
 
 

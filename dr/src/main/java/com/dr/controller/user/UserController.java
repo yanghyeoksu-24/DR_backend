@@ -1,5 +1,6 @@
 package com.dr.controller.user;
 
+import com.dr.dto.user.EmailFindDTO;
 import com.dr.dto.user.UserDTO;
 import com.dr.dto.user.UserSessionDTO;
 import com.dr.service.user.UserService;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -35,8 +37,55 @@ public class UserController {
 
     // api회원가입 페이지 이동
     @GetMapping("/user/apijoin")
-    public String apijoinPage() {
-        return "/user/apijoin";
+    public String apiJoinPage() {
+        return "/user/apiJoin";
+    }
+
+    // 아이디 찾기 페이지 이동
+    @GetMapping("/user/emailFind")
+    public String emailFindPage() {
+        return "/user/emailFind";
+    }
+
+    // 아이디 찾기 완료 페이지 이동
+    @GetMapping("/user/emailFindFinish")
+    public String emailFindFinishPage() {
+        return "/user/emailFindFinish";
+    }
+
+    // 회원가입 종류 페이지 이동
+    @GetMapping("/user/join")
+    public String joinPage() {
+        return "/user/join";
+    }
+
+
+    // 비밀번호 찾기 페이지 이동
+    @GetMapping("/user/PwFind")
+    public String PwFindPage() {
+        return "/user/PwFind";
+    }
+
+    // 비밀번호 재설정 페이지 이동
+    @GetMapping("/user/PwReset")
+    public String PwResetPage() {
+        return "/user/PwReset";
+    }
+
+
+
+
+    // 아이디 찾기 완료 페이지 이동
+    @PostMapping("/user/emailFindOk")
+    public String emailFindPage(@RequestParam("phone") String userPhone, Model model) {
+        EmailFindDTO userEmail = userService.userFindEmail(userPhone);
+
+        if (userEmail == null) {
+            return "redirect:/user/emailFind"; // 전화번호가 일치하지 않으면 다시 이메일 찾기 페이지로 리다이렉트
+        }
+
+        model.addAttribute("userEmail", userEmail);
+        return "/user/emailFindFinish"; // 이메일 찾기 완료 페이지로 이동
     }
 
 
@@ -69,8 +118,6 @@ public class UserController {
     }
 
 
-
-
     // 로그인 요청 처리
     @PostMapping("/user/login")
     public RedirectView login(@RequestParam("userEmail") String userEmail,
@@ -84,15 +131,16 @@ public class UserController {
             // 세션에 사용자 정보를 설정
             session.setAttribute("userNumber", userLogin.getUserNumber());
             session.setAttribute("userNickName", userLogin.getUserNickName());
-            session.setAttribute("photoLocal", userLogin.getPhotoLocal()); // photoLocal 추가
+            session.setAttribute("photoLocal", userLogin.getPhotoLocal());
 
-            // 메인 페이지로 리다이렉트
+            // 로그인 성공 시 메인 페이지로 리다이렉트
             return new RedirectView("/main");
         } else {
-            // 로그인 실패 시 로그인 페이지로 다시 리다이렉트
-            return new RedirectView("/user/login?error=로그인실패");
+            // 로그인 실패 시 로그인 페이지로 리다이렉트하면서 'error' 파라미터 추가
+            return new RedirectView("/user/login?error=이메일이나 비밀번호를 확인해주세요");
         }
     }
+
 
     // 로그아웃 요청 처리
     @GetMapping("/logout")
