@@ -30,19 +30,19 @@
   <main>
     <!-- 사이드바 -->
     <div id="nangjangbot-sideBar">
-      <img src="../../image/nangjangbot/close.png" id="nangjangbot-closeBtn">
+      <img th:src="@{/image/nangjangbot/close.png}" id="nangjangbot-closeBtn">
       <div id="nangjangbot-newChatContainer">
-        <a href="../../html/chatBot/nangjangbot.html"><img src="../../image/nangjangbot/newChat.png" id="nangjangbot-newChatBtn"></a>
+        <a th:href="@{/chatBot/nangjangbot}"><img th:src="@{/image/nangjangbot/newChat.png}" id="nangjangbot-newChatBtn"></a>
         <div id="nangjangbot-newChat">새 채팅</div>
       </div>
 
       <div id="nangjangbot-sideMenu">
-        <a href="../../html/rank/userRank.html">
-          <div><img src="../../image/nangjangbot/checkRank.png" class="nanajangbot-menuImg"><span>랭킹 확인하러 가기</span>
+        <a th:href="@{/rank/userRank}">
+          <div><img th:src="@{/image/nangjangbot/checkRank.png}" class="nanajangbot-menuImg"><span>랭킹 확인하러 가기</span>
           </div>
         </a>
-        <a href="../../html/recipe/chatBotRecipeWriter.html">
-          <div><img src="../../image/nangjangbot/writeRecipe.png" class="nanajangbot-menuImg"><span>챗봇 레시피 작성하러
+        <a th:href="@{/recipe/chatBotRecipeWriter}">
+          <div><img th:src="@{/image/nangjangbot/writeRecipe.png}" class="nanajangbot-menuImg"><span>챗봇 레시피 작성하러
               가기</span></div>
         </a>
       </div>
@@ -51,43 +51,43 @@
 
       <div class="nangjangbot-lastChat">
         <div>열번째 첫 채팅내용 Blah blah blah</div>
-        <button class="nangjangbot-imgFrame"><img src="../../image/nangjangbot/delete.png"></button>
+        <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
         <div>아홉번째 첫 채팅내용 Blah blah blah</div>
-        <button class="nangjangbot-imgFrame"><img src="../../image/nangjangbot/delete.png"></button>
+        <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
         <div>여덟번째 첫 채팅내용 Blah blah blah</div>
-        <button class="nangjangbot-imgFrame"><img src="../../image/nangjangbot/delete.png"></button>
+        <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
         <div>일곱번째 첫 채팅내용 Blah blah blah</div>
-        <button class="nangjangbot-imgFrame"><img src="../../image/nangjangbot/delete.png"></button>
+        <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
         <div>여섯번째 첫 채팅내용 Blah blah blah</div>
-        <button class="nangjangbot-imgFrame"><img src="../../image/nangjangbot/delete.png"></button>
+        <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
         <div>다섯번째 첫 채팅내용 Blah blah blah</div>
-        <button class="nangjangbot-imgFrame"><img src="../../image/nangjangbot/delete.png"></button>
+        <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
         <div>네번째 첫 채팅내용 Blah blah blah</div>
-        <button class="nangjangbot-imgFrame"><img src="../../image/nangjangbot/delete.png"></button>
+        <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
         <div>세번째 첫 채팅내용 Blah blah blah</div>
-        <button class="nangjangbot-imgFrame"><img src="../../image/nangjangbot/delete.png"></button>
+        <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
         <div>두번째 첫 채팅내용 Blah blah blah</div>
-        <button class="nangjangbot-imgFrame"><img src="../../image/nangjangbot/delete.png"></button>
+        <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
         <div>첫번째 첫 채팅내용 Blah blah blah</div>
-        <button class="nangjangbot-imgFrame"><img src="../../image/nangjangbot/delete.png"></button>
+        <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
 
       <div id="nangjangbot-notice">최근 열개의 채팅만 나타납니다</div>
