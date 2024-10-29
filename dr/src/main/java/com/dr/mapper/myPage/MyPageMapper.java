@@ -26,5 +26,8 @@ public interface MyPageMapper {
     //UserSteamDTO 리스트를 반환하며, userNumber를 매개변수로 받아 사용자의 찜 목록을 조회
     List<UserSteamDTO> getUserSteam(@Param("userNumber") Long userNumber);
 
+    //찜 목록 삭제
+    int deleteUserSteam(@Param("userNumber") Long userNumber, @Param("recipeNumber") Long recipeNumber);
+
 
 }

@@ -130,4 +130,18 @@ public class MyPageController {
         return "myPage/myPageSteamedList";
     }
 
+    // --찜목록 삭제 -- //
+    // 찜 삭제 요청 처리
+    @PostMapping("/myPageSteamedList")
+    @ResponseBody
+    public String deleteSteam(@RequestParam Long userNumber, @RequestParam Long recipeNumber) {
+        int result = myPageService.deleteUserSteam(userNumber, recipeNumber);
+        if (result > 0) {
+            return "찜 삭제 성공";
+        } else {
+            return "찜 삭제 실패";
+        }
+    }
+
+
         }

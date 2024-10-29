@@ -49,4 +49,9 @@ public class MyPageService {
     public List<UserSteamDTO> getUserSteam(Long userNumber) {
         return myPageMapper.getUserSteam(userNumber);
     }
+
+    // 찜 목록 삭제
+    public int deleteUserSteam(Long userNumber, Long recipeNumber) {
+        return myPageMapper.deleteUserSteam(userNumber, recipeNumber);
+    }
 }
