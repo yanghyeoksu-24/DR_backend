@@ -42,14 +42,12 @@ public class ManagerController {
     // 1-2. 로그인 버튼 눌렀을 때
     @PostMapping("/managerLogin")
     public RedirectView login(@RequestParam("managerEmail") String managerEmail, @RequestParam("managerPw") String managerPw, HttpSession session) {
-        log.info("로그인 시도: {}", managerEmail);
-        log.info("로그인 시도: {}", managerPw);
 
-        ManagerSessionDTO managerSession = managerService.managerLogin(managerEmail, managerPw);
+        ManagerSessionDTO loginOk = managerService.managerLogin(managerEmail, managerPw);
 
         // 로그인 성공 시
-        if (managerSession != null) {
-            session.setAttribute("managerName", managerSession.getManagerName()); // 이름만 저장
+        if (loginOk != null) {
+            session.setAttribute("managerName", loginOk.getManagerName()); // 이름만 저장
             return new RedirectView("/manager/dashBoard");
         } else {
             session.setAttribute("loginError", "로그인 오류");
@@ -60,7 +58,7 @@ public class ManagerController {
 
     // 2. 대시보드
     @GetMapping("/dashBoard")
-    public String dashboard(@SessionAttribute(value = "managerName") String managerName, Model model, ManagerDTO managerDTO , DashBoardDTO dashBoardDTO) {
+    public String dashboard(Model model, ManagerDTO managerDTO , DashBoardDTO dashBoardDTO) {
 
         List<ManagerDTO> managerList = managerService.managerInfo();
         dashBoardDTO = managerService.dashBoardInfo();
@@ -83,21 +81,30 @@ public class ManagerController {
     // 3-2. 회원탈퇴
     @PostMapping("/userOut")
     public ResponseEntity<?> deleteUser(@RequestBody Map<String, List<Integer>> request) {
-        List<Integer> userNumbers = request.get("userNumber");
-        boolean allDeleted = true;
+        // ResponseEntity<?> = 스프링 프레임워크에서 HTTP 응답을 나타내는 클래스 , ? 는 타입 지정을 안함으로써 유여한 코드 작성 가능
+        // @RequestBody 는 ajax로 보낸 JSON 데이터를 JAVA 객체로 변환해주는 역할
+        // 매개변수에서 String은 키값으로 userNumber 을 가져오고 , value는 유저 번호 목록이다.
 
+        // 클라이언트로부터 전달받은 JSON 데이터에서 "userNumber" 키에 해당하는 사용자 번호 리스트를 추출
+        List<Integer> userNumbers = request.get("userNumber");
+        boolean allDeleted = true; // 모든 사용자가 성공적으로 삭제되었는지 여부를 나타내는 변수
+
+        // 사용자 번호 리스트를 순회하면서 각각의 사용자를 탈퇴 처리 시도
         for (Integer userNumber : userNumbers) {
+            // managerService.userOut 메서드를 호출하여 사용자 탈퇴 처리. 실패 시 allDeleted를 false로 설정
             if (!managerService.userOut(userNumber)) {
-                allDeleted = false; // 하나라도 실패하면 false
+                allDeleted = false; // 하나라도 실패하면 allDeleted 값을 false로 변경
             }
         }
 
+        // 모든 사용자가 성공적으로 삭제되었을 경우와 실패한 경우에 따라 다른 응답을 반환
         if (allDeleted) {
-            return ResponseEntity.ok("선택된 사용자가 탈퇴 처리되었습니다.");
+            return ResponseEntity.ok("선택된 사용자가 탈퇴 처리되었습니다."); // 성공 시 메시지 반환
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일부 사용자 삭제에 실패했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일부 사용자 삭제에 실패했습니다."); // 일부 실패 시 메시지 반환
         }
     }
+
 
 
 

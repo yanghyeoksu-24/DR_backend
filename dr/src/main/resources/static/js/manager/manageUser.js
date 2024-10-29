@@ -48,27 +48,31 @@
   });
 
 
+  // 'memberOut' 버튼에 클릭 이벤트 리스너 추가
   document.getElementById('memberOut').addEventListener('click', function() {
-    // 체크된 체크박스들의 value 값 수집
+    // 관리 페이지의 체크된 체크박스들을 찾아 그 value 값(사용자 번호)을 배열로 수집
     const selectedUserNumbers = Array.from(document.querySelectorAll('#manage-memberUl input[type="checkbox"]:checked'))
-        .map(checkbox => checkbox.value);
+        .map(checkbox => checkbox.value); // 체크된 체크박스의 value 값만 추출하여 배열로 만듦
 
+    // 선택된 사용자가 없을 경우 경고 메시지를 출력하고 함수 종료
     if (selectedUserNumbers.length === 0) {
-      alert("탈퇴할 사용자를 선택하세요.");
+      alert("탈퇴할 사용자를 선택하세요."); // 선택되지 않은 경우 알림 메시지 표시
       return;
     }
 
-    // AJAX 요청을 통해 체크된 userNumber 값들을 서버에 전송
+    // AJAX 요청을 사용해 선택된 사용자 번호 리스트를 JSON 형태로 서버에 전송
     $.ajax({
       type: "POST",
-      url: "/manager/userOut",
-      contentType: "application/json",
-      data: JSON.stringify({ userNumber: selectedUserNumbers }), // 배열을 JSON으로 변환
+      url: "/manager/userOut", // 서버의 userOut API 엔드포인트 URL
+      contentType: "application/json", // 전송 데이터 형식을 JSON으로 설정
+      data: JSON.stringify({ userNumber: selectedUserNumbers }), // 선택된 사용자 번호 배열을 JSON으로 변환하여 전송
       success: function(response) {
+        // 성공 시 알림 메시지 표시하고 관리자 페이지로 리다이렉션
         alert("선택된 사용자가 탈퇴 처리되었습니다.");
-        window.location.href = "/manager/manageUser"; // 리다이렉션
+        window.location.href = "/manager/manageUser"; // 탈퇴 후 사용자 관리 페이지로 이동
       },
       error: function() {
+        // 실패 시 오류 알림 메시지 표시
         alert("탈퇴 처리에 실패했습니다.");
       }
     });

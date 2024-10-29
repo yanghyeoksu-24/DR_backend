@@ -16,4 +16,5 @@ public class ManagerReportDTO {
     private String sirenReason;
     private String sirenType;
     private String sirenDate;
+    private int targetId;
 }

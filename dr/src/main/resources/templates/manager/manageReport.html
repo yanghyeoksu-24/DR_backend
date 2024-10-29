@@ -60,7 +60,7 @@
             <ul id="manage-memberUl">
                 <li id="manage-memberTitle">
                     <input id="title-check" type="checkbox" value="전체선택">
-                    <span id="title-num">신고번호</span>
+                    <span id="title-num">글/댓글 번호</span>
                     <span id="title-name">이름</span>
                     <span id="title-con">유저이메일</span>
                     <span id="title-reason">사유</span>
@@ -70,7 +70,7 @@
 
                 <li th:each="reportList : ${reportList}">
                     <input type="checkbox" th:value="${reportList.sirenNumber}">
-                    <span class="report-num" th:text="${reportList.sirenNumber}"></span>
+                    <span class="report-num" th:text="${reportList.targetId}"></span>
                     <span class="report-name" th:text="${reportList.userNickName}"></span>
                     <span class="report-con" th:text="${reportList.userEmail}"></span>
                     <span class="report-type1" th:text="${reportList.sirenReason}"></span>

@@ -165,17 +165,26 @@
 
     <!-- 8-1. 신고 관리-->
     <select id="showReport" parameterType="ManagerReportDTO">
-        SELECT S.SIREN_NUMBER,
-               U.USER_NICKNAME,
-               U.USER_EMAIL,
-               S.SIREN_REASON,
-               S.SIREN_TYPE,
-               S.SIREN_DATE
-        FROM DR_SIREN S
-                 JOIN
-             DR_USER U ON S.USER_NUMBER = U.USER_NUMBER
-        ORDER BY S.SIREN_DATE
+        SELECT
+            S.SIREN_NUMBER,
+            COALESCE(S.BOARD_NUMBER, S.RECIPE_NUMBER, S.REPLY_NUMBER) AS TARGET_ID,
+            U.USER_NICKNAME,
+            U.USER_EMAIL,
+            S.SIREN_REASON,
+            S.SIREN_TYPE,
+            S.SIREN_DATE
+        FROM
+            DR_SIREN S
+                JOIN DR_USER U ON S.USER_NUMBER = U.USER_NUMBER
+                LEFT JOIN DR_BOARD B ON S.BOARD_NUMBER = B.BOARD_NUMBER
+                LEFT JOIN DR_RECIPE R ON S.RECIPE_NUMBER = R.RECIPE_NUMBER
+                LEFT JOIN DR_REPLY RE ON S.REPLY_NUMBER = RE.REPLY_NUMBER
+        ORDER BY
+            S.SIREN_DATE
     </select>
+
+
+
 
     <!-- 8-2. 신고 삭제-->
     <delete id="reportDelete" parameterType="Integer">
