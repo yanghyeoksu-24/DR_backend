@@ -1,9 +1,6 @@
 package com.dr.controller.myPage;
 
-import com.dr.dto.myPage.PointDetailDTO;
-import com.dr.dto.myPage.UserInfoDTO;
-import com.dr.dto.myPage.UserPostDTO;
-import com.dr.dto.myPage.UserRecipeDTO;
+import com.dr.dto.myPage.*;
 import com.dr.service.myPage.MyPageService;
 import com.dr.service.rank.RankService;
 import jakarta.servlet.http.HttpSession;
@@ -118,6 +115,19 @@ public class MyPageController {
         model.addAttribute("userPosts", userPosts);
 
         return "myPage/myPageMyPost";
+    }
+
+    // -- 내정보 찜 목록 확인 --
+    @GetMapping("/myPageSteamedList")
+    public String getUserSteam(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model) {
+        if (userNumber == null) {
+            return "redirect:/user/login";
+        }
+
+        List<UserSteamDTO> userSteamList = myPageService.getUserSteam(userNumber);
+        model.addAttribute("userSteamList", userSteamList);
+
+        return "myPage/myPageSteamedList";
     }
 
         }

@@ -93,6 +93,7 @@ li {
     font-size: 15px;
     padding-left: 5px;
     padding-top: 5px;
+    width: 165px;
 }
 
 .myPage-pictureName {
@@ -116,8 +117,8 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 95px;
     margin-top: 10px;
+    margin-left: 25px;
 }
 
 
@@ -146,6 +147,6 @@ li {
 
 #pagination {
     position: absolute;
-    top: 500px;
+    top: 505px;
     left: 582px;
 }
