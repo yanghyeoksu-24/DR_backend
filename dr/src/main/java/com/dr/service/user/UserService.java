@@ -48,12 +48,11 @@ public class UserService<BCryptPasswordEncoder> {
     }
 
 
-    public void changePassword(String userEmail, String newPassword) {
+    public void updatePassword(String userPhone, String userPw) {
         // 비밀번호 유효성 검사 추가 가능 (예: 빈 문자열 또는 특정 패턴 검사)
 
         // 데이터베이스에서 비밀번호 업데이트
-        userMapper.updatePassword(userEmail, newPassword);
-
+        userMapper.updatePassword(userPhone, userPw);
 
     }
 

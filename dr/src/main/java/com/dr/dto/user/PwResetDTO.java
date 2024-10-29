@@ -10,6 +10,6 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class PwResetDTO {
-    private String userEmail;
-    private String newPassword;
+    private String userPhone;
+    private String userPw;
 }

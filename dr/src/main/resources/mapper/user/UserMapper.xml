@@ -40,12 +40,13 @@
     <select id="userPwFind" parameterType="PwFindDTO" resultType="int">
         SELECT COUNT(*)
         FROM DR_USER
-        WHERE USER_PHONE = #{userPhone} AND USER_EMAIL = #{userEmail}
+        WHERE USER_PHONE = #{userPhone}
+          AND USER_EMAIL = #{userEmail}
     </select>
 
     <update id="updatePassword">
         UPDATE dr_user
-        SET user_pw = #{newPassword}
-        WHERE user_email = #{userEmail}
+        SET user_pw = #{userPw}
+        WHERE user_phone = #{userPhone}
     </update>
 </mapper>
