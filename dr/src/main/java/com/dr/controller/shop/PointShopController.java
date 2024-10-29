@@ -2,6 +2,7 @@ package com.dr.controller.shop;
 
 import com.dr.dto.shop.PointShopDTO;
 import com.dr.service.shop.PointShopService;
+import com.dr.service.user.CoolSmsService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestMapping("/shop") //최상위 경로
 public class PointShopController {
     private final PointShopService pointShopService;
-//    private final HttpSession session; // HttpSession 주입
+    private final CoolSmsService coolSmsService;
 
     @PostMapping("/pointShop") //하위경로
     public String openPointShop(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model) {
@@ -46,12 +47,22 @@ public class PointShopController {
         }
 
         // 상품코드 가져오기
-        List<String> code = pointShopService.getProductCode(pointShopDTO);
-        System.out.println(code);
+        List<String> codes = pointShopService.getProductCode(pointShopDTO);
+        System.out.println(codes);
+
         // 상품코드 보낼 유저 핸드폰 가져오기
         String phone = pointShopService.getUserPhone(userNumber);
         System.out.println(phone);
+
         // 상품코드 문자로 전송
+        try {
+            for (String code : codes) {
+                coolSmsService.sendProductCode(phone, code); // 상품 코드 전송
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "문자 전송 오류: " + e.getMessage();
+        }
 
         // 전송끝난 코드 테이블에서 삭제
         pointShopService.deleteCode(pointShopDTO);
