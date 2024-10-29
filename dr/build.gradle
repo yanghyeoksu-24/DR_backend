@@ -55,6 +55,7 @@ dependencies {
 	implementation group: 'net.nurigo', name: 'javaSDK', version: '2.2'
 
 
+
 }
 
 tasks.named('test') {

@@ -74,29 +74,4 @@ $(document).ready(function () {
     });
   });
 
-// 인증완료 버튼 클릭 시 처리
-  $('#finishButton').on('click', function () {
-    const phone = $('#phone').val().trim(); // 현재 입력된 전화번호 가져오기
-
-    // 전화번호가 유효한지 확인
-    if (!phonePattern.test(phone)) {
-      $('#phoneError').text("형식에 맞게 입력하세요.").css('color', 'red');
-      return;
-    }
-
-    // AJAX 요청을 통해 전화번호 확인
-    $.ajax({
-      url: '/user/emailFindOk',
-      type: 'POST', // POST 방식으로 요청
-      data: {phone: phone}, // 전화번호 전송
-      success: function (response) {
-        // 서버가 리다이렉트 URL을 반환하면 그 URL로 이동
-        window.location.href = response; // 리다이렉트
-      },
-      error: function (xhr, status, error) {
-        console.error("에러 발생: " + error);
-        alert("서버와의 통신 중 오류가 발생했습니다.");
-      }
-    });
-  });
 });

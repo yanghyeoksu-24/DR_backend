@@ -1,12 +1,11 @@
 package com.dr.controller.user;
 
-import com.dr.dto.user.EmailFindDTO;
-import com.dr.dto.user.UserDTO;
-import com.dr.dto.user.UserSessionDTO;
+import com.dr.dto.user.*;
 import com.dr.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,12 +88,51 @@ public class UserController {
     }
 
 
+
+    @PostMapping("/user/PwFind")
+    @ResponseBody
+    public ResponseEntity<?> PwFindPage(@RequestBody PwFindDTO pwFindDTO) {
+        boolean isTrue = userService.userPwFind(pwFindDTO); // 이메일과 휴대폰 번호 확인
+
+        // 응답 데이터
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", isTrue); // 일치 여부 저장
+
+        // 메시지 설정
+        if (isTrue) {
+            response.put("message", "인증이 완료되었습니다."); // 성공 메시지
+            response.put("redirectUrl", "/user/PwReset"); // 비밀번호 재설정 페이지 URL
+        } else {
+            response.put("message", "없는 이메일입니다."); // 실패 메시지
+            response.put("redirectUrl", "/user/PwFind"); // 비밀번호 찾기 페이지 URL
+        }
+
+        return ResponseEntity.ok(response); // JSON 형태로 응답
+    }
+
+
+
+
+    @PostMapping("/user/PwReset")
+    @ResponseBody
+    public ResponseEntity<?> resetPassword(@RequestBody PwResetDTO pwResetDTO) {
+        // 비밀번호 변경 메서드 호출
+        userService.changePassword(pwResetDTO.getUserEmail(), pwResetDTO.getNewPassword());
+
+        return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
+    }
+
+
+
+
+
+
+
     //drjoin 회원가입 요청 컨트롤러
     @PostMapping("/user/drJoin")
     public String join(@ModelAttribute UserDTO userDTO) {
         userService.registerUser(userDTO);
-
-        return "/user/login";
+        return "redirect:/user/login";
     }
 
 
@@ -110,7 +148,7 @@ public class UserController {
     @PostMapping("/api/user/checkPhone")
     @ResponseBody
     public Map<String, Boolean> checkPhone(@RequestBody Map<String, String> request) {
-        String userPhone = request.get("userPhone");
+        String userPhone = request.get("phoneNumber");
         boolean exists = userService.isPhoneExists(userPhone);
         Map<String, Boolean> response = new HashMap<>();
         response.put("exists", exists);
@@ -118,14 +156,14 @@ public class UserController {
     }
 
 
-    // 로그인 요청 처리
     @PostMapping("/user/login")
-    public RedirectView login(@RequestParam("userEmail") String userEmail,
-                              @RequestParam("userPw") String userPw,
-                              HttpSession session) {
-
+    public ResponseEntity<Map<String, String>> login(@RequestParam("userEmail") String userEmail,
+                                                     @RequestParam("userPw") String userPw,
+                                                     HttpSession session) {
         UserSessionDTO userLogin = userService.userLogin(userEmail, userPw);
         log.info("로그인 시도 확인: {}", userLogin);
+
+        Map<String, String> response = new HashMap<>();
 
         if (userLogin != null) {
             // 세션에 사용자 정보를 설정
@@ -133,13 +171,19 @@ public class UserController {
             session.setAttribute("userNickName", userLogin.getUserNickName());
             session.setAttribute("photoLocal", userLogin.getPhotoLocal());
 
-            // 로그인 성공 시 메인 페이지로 리다이렉트
-            return new RedirectView("/main");
+            // 로그인 성공 시 성공 메시지와 리다이렉트 URL 반환
+            response.put("message", "환영합니다.");
+            response.put("redirect", "/main");
+            return ResponseEntity.ok(response);
         } else {
-            // 로그인 실패 시 로그인 페이지로 리다이렉트하면서 'error' 파라미터 추가
-            return new RedirectView("/user/login?error=이메일이나 비밀번호를 확인해주세요");
+            // 로그인 실패 시 오류 메시지와 리다이렉트 URL 반환
+            response.put("message", "이메일이나 비밀번호가 잘못되었습니다.");
+            response.put("redirect", "/user/login"); // 로그인 페이지로 리다이렉트
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response); // 401 Unauthorized
         }
     }
+
+
 
 
     // 로그아웃 요청 처리
