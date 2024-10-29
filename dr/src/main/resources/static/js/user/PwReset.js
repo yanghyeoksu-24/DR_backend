@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
   // 비밀번호 정규표현식 검사 함수: 최소 8자, 문자, 숫자, 특수문자 포함
   function validatePassword(password) {
     const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -8,7 +7,6 @@ $(document).ready(function () {
 
   const newPassword = document.getElementById("newPassword");
   const confirmNewPassword = document.getElementById("confirmNewPassword");
-
   const passwordError = document.getElementById("passwordError");
   const confirmPasswordError = document.getElementById("confirmPasswordError");
 
@@ -66,10 +64,9 @@ $(document).ready(function () {
 
   // 변경완료 버튼 클릭 이벤트: 유효성 검사 후 페이지 이동
   $('.pwreset-finishButton').on('click', function (event) {
-    event.preventDefault(); // 기본 폼 제출 방지
-
     const passwordValue = newPassword.value.trim();
     const confirmPasswordValue = confirmNewPassword.value.trim();
+    const userPhoneValue = userPhone.value.trim(); // 전화번호 값 가져오기
     let isValid = true;
 
     // 비밀번호 유효성 검사
@@ -86,9 +83,16 @@ $(document).ready(function () {
       confirmPasswordError.style.color = "red";
     }
 
+    // 전화번호 유효성 검사
+    if (userPhoneValue === "") {
+      isValid = false;
+      alert("전화번호를 입력해주세요.");
+    }
+
     // 유효성 검사가 통과되었는지 확인
     if (isValid) {
-      alert("비밀번호가 성공적으로 변경되었습니다.");
+      console.log("전화번호:", userPhoneValue); // 전화번호 확인
+      console.log("새 비밀번호:", passwordValue); // 비밀번호 확인
       $('#pwResetForm').submit(); // 폼 제출
     } else {
       alert("형식에 맞게 입력해주세요.");

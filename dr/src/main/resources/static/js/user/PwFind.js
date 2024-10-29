@@ -1,25 +1,54 @@
 $(document).ready(function () {
-    // 아이디 정규표현식: 이메일 형식 검사
-    const userIdRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    // 이메일 형식 정규표현식
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    // 휴대폰 번호 형식 정규표현식 (하이픈 없이 숫자만 10~11자리)
+    const phonePattern = /^[0-9]{10,11}$/;
 
-    // 휴대폰 번호 유효성 검사 정규표현식 (하이픈 없이 숫자만 10~11자리)
-    const userPhonePattern = /^[0-9]{10,11}$/;
+    // 이메일 입력란 blur 이벤트: 유효성 검사
+    $('#userEmail').on('blur', function () {
+        const userEmailValue = $(this).val().trim();
+        if (!emailPattern.test(userEmailValue)) {
+            $('#userEmailError').text("올바른 이메일 형식을 입력하세요.").css('color', 'red');
+        } else {
+            $('#userEmailError').text(""); // 오류 메시지 초기화
+        }
+    });
 
-    // 비밀번호 찾기 요청
+    // 휴대폰 번호 입력란 blur 이벤트: 유효성 검사
+    $('#userPhone').on('blur', function () {
+        const userPhoneValue = $(this).val().trim();
+        if (!phonePattern.test(userPhoneValue)) {
+            $('#phoneError').text("하이픈(-) 없이 숫자만 10~11자리를 입력하세요.").css('color', 'red');
+        } else {
+            $('#phoneError').text(""); // 오류 메시지 초기화
+        }
+    });
+
+    // 인증번호 입력란 blur 이벤트: 유효성 검사
+    $('#authCode').on('blur', function () {
+        const authCodeValue = $(this).val().trim();
+        if (!authCodeValue) {
+            $('#authCodeError').text("인증번호를 입력하세요.").css('color', 'red');
+        } else {
+            $('#authCodeError').text(""); // 오류 메시지 초기화
+        }
+    });
+
+    // 비밀번호 찾기 폼 제출 이벤트
     $('#pwFindForm').on('submit', function (event) {
-        event.preventDefault(); // 폼 제출 이벤트 방지
+        event.preventDefault(); // 폼 기본 제출 방지
 
         const userEmailValue = $('#userEmail').val().trim();
         const userPhoneValue = $('#userPhone').val().trim();
 
-        // 유효성 검사
-        if (!userIdRegex.test(userEmailValue)) {
-            alert("올바른 이메일 형식을 입력하세요.");
+        // 최종 유효성 검사
+        if (!emailPattern.test(userEmailValue)) {
+            $('#userEmailError').text("올바른 이메일 형식을 입력하세요.").css('color', 'red');
             return;
         }
 
-        if (!userPhonePattern.test(userPhoneValue)) {
-            $('#phoneError').text("형식에 맞게 입력하세요.").css('color', 'red');
+        if (!phonePattern.test(userPhoneValue)) {
+            $('#phoneError').text("하이픈(-) 없이 숫자만 10~11자리를 입력하세요.").css('color', 'red');
             return;
         }
 
@@ -43,14 +72,16 @@ $(document).ready(function () {
         });
     });
 
-    // 인증요청 버튼 클릭 시 이벤트 처리
+    // 인증요청 버튼 클릭 이벤트 처리
     $('#sendCode').on('click', function () {
         const userPhone = $('#userPhone').val().trim();
 
         // 휴대폰 번호 형식 검사
-        if (!userPhonePattern.test(userPhone)) {
-            $('#phoneError').text("형식에 맞게 입력하세요.").css('color', 'red');
+        if (!phonePattern.test(userPhone)) {
+            $('#phoneError').text("하이픈(-) 없이 숫자만 10~11자리를 입력하세요.").css('color', 'red');
             return;
+        } else {
+            $('#phoneError').text(""); // 오류 메시지 초기화
         }
 
         // 유효한 번호일 경우에만 인증 요청
@@ -70,14 +101,19 @@ $(document).ready(function () {
         });
     });
 
-    // 인증번호 확인
+    // 인증번호 확인 버튼 클릭 이벤트 처리
     $('#verifyCode').on('click', function () {
         const authCode = $('#authCode').val().trim();
+
+        // 인증번호 입력 확인
         if (!authCode) {
             $('#authCodeError').text("인증번호를 입력하세요.").css('color', 'red');
             return;
+        } else {
+            $('#authCodeError').text(""); // 오류 메시지 초기화
         }
 
+        // 인증번호 확인 요청
         $.ajax({
             url: '/api/sms/verify',
             type: 'POST',
@@ -94,7 +130,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.log("에러 발생: " + error);
+                console.error("에러 발생: " + error);
                 alert("서버와의 통신 중 오류가 발생했습니다.");
             }
         });

@@ -72,8 +72,6 @@ public class UserController {
     }
 
 
-
-
     // 아이디 찾기 완료 페이지 이동
     @PostMapping("/user/emailFindOk")
     public String emailFindPage(@RequestParam("phone") String userPhone, Model model) {
@@ -86,7 +84,6 @@ public class UserController {
         model.addAttribute("userEmail", userEmail);
         return "/user/emailFindFinish"; // 이메일 찾기 완료 페이지로 이동
     }
-
 
 
     @PostMapping("/user/PwFind")
@@ -111,14 +108,28 @@ public class UserController {
     }
 
 
+    @PostMapping("/user/PwReset")
+    public ResponseEntity<String> updatePassword(@ModelAttribute PwResetDTO pwResetDTO) {
+        String userPhone = pwResetDTO.getUserPhone();
+        String newPassword = pwResetDTO.getUserPw();
+        System.out.println(userPhone);
 
+        // 비밀번호 변경 처리
+        try {
+            userService.updatePassword(userPhone, newPassword);
 
-    
-
-
-
-
-
+            return ResponseEntity
+                    .status(HttpStatus.FOUND)  // 리다이렉트를 위한 상태코드
+                    .header("Location", "/user/login")  // 성공 시 login 페이지로 리다이렉트
+                    .body("비밀번호가 성공적으로 변경되었습니다.");
+        } catch (Exception e) {
+            // 예외 발생 시 다시 PwReset 페이지로 리다이렉트
+            return ResponseEntity
+                    .status(HttpStatus.FOUND)
+                    .header("Location", "/user/PwReset")
+                    .body("비밀번호 변경 중 오류가 발생했습니다. 다시 시도해주세요.");
+        }
+    }
 
 
     //drjoin 회원가입 요청 컨트롤러
@@ -177,13 +188,13 @@ public class UserController {
     }
 
 
-
-
     // 로그아웃 요청 처리
     @GetMapping("/logout")
     public RedirectView logout(HttpSession session) {
         session.invalidate();
         return new RedirectView("/main");
     }
+
 }
+
 
