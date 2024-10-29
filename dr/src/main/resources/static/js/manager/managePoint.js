@@ -46,3 +46,68 @@ $(function () {
   // 처음 로드 시 첫 번째 페이지의 항목만 보여주기
   container.pagination('goToPage', 1);
 });
+
+
+
+$(document).ready(function() {
+  $('#manager-select select').on('change', function() {
+    const selectedMonth = $(this).val();
+    if (selectedMonth === "0") {
+      window.location.href = "/manager/managePoint"; // 전체 조회
+    } else {
+      window.location.href = `/manager/managePoint?month=${selectedMonth}`; // 선택한 월로 조회
+    }
+  });
+});
+
+document.getElementById('memberOut').addEventListener('click', function() {
+  // 체크된 체크박스들의 value 값 수집
+  const selectedUserNumbers = Array.from(document.querySelectorAll('#manage-memberUl input[type="checkbox"]:checked'))
+      .map(checkbox => checkbox.value);
+
+  if (selectedUserNumbers.length === 0) {
+    alert("삭제할 댓글을 선택하세요.");
+    return;
+  }
+
+  // AJAX 요청을 통해 체크된 userNumber 값들을 서버에 전송
+  $.ajax({
+    type: "POST",
+    url: "/manager/pointDelete",
+    contentType: "application/json",
+    data: JSON.stringify({ pointNumber: selectedUserNumbers }), // 배열을 JSON으로 변환
+    success: function(response) {
+      alert("선택된 포인트가 삭제 처리되었습니다.");
+      window.location.href = "/manager/managePoint"; // 리다이렉션
+    },
+    error: function() {
+      alert("삭제 처리에 실패했습니다.");
+    }
+  });
+});
+
+document.getElementById('memberPause').addEventListener('click', function() {
+  // 체크된 체크박스들의 value 값 수집
+  const selectedUserNumbers = Array.from(document.querySelectorAll('#manage-memberUl input[type="checkbox"]:checked'))
+      .map(checkbox => checkbox.value);
+
+  if (selectedUserNumbers.length === 0) {
+    alert("삭제할 댓글을 선택하세요.");
+    return;
+  }
+
+  // AJAX 요청을 통해 체크된 userNumber 값들을 서버에 전송
+  $.ajax({
+    type: "POST",
+    url: "/manager/takePoint",
+    contentType: "application/json",
+    data: JSON.stringify({ pointNumber: selectedUserNumbers }), // 배열을 JSON으로 변환
+    success: function(response) {
+      alert("선택된 포인트가 회수 처리되었습니다.");
+      window.location.href = "/manager/managePoint"; // 리다이렉션
+    },
+    error: function() {
+      alert("회수 처리에 실패했습니다.");
+    }
+  });
+});

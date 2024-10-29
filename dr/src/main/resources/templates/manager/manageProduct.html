@@ -70,45 +70,14 @@
                     <span id="title-point">소모포인트</span>
                     <span id="title-stock">재고</span>
                 </li>
-                <li>
-                    <input type="checkbox" value="전체선택">
-                    <span class="product-num">1</span>
-                    <span class="product-name">비타500</span>
-                    <span class="product-point">500</span>
-                    <span class="product-stock">100</span>
+                <li th:each="product, iterStat : ${productList}">
+                    <input type="checkbox" th:value="${product.productName}">
+                    <span class="product-num" th:text="${iterStat.index + 1}"></span>
+                    <span class="product-name" th:text="${product.productName}"></span>
+                    <span class="product-point" th:text="${product.productPrice}"></span>
+                    <span class="product-stock" th:text="${product.productCount}"></span>
                 </li>
-                <li>
-                    <input type="checkbox" value="전체선택">
-                    <span class="product-num">2</span>
-                    <span class="product-name">빵또아</span>
-                    <span class="product-point">1000</span>
-                    <span class="product-stock">200</span>
-                </li>
-                <li>
-                    <input type="checkbox" value="전체선택">
-                    <span class="product-num">3</span>
-                    <span class="product-name">단백질바</span>
-                    <span class="product-point">2000</span>
-                    <span class="product-stock">300</span>
-                </li>
-                <li>
-                    <input type="checkbox" value="전체선택">
-                    <span class="product-num">4</span>
-                    <span class="product-name">문화상품권</span>
-                    <span class="product-point">5000</span>
-                    <span class="product-stock">80</span>
-                </li>
-                <li>
-                    <input type="checkbox" value="전체선택">
-                    <span class="product-num">5</span>
-                    <span class="product-name">하늘보리</span>
-                    <span class="product-point">1500</span>
-                    <span class="product-stock">300</span>
-                </li>
-
-
             </ul>
-
 
             <div id="pagination"></div>
 
@@ -117,6 +86,9 @@
 
 
 </div>
+<form th:action="@{/manager/managerLogout}" method="get">
+    <button id="manager-logout">로그아웃</button>
+</form>
 
 
 <script src="./../../js/manager/manageProduct.js"></script>

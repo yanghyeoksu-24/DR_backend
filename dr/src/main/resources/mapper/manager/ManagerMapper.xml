@@ -9,7 +9,7 @@
         WHERE MANAGER_EMAIL = #{managerEmail} AND MANAGER_PW = #{managerPw}
     </select>
 
-<!-- 2. 대시보드-->
+<!-- 2-1. 대시보드-->
     <select id="dashBoardInfo" resultType="DashBoardDTO">
         SELECT
                 (SELECT COUNT(*) FROM DR_USER) AS userAll,
@@ -21,7 +21,7 @@
     </select>
 
 
-
+    <!-- 2-2. 관리자 정보-->
     <select id="managerInfo" resultType="ManagerDTO">
         SELECT
         M.MANAGER_NAME AS managerName,
@@ -31,7 +31,7 @@
         DR_MANAGER M
     </select>
 
-<!-- 3. 회원관리-->
+<!-- 3-1. 회원관리-->
     <select id="manageUser" resultType="ManagerUserDTO">
         SELECT
             U.USER_NUMBER,
@@ -45,19 +45,21 @@
             U.USER_NUMBER
     </select>
 
+    <!-- 3-2. 회원탈퇴-->
     <delete id="userOut" parameterType="Integer">
         DELETE
         FROM DR_USER U
         WHERE U.USER_NUMBER = #{userNumber}
     </delete>
 
+    <!-- 3-3. 회원정지-->
     <update id="userPause" parameterType="Integer">
         UPDATE DR_USER
         SET USER_STATUS = '7일정지'
         WHERE USER_NUMBER = #{userNumber}
     </update>
 
-<!-- 4. 게시판 관리-->
+<!-- 4-1. 게시판 관리-->
     <select id="showBoard" parameterType="ManagerBoardDTO">
         SELECT
             B.BOARD_NUMBER,
@@ -78,13 +80,14 @@
             B.BOARD_WRITE_DATE DESC
     </select>
 
+    <!-- 4-2. 게시판 삭제-->
     <delete id="boardDelete" parameterType="Integer">
         DELETE
         FROM DR_BOARD B
         WHERE B.BOARD_NUMBER = #{boardNumber}
     </delete>
 
-    <!-- 5. 레시피 관리-->
+    <!-- 5-1. 레시피 관리-->
     <select id="showRecipe" parameterType="ManagerRecipeDTO">
         SELECT
             R.RECIPE_NUMBER,
@@ -105,11 +108,118 @@
             R.RECIPE_WRITE_DATE DESC
     </select>
 
+    <!-- 5-2. 레시피 삭제-->
     <delete id="recipeDelete" parameterType="Integer">
         DELETE
         FROM DR_RECIPE R
         WHERE R.RECIPE_NUMBER = #{recipeNumber}
     </delete>
+
+<!-- 6-1. 댓글관리-->
+    <select id="showReply" parameterType="ManagerCommentDTO">
+        select R.REPLY_NUMBER , R.REPLY_TEXT , U.USER_NICKNAME , U.USER_PHONE , R.REPLY_WRITE_DATE
+        from DR_REPLY R
+        JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
+        ORDER BY R.REPLY_WRITE_DATE DESC
+    </select>
+
+    <!-- 6-2. 댓글 삭제-->
+    <delete id="replyDelete" parameterType="Integer">
+        DELETE
+        FROM DR_REPLY RE
+        WHERE RE.REPLY_NUMBER = #{replyNumber}
+    </delete>
+
+<!-- 7-1. 포인트 관리-->
+    <select id="showPoint" parameterType="ManagerPointDTO">
+        SELECT
+            P.POINT_NUMBER,
+            U.USER_NICKNAME,
+            U.USER_EMAIL,
+            P.POINT_NOTE,
+            P.POINT_GET,
+            P.POINT_DATE,
+            SUM(P.POINT_GET) OVER (PARTITION BY U.USER_NUMBER, U.USER_EMAIL) AS POINT_SUM
+        FROM
+            DR_POINT P
+                JOIN
+            DR_USER U ON P.USER_NUMBER = U.USER_NUMBER
+        ORDER BY
+            P.POINT_DATE DESC
+
+    </select>
+
+    <!-- 7-2. 포인트 삭제-->
+    <delete id="pointDelete" parameterType="Integer">
+        DELETE
+        FROM DR_POINT P
+        WHERE P.POINT_NUMBER = #{pointNumber}
+    </delete>
+
+    <!-- 7-3. 포인트 회수-->
+    <update id="takePoint" parameterType="Integer">
+        UPDATE DR_POINT
+        SET POINT_GET = NULL
+        WHERE POINT_NUMBER = #{pointNumber}
+    </update>
+
+    <!-- 8-1. 신고 관리-->
+    <select id="showReport" parameterType="ManagerReportDTO">
+        SELECT
+            S.SIREN_NUMBER,
+            COALESCE(S.BOARD_NUMBER, S.RECIPE_NUMBER, S.REPLY_NUMBER) AS TARGET_ID,
+            U.USER_NICKNAME,
+            U.USER_EMAIL,
+            S.SIREN_REASON,
+            S.SIREN_TYPE,
+            S.SIREN_DATE
+        FROM
+            DR_SIREN S
+                JOIN DR_USER U ON S.USER_NUMBER = U.USER_NUMBER
+                LEFT JOIN DR_BOARD B ON S.BOARD_NUMBER = B.BOARD_NUMBER
+                LEFT JOIN DR_RECIPE R ON S.RECIPE_NUMBER = R.RECIPE_NUMBER
+                LEFT JOIN DR_REPLY RE ON S.REPLY_NUMBER = RE.REPLY_NUMBER
+        ORDER BY
+            S.SIREN_DATE
+    </select>
+
+
+
+
+    <!-- 8-2. 신고 삭제-->
+    <delete id="reportDelete" parameterType="Integer">
+        DELETE
+        FROM DR_SIREN S
+        WHERE S.SIREN_NUMBER = #{sirenNumber}
+    </delete>
+
+<!-- 9-1. 상품관리-->
+    <select id="showProduct" parameterType="ManagerProductDTO">
+        SELECT
+            P.PRODUCT_NAME,
+            P.PRODUCT_PRICE,
+            COUNT(*) AS PRODUCT_COUNT
+        FROM
+            DR_PRODUCT P
+        GROUP BY
+            P.PRODUCT_NAME,
+            P.PRODUCT_PRICE
+        ORDER BY
+            P.PRODUCT_NAME
+    </select>
+
+    <!-- 9-2. 상품삭제-->
+    <delete id="productDelete" parameterType="String">
+        DELETE
+        FROM DR_PRODUCT P
+        WHERE P.PRODUCT_NAME= #{productName}
+    </delete>
+
+    <!-- 9-3. 상품 등록 -->
+
+
+    <!-- 9-4. 상품 수정 -->
+
 
 
 
