@@ -30,4 +30,21 @@ public interface ManagerMapper {
 
    boolean recipeDelete(Integer recipeNumber);
 
+   List <ManagerCommentDTO> showReply();
+
+   boolean replyDelete(Integer replyNumber);
+
+   List<ManagerPointDTO> showPoint();
+
+   boolean pointDelete(Integer pointNumber);
+
+   boolean takePoint(Integer pointNumber);
+
+   List<ManagerReportDTO> showReport();
+
+   boolean reportDelete(Integer sirenNumber);
+
+   List<ManagerProductDTO> showProduct();
+
+   boolean productDelete(String productName);
 }
