@@ -1,9 +1,6 @@
 package com.dr.controller.user;
 
-import com.dr.dto.user.EmailFindDTO;
-import com.dr.dto.user.PwFindDTO;
-import com.dr.dto.user.UserDTO;
-import com.dr.dto.user.UserSessionDTO;
+import com.dr.dto.user.*;
 import com.dr.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -111,6 +108,18 @@ public class UserController {
         }
 
         return ResponseEntity.ok(response); // JSON 형태로 응답
+    }
+
+
+
+
+    @PostMapping("/user/PwReset")
+    @ResponseBody
+    public ResponseEntity<?> resetPassword(@RequestBody PwResetDTO pwResetDTO) {
+        // 비밀번호 변경 메서드 호출
+        userService.changePassword(pwResetDTO.getUserEmail(), pwResetDTO.getNewPassword());
+
+        return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
     }
 
 
