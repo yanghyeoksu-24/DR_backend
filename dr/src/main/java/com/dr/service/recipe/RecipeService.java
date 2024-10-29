@@ -1,9 +1,6 @@
 package com.dr.service.recipe;
 
-import com.dr.dto.recipe.ChatBotRecipeDetailDTO;
-import com.dr.dto.recipe.ChatBotRecipeListDTO;
-import com.dr.dto.recipe.MyRecipeDetailDTO;
-import com.dr.dto.recipe.MyRecipeListDTO;
+import com.dr.dto.recipe.*;
 import com.dr.mapper.recipe.RecipeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,6 +29,12 @@ public class RecipeService {
     public ChatBotRecipeDetailDTO findChatBotRecipeDetail(Long recipeNumber) {
         return recipeMapper.selectChatBotRecipeDetail(recipeNumber);  // 특정 레시피의 상세 정보를 조회합니다.
     }
+
+    public void insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO) {
+        recipeMapper.insertMyRecipe(myRecipeWriteDTO);  // Toast API로 전달된 레시피 데이터를 DB에 삽입
+    }
+
+
 
 
 }

@@ -36,9 +36,9 @@
 
             <!-- 글작성,전체보기,최신순,추천순 버튼들 -->
             <div class="myRecipeList-button">
-                <a th:href="@{/myRecipeWriter}">
+                <form th:action="@{/recipe/write}" method="get">
                     <button class="myRecipeList-writeButton">글작성</button>
-                </a>
+                </form>
 
                 <div class="myRecipeList-rightButton">
                     <button class="myRecipeList-secondButton">최신순</button>

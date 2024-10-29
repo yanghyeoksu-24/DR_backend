@@ -99,11 +99,34 @@
             UP.PHOTO_LOCAL
     </select>
 
-<<<<<<< HEAD
+    <insert id="insertMyRecipe" parameterType="MyRecipeWriteDTO">
+        <!-- 레시피 번호 자동 생성 -->
+        <selectKey keyProperty="recipeNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_DR_RECIPE.NEXTVAL FROM DUAL
+        </selectKey>
 
+        <!-- DR_RECIPE 테이블에 데이터 삽입 -->
+        INSERT INTO DR_RECIPE (
+        RECIPE_NUMBER,
+        USER_NUMBER,
+        RECIPE_TITLE,
+        RECIPE_TEXT,
+        RECIPE_ORIGINAL,
+        USER_NICKNAME,
+        RECIPE_TYPE,
+        RECIPE_WRITE_DATE
+        )
+        VALUES (
+        #{recipeNumber},
+        #{userNumber},
+        #{recipeTitle},
+        #{recipeText},
+        #{recipeOriginal},
+        #{userNickName},
+        #{recipeType},
+        SYSDATE
+        )
+    </insert>
 
-
-=======
->>>>>>> main
 
 </mapper>

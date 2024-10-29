@@ -1,9 +1,6 @@
 package com.dr.mapper.recipe;
 
-import com.dr.dto.recipe.ChatBotRecipeDetailDTO;
-import com.dr.dto.recipe.ChatBotRecipeListDTO;
-import com.dr.dto.recipe.MyRecipeDetailDTO;
-import com.dr.dto.recipe.MyRecipeListDTO;
+import com.dr.dto.recipe.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,4 +16,6 @@ public interface RecipeMapper {
     MyRecipeDetailDTO selectMyRecipeDetail(@Param("recipeNumber") Long recipeNumber);
 
     ChatBotRecipeDetailDTO selectChatBotRecipeDetail(@Param("recipeNumber") Long recipeNumber);
+
+    void insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO);
 }
