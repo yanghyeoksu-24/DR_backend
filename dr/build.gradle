@@ -54,6 +54,11 @@ dependencies {
 	//collSMS 문자인증
 	implementation group: 'net.nurigo', name: 'javaSDK', version: '2.2'
 
+<<<<<<< HEAD
+=======
+	// Json 의존성 추가
+	implementation 'org.json:json:20210307'
+>>>>>>> main
 
 }
 
