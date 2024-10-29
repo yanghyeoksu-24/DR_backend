@@ -1,5 +1,6 @@
 package com.dr.service.recipe;
 
+import com.dr.dto.recipe.ChatBotRecipeDetailDTO;
 import com.dr.dto.recipe.ChatBotRecipeListDTO;
 import com.dr.dto.recipe.MyRecipeDetailDTO;
 import com.dr.dto.recipe.MyRecipeListDTO;
@@ -26,6 +27,10 @@ public class RecipeService {
 
     public MyRecipeDetailDTO findMyRecipeDetail(Long recipeNumber) {
         return recipeMapper.selectMyRecipeDetail(recipeNumber);  // 특정 레시피의 상세 정보를 조회합니다.
+    }
+
+    public ChatBotRecipeDetailDTO findChatBotRecipeDetail(Long recipeNumber) {
+        return recipeMapper.selectChatBotRecipeDetail(recipeNumber);  // 특정 레시피의 상세 정보를 조회합니다.
     }
 
 

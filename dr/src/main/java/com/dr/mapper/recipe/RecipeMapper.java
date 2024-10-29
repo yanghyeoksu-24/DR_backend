@@ -1,5 +1,6 @@
 package com.dr.mapper.recipe;
 
+import com.dr.dto.recipe.ChatBotRecipeDetailDTO;
 import com.dr.dto.recipe.ChatBotRecipeListDTO;
 import com.dr.dto.recipe.MyRecipeDetailDTO;
 import com.dr.dto.recipe.MyRecipeListDTO;
@@ -17,5 +18,5 @@ public interface RecipeMapper {
 
     MyRecipeDetailDTO selectMyRecipeDetail(@Param("recipeNumber") Long recipeNumber);
 
-
+    ChatBotRecipeDetailDTO selectChatBotRecipeDetail(@Param("recipeNumber") Long recipeNumber);
 }

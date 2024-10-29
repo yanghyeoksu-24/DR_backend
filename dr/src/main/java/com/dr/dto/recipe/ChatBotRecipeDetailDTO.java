@@ -1,5 +1,6 @@
 package com.dr.dto.recipe;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class MyRecipeDetailDTO {
+public class ChatBotRecipeDetailDTO {
     private Long recipeNumber;           // 레시피 번호 (ID 대신 사용)
     private String recipeTitle;          // 레시피 제목
     private String recipeText;           // 레시피 내용
