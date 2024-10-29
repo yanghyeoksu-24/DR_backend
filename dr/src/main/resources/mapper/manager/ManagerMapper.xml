@@ -59,6 +59,17 @@
         WHERE USER_NUMBER = #{userNumber}
     </update>
 
+    <!-- 3-4. 회원검색-->
+    <select id="userSearch" parameterType="int" resultType="ManagerUserDTO">
+        SELECT  U.USER_NUMBER,
+                U.USER_NICKNAME,
+                U.USER_STATUS,
+                U.USER_PHONE,
+                U.USER_EMAIL
+        FROM DR_USER U
+        WHERE U.USER_NUMBER = #{userNumber}
+    </select>
+
 <!-- 4-1. 게시판 관리-->
     <select id="showBoard" parameterType="ManagerBoardDTO">
         SELECT
@@ -86,6 +97,32 @@
         FROM DR_BOARD B
         WHERE B.BOARD_NUMBER = #{boardNumber}
     </delete>
+
+    <!-- 4-3. 게시판 검색-->
+    <select id="boardSearch" parameterType="int" resultType="ManagerBoardDTO">
+        SELECT
+            B.BOARD_NUMBER,
+            B.BOARD_TITLE,
+            U.USER_NICKNAME,
+            COUNT(G.GOOD_NUMBER) AS goodCount,
+            B.BOARD_WRITE_DATE,
+            B.BOARD_TYPE
+        FROM
+            DR_BOARD B
+                JOIN
+            DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
+                LEFT JOIN
+            DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
+        WHERE
+            B.BOARD_NUMBER = #{boardNumber}
+        GROUP BY
+            B.BOARD_NUMBER,
+            B.BOARD_TITLE,
+            U.USER_NICKNAME,
+            B.BOARD_WRITE_DATE,
+            B.BOARD_TYPE
+    </select>
+
 
     <!-- 5-1. 레시피 관리-->
     <select id="showRecipe" parameterType="ManagerRecipeDTO">
@@ -115,6 +152,30 @@
         WHERE R.RECIPE_NUMBER = #{recipeNumber}
     </delete>
 
+    <!-- 5-3. 레시피 검색-->
+    <select id="recipeSearch" parameterType="int" resultType="ManagerRecipeDTO">
+        SELECT
+            R.RECIPE_NUMBER,
+            R.RECIPE_TITLE,
+            U.USER_NICKNAME,
+            COUNT(G.GOOD_NUMBER) AS goodCount,
+            R.RECIPE_WRITE_DATE,
+            R.RECIPE_TYPE
+        FROM
+            DR_RECIPE R
+                JOIN
+            DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
+                LEFT JOIN
+            DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
+        WHERE
+            R.RECIPE_NUMBER = #{recipeNumber}
+        GROUP BY
+            R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, R.RECIPE_TYPE
+
+    </select>
+
+
+
 <!-- 6-1. 댓글관리-->
     <select id="showReply" parameterType="ManagerCommentDTO">
         select R.REPLY_NUMBER , R.REPLY_TEXT , U.USER_NICKNAME , U.USER_PHONE , R.REPLY_WRITE_DATE
@@ -129,6 +190,15 @@
         FROM DR_REPLY RE
         WHERE RE.REPLY_NUMBER = #{replyNumber}
     </delete>
+
+    <!-- 6-3. 댓글 검색-->
+    <select id="replySearch" parameterType="int" resultType="ManagerCommentDTO">
+        select R.REPLY_NUMBER , R.REPLY_TEXT , U.USER_NICKNAME , U.USER_PHONE , R.REPLY_WRITE_DATE
+        from DR_REPLY R
+                 JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
+        WHERE
+            R.REPLY_NUMBER = #{replyNumber}
+    </select>
 
 <!-- 7-1. 포인트 관리-->
     <select id="showPoint" parameterType="ManagerPointDTO">
@@ -146,7 +216,6 @@
             DR_USER U ON P.USER_NUMBER = U.USER_NUMBER
         ORDER BY
             P.POINT_DATE DESC
-
     </select>
 
     <!-- 7-2. 포인트 삭제-->
@@ -162,6 +231,26 @@
         SET POINT_GET = NULL
         WHERE POINT_NUMBER = #{pointNumber}
     </update>
+
+    <!-- 7-4. 포인트 검색 -->
+    <select id="pointSearch" parameterType="String" resultType="ManagerPointDTO">
+        SELECT
+            P.POINT_NUMBER,
+            U.USER_NICKNAME,
+            U.USER_EMAIL,
+            P.POINT_NOTE,
+            P.POINT_GET,
+            P.POINT_DATE,
+            SUM(P.POINT_GET) OVER (PARTITION BY U.USER_NUMBER, U.USER_EMAIL) AS POINT_SUM
+        FROM
+            DR_POINT P
+                JOIN
+            DR_USER U ON P.USER_NUMBER = U.USER_NUMBER
+        WHERE
+            U.USER_NICKNAME = #{userNickName}
+        ORDER BY
+            P.POINT_DATE DESC
+    </select>
 
     <!-- 8-1. 신고 관리-->
     <select id="showReport" parameterType="ManagerReportDTO">

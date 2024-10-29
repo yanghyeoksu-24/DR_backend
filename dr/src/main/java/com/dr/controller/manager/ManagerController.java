@@ -108,7 +108,6 @@ public class ManagerController {
 
 
 
-
     // 3-3. 회원정지
     @PostMapping("/userPause")
     public ResponseEntity<?> updateUser(@RequestBody Map<String, List<Integer>> request) {
@@ -127,6 +126,14 @@ public class ManagerController {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일부 사용자 정지에 실패했습니다.");
         }
+    }
+
+    // 3-4 회원검색
+    @PostMapping("/userSearch")
+    public String userSearch(@RequestParam("userNumber") int userNumber, Model model) {
+        ManagerUserDTO user = managerService.userSearch(userNumber);
+        model.addAttribute("user" , user);
+        return "/manager/manageUser";
     }
 
     //4-1. 게시판 관리
@@ -156,6 +163,14 @@ public class ManagerController {
         }
     }
 
+    // 4-3. 회원검색
+    @PostMapping("/boardSearch")
+    public String boardSearch(@RequestParam("boardNumber") int boardNumber, Model model) {
+        ManagerBoardDTO board = managerService.boardSearch(boardNumber);
+        model.addAttribute("board" , board);
+        return "/manager/manageBoard";
+    }
+
     //5-1. 레시피 관리
     @GetMapping("/manageRecipe")
     public String showRecipe(Model model) {
@@ -183,6 +198,14 @@ public class ManagerController {
         }
     }
 
+    // 5-3. 레시피 검색
+    @PostMapping("/recipeSearch")
+    public String recipeSearch(@RequestParam("recipeNumber") int recipeNumber, Model model) {
+        ManagerRecipeDTO recipe = managerService.recipeSearch(recipeNumber);
+        model.addAttribute("recipe" , recipe);
+        return "/manager/manageRecipe";
+    }
+
     // 6-1. 댓글 관리
     @GetMapping("/manageComment")
     public String showComment(Model model) {
@@ -208,6 +231,14 @@ public class ManagerController {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일부 사용자 삭제에 실패했습니다.");
         }
+    }
+
+    // 6-3. 댓글 검색
+    @PostMapping("/replySearch")
+    public String replySearch(@RequestParam("replyNumber") int replyNumber, Model model) {
+        ManagerCommentDTO reply = managerService.replySearch(replyNumber);
+        model.addAttribute("reply" , reply);
+        return "/manager/manageComment";
     }
 
     // 7-1. 포인트 관리
@@ -271,6 +302,14 @@ public class ManagerController {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일부 사용자 삭제에 실패했습니다.");
         }
+    }
+
+    // 7-4. 포인트 검색
+    @PostMapping("/pointSearch")
+    public String pointSearch(@RequestParam("userNickName") String userNickName, Model model) {
+        List <ManagerPointDTO> point = managerService.pointSearch(userNickName);
+        model.addAttribute("point" , point);
+        return "/manager/managePoint";
     }
 
     // 8-1. 신고 관리
