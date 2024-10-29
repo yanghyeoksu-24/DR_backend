@@ -49,7 +49,7 @@
             <!-- 나만의 레시피 목록 -->
             <div class="myRecipeList-outbox">
                 <div class="myRecipeList-listbox" th:each="recipeList : ${recipeList}">
-                    <a th:href="@{/recipe/myDetailPage}">
+                    <a th:href="@{/recipe/myDetailPage(recipeNumber=${recipeList.recipeNumber})}">
                         <img th:src="@{${recipeList.photoOriginal}}" alt="레시피 이미지">
                     </a>
                     <p class="myRecipeList-foodTitle" th:text="${recipeList.recipeTitle}"></p>
