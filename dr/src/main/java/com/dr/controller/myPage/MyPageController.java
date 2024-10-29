@@ -130,18 +130,31 @@ public class MyPageController {
         return "myPage/myPageSteamedList";
     }
 
-    // --찜목록 삭제 -- //
-    // 찜 삭제 요청 처리
+    // -- 찜목록 삭제 -- //
     @PostMapping("/myPageSteamedList")
-    @ResponseBody
-    public String deleteSteam(@RequestParam Long userNumber, @RequestParam Long recipeNumber) {
+    public String deleteSteam(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
+                              @RequestParam Long recipeNumber) {
         int result = myPageService.deleteUserSteam(userNumber, recipeNumber);
+
+        // 삭제 성공 여부 체크
         if (result > 0) {
-            return "찜 삭제 성공";
+            // 삭제 성공 시
+            log.info("찜 목록 삭제 성공: recipeNumber={}", recipeNumber);
         } else {
-            return "찜 삭제 실패";
+            // 삭제 실패 시
+            log.warn("찜 목록 삭제 실패: recipeNumber={}", recipeNumber);
         }
+
+        // 삭제 후 다시 찜 목록 페이지로 리다이렉트
+        return "redirect:/myPage/myPageSteamedList";
     }
+
+
+
+
+
+
+
 
 
         }

@@ -1,23 +1,16 @@
-// 찜 삭제 하기 //
-function deleteSteam(userNumber, recipeNumber) {
-    if (confirm("찜을 삭제하시겠습니까?")) {
-        fetch('/myPageSteamedList', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `userNumber=${userNumber}&recipeNumber=${recipeNumber}`
-        })
-            .then(response => response.text())
-            .then(data => {
-                alert(data);
-                // 찜 삭제 성공 후 페이지 새로고침 또는 해당 요소 제거
-                location.reload(); // 페이지 새로고침
-            })
-            .catch(error => console.error('Error:', error));
-    }
+function deleteSteam(recipeNumber) {
+    // 세션에 저장된 userNumber를 서버에서 직접 확인하고 사용할 수 있도록 수정합니다.
+    $.ajax({
+        type: "POST",
+        url: "/myPage/myPageSteamedList",
+        data: { recipeNumber: recipeNumber }, // userNumber는 세션에서 자동으로 관리
+        success: function(response) {
+            alert("찜 목록이 삭제되었습니다.");
+            // 찜 목록을 다시 가져오는 등의 후속 작업 수행
+            location.reload(); // 페이지 새로고침하여 업데이트된 목록 표시
+        },
+    });
 }
-
 
 $(function() {
     const items = $('.myPage-pictureprideOne'); // 게시글 항목 선택

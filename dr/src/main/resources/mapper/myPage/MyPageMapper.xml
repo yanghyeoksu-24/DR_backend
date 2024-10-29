@@ -145,6 +145,15 @@
         S.STEAM_DATE DESC              <!-- 찜한 날짜 기준 최신순 정렬 -->
     </select>
 
+    <!-- 내정보 찜 목록 삭제 -->
+    <delete id="deleteUserSteam" parameterType="Long">
+    DELETE FROM DR_STEAM
+    WHERE USER_NUMBER = #{userNumber}
+    AND RECIPE_NUMBER = #{recipeNumber}
+    </delete>
+
+
+
 
 
 </mapper>
