@@ -99,12 +99,6 @@
             UP.PHOTO_LOCAL
     </select>
 
-    <!-- 내정보 찜 삭제 -->
-    <select id="getSteamDelete" parameterType="Long">
-        DELETE FROM DR_STEAM
-        WHERE USER_NUMBER = #{userNumber}
-        AND RECIPE_NUMBER = #{recipeNumber}
-    </select>
 
 
 </mapper>
