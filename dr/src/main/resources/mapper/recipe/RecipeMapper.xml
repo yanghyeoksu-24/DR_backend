@@ -99,11 +99,7 @@
             UP.PHOTO_LOCAL
     </select>
 
-    <insert id="writeMyRecipe" parameterType="MyRecipeWriterDTO">
-        <selectKey keyProperty="recipeNumber" resultType="Long" order="BEFORE">
 
-        </selectKey>
-    </insert>
 
 
 
