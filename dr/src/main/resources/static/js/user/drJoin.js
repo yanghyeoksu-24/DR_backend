@@ -93,6 +93,32 @@ $(document).ready(function () {
     // 휴대폰 번호 유효성 검사 정규표현식 (하이픈 없이 숫자만 10~11자리)
     const phonePattern = /^[0-9]{10,11}$/;
 
+    $('#sendCode').on('click', function () {
+        const phone = $('#userPhone').val().trim();
+
+        // 휴대폰 번호 형식 검사
+        if (!phonePattern.test(phone)) {
+            $('#phoneError').text("올바른 휴대폰 번호를 입력하세요. (하이픈 없이 10~11자리 숫자)").css("color", "red");
+            return; // 유효하지 않은 번호면 요청을 보내지 않음
+        } else {
+            $('#phoneError').text(""); // 오류 메시지 초기화
+        }
+
+        // 유효한 번호일 경우에만 인증 요청
+        $.ajax({
+            url: '/api/sms/send',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({phoneNumber: phone}),
+            success: function (response) {
+                alert(response);
+            },
+            error: function (xhr, status, error) {
+                console.error("에러 발생: " + error);
+                alert("서버와의 통신 중 오류가 발생했습니다.");
+            }
+        });
+    });
 
     // 인증번호 확인
     $('#verifyCode').on('click', function () {
@@ -164,7 +190,6 @@ $(document).ready(function () {
             return;
         }
         showAlertAndRedirect();
-
     });
 
     // 비밀번호 토글 기능 추가
@@ -196,51 +221,48 @@ $(document).ready(function () {
         return true; // 폼이 정상적으로 제출되도록 true 반환
     }
 
-    // 인증 요청 버튼 클릭 이벤트
-    $('#sendCode').on('click', function () {
+
+    $(document).ready(function () {
+        let phoneAlertShown = false; // 중복 전화번호에 대한 alert 표시 여부
         let isRequesting = false; // 인증 요청 중복 방지 변수
-        const userPhone = $('#userPhone').val().trim();
-        const phonePattern = /^[0-9]{10,11}$/; // 하이픈 없이 숫자만 10~11자리
 
-        // 휴대폰 번호 형식 검사
-        if (!phonePattern.test(userPhone)) {
-            alert("올바른 형식의 휴대폰 번호를 입력하세요.");
-            return;
-        }
+        // 전화번호 중복 확인
+        $('#userPhone').on('blur', function () {
+            const userPhone = $(this).val().trim();
+            const phonePattern = /^[0-9]{10,11}$/;
 
-        // 전화번호가 중복된 경우 인증 요청을 하지 않음
-        if ($('#phoneError').text() === "전화번호가 이미 존재합니다.") {
-            alert("이 전화번호는 이미 사용 중입니다. 인증 요청을 할 수 없습니다.");
-            return;
-        }
-
-        // 인증 요청이 진행 중인지 확인
-        if (isRequesting) {
-            return; // 이미 요청 중이면 아무것도 하지 않음
-        }
-
-        // 인증 요청 중 상태 업데이트
-        isRequesting = true;
-
-        // 인증 요청 로직 추가
-        $.ajax({
-            url: '/api/sms/send', // 인증 요청을 위한 API 엔드포인트
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({phoneNumber: userPhone}),
-            success: function (response) {
-                alert("인증 코드가 발송되었습니다.");
-            },
-            error: function (xhr, status, error) {
-                console.error("인증 요청 중 에러 발생: " + error);
-                alert("인증 요청 중 오류가 발생했습니다.");
-            },
-            complete: function () {
-                // 요청 완료 후 상태 초기화
-                isRequesting = false;
+            if (!phonePattern.test(userPhone)) {
+                $('#phoneError').text("올바른 형식의 휴대폰 번호를 입력하세요.").css('color', 'red');
+                phoneAlertShown = false;
+                return;
             }
+
+            $.ajax({
+                url: '/api/user/checkPhone',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({userPhone: userPhone}),
+                success: function (response) {
+                    if (response.exists) {
+                        if (!phoneAlertShown) {
+                            alert("전화번호가 이미 존재합니다.");
+                            phoneAlertShown = true;
+                        }
+                        $('#phoneError').text("전화번호가 이미 존재합니다.").css('color', 'red');
+                        $('#sendCode').prop('disabled', true);
+                    } else {
+                        $('#phoneError').text("");
+                        phoneAlertShown = false;
+                        $('#sendCode').prop('disabled', false);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("에러 발생: " + error);
+                    alert("서버와의 통신 중 오류가 발생했습니다.");
+                }
+            });
         });
+
     });
 });
-
 

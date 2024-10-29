@@ -10,7 +10,8 @@
   <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
   <script defer th:src="@{/js/fragment/header.js}"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"
+          integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -26,7 +27,8 @@
       <!-- 휴대폰 번호 필드 -->
       <label for="phone" class="emailfind-label">휴대폰 번호</label>
       <div class="input-withButton">
-        <input type="text" id="phone" name="phone" class="emailfind-input" placeholder="하이픈(-)없이 숫자만 입력해주세요." required>
+        <input type="text" id="phone" name="phone" class="emailfind-input" placeholder="하이픈(-)없이 숫자만 입력해주세요."
+               required>
         <button type="button" id="sendCode" class="emailfind-eventButton">인증요청</button>
       </div>
       <span class="error-message" id="phoneError"></span>
@@ -34,7 +36,8 @@
       <!-- 인증번호 필드 -->
       <label for="authCode" class="emailfind-label">인증번호</label>
       <div class="input-withButton">
-        <input type="text" id="authCode" name="authCode" class="emailfind-input" placeholder="인증번호를 입력해주세요." required>
+        <input type="text" id="authCode" name="authCode" class="emailfind-input" placeholder="인증번호를 입력해주세요."
+               required>
         <button type="button" id="verifyCode" class="emailfind-eventButton">인증확인</button>
       </div>
       <span class="error-message" id="authCodeError"></span>

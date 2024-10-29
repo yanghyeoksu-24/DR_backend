@@ -36,4 +36,16 @@
         FROM DR_USER U
         WHERE U.USER_PHONE = #{userPhone}
     </select>
+
+    <select id="userPwFind" parameterType="PwFindDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM DR_USER
+        WHERE USER_PHONE = #{userPhone} AND USER_EMAIL = #{userEmail}
+    </select>
+
+    <update id="updatePassword">
+        UPDATE dr_user
+        SET user_pw = #{newPassword}
+        WHERE user_email = #{userEmail}
+    </update>
 </mapper>

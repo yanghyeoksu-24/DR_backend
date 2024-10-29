@@ -1,8 +1,6 @@
 package com.dr.controller.user;
 
-import com.dr.dto.user.EmailFindDTO;
-import com.dr.dto.user.UserDTO;
-import com.dr.dto.user.UserSessionDTO;
+import com.dr.dto.user.*;
 import com.dr.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -88,6 +86,46 @@ public class UserController {
         model.addAttribute("userEmail", userEmail);
         return "/user/emailFindFinish"; // 이메일 찾기 완료 페이지로 이동
     }
+
+
+
+    @PostMapping("/user/PwFind")
+    @ResponseBody
+    public ResponseEntity<?> PwFindPage(@RequestBody PwFindDTO pwFindDTO) {
+        boolean isTrue = userService.userPwFind(pwFindDTO); // 이메일과 휴대폰 번호 확인
+
+        // 응답 데이터
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", isTrue); // 일치 여부 저장
+
+        // 메시지 설정
+        if (isTrue) {
+            response.put("message", "인증이 완료되었습니다."); // 성공 메시지
+            response.put("redirectUrl", "/user/PwReset"); // 비밀번호 재설정 페이지 URL
+        } else {
+            response.put("message", "없는 이메일입니다."); // 실패 메시지
+            response.put("redirectUrl", "/user/PwFind"); // 비밀번호 찾기 페이지 URL
+        }
+
+        return ResponseEntity.ok(response); // JSON 형태로 응답
+    }
+
+
+
+
+    @PostMapping("/user/PwReset")
+    @ResponseBody
+    public ResponseEntity<?> resetPassword(@RequestBody PwResetDTO pwResetDTO) {
+        // 비밀번호 변경 메서드 호출
+        userService.changePassword(pwResetDTO.getUserEmail(), pwResetDTO.getNewPassword());
+
+        return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
+    }
+
+
+
+
+
 
 
     //drjoin 회원가입 요청 컨트롤러
