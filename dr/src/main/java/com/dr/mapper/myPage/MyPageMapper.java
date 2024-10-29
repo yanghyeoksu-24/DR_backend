@@ -1,9 +1,6 @@
 package com.dr.mapper.myPage;
 
-import com.dr.dto.myPage.PointDetailDTO;
-import com.dr.dto.myPage.UserInfoDTO;
-import com.dr.dto.myPage.UserPostDTO;
-import com.dr.dto.myPage.UserRecipeDTO;
+import com.dr.dto.myPage.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,12 +14,17 @@ public interface MyPageMapper {
     // 회원 탈퇴
     int deleteUser(@Param("userNumber") Long userNumber);
 
-    // 내 정보 포인트 내역 확인
+    // 내 정보 포인트 내역
     List<PointDetailDTO> pointHistory(@Param("userNumber") Long userNumber);
 
-    //내 정보 내가 쓴 레시피 목록 확인
+    //내 정보 내가 쓴 레시피 목록
     List<UserRecipeDTO> getUserRecipe(@Param("userNumber") Long userNumber);
 
-    //내 정보 내가 쓴 게시글 목록 확인
+    //내 정보 내가 쓴 게시글 목록
     List<UserPostDTO> getUserPost(@Param("userNumber") Long userNumber);
+
+    //UserSteamDTO 리스트를 반환하며, userNumber를 매개변수로 받아 사용자의 찜 목록을 조회
+    List<UserSteamDTO> getUserSteam(@Param("userNumber") Long userNumber);
+
+
 }
