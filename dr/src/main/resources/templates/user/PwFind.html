@@ -19,8 +19,7 @@
             <span class="pwfind-leftTitle">비밀번호</span>
             <span class="pwfind-rightTitle">찾기</span>
         </div>
-
-        <form id="pwFindForm" class="pwFindForm" method="post" th:action="@{/user/PwFind}">
+        <form id="pwFindForm" class="pwFindForm" method="post">
             <label for="userEmail" class="pwfind-label">아이디(이메일)</label>
             <div class="pwinput-withButton">
                 <input type="text" id="userEmail" name="userEmail" class="pwfind-input" placeholder="아이디를 입력하세요."
@@ -35,7 +34,7 @@
                 <button type="button" id="sendCode" class="pwfind-eventButton">인증요청</button>
             </div>
             <span class="error-message" id="phoneError"></span>
-            <br><br>
+            <br>
             <label for="authCode" class="pwfind-label">인증번호</label>
             <div class="pwinput-withButton">
                 <input type="text" id="authCode" name="authCode" class="pwfind-input" placeholder="인증번호를 입력해주세요."
@@ -44,7 +43,7 @@
             </div>
             <span class="error-message" id="authCodeError"></span>
             <br>
-            <button class="pwfind-finishButton">인증완료</button>
+            <button type="submit" class="pwfind-finishButton">인증완료</button>
         </form>
     </div>
 </main>

@@ -93,18 +93,16 @@ public class UserController {
         PwFindDTO pwFindDTO = userService.userPwFind(userEmail, userPhone);
         log.info(pwFindDTO.toString());
 
-        if (pwFindDTO != null && pwFindDTO.getUserPhone() != null) {
+        if (pwFindDTO.getUserPhone() != null) {
             redirectAttributes.addFlashAttribute("userEmail", pwFindDTO.getUserEmail());
             redirectAttributes.addFlashAttribute("userPhone", pwFindDTO.getUserPhone()); // userPhone 추가
             log.info(pwFindDTO.toString());
 
-            return "redirect:/user/PwReset"; // 이메일이 존재하면 PwReset 페이지로 리다이렉트
+            return "redirect:/user/PwReset";
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "이메일이 일치하지 않습니다."); // 에러 메시지 추가
-            return "redirect:/user/PwFind"; // 이메일이 존재하지 않으면 PwFind 페이지로 리다이렉트
+            return "/user/PwFind";
         }
     }
-
 
 
     //비밀번호 변경 페이지
@@ -113,7 +111,7 @@ public class UserController {
         PwFindDTO pwFindDTO = new PwFindDTO();
 
         model.addAttribute("userPhone", pwFindDTO.getUserPhone());
-        log.info(pwFindDTO.getUserPhone() +"출력");
+        log.info(pwFindDTO.getUserPhone() + "출력");
 
         userService.updatePassword(userPw, userPhone);
         return "redirect:/user/login";

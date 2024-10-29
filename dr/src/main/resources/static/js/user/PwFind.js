@@ -1,49 +1,56 @@
 $(document).ready(function () {
-    // 이메일 형식 정규표현식
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    // 휴대폰 번호 형식 정규표현식 (하이픈 없이 숫자만 10~11자리)
-    const phonePattern = /^[0-9]{10,11}$/;
+    // 아이디 정규표현식: 이메일 형식 검사
+    const userIdRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    // 이메일 입력란 blur 이벤트: 유효성 검사
-    $('#userEmail').on('blur', function () {
-        const userEmailValue = $(this).val().trim();
-        if (!emailPattern.test(userEmailValue)) {
-            $('#userEmailError').text("올바른 이메일 형식을 입력하세요.").css('color', 'red');
-        } else {
-            $('#userEmailError').text(""); // 오류 메시지 초기화
+    // 휴대폰 번호 유효성 검사 정규표현식 (하이픈 없이 숫자만 10~11자리)
+    const userPhonePattern = /^[0-9]{10,11}$/;
+
+    // 비밀번호 찾기 요청
+    $('#pwFindForm').on('submit', function (event) {
+
+
+        const userEmailValue = $('#userEmail').val().trim();
+        const userPhoneValue = $('#userPhone').val().trim();
+
+        // 유효성 검사
+        if (!userIdRegex.test(userEmailValue)) {
+            alert("올바른 이메일 형식을 입력하세요.");
+            return;
         }
+
+        if (!userPhonePattern.test(userPhoneValue)) {
+            $('#phoneError').text("형식에 맞게 입력하세요.").css('color', 'red');
+            return;
+        }
+
+        // AJAX 요청을 통해 전화번호와 이메일 확인
+        $.ajax({
+            url: '/user/PwFind',
+            type: 'POST',
+            contentType: 'application/json', // JSON 형식으로 전송
+            data: JSON.stringify({
+                userEmail: userEmailValue,
+                userPhone: userPhoneValue
+            }),
+            success: function (response) {
+                alert(response.message); // 서버에서 보낸 메시지 표시
+                window.location.href = response.redirectUrl; // 서버의 리다이렉트 URL로 이동
+            },
+            error: function (xhr, status, error) {
+                console.error("에러 발생: " + error);
+                alert("서버와의 통신 중 오류가 발생했습니다.");
+            }
+        });
     });
 
-    // 휴대폰 번호 입력란 blur 이벤트: 유효성 검사
-    $('#userPhone').on('blur', function () {
-        const userPhoneValue = $(this).val().trim();
-        if (!phonePattern.test(userPhoneValue)) {
-            $('#phoneError').text("하이픈(-) 없이 숫자만 10~11자리를 입력하세요.").css('color', 'red');
-        } else {
-            $('#phoneError').text(""); // 오류 메시지 초기화
-        }
-    });
-
-    // 인증번호 입력란 blur 이벤트: 유효성 검사
-    $('#authCode').on('blur', function () {
-        const authCodeValue = $(this).val().trim();
-        if (!authCodeValue) {
-            $('#authCodeError').text("인증번호를 입력하세요.").css('color', 'red');
-        } else {
-            $('#authCodeError').text(""); // 오류 메시지 초기화
-        }
-    });
-
-    // 인증요청 버튼 클릭 이벤트 처리
+    // 인증요청 버튼 클릭 시 이벤트 처리
     $('#sendCode').on('click', function () {
         const userPhone = $('#userPhone').val().trim();
 
         // 휴대폰 번호 형식 검사
-        if (!phonePattern.test(userPhone)) {
-            $('#phoneError').text("하이픈(-) 없이 숫자만 10~11자리를 입력하세요.").css('color', 'red');
+        if (!userPhonePattern.test(userPhone)) {
+            $('#phoneError').text("형식에 맞게 입력하세요.").css('color', 'red');
             return;
-        } else {
-            $('#phoneError').text(""); // 오류 메시지 초기화
         }
 
         // 유효한 번호일 경우에만 인증 요청
@@ -63,19 +70,14 @@ $(document).ready(function () {
         });
     });
 
-    // 인증번호 확인 버튼 클릭 이벤트 처리
+    // 인증번호 확인
     $('#verifyCode').on('click', function () {
         const authCode = $('#authCode').val().trim();
-
-        // 인증번호 입력 확인
         if (!authCode) {
             $('#authCodeError').text("인증번호를 입력하세요.").css('color', 'red');
             return;
-        } else {
-            $('#authCodeError').text(""); // 오류 메시지 초기화
         }
 
-        // 인증번호 확인 요청
         $.ajax({
             url: '/api/sms/verify',
             type: 'POST',
@@ -92,20 +94,9 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.error("에러 발생: " + error);
+                console.log("에러 발생: " + error);
                 alert("서버와의 통신 중 오류가 발생했습니다.");
             }
         });
-
-        window.onload = function() {
-            const errorMessage = /*[[${errorMessage}]]*/ null; // Thymeleaf 사용 시
-            const message = /*[[${message}]]*/ null; // Thymeleaf 사용 시
-
-            if (errorMessage) {
-                alert(errorMessage);
-            } else if (message) {
-                alert(message);
-            }
-        };
     });
 });
