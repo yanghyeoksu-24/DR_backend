@@ -2,6 +2,7 @@ package com.dr.controller.user;
 
 import com.dr.dto.user.*;
 import com.dr.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.HashMap;
@@ -85,50 +87,36 @@ public class UserController {
         return "/user/emailFindFinish"; // 이메일 찾기 완료 페이지로 이동
     }
 
-
+    //비밀번호 찾기 페이지
     @PostMapping("/user/PwFind")
-    @ResponseBody
-    public ResponseEntity<?> PwFindPage(@RequestBody PwFindDTO pwFindDTO) {
-        boolean isTrue = userService.userPwFind(pwFindDTO); // 이메일과 휴대폰 번호 확인
+    public String PwFind(RedirectAttributes redirectAttributes, @RequestParam("userEmail") String userEmail, @RequestParam("userPhone") String userPhone) {
+        PwFindDTO pwFindDTO = userService.userPwFind(userEmail, userPhone);
+        log.info(pwFindDTO.toString());
 
-        // 응답 데이터
-        Map<String, Object> response = new HashMap<>();
-        response.put("success", isTrue); // 일치 여부 저장
+        if (pwFindDTO != null && pwFindDTO.getUserPhone() != null) {
+            redirectAttributes.addFlashAttribute("userEmail", pwFindDTO.getUserEmail());
+            redirectAttributes.addFlashAttribute("userPhone", pwFindDTO.getUserPhone()); // userPhone 추가
+            log.info(pwFindDTO.toString());
 
-        // 메시지 설정
-        if (isTrue) {
-            response.put("message", "인증이 완료되었습니다."); // 성공 메시지
-            response.put("redirectUrl", "/user/PwReset"); // 비밀번호 재설정 페이지 URL
+            return "redirect:/user/PwReset"; // 이메일이 존재하면 PwReset 페이지로 리다이렉트
         } else {
-            response.put("message", "없는 이메일입니다."); // 실패 메시지
-            response.put("redirectUrl", "/user/PwFind"); // 비밀번호 찾기 페이지 URL
+            redirectAttributes.addFlashAttribute("errorMessage", "이메일이 일치하지 않습니다."); // 에러 메시지 추가
+            return "redirect:/user/PwFind"; // 이메일이 존재하지 않으면 PwFind 페이지로 리다이렉트
         }
-
-        return ResponseEntity.ok(response); // JSON 형태로 응답
     }
 
 
+
+    //비밀번호 변경 페이지
     @PostMapping("/user/PwReset")
-    public ResponseEntity<String> updatePassword(@ModelAttribute PwResetDTO pwResetDTO) {
-        String userPhone = pwResetDTO.getUserPhone();
-        String newPassword = pwResetDTO.getUserPw();
-        System.out.println(userPhone);
+    public String PwReset(Model model, @RequestParam("newPassword") String userPw, @RequestParam("userPhone") String userPhone) {
+        PwFindDTO pwFindDTO = new PwFindDTO();
 
-        // 비밀번호 변경 처리
-        try {
-            userService.updatePassword(userPhone, newPassword);
+        model.addAttribute("userPhone", pwFindDTO.getUserPhone());
+        log.info(pwFindDTO.getUserPhone() +"출력");
 
-            return ResponseEntity
-                    .status(HttpStatus.FOUND)  // 리다이렉트를 위한 상태코드
-                    .header("Location", "/user/login")  // 성공 시 login 페이지로 리다이렉트
-                    .body("비밀번호가 성공적으로 변경되었습니다.");
-        } catch (Exception e) {
-            // 예외 발생 시 다시 PwReset 페이지로 리다이렉트
-            return ResponseEntity
-                    .status(HttpStatus.FOUND)
-                    .header("Location", "/user/PwReset")
-                    .body("비밀번호 변경 중 오류가 발생했습니다. 다시 시도해주세요.");
-        }
+        userService.updatePassword(userPw, userPhone);
+        return "redirect:/user/login";
     }
 
 
@@ -148,7 +136,7 @@ public class UserController {
         return ResponseEntity.ok(exists);
     }
 
-
+    // 핸드폰 중복 확인 요청 처리
     @PostMapping("/api/user/checkPhone")
     @ResponseBody
     public Map<String, Boolean> checkPhone(@RequestBody Map<String, String> request) {
@@ -159,7 +147,7 @@ public class UserController {
         return response;
     }
 
-
+    //로그인 페이지
     @PostMapping("/user/login")
     public ResponseEntity<Map<String, String>> login(@RequestParam("userEmail") String userEmail,
                                                      @RequestParam("userPw") String userPw,

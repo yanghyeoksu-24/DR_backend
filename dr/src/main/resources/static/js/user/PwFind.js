@@ -34,44 +34,6 @@ $(document).ready(function () {
         }
     });
 
-    // 비밀번호 찾기 폼 제출 이벤트
-    $('#pwFindForm').on('submit', function (event) {
-        event.preventDefault(); // 폼 기본 제출 방지
-
-        const userEmailValue = $('#userEmail').val().trim();
-        const userPhoneValue = $('#userPhone').val().trim();
-
-        // 최종 유효성 검사
-        if (!emailPattern.test(userEmailValue)) {
-            $('#userEmailError').text("올바른 이메일 형식을 입력하세요.").css('color', 'red');
-            return;
-        }
-
-        if (!phonePattern.test(userPhoneValue)) {
-            $('#phoneError').text("하이픈(-) 없이 숫자만 10~11자리를 입력하세요.").css('color', 'red');
-            return;
-        }
-
-        // AJAX 요청을 통해 전화번호와 이메일 확인
-        $.ajax({
-            url: '/user/PwFind',
-            type: 'POST',
-            contentType: 'application/json', // JSON 형식으로 전송
-            data: JSON.stringify({
-                userEmail: userEmailValue,
-                userPhone: userPhoneValue
-            }),
-            success: function (response) {
-                alert(response.message); // 서버에서 보낸 메시지 표시
-                window.location.href = response.redirectUrl; // 서버의 리다이렉트 URL로 이동
-            },
-            error: function (xhr, status, error) {
-                console.error("에러 발생: " + error);
-                alert("서버와의 통신 중 오류가 발생했습니다.");
-            }
-        });
-    });
-
     // 인증요청 버튼 클릭 이벤트 처리
     $('#sendCode').on('click', function () {
         const userPhone = $('#userPhone').val().trim();
@@ -134,5 +96,16 @@ $(document).ready(function () {
                 alert("서버와의 통신 중 오류가 발생했습니다.");
             }
         });
+
+        window.onload = function() {
+            const errorMessage = /*[[${errorMessage}]]*/ null; // Thymeleaf 사용 시
+            const message = /*[[${message}]]*/ null; // Thymeleaf 사용 시
+
+            if (errorMessage) {
+                alert(errorMessage);
+            } else if (message) {
+                alert(message);
+            }
+        };
     });
 });

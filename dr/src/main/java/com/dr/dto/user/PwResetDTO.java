@@ -9,6 +9,8 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
+
+//비밀번호 변경 DTO
 public class PwResetDTO {
     private String userPhone;
     private String userPw;

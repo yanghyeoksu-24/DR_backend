@@ -37,12 +37,12 @@
         WHERE U.USER_PHONE = #{userPhone}
     </select>
 
-    <select id="userPwFind" parameterType="PwFindDTO" resultType="int">
-        SELECT COUNT(*)
+    <select id="userPwFind" parameterType="PwFindDTO" resultType="PwFindDTO">
+        SELECT USER_PHONE
         FROM DR_USER
-        WHERE USER_PHONE = #{userPhone}
-          AND USER_EMAIL = #{userEmail}
+        WHERE USER_PHONE = #{arg1} AND USER_EMAIL = #{arg0}
     </select>
+
 
     <update id="updatePassword">
         UPDATE dr_user
