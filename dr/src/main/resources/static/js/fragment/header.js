@@ -34,6 +34,7 @@ $(document).ready(function () {
     e.preventDefault(); // 기본 폼 제출 방지
     let check = confirm('로그아웃 하시겠습니까?');
     if (check) {
+      alert('로그아웃 되었습니다.')
       // 로그아웃 요청을 보내기 위해 폼을 제출
       $(this).closest('form').submit();
     }

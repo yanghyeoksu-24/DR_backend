@@ -48,6 +48,13 @@ public class ChatBotService {
         JSONObject responseJson = new JSONObject(response.getBody());
         JSONArray choicesArray = responseJson.getJSONArray("choices");
         JSONObject messageObject = choicesArray.getJSONObject(0).getJSONObject("message");
-        return messageObject.getString("content").trim();
+
+        // 응답 반환
+//      return messageObject.getString("content").trim();
+
+        // 받은 응답을 줄바꿈 처리를 추가해 반환
+        String botReply = messageObject.getString("content").trim();
+        return botReply.replace("\n", "<br>");  // \n을 <br>로 변환
+
     }
 }

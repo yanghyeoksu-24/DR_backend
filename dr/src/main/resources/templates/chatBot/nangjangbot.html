@@ -50,43 +50,43 @@
       <div id="nangjangbot-sideBarTitle">이전 채팅</div>
 
       <div class="nangjangbot-lastChat">
-        <div>열번째 첫 채팅내용 Blah blah blah</div>
+        <div>열번째 첫 채팅내용blah blah <span>0일전</span></div>
         <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
-        <div>아홉번째 첫 채팅내용 Blah blah blah</div>
+        <div>아홉번째 첫 채팅내용blah blah <span>0일전</span></div>
         <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
-        <div>여덟번째 첫 채팅내용 Blah blah blah</div>
+        <div>여덟번째 첫 채팅내용blah blah <span>0일전</span></div>
         <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
-        <div>일곱번째 첫 채팅내용 Blah blah blah</div>
+        <div>일곱번째 첫 채팅내용blah blah <span>0일전</span></div>
         <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
-        <div>여섯번째 첫 채팅내용 Blah blah blah</div>
+        <div>여섯번째 첫 채팅내용blah blah <span>0일전</span></div>
         <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
-        <div>다섯번째 첫 채팅내용 Blah blah blah</div>
+        <div>다섯번째 첫 채팅내용blah blah <span>0일전</span></div>
         <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
-        <div>네번째 첫 채팅내용 Blah blah blah</div>
+        <div>네번째 첫 채팅내용blah blah <span>0일전</span></div>
         <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
-        <div>세번째 첫 채팅내용 Blah blah blah</div>
+        <div>세번째 첫 채팅내용blah blah <span>0일전</span></div>
         <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
-        <div>두번째 첫 채팅내용 Blah blah blah</div>
+        <div>두번째 첫 채팅내용blah blah <span>0일전</span></div>
         <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
       <div class="nangjangbot-lastChat">
-        <div>첫번째 첫 채팅내용 Blah blah blah</div>
+        <div>첫번째 첫 채팅내용blah blah <span>0일전</span></div>
         <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
       </div>
 
@@ -117,7 +117,9 @@
     <!-- 채팅시작시 여유공간 블럭 -->
     <div class="nangjangbot-block"></div>
 
-    <div id="loading-spinner" style="display: none;">냉장봇 답변 로딩 중...</div>
+    <div id="loading-spinner">냉장봇 답변 로딩 중...</div>
+
+    <!-- 이전채팅내용 -->
 
     <!-- 대화 컨테이너 -->
     <div id="nangjangbot-conversationContainer">
@@ -127,7 +129,7 @@
     <!-- 채팅입력 -->
     <form action="#컨트롤러로" method="" id="nangjangbot-chating">
       <div id="nangjangbot-btnContainer"><img th:src="@{/image/nangjangbot/sideBar.png}" id="nangjangbot-listBtn"></div>
-      <input type="text" id="nangjangbot-sendMsg" placeholder="냉장고에 남은 재료와 원하는 요리를 말씀해주세요! ex: 계란과 토마토가 남았는데 한식이 먹고싶어">
+      <input type="text" id="nangjangbot-sendMsg" autocomplete="off" placeholder="냉장고에 남은 재료와 원하는 요리를 말씀해주세요! ex: 계란과 토마토가 남았는데 한식이 먹고싶어">
       <button id="nangjangbot-sendBtn"><img th:src="@{/image/nangjangbot/send.png}"></button>
     </form>
   </main>

@@ -15,14 +15,25 @@ import java.util.List;
 @RequestMapping("/chatBot") //최상위 경로
 public class NangjangbotController {
 
-
-    @PostMapping("/nangjangbot") //하위경로
+    @GetMapping("/nangjangbot") //하위경로
     public String openNangjangbot() {
+
+
         return "chatBot/nangjangbot";
     }
 
-    @PostMapping("/lastChating")
-    public String lastChating() {
-        return "chatBot/lastChating";
+    @PostMapping("/firstChat")
+    public void startChat(){
+
+    }
+
+    @PostMapping("/onGoingChat")
+    public void onGoingChat(){
+
+    }
+
+    @PostMapping("/lastChat")
+    public String lastChat() {
+        return "chatBot/lastChat";
     }
 }
