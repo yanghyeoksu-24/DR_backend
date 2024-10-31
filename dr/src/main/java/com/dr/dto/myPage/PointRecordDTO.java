@@ -10,10 +10,11 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class UserSteamDTO {
-    private Long userNumber;
-    private Long recipeNumber;
-    private String recipeTitle;
-    private String userNickname;
-    private String photoLocal;
+public class PointRecordDTO {
+    private int userNumber;
+    private int points;
+    private String note;
+
+    public PointRecordDTO(Long userNumber, int i, String 개근) {
+    }
 }

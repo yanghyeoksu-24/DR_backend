@@ -26,6 +26,32 @@ document.addEventListener('DOMContentLoaded', function() {
             String(today.getDate()).padStart(2, '0');
     }
 
+    // 출석 체크 AJAX 요청 함수
+    function checkInAttendance() {
+        var todayDateString = getTodayDateString(); // 오늘 날짜 문자열 가져오기
+
+        return fetch(`/myPage/myPageCheck?userNumber=${userNumber}&date=${todayDateString}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('출석 체크 요청 실패');
+                }
+                return response.text(); // 페이지 전환이므로 텍스트로 응답받기
+            })
+            .then(data => {
+                // 출석 체크 후 페이지 전환을 처리하기 위해 리다이렉트 또는 페이지 갱신 로직 추가
+                window.location.href = '/myPage/myPageCheck'; // 결과 페이지로 리다이렉트
+            })
+            .catch(error => {
+                console.error('Error checking in attendance:', error);
+                alert("출석 체크 중 오류가 발생했습니다.");
+            });
+    }
+
     // 출석 체크 버튼 클릭 이벤트
     document.getElementById('checkInButton').addEventListener('click', function() {
         if (isCheckedIn) {
@@ -68,7 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             isCheckedIn = true; // 출석 체크 상태 업데이트
-            alert("10 포인트가 적립되었습니다.");
+            alert("출석 체크가 완료되었습니다. 10 포인트가 적립되었습니다."); // 사용자에게 알림
+            checkInAttendance(); // 출석 체크 AJAX 요청
         }
     });
 });
