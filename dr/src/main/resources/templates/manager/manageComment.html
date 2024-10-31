@@ -67,20 +67,44 @@
                     <span id="title-date">작성일</span>
                 </li>
 
-                <li th:each="replyList : ${replyList}">
-                    <input type="checkbox" class="con-check" th:value="${replyList.replyNumber}">
-                    <span class="con-num" th:text="${replyList.replyNumber}"></span>
-                    <span class="con-title" th:text="${replyList.replyText}"></span>
-                    <span class="con-name" th:text="${replyList.userNickName}"></span>
-                    <span class="con-phone" th:text="${replyList.userPhone}"></span>
-                    <span class="con-date" th:text="${replyList.replyWriteDate}"></span>
+                <li th:if="${reply != null}">
+                    <input type="checkbox" class="con-check" th:value="${reply.replyNumber}">
+                    <span class="con-num" th:text="${reply.replyNumber}"></span>
+                    <span class="con-title" th:text="${reply.replyText}"></span>
+                    <span class="con-name" th:text="${reply.userNickName}"></span>
+                    <span class="con-phone" th:text="${reply.userPhone}"></span>
+                    <span class="con-date" th:text="${reply.replyWriteDate}"></span>
                 </li>
+
+                <li th:each="item : ${replyList}" th:if="${item != null}">
+                    <a th:href="${item.recipeNumber!= null ?
+        (item.recipeType == '나만의레시피' ?
+            '/recipe/myDetailPage?recipeNumber=' + item.recipeNumber :
+            '/recipe/chatBotDetailPage?recipeNumber=' + item.recipeNumber)
+        :
+        (item.boardType == '자유게시판' ?
+            '/board/freeBoardDetail?boardNumber=' + item.boardNumber :
+            '/board/honeyBoardDetail?boardNumber=' + item.boardNumber)
+    }">
+                        <input type="checkbox" class="con-check" th:value="${item.replyNumber}">
+                        <span class="con-num" th:text="${item.replyNumber}"></span>
+                        <span class="con-title" th:text="${item.replyText}"></span>
+                        <span class="con-name" th:text="${item.userNickName}"></span>
+                        <span class="con-phone" th:text="${item.userPhone}"></span>
+                        <span class="con-date" th:text="${item.replyWriteDate}"></span>
+                    </a>
+                </li>
+
 
             </ul>
             <div id="pagination"></div>
 
         </div>
     </div>
+    <form class="manager-search-form" th:action="@{/manager/replySearch}" method="post">
+        <input type="text" id="manager-input" name="replyNumber" placeholder="댓글 번호"/>
+        <button class="manager-search">검색</button>
+    </form>
 </div>
 <form th:action="@{/manager/managerLogout}" method="get">
     <button id="manager-logout">로그아웃</button>

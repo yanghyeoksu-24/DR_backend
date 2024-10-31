@@ -15,4 +15,8 @@ public class ManagerCommentDTO {
     private String userNickName;
     private String userPhone;
     private String replyWriteDate;
+    private int boardNumber;
+    private int recipeNumber;
+    private String boardType;
+    private String recipeType;
 }

@@ -1,54 +1,54 @@
 // + 버튼에 대한 클릭 이벤트 설정
 document.getElementById('numberUp').addEventListener('click', function() {
-  // + 버튼이 있는 네 번째 div 선택 (네 번째 .register-right-con)
-  const targetDiv = document.querySelectorAll('.register-right-con')[3];  // 4번째 div 선택
-  
-  // 현재 div 안에 있는 input 태그들의 수를 확인
+  const targetDiv = document.querySelectorAll('.register-right-con')[2];  // 3번째 div 선택
+
   const inputCount = targetDiv.querySelectorAll('input').length;
 
-  // input이 10개 이상이면 추가되지 않도록 설정
   if (inputCount >= 10) {
     alert('최대 10개의 입력 필드만 추가할 수 있습니다.');
-    return;  // 추가 작업 중단
+    return;
   }
 
-  // 새로운 input 요소 생성
   const newInput = document.createElement('input');
   newInput.setAttribute('type', 'text');
-  newInput.setAttribute('name', 'productCode');  // 동일한 name 속성 설정
+  newInput.setAttribute('name', 'productCode[]');  // 배열 형태로 name 속성 설정
 
-  // 새로 생성한 input 태그를 div의 마지막에 추가
   targetDiv.appendChild(newInput);
 });
 
-// 파일 선택 input에 대한 change 이벤트 설정
-document.querySelector('.real-upload').addEventListener('change', function(event) {
-  // 선택된 파일들을 가져옴
-  const files = event.target.files;
-  const uploadDiv = document.querySelector('.upload');
+// 상품 등록 버튼 클릭 이벤트
+document.querySelector("#productButton").addEventListener('click', function() {
+  const productName = document.querySelector('input[name="productName"]').value;
+  const productCodes = Array.from(document.querySelectorAll('input[name="productCode[]"]'))  // 수정된 부분
+      .map(input => input.value)
+      .filter(code => code.trim() !== "");  // 빈 값 제거
 
-  // 이전에 있던 이미지들 제거 (새로운 파일 선택 시 갱신)
-  uploadDiv.innerHTML = '';
+  const productPrice = document.querySelector('input[name="productPoint"]').value;
 
-  // 각 파일에 대해 이미지 미리보기 생성
-  Array.from(files).forEach(file => {
-    if (file.type.startsWith('image/')) { // 이미지 파일만 처리
-      const reader = new FileReader();
+  const formData = productCodes.map(code => ({
+    productName: productName,
+    productCode: code,
+    productPrice: productPrice
+  }));
 
-      reader.onload = function(e) {
-        // 이미지 엘리먼트 생성
-        const img = document.createElement('img');
-        img.src = e.target.result;
-        img.style.width = '120px';  // 원하는 크기로 설정
-        img.style.margin = '10px';  // 이미지 간격 설정
-        img.alt = 'Uploaded Image';
-
-        // upload div에 이미지 추가
-        uploadDiv.appendChild(img);
-      };
-
-      // 파일을 읽어서 이미지로 변환
-      reader.readAsDataURL(file);
-    }
-  });
+  fetch('/manager/registerProduct', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("등록에 실패했습니다.");
+        }
+        return response.json();
+      })
+      .then(data => {
+        alert('상품이 성공적으로 등록되었습니다.');
+        window.location.href = "/manager/manageProduct";
+      })
+      .catch(error => {
+        alert('상품 등록 중 오류가 발생했습니다.');
+      });
 });

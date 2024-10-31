@@ -66,9 +66,6 @@
                     상품 이미지 등록
                 </div>
                 <div class="register-left-con">
-                    갯수
-                </div>
-                <div class="register-left-con">
                     상품코드
                 </div>
                 <div class="register-left-con">
@@ -79,37 +76,32 @@
                 </div>
             </div>
 
+
             <div id="register-right">
                 <div class="register-right-con">
                     <input type="text" name="productName" placeholder="ex&#41; 비타500">
                 </div>
+
                 <div id="register-right-img">
                     <input type="file" class="real-upload" accept="image/*" required multiple>
                     <div class="upload"></div>
+                </div>
 
-                </div>
                 <div class="register-right-con">
-                    <input type="text" name="productNumber" placeholder="ex&#41; 10개">
-                </div>
-                <div class="register-right-con">
-                    <input type="text" name="productCode" placeholder="ex&#41; F51K5">
-                    &nbsp;
+                    <input type="text" name="productCodePlus" placeholder="ex&#41; F51K5" readonly>&nbsp;
                     <button id="numberUp">+</button>
                 </div>
-                <div class="register-right-con" id="targetDiv">
 
-                </div>
+                <div class="register-right-con" id="targetDiv"></div>
+
                 <div class="register-right-con">
                     <input type="text" name="productPoint" placeholder="ex&#41; 500">
                 </div>
+
+                <button id="productButton">상품 등록</button>
             </div>
 
         </div>
-
-        <a href="./../../html/manager/manageProduct.html">
-            <button id="memberOut">상품 등록</button>
-        </a>
-
     </div>
 
 
