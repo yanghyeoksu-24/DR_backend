@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dr.mapper.chatBot.NangjangbotMapper">
+
+<!-- 채팅방 생성 -->
+    <insert id="createChatSession" parameterType="NangjangbotDTO">
+        <selectKey keyProperty="sessionNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_CHAT_SESSION_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_CHAT_SESSION(SESSION_NUMBER, USER_NUMBER, SESSION_TITLE)
+        VALUES (#{sessionNumber}, #{userNumber}, #{sessionTitle})
+    </insert>
+
+<!-- 현재 유저가 채팅중인 방번호 조회 -->
+    <select id="getSessionNumber" parameterType="Long" resultType="Long">
+        SELECT SESSION_NUMBER
+        FROM (
+                 SELECT SESSION_NUMBER
+                 FROM DR_CHAT_SESSION
+                 WHERE USER_NUMBER = #{userNumber}
+                 ORDER BY CREATE_DATE DESC
+             )
+        WHERE ROWNUM = 1
+    </select>
+
+<!-- 유저채팅 행 추가 -->
+    <insert id="insertUserMsg" parameterType="NangjangbotDTO">
+        <selectKey keyProperty="chatNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_CHAT_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_CHAT(CHAT_NUMBER, USER_MSG, SESSION_NUMBER, USER_NUMBER)
+        VALUES (#{chatNumber}, #{userMsg}, #{sessionNumber}, #{userNumber})
+    </insert>
+
+<!-- 챗봇응답 행 추가 -->
+    <insert id="insertBotReply" parameterType="NangjangbotDTO">
+        <selectKey keyProperty="chatNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_CHAT_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_CHAT(CHAT_NUMBER, BOT_REPLY, SESSION_NUMBER, USER_NUMBER)
+        VALUES (#{chatNumber}, #{botReply}, #{sessionNumber}, #{userNumber})
+    </insert>
+    
+<!-- 사이드바 채팅목록 -->
+    <select id="getChatList" parameterType="Long" resultType="NangjangbotDTO">
+        <![CDATA[
+        SELECT SESSION_NUMBER, SESSION_TITLE, CREATE_DATE
+        FROM (
+        SELECT SESSION_NUMBER, SESSION_TITLE, CREATE_DATE
+        FROM DR_CHAT_SESSION
+        WHERE USER_NUMBER = #{userNumber}
+        ORDER BY SESSION_NUMBER DESC)
+        WHERE ROWNUM <= 10]]>
+    </select>
+
+<!-- 이전채팅내용 조회 -->
+    <select id="getChatContents" parameterType="Long" resultType="NangjangbotDTO">
+        SELECT C.USER_MSG ,C.BOT_REPLY
+        FROM DR_CHAT_SESSION CS JOIN DR_CHAT C ON CS.SESSION_NUMBER = C.SESSION_NUMBER
+        WHERE C.SESSION_NUMBER = #{sessionNumber}
+        ORDER BY C.CHAT_NUMBER ASC
+    </select>
+
+<!-- 채팅 삭제 -->
+    <delete id="deleteChat" parameterType="Long">
+        DELETE FROM DR_CHAT_SESSION
+        WHERE SESSION_NUMBER = #{sessionNumber}
+    </delete>
+
+</mapper>

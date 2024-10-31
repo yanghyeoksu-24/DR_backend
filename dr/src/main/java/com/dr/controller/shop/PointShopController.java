@@ -5,9 +5,12 @@ import com.dr.service.shop.PointShopService;
 import com.dr.service.user.CoolSmsService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -40,38 +43,45 @@ public class PointShopController {
     }
 
     @PostMapping("/buy")
-    public String userBuyProducts(@RequestBody PointShopDTO pointShopDTO, @SessionAttribute(value = "userNumber", required = false) Long userNumber) { //@RequestBody 로 DTO에 구매상품,갯수,총액 저장(ajax로 전송받은 데이터)
+    @ResponseBody // JSON으로 바로 반환
+    public ResponseEntity<String> userBuyProducts(@RequestBody PointShopDTO pointShopDTO,
+                                                  @SessionAttribute(value = "userNumber", required = false) Long userNumber) { //@RequestBody 로 DTO에 구매상품,갯수,총액 저장(ajax로 전송받은 데이터)
         //로그인하지 않았을 경우 처리
         if (userNumber == null) {
-            return "redirect:/user/login"; // 로그인 페이지로 리다이렉션
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
         }
 
-        // 상품코드 가져오기
-        List<String> codes = pointShopService.getProductCode(pointShopDTO);
-        System.out.println(codes);
-
-        // 상품코드 보낼 유저 핸드폰 가져오기
-        String phone = pointShopService.getUserPhone(userNumber);
-        System.out.println(phone);
-
-        // 상품코드 문자로 전송
         try {
-            for (String code : codes) {
-                coolSmsService.sendProductCode(phone, code); // 상품 코드 전송
+            // 구매 로직
+            // 상품코드 가져오기
+            List<String> codes = pointShopService.getProductCode(pointShopDTO);
+            System.out.println(codes);
+
+            // 상품코드 보낼 유저 핸드폰 가져오기
+            String phone = pointShopService.getUserPhone(userNumber);
+            System.out.println(phone);
+
+            // 상품코드 문자로 전송
+            try {
+                for (String code : codes) {
+                    coolSmsService.sendProductCode(phone, code); // 상품 코드 전송
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
+            // 전송끝난 코드 테이블에서 삭제
+            pointShopService.deleteCode(pointShopDTO);
+
+            // 포인트 테이블에 사용한 포인트 행 추가
+            pointShopDTO.setUserNumber(userNumber);
+            pointShopService.insertUsePoint(pointShopDTO);
         } catch (Exception e) {
-            e.printStackTrace();
-            return "문자 전송 오류: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("구매 처리 중 오류 발생");
         }
 
-        // 전송끝난 코드 테이블에서 삭제
-        pointShopService.deleteCode(pointShopDTO);
-
-        // 포인트 테이블에 사용한 포인트 행 추가
-        pointShopDTO.setUserNumber(userNumber);
-        pointShopService.insertUsePoint(pointShopDTO);
-
-        return "shop/pointShop";
+        return ResponseEntity.ok("구매가 완료되었습니다.");
     }
+
 
 }
