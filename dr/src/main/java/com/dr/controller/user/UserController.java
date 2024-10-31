@@ -87,42 +87,18 @@ public class UserController {
         return "/user/emailFindFinish"; // 이메일 찾기 완료 페이지로 이동
     }
 
-
-
     @PostMapping("/user/PwFind")
-    @ResponseBody
-    public ResponseEntity<?> PwFindPage(@RequestBody PwFindDTO pwFindDTO) {
-        boolean isTrue = userService.userPwFind(pwFindDTO); // 이메일과 휴대폰 번호 확인
+    public RedirectView PwFind(@RequestParam("userPhone") String userPhone, @RequestParam("userEmail") String userEmail, Model model) {
+        PwFindDTO pwFindDTO = userService.userPwFind(userPhone, userEmail);
+        log.info("wjkedfvlmfdewefjkgfl" + pwFindDTO.getUserPhone());
 
-        // 응답 데이터
-        Map<String, Object> response = new HashMap<>();
-        response.put("success", isTrue); // 일치 여부 저장
-
-        // 메시지 설정
-        if (isTrue) {
-            response.put("message", "인증이 완료되었습니다."); // 성공 메시지
-            response.put("redirectUrl", "/user/PwReset"); // 비밀번호 재설정 페이지 URL
+        if (pwFindDTO!=null) {
+           model.addAttribute("userPhone", pwFindDTO.getUserPhone());
+            return new RedirectView("/user/PwReset");
         } else {
-            response.put("message", "없는 이메일입니다."); // 실패 메시지
-            response.put("redirectUrl", "/user/PwFind"); // 비밀번호 찾기 페이지 URL
+            return new RedirectView("/user/PwFind");
         }
-
-        return ResponseEntity.ok(response); // JSON 형태로 응답
     }
-
-
-
-
-    @PostMapping("/user/PwReset")
-    @ResponseBody
-    public ResponseEntity<?> resetPassword(@RequestBody PwResetDTO pwResetDTO) {
-        // 비밀번호 변경 메서드 호출
-        userService.changePassword(pwResetDTO.getUserEmail(), pwResetDTO.getNewPassword());
-
-        return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
-    }
-
-
 
 
 

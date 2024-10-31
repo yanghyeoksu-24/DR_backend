@@ -57,4 +57,8 @@ public interface ManagerMapper {
    List<ManagerProductDTO> showProduct();
 
    boolean productDelete(String productName);
+
+   void productRegister(ManagerRegisterDTO managerRegisterDTO);
+
+
 }

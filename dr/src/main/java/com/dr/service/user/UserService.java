@@ -42,20 +42,14 @@ public class UserService<BCryptPasswordEncoder> {
         return userMapper.userEmailFind(userPhone);
     }
 
-    public boolean userPwFind(PwFindDTO pwFindDTO) {
-        int count = userMapper.userPwFind(pwFindDTO); // int로 결과 받기
-        return count > 0; // 결과가 1 이상이면 true
+    public PwFindDTO userPwFind(String userPhone , String userEmail) {
+        return userMapper.userPwFind(userPhone, userEmail);
     }
 
 
-    public void changePassword(String userEmail, String newPassword) {
-        // 비밀번호 유효성 검사 추가 가능 (예: 빈 문자열 또는 특정 패턴 검사)
-
-        // 데이터베이스에서 비밀번호 업데이트
-        userMapper.updatePassword(userEmail, newPassword);
 
 
-    }
+
 
 }
 

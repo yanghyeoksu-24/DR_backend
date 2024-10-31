@@ -178,9 +178,11 @@
 
 <!-- 6-1. 댓글관리-->
     <select id="showReply" parameterType="ManagerCommentDTO">
-        select R.REPLY_NUMBER , R.REPLY_TEXT , U.USER_NICKNAME , U.USER_PHONE , R.REPLY_WRITE_DATE
+        select R.REPLY_NUMBER , R.REPLY_TEXT , U.USER_NICKNAME , U.USER_PHONE , R.REPLY_WRITE_DATE , B.BOARD_NUMBER , RR.RECIPE_NUMBER , B.BOARD_TYPE , RR.RECIPE_TYPE
         from DR_REPLY R
         JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
+        LEFT JOIN DR_BOARD B ON R.BOARD_NUMBER = B.BOARD_NUMBER
+        LEFT JOIN DR_RECIPE RR ON R.RECIPE_NUMBER = RR.RECIPE_NUMBER
         ORDER BY R.REPLY_WRITE_DATE DESC
     </select>
 
@@ -288,6 +290,7 @@
             P.PRODUCT_NAME,
             P.PRODUCT_PRICE,
             COUNT(*) AS PRODUCT_COUNT
+
         FROM
             DR_PRODUCT P
         GROUP BY
@@ -305,6 +308,18 @@
     </delete>
 
     <!-- 9-3. 상품 등록 -->
+    <insert id="productRegister" parameterType="ManagerRegisterDTO">
+        <selectKey keyProperty="productNumber" resultType="int" order="BEFORE">
+            SELECT SEQ_PRODUCT_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_PRODUCT (PRODUCT_NUMBER , PRODUCT_NAME , PRODUCT_CODE , PRODUCT_PRICE)
+        VALUES (#{productNumber}, #{productName}, #{productCode}, #{productPrice})
+    </insert>
+
+
+
+    <!-- 9-3. 상품 사진 -->
+
 
 
     <!-- 9-4. 상품 수정 -->

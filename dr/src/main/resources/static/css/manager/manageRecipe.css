@@ -137,7 +137,7 @@ a {
     gap: 12px;
 }
 
-#manage-memberUl li {
+#manage-memberUl li a {
     margin-left: 50px;
     display: flex;
     height: 28px;
@@ -150,6 +150,16 @@ a {
     height: 35px;
     line-height: 30px;
     background-color: lightgray;
+}
+
+li {
+    list-style: none;
+    text-decoration: none;
+}
+
+#manage-memberUl li a:hover {
+    background-color: #f0f0f0;
+    color: #007bff;
 }
 
 #title-check {

@@ -78,15 +78,21 @@
                     <span class="con-type" th:text="${recipe.recipeType}"></span>
                 </li>
 
-                <li th:each="recipeList : ${recipeList}" th:if="${recipe == null}">
-                    <input type="checkbox" class="con-check" th:value="${recipeList.recipeNumber}">
-                    <span class="con-num" th:text="${recipeList.recipeNumber}"></span>
-                    <span class="con-con" th:text="${recipeList.recipeTitle}"></span>
-                    <span class="con-name" th:text="${recipeList.userNickName}"></span>
-                    <span class="con-good" th:text="${recipeList.goodCount}"></span>
-                    <span class="con-date" th:text="${recipeList.recipeWriteDate}"></span>
-                    <span class="con-type" th:text="${recipeList.recipeType}"></span>
+                <li th:each="recipeList : ${recipeList}" th:if="${recipeList != null}">
+                    <a th:href="${recipeList.recipeType == '나만의레시피' ?
+                       '/recipe/myDetailPage?recipeNumber=' + recipeList.recipeNumber :
+                       '/recipe/chatBotDetailPage?recipeNumber=' + recipeList.recipeNumber}">
+                        <input type="checkbox" class="con-check" th:value="${recipeList.recipeNumber}">
+                        <span class="con-num" th:text="${recipeList.recipeNumber}"></span>
+                        <span class="con-con" th:text="${recipeList.recipeTitle}"></span>
+                        <span class="con-name" th:text="${recipeList.userNickName}"></span>
+                        <span class="con-good" th:text="${recipeList.goodCount}"></span>
+                        <span class="con-date" th:text="${recipeList.recipeWriteDate}"></span>
+                        <span class="con-type" th:text="${recipeList.recipeType}"></span>
+                    </a>
                 </li>
+
+
             </ul>
             <div id="pagination"></div>
         </div>

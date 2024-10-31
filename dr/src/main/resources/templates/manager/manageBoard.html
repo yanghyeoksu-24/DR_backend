@@ -78,15 +78,21 @@
                     <span class="con-type" th:text="${board.boardType}"></span>
                 </li>
 
-                <li th:each="boardList : ${boardList}" th:if="${board == null}">
-                    <input type="checkbox" class="con-check" th:value="${boardList.boardNumber}">
-                    <span class="con-num" th:text="${boardList.boardNumber}"></span>
-                    <span class="con-con" th:text="${boardList.boardTitle}"></span>
-                    <span class="con-name" th:text="${boardList.userNickName}"></span>
-                    <span class="con-good" th:text="${boardList.goodCount}"></span>
-                    <span class="con-date" th:text="${boardList.boardWriteDate}"></span>
-                    <span class="con-type" th:text="${boardList.boardType}"></span>
+                <li th:each="boardList : ${boardList}" th:if="${boardList != null}">
+                    <a th:href="${boardList.boardType == '자유게시판' ?
+                       '/board/freeBoardDetail?boardNumber=' + boardList.boardNumber :
+                       '/board/honeyBoardDetail?boardNumber=' + boardList.boardNumber}">
+                        <input type="checkbox" class="con-check" th:value="${boardList.boardNumber}">
+                        <span class="con-num" th:text="${boardList.boardNumber}"></span>
+                        <span class="con-con" th:text="${boardList.boardTitle}"></span>
+                        <span class="con-name" th:text="${boardList.userNickName}"></span>
+                        <span class="con-good" th:text="${boardList.goodCount}"></span>
+                        <span class="con-date" th:text="${boardList.boardWriteDate}"></span>
+                        <span class="con-type" th:text="${boardList.boardType}"></span>
+                    </a>
                 </li>
+
+
             </ul>
             <div id="pagination"></div>
         </div>

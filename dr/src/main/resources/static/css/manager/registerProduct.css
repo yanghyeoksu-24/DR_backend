@@ -79,7 +79,7 @@ a {
 }
 
 #manage-member {
-  width: 80%;
+  width: 90%;
   height: 100%;
   background-color: white;
   border-radius: 5px;
@@ -97,10 +97,10 @@ a {
   font-weight: bold;
 }
 
-#memberOut {
-  position: relative;
-  top: 5%;
-  left: 45%;
+#productButton {
+  position: absolute;
+  top: 87%;
+  left: 55%;
   width: 100px;
   height: 40px;
   background-color: #EBAA39;

@@ -48,7 +48,7 @@
         </div>
 
         <div id="freeboardlist-page">
-            <a th:href="@{/board/freeBoardDetail(id=${post.id})}">
+
                 <div class="freeboardlist-row">
                     <div class="freeboardlist-titleColumn" th:text="${post.title}">이븐하게 익었어요</div>
                     <div class="freeboardlist-nameColumn" th:text="${post.nickname}">안성재</div>
@@ -56,7 +56,7 @@
                     <div class="freeboardlist-dateColumn" th:text="${#dates.format(post.date, 'yy/MM/dd')}">17/01/30
                     </div>
                 </div>
-            </a>
+
 
             <div class="freeboardlist-row" th:each="post : ${posts}">
                 <div class="freeboardlist-titleColumn" th:text="${post.title}"></div>
