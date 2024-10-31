@@ -10,7 +10,12 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class MyRecipeWriteDTO {
+    private Long recipeNumber;
+    private Long userNumber;
     private String recipeTitle;
     private String recipeText;
     private String recipeOriginal;
+    private String userNickName;
+    private String recipeWriteDate;
+    private String recipeType;
 }
