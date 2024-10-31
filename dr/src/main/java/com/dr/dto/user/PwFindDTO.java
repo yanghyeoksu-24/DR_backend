@@ -12,4 +12,5 @@ import lombok.ToString;
 public class PwFindDTO {
     private String userEmail;
     private String userPhone;
+    private String userNickName;
 }

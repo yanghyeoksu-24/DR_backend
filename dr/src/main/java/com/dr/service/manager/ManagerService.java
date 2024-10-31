@@ -1,17 +1,27 @@
 package com.dr.service.manager;
 
+
 import com.dr.dto.manager.*;
 import com.dr.mapper.manager.ManagerMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class ManagerService {
     private final ManagerMapper managerMapper;
+
+    @Value("C:/upload/")
+    private String fileDir;
 
     // 로그인
     public ManagerSessionDTO managerLogin(String managerEmail, String managerPw) {
@@ -44,6 +54,11 @@ public class ManagerService {
         return managerMapper.userPause(userNumber);
     }
 
+    // 회원 검색
+    public ManagerUserDTO userSearch(int userNumber) {
+        return managerMapper.userSearch(userNumber);
+    }
+
     // 게시판
     public List<ManagerBoardDTO> showBoard(){
         return managerMapper.showBoard();
@@ -52,6 +67,11 @@ public class ManagerService {
     // 게시판 삭제
     public boolean boardDelete(Integer boardNumber) {
         return managerMapper.boardDelete(boardNumber);
+    }
+
+    // 게시판 검색
+    public ManagerBoardDTO boardSearch(int boardNumber) {
+        return managerMapper.boardSearch(boardNumber);
     }
 
     // 레시피
@@ -64,6 +84,11 @@ public class ManagerService {
         return managerMapper.recipeDelete(recipeNumber);
     }
 
+    // 레시피 검색
+    public ManagerRecipeDTO recipeSearch(int recipeNumber) {
+        return managerMapper.recipeSearch(recipeNumber);
+    }
+
     // 댓글
     public List<ManagerCommentDTO> showReply(){
         return managerMapper.showReply();
@@ -72,6 +97,11 @@ public class ManagerService {
     // 댓글 삭제
     public boolean replyDelete(Integer replyNumber) {
         return managerMapper.replyDelete(replyNumber);
+    }
+
+    // 댓글 검색
+    public ManagerCommentDTO replySearch(int replyNumber) {
+        return managerMapper.replySearch(replyNumber);
     }
 
     // 포인트
@@ -87,6 +117,11 @@ public class ManagerService {
     // 포인트 회수
     public boolean takePoint(Integer PointNumber) {
         return managerMapper.takePoint(PointNumber);
+    }
+
+    // 포인트 검색
+    public List<ManagerPointDTO> pointSearch(String userNickName) {
+        return managerMapper.pointSearch(userNickName);
     }
 
     // 신고
@@ -109,7 +144,15 @@ public class ManagerService {
         return managerMapper.productDelete(productName);
     }
 
-    // 상품 등록
+    // 상품 등록 (사진 제외)
+    public void productRegister(ManagerRegisterDTO managerRegisterDTO) {
+        managerMapper.productRegister(managerRegisterDTO);
+    }
+
+
+
+
+
 
     // 상품 수정
 
