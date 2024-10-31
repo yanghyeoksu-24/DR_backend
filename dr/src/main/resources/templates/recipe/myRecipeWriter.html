@@ -10,6 +10,10 @@
 
   <!-- 네비바 폰트 -->
   <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
+
+  <!-- Toast UI Editor CSS -->
+  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css">
+
   <!-- 제이쿼리 -->
   <script src="https://code.jquery.com/jquery-3.7.1.js"
           integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -21,42 +25,55 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 
   <title>DR - 나만의 레시피 작성</title>
-
 </head>
+
 <body>
 <header th:replace="~{/fragment/header :: header}"></header>
-  <main>
-    <div class="myRecipeWriter-mainContainer">
-      <div class="myRecipeWriter-mainBox">
-        <div class="myRecipeWriter-title">
-          <span class="myRecipeWriter-text1">나만의 레시피</span>
-          <span class="myRecipeWriter-text2">글쓰기</span>
-        </div>
+<main>
+  <div class="myRecipeWriter-mainContainer">
+    <div class="myRecipeWriter-mainBox">
+      <div class="myRecipeWriter-title">
+        <span class="myRecipeWriter-text1">나만의 레시피</span>
+        <span class="myRecipeWriter-text2">글쓰기</span>
+      </div>
 
+      <!-- Updated form -->
+      <form action="/recipe/myDetailPage" method="get" id="recipeForm">
         <div class="myRecipeWriter-inputContainer">
-          <input type="text" class="myRecipeWriter-titleInput" placeholder="제목을 입력하세요">
+          <input type="text" class="myRecipeWriter-titleInput" name="recipeTitle" placeholder="제목을 입력하세요" required>
         </div>
 
-        <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+        <!-- Toast UI Editor Section -->
         <div id="contsEditor"></div>
-        <script>
-          const editor = new toastui.Editor({
-            el: document.querySelector('#contsEditor'),
-            previewStyle: 'vertical',
-            initialEditType: 'WYSIWYG',
-            height: '500px',
-            placeholder: '내용을 입력해 주세요.',
-          });
-        </script>
+        <!-- Hidden input to store editor content -->
+        <input type="hidden" name="recipeText" id="recipeText">
 
         <div class="myRecipeWriter-write">
-          <a href="./myDetailPage.html"><button class="myRecipeWriter-writeButton" id="registerButton">등록</button></a>
+          <button type="submit" class="myRecipeWriter-writeButton" id="registerButton">등록</button>
         </div>
-      </div>
+      </form>
     </div>
-  </main>
-  <footer th:replace="~{/fragment/footer :: footer}"></footer>
-  <script src="./../../js/recipe/myRecipeWriter.js" defer></script>
-</body>
+  </div>
+</main>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 
+<!-- Toast UI Editor JavaScript -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+  const editor = new toastui.Editor({
+    el: document.querySelector('#contsEditor'),
+    previewStyle: 'vertical',
+    initialEditType: 'wysiwyg',
+    height: '500px',
+    placeholder: '내용을 입력해 주세요.',
+  });
+
+  document.getElementById('registerButton').addEventListener('click', function (event) {
+    event.preventDefault();
+    document.getElementById('recipeText').value = editor.getHTML();  // Get HTML content from editor
+    document.getElementById('recipeForm').submit();
+  });
+</script>
+
+</body>
 </html>
