@@ -30,8 +30,8 @@ public class ChatBotService {
         messages.put(userMessage);
 
         requestJson.put("messages", messages); // 필수 파라미터 추가
-        requestJson.put("max_tokens", 1000);
-        requestJson.put("temperature", 0.8);
+        requestJson.put("max_tokens", 1000); //최대 글자 수
+        requestJson.put("temperature", 0.8); //창의성
 
         // HTTP 요청 헤더 설정
         HttpHeaders headers = new HttpHeaders();
@@ -48,6 +48,13 @@ public class ChatBotService {
         JSONObject responseJson = new JSONObject(response.getBody());
         JSONArray choicesArray = responseJson.getJSONArray("choices");
         JSONObject messageObject = choicesArray.getJSONObject(0).getJSONObject("message");
-        return messageObject.getString("content").trim();
+
+        // 응답 반환
+//      return messageObject.getString("content").trim();
+
+        // 받은 응답을 줄바꿈 처리를 추가해 반환
+        String botReply = messageObject.getString("content").trim();
+        return botReply.replace("\n", "<br>");  // \n을 <br>로 변환
+
     }
 }
