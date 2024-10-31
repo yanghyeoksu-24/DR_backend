@@ -80,7 +80,7 @@
                 <li id="manage-memberTitle">
                     <input id="title-check" type="checkbox" value="전체선택">
                     <span id="title-num">No.</span>
-                    <span id="title-name">이름</span>
+                    <span id="title-name">닉네임</span>
                     <span id="title-email">이메일</span>
                     <span id="title-points">포인트 내용</span>
                     <span id="title-point">포인트</span>
@@ -88,7 +88,18 @@
                     <span id="title-sum">포인트 합</span>
                 </li>
 
-                <li th:each="pointList : ${pointList}">
+                <li th:each="point : ${point}" th:if="${point != null}">
+                    <input type="checkbox" th:value="${point.pointNumber}">
+                    <span class="point-num" th:text="${point.pointNumber}"></span>
+                    <span class="point-name" th:text="${point.userNickName}"></span>
+                    <span class="point-email" th:text="${point.userEmail}"></span>
+                    <span class="point-check" th:text="${point.pointNote}"></span>
+                    <span class="point-point" th:text="${point.pointGet}"></span>
+                    <span class="point-date" th:text="${point.pointDate}"></span>
+                    <span class="point-sum" th:text="${point.pointSum}"></span>
+                </li>
+
+                <li th:each="pointList : ${pointList}" th:if="${point == null}">
                     <input type="checkbox" th:value="${pointList.pointNumber}">
                     <span class="point-num" th:text="${pointList.pointNumber}"></span>
                     <span class="point-name" th:text="${pointList.userNickName}"></span>
@@ -103,8 +114,10 @@
             <div id="pagination"></div>
         </div>
     </div>
-
-
+    <form class="manager-search-form" th:action="@{/manager/pointSearch}" method="post">
+        <input type="text" id="manager-input" name="userNickName" placeholder="닉네임"/>
+        <button class="manager-search">검색</button>
+    </form>
 </div>
 <form th:action="@{/manager/managerLogout}" method="get">
     <button id="manager-logout">로그아웃</button>

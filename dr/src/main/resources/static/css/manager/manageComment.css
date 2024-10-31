@@ -136,7 +136,7 @@ a {
   gap: 12px;
 }
 
-#manage-memberUl li {
+#manage-memberUl li a {
   margin-left: 50px;
   display: flex;
   height: 28px;
@@ -149,6 +149,16 @@ a {
   height: 35px;
   line-height: 30px;
   background-color: lightgray;
+}
+
+li {
+  list-style: none;
+  text-decoration: none;
+}
+
+#manage-memberUl li a:hover {
+  background-color: #f0f0f0;
+  color: #007bff;
 }
 
 #title-check {
@@ -250,5 +260,27 @@ a {
   color: white;
   cursor: pointer;
 }
+
+.manager-search-form {
+  position: absolute;
+  left: 53%;
+  top: 9%;
+  width: 240px;
+  height: 40px;
+}
+
+#manager-input {
+  width: 70%;
+}
+
+.manager-search{
+  color: white;
+  background-color: #ebaa39;
+  border: white;
+  border-radius: 5px;
+  width: 50px;
+  height: 23px;
+}
+
 
 

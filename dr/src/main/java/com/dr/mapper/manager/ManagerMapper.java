@@ -22,23 +22,33 @@ public interface ManagerMapper {
 
    boolean userPause(Integer userNumber);
 
+   ManagerUserDTO userSearch(int userNumber);
+
    List <ManagerBoardDTO> showBoard();
 
    boolean boardDelete(Integer boardNumber);
+
+   ManagerBoardDTO boardSearch(int boardNumber);
 
    List <ManagerRecipeDTO> showRecipe();
 
    boolean recipeDelete(Integer recipeNumber);
 
+   ManagerRecipeDTO recipeSearch(int recipeNumber);
+
    List <ManagerCommentDTO> showReply();
 
    boolean replyDelete(Integer replyNumber);
+
+   ManagerCommentDTO replySearch(int replyNumber);
 
    List<ManagerPointDTO> showPoint();
 
    boolean pointDelete(Integer pointNumber);
 
    boolean takePoint(Integer pointNumber);
+
+   List<ManagerPointDTO> pointSearch(String userNickName);
 
    List<ManagerReportDTO> showReport();
 
@@ -47,4 +57,8 @@ public interface ManagerMapper {
    List<ManagerProductDTO> showProduct();
 
    boolean productDelete(String productName);
+
+   void productRegister(ManagerRegisterDTO managerRegisterDTO);
+
+
 }
