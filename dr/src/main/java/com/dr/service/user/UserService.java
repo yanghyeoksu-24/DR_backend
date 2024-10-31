@@ -41,8 +41,10 @@ public class UserService<BCryptPasswordEncoder> {
     }
 
 
+
+    //비밀번호 찾기
     public PwFindDTO userPwFind(String userEmail, String userPhone) {
-       return userMapper.userPwFind(userEmail, userPhone);
+        return userMapper.userPwFind(userEmail, userPhone);
     }
 
     //비밀번호 변경

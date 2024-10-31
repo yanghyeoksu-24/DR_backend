@@ -25,7 +25,7 @@
         </div>
         <form method="post" id="pwResetForm" class="pwreset-form" th:action="@{/user/PwReset}">
 
-            <input type="hidden" name="userPhone" th:value="${userPhone}" required/>
+            <input type="hidden" name="userPhone" th:value="${userPhone}">
             <!-- 새 비밀번호 필드 -->
             <label for="newPassword" class="pwreset-label">새 비밀번호</label>
             <div class="input-withButton">

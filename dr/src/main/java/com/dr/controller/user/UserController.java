@@ -87,15 +87,19 @@ public class UserController {
         return "/user/emailFindFinish"; // 이메일 찾기 완료 페이지로 이동
     }
 
+
     //비밀번호 찾기 페이지
     @PostMapping("/user/PwFind")
-    public String PwFind(RedirectAttributes redirectAttributes, @RequestParam("userEmail") String userEmail, @RequestParam("userPhone") String userPhone) {
-        PwFindDTO pwFindDTO = userService.userPwFind(userEmail, userPhone);
+    public String PwFind(Model model, @RequestParam("userEmail") String userEmail, @RequestParam("userPhone") String userPhone) {
+        PwFindDTO pwFindDTO = new PwFindDTO();
+
+        log.info("userController PwFind 메소드");
+        pwFindDTO = userService.userPwFind(userEmail, userPhone);
         log.info(pwFindDTO.toString());
 
         if (pwFindDTO.getUserPhone() != null) {
-            redirectAttributes.addFlashAttribute("userEmail", pwFindDTO.getUserEmail());
-            redirectAttributes.addFlashAttribute("userPhone", pwFindDTO.getUserPhone()); // userPhone 추가
+            model.addAttribute("userEmail", pwFindDTO.getUserEmail());
+            model.addAttribute("userPhone", pwFindDTO.getUserPhone());
             log.info(pwFindDTO.toString());
 
             return "redirect:/user/PwReset";
@@ -111,7 +115,7 @@ public class UserController {
         PwFindDTO pwFindDTO = new PwFindDTO();
 
         model.addAttribute("userPhone", pwFindDTO.getUserPhone());
-        log.info(pwFindDTO.getUserPhone() + "출력");
+        log.info(pwFindDTO.getUserPhone() +"출력");
 
         userService.updatePassword(userPw, userPhone);
         return "redirect:/user/login";
