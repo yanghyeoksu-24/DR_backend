@@ -16,7 +16,7 @@ $(document).ready(function() {
     // 내용이 있을 때는 확인 창 띄우기
     if (confirm("등록하시겠습니까?")) {
       // 확인을 누르면 해당 페이지로 이동 (실제 등록 처리 로직 추가 가능)
-      window.location.href = './myDetailPage.html';
+      window.location.href = './myDetailPage';
     }
   });
 });
