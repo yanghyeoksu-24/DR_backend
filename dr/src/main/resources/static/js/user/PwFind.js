@@ -1,25 +1,20 @@
 $(document).ready(function () {
-    // 아이디 정규표현식: 이메일 형식 검사
     const userIdRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    // 휴대폰 번호 유효성 검사 정규표현식 (하이픈 없이 숫자만 10~11자리)
     const userPhonePattern = /^[0-9]{10,11}$/;
 
-    // 비밀번호 찾기 요청
     $('#pwFindForm').on('submit', function (event) {
-        event.preventDefault(); // 폼 제출 이벤트 방지
+        event.preventDefault();
 
         const userEmailValue = $('#userEmail').val().trim();
         const userPhoneValue = $('#userPhone').val().trim();
 
-        // 유효성 검사
         if (!userIdRegex.test(userEmailValue)) {
             alert("올바른 이메일 형식을 입력하세요.");
             return;
         }
 
         if (!userPhonePattern.test(userPhoneValue)) {
-            $('#phoneError').text("형식에 맞게 입력하세요.").css('color', 'red');
+            alert("휴대폰 번호를 정확히 입력하세요.");
             return;
         }
 
@@ -27,18 +22,17 @@ $(document).ready(function () {
         $.ajax({
             url: '/user/PwFind',
             type: 'POST',
-            contentType: 'application/json', // JSON 형식으로 전송
-            data: JSON.stringify({
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: $.param({
                 userEmail: userEmailValue,
                 userPhone: userPhoneValue
             }),
             success: function (response) {
-                alert(response.message); // 서버에서 보낸 메시지 표시
-                window.location.href = response.redirectUrl; // 서버의 리다이렉트 URL로 이동
+                alert("인증이 완료되었습니다."); // 성공 메시지 표시
+                window.location.href = "/user/PwReset"; // PwReset 페이지로 이동
             },
-            error: function (xhr, status, error) {
-                console.error("에러 발생: " + error);
-                alert("서버와의 통신 중 오류가 발생했습니다.");
+            error: function () {
+                alert("이메일을 다시 확인해주세요.");
             }
         });
     });
