@@ -1,11 +1,41 @@
 $(document).ready(function () {
-    // 아이디 정규표현식: 이메일 형식 검사
     const userIdRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    // 휴대폰 번호 유효성 검사 정규표현식 (하이픈 없이 숫자만 10~11자리)
     const userPhonePattern = /^[0-9]{10,11}$/;
 
+    $('#pwFindForm').on('submit', function (event) {
+        event.preventDefault();
 
+        const userEmailValue = $('#userEmail').val().trim();
+        const userPhoneValue = $('#userPhone').val().trim();
+
+        if (!userIdRegex.test(userEmailValue)) {
+            alert("올바른 이메일 형식을 입력하세요.");
+            return;
+        }
+
+        if (!userPhonePattern.test(userPhoneValue)) {
+            alert("휴대폰 번호를 정확히 입력하세요.");
+            return;
+        }
+
+        // AJAX 요청을 통해 전화번호와 이메일 확인
+        $.ajax({
+            url: '/user/PwFind',
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: $.param({
+                userEmail: userEmailValue,
+                userPhone: userPhoneValue
+            }),
+            success: function (response) {
+                alert("인증이 완료되었습니다."); // 성공 메시지 표시
+                window.location.href = "/user/PwReset"; // PwReset 페이지로 이동
+            },
+            error: function () {
+                alert("이메일을 다시 확인해주세요.");
+            }
+        });
+    });
 
     // 인증요청 버튼 클릭 시 이벤트 처리
     $('#sendCode').on('click', function () {

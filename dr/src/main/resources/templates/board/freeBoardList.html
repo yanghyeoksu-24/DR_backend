@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -48,28 +48,24 @@
         </div>
 
         <div id="freeboardlist-page">
-
-                <div class="freeboardlist-row">
-                    <div class="freeboardlist-titleColumn" th:text="${post.title}">이븐하게 익었어요</div>
-                    <div class="freeboardlist-nameColumn" th:text="${post.nickname}">안성재</div>
-                    <div class="freeboardlist-voteColumn" th:text="${post.voteCount}">23,065</div>
-                    <div class="freeboardlist-dateColumn" th:text="${#dates.format(post.date, 'yy/MM/dd')}">17/01/30
+            <div th:each="freeBoardList : ${freeBoardList}">
+                <a th:href="@{/board/freeBoardDetail(boardNumber=${freeBoardList.boardNumber})}">
+                    <div class="freeboardlist-row">
+                        <div class="freeboardlist-titleColumn" th:text="${freeBoardList.boardTitle}"></div>
+                        <div class="freeboardlist-nameColumn" th:text="${freeBoardList.userNickName}"></div>
+                        <div class="freeboardlist-voteColumn" th:text="${freeBoardList.goodCount}"></div>
+                        <div class="freeboardlist-dateColumn" th:text="${freeBoardList.boardWriteDate}"></div>
                     </div>
-                </div>
-
-
-            <div class="freeboardlist-row" th:each="post : ${posts}">
-                <div class="freeboardlist-titleColumn" th:text="${post.title}"></div>
-                <div class="freeboardlist-nameColumn" th:text="${post.nickname}"></div>
-                <div class="freeboardlist-voteColumn" th:text="${post.voteCount}"></div>
-                <div class="freeboardlist-dateColumn" th:text="${#dates.format(post.date, 'yy/MM/dd')}"></div>
+                </a>
             </div>
-            <div id="pagination"></div>
-
-            <a th:href="@{/board/freeBoardWrite}">
-                <button class="freeboardlist-writeButton">글 작성</button>
-            </a>
         </div>
+
+        <div id="pagination"></div>
+
+        <a th:href="@{/board/freeBoardWrite}">
+            <button class="freeboardlist-writeButton">글 작성</button>
+        </a>
+
     </div>
 </main>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>

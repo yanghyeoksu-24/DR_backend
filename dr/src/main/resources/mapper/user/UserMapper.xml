@@ -37,10 +37,16 @@
         WHERE U.USER_PHONE = #{userPhone}
     </select>
 
-    <select id="userPwFind" resultType="PwFindDTO">
-        SELECT U.USER_PHONE
-        FROM DR_USER U
-        WHERE USER_PHONE = #{userPhone} AND USER_EMAIL = #{userEmail}
+    <select id="userPwFind" parameterType="PwFindDTO" resultType="PwFindDTO">
+        SELECT USER_PHONE
+        FROM DR_USER
+        WHERE USER_PHONE = #{arg1} AND USER_EMAIL = #{arg0}
     </select>
 
+
+    <update id="updatePassword">
+        UPDATE dr_user
+        SET user_pw = #{userPw}
+        WHERE user_phone = #{userPhone}
+    </update>
 </mapper>

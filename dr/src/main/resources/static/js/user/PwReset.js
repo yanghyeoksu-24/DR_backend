@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
   // 비밀번호 정규표현식 검사 함수: 최소 8자, 문자, 숫자, 특수문자 포함
   function validatePassword(password) {
     const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -8,12 +7,11 @@ $(document).ready(function () {
 
   const newPassword = document.getElementById("newPassword");
   const confirmNewPassword = document.getElementById("confirmNewPassword");
-
   const passwordError = document.getElementById("passwordError");
   const confirmPasswordError = document.getElementById("confirmPasswordError");
 
-  // 첫 번째 비밀번호 필드 blur 이벤트: 비밀번호 유효성 검사
-  newPassword.addEventListener("blur", function () {
+  // 첫 번째 비밀번호 필드 input 이벤트: 비밀번호 유효성 검사
+  newPassword.addEventListener("input", function () {
     const password = newPassword.value;
     if (!validatePassword(password)) {
       passwordError.innerHTML = "비밀번호는 최소 8자 이상이어야 하며, 문자, 숫자, 특수문자를 포함해야 합니다.";
@@ -23,8 +21,8 @@ $(document).ready(function () {
     }
   });
 
-  // 두 번째 비밀번호 필드 blur 이벤트: 비밀번호 일치 확인
-  confirmNewPassword.addEventListener("blur", function () {
+  // 두 번째 비밀번호 필드 input 이벤트: 비밀번호 일치 확인
+  confirmNewPassword.addEventListener("input", function () {
     const password = newPassword.value;
     const confirmPassword = confirmNewPassword.value;
     if (password === confirmPassword) {
@@ -63,5 +61,4 @@ $(document).ready(function () {
       confirmPasswordToggleIcon.attr('src', './../../image/noView.png'); // 아이콘 변경
     }
   });
-
 });

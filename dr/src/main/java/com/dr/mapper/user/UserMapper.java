@@ -23,8 +23,13 @@ public interface UserMapper {
 
     EmailFindDTO userEmailFind(String userPhone);
 
+
     // 비밀번호 찾기 메서드
-    PwFindDTO userPwFind(String userPhone , String userEmail);
+    PwFindDTO userPwFind(String userPhone, String userEmail);
+
+
+    // 비밀번호 변경 메서드
+    void updatePassword(@Param("userPw") String userPw , @Param("userPhone") String userPhone);
 
 
 

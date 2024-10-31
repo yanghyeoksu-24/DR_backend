@@ -1,18 +1,16 @@
 package com.dr.service.user;
 
-import com.dr.dto.user.EmailFindDTO;
-import com.dr.dto.user.PwFindDTO;
-import com.dr.dto.user.UserDTO;
-import com.dr.dto.user.UserSessionDTO;
+import com.dr.dto.user.*;
 import com.dr.mapper.user.UserMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 
-
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -42,14 +40,18 @@ public class UserService<BCryptPasswordEncoder> {
         return userMapper.userEmailFind(userPhone);
     }
 
-    public PwFindDTO userPwFind(String userPhone , String userEmail) {
-        return userMapper.userPwFind(userPhone, userEmail);
+
+
+    //비밀번호 찾기
+    public PwFindDTO userPwFind(String userEmail, String userPhone) {
+        return userMapper.userPwFind(userEmail, userPhone);
     }
 
+    //비밀번호 변경
+    public void updatePassword(String userPw, String userPhone) {
+        userMapper.updatePassword(userPw, userPhone);
 
-
-
-
+    }
 
 }
 

@@ -2,6 +2,7 @@ package com.dr.controller.user;
 
 import com.dr.dto.user.*;
 import com.dr.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.HashMap;
@@ -72,8 +74,6 @@ public class UserController {
     }
 
 
-
-
     // 아이디 찾기 완료 페이지 이동
     @PostMapping("/user/emailFindOk")
     public String emailFindPage(@RequestParam("phone") String userPhone, Model model) {
@@ -87,21 +87,39 @@ public class UserController {
         return "/user/emailFindFinish"; // 이메일 찾기 완료 페이지로 이동
     }
 
-    @PostMapping("/user/PwFind")
-    public RedirectView PwFind(@RequestParam("userPhone") String userPhone, @RequestParam("userEmail") String userEmail, Model model) {
-        PwFindDTO pwFindDTO = userService.userPwFind(userPhone, userEmail);
-        log.info("wjkedfvlmfdewefjkgfl" + pwFindDTO.getUserPhone());
 
-        if (pwFindDTO!=null) {
-           model.addAttribute("userPhone", pwFindDTO.getUserPhone());
-            return new RedirectView("/user/PwReset");
+    //비밀번호 찾기 페이지
+    @PostMapping("/user/PwFind")
+    public String PwFind(Model model, @RequestParam("userEmail") String userEmail, @RequestParam("userPhone") String userPhone) {
+        PwFindDTO pwFindDTO = new PwFindDTO();
+
+        log.info("userController PwFind 메소드");
+        pwFindDTO = userService.userPwFind(userEmail, userPhone);
+        log.info(pwFindDTO.toString());
+
+        if (pwFindDTO.getUserPhone() != null) {
+            model.addAttribute("userEmail", pwFindDTO.getUserEmail());
+            model.addAttribute("userPhone", pwFindDTO.getUserPhone());
+            log.info(pwFindDTO.toString());
+
+            return "redirect:/user/PwReset";
         } else {
-            return new RedirectView("/user/PwFind");
+            return "/user/PwFind";
         }
     }
 
 
+    //비밀번호 변경 페이지
+    @PostMapping("/user/PwReset")
+    public String PwReset(Model model, @RequestParam("newPassword") String userPw, @RequestParam("userPhone") String userPhone) {
+        PwFindDTO pwFindDTO = new PwFindDTO();
 
+        model.addAttribute("userPhone", pwFindDTO.getUserPhone());
+        log.info(pwFindDTO.getUserPhone() +"출력");
+
+        userService.updatePassword(userPw, userPhone);
+        return "redirect:/user/login";
+    }
 
 
     //drjoin 회원가입 요청 컨트롤러
@@ -120,7 +138,7 @@ public class UserController {
         return ResponseEntity.ok(exists);
     }
 
-
+    // 핸드폰 중복 확인 요청 처리
     @PostMapping("/api/user/checkPhone")
     @ResponseBody
     public Map<String, Boolean> checkPhone(@RequestBody Map<String, String> request) {
@@ -131,7 +149,7 @@ public class UserController {
         return response;
     }
 
-
+    //로그인 페이지
     @PostMapping("/user/login")
     public ResponseEntity<Map<String, String>> login(@RequestParam("userEmail") String userEmail,
                                                      @RequestParam("userPw") String userPw,
@@ -160,13 +178,13 @@ public class UserController {
     }
 
 
-
-
     // 로그아웃 요청 처리
     @GetMapping("/logout")
     public RedirectView logout(HttpSession session) {
         session.invalidate();
         return new RedirectView("/main");
     }
+
 }
+
 
