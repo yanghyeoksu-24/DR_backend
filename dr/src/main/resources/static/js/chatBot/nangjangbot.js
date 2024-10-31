@@ -21,14 +21,26 @@ $(document).ready(function () {
         // 로딩중 표시
         $('#loading-spinner').css('display', 'flex');
 
+        //sessionNumber 가져오기
+        let sessionNumber = $('#sessionNumber').val();
+
         // AJAX 요청을 통해 챗봇 응답 가져오기
         $.ajax({
             type: "POST",
             url: "/api/chatbot/chat",
             contentType: "application/json",
-            data: JSON.stringify({message: userMsg}),
+            data: JSON.stringify({
+                message: userMsg,
+                sessionNumber: sessionNumber
+            }),
             success: function (response) {
                 $('#loading-spinner').css('display', 'none'); // 로딩중 숨김
+
+                //sessionNumber가 0이라면 번호 변경
+                if (response.sessionNumber != 0) {
+                    // AJAX 응답에서 sessionNumber 업데이트
+                    $('#sessionNumber').val(response.sessionNumber);
+                }
 
                 console.log(response.reply);
 
@@ -38,11 +50,6 @@ $(document).ready(function () {
                         <div class="botMsgBox">${response.reply}</div>
                 `);
 
-                // 새로운 메시지가 추가된 후 페이지 스크롤을 최하단으로 이동
-                // window.scrollTo({
-                //     top: document.body.scrollHeight,
-                //     behavior: 'smooth'
-                // });
                 $('html, body').animate({
                     scrollTop: $(document).height()  // 페이지 전체 높이로 스크롤
                 }, 500);
@@ -68,37 +75,46 @@ $(document).ready(function () {
         $('.nangjangbot-pageTitle, #nangjangbot-text').css('display', 'none');
         $('.nangjangbot-block, .nangjangbot-myMsg, .nangjangbot-chatBotMsg').css('display', 'block');
 
+
+        // 삭제 버튼 클릭 이벤트 처리
+        $(document).on('click', '.nangjangbot-imgFrame', function () {
+            const sessionNumber = $(this).siblings('.lastChat').val(); // sessionNumber 가져오기
+
+            if (confirm("정말로 삭제하시겠습니까?\n삭제된 채팅은 복구가 불가능합니다.")) {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/chatbot/delete",
+                    contentType: "application/json",
+                    data: JSON.stringify(sessionNumber), // sessionNumber를 JSON 형태로 전송
+                    success: function (newChatList) {
+                        alert("삭제되었습니다.");
+
+                        // 기존 채팅 목록을 초기화
+                        $('#nangjangbot-sideBar').find('.nangjangbot-lastChat').remove();
+
+                        // 새로운 채팅 목록으로 업데이트
+                        newChatList.forEach(chat => {
+                            $('#nangjangbot-sideBar').append(`
+                            <div class="nangjangbot-lastChat">
+                                <span class="nangjangbot-lastChatTitle">${chat.sessionTitle}</span>
+                                <span class="nangjangbot-lastChatDate">${chat.createDate}</span>
+                                <button class="nangjangbot-imgFrame">
+                                    <img th:src="@{/image/nangjangbot/delete.png}">
+                                </button>
+                                <input type="hidden" class="lastChat" value="${chat.sessionNumber}" />
+                            </div>
+                        `);
+                        });
+                    },
+                    error: function () {
+                        alert("삭제 중 오류가 발생했습니다.");
+                    }
+                });
+            }
+        });
+
     });
 });
-
-// //비동기로 데이터 저장
-// function sendDB() {
-//     // 입력된 메시지 가져오기
-//     let message = $('#chatRoom-chatArea').val();
-//     if (message.trim() === '') {
-//         return; // 빈 메시지는 전송하지 않음
-//     }
-//
-//     // 채팅방 정보 가져오기
-//     let sessionNumber = $('#chatRoom-info').text();
-//
-//     // Ajax를 사용하여 서버로 데이터 전송
-//     $.ajax({
-//         url: '/sendOkController.doccl', // 전송할 서블릿의 URL
-//         type: 'POST',
-//         data: {
-//             message: message,
-//             sessionNumber: sessionNumber
-//         },
-//         success: function() {
-//             // 입력 창 비우기
-//             $('#chatRoom-chatArea').val('');
-//         },
-//         error: function() {
-//             alert('메시지 전송에 실패했습니다.');
-//         }
-//     });
-// }
 
 
 //a태그 post로 전송

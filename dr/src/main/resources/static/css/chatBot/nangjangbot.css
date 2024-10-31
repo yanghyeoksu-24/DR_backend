@@ -114,13 +114,23 @@ main {
     border-radius: 25px;
 }
 
+.nangjangbot-lastChatTitle {
+    display: block; /* 블록 요소로 설정 */
+    width: 210px; /* 최대 너비 설정 */
+    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+    overflow: hidden; /* 넘치는 부분 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 텍스트를 '...'로 표시 */
+    margin-right: 10px;
+}
+
+.nangjangbot-lastChatDate {
+    font-size: 10px;
+}
+
 .nangjangbot-lastChat button {
     display: block;
 }
 
-.nangjangbot-lastChat div span{
-    font-size: 10px;
-}
 
 .nangjangbot-imgFrame:hover {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 1);
@@ -341,7 +351,39 @@ main {
     display: none;
 }
 
-/* .nangjangbot-pageTitle,
-#nangjangbot-text {
-  display: none;
-} */
+#nangjangbot-tip {
+    position: fixed;
+    right: 0px;
+    top: 900px;
+    margin-right: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 29px;
+    cursor: pointer;
+}
+
+#nangjangbot-tipText {
+    position: fixed;
+    right: 45px;
+    top: 600px;
+    width: 230px;
+    height: 220px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    background-color: #888888;
+    color: white;
+    font-size: 13px;
+    letter-spacing: -0.3px;
+    display: none;
+}
+
+#nangjangbot-tip:hover + #nangjangbot-tipText {
+    display: block; /* 호버 시 block으로 변경 */
+}

@@ -11,4 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ChatResponse {
     private String reply;
+    private Long sessionNumber;
 }
