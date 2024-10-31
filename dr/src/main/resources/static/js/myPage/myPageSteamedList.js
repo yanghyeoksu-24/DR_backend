@@ -1,15 +1,12 @@
-function deleteSteam(recipeNumber) {
-    // 세션에 저장된 userNumber를 서버에서 직접 확인하고 사용할 수 있도록 수정합니다.
-    $.ajax({
-        type: "POST",
-        url: "/myPage/myPageSteamedList",
-        data: { recipeNumber: recipeNumber }, // userNumber는 세션에서 자동으로 관리
-        success: function(response) {
-            alert("찜 목록이 삭제되었습니다.");
-            // 찜 목록을 다시 가져오는 등의 후속 작업 수행
-            location.reload(); // 페이지 새로고침하여 업데이트된 목록 표시
-        },
-    });
+// 찜 삭제하시겠습니까? confirm창 띄우기 //
+function confirmDelete(event) {
+
+    const confirmDelete = confirm("찜 삭제하시겠습니까?");
+    if (confirmDelete) {
+        alert("찜 삭제되었습니다.");
+    } else {
+        event.preventDefault();
+    }
 }
 
 $(function() {

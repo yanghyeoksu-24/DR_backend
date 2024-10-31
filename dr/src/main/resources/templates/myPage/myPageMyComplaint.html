@@ -61,183 +61,18 @@
                         </li>
                     </ul>
                 </div>
-                <div class="myPage-myComplaintTitleMainOne">
+                <div th:each="siren, start : ${sirenList}" class="myPage-myComplaintTitleMainOne">
                     <ul>
                         <li>
-                            <span class="myPage-myComplaintTitleNumberZero">1</span>
+                            <span class="myPage-myComplaintTitleNumberZero" th:text="${start.index + 1}"></span>
                             <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne">그동안 감사했습니다...^ㅡ^</span>
+                            <span class="myPage-myComplaintTitleContentOne" th:text="${siren.TitleAndContent}"></span>
                             <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo">게시글</span>
+                            <span class="myPage-myComplaintTitleContentTypeTwo" th:text="${siren.SirenType}"></span>
                             <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree">스팸 및 광고</span>
+                            <span class="myPage-myComplaintTitleCauseThree" th:text="${siren.SirenReason}"></span>
                             <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour">2024-10-05</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="myPage-myComplaintTitleMainOne">
-                    <ul>
-                        <li>
-                            <span class="myPage-myComplaintTitleNumberZero">2</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne">흑백요리사 1위는 나폴리 요리사</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo">게시글</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree">스팸 및 광고</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour">2024-10-05</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="myPage-myComplaintTitleMainOne">
-                    <ul>
-                        <li>
-                            <span class="myPage-myComplaintTitleNumberZero">3</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne">튀김 옷 필살기</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo">레시피</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree">음란물</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour">2024-10-05</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="myPage-myComplaintTitleMainOne">
-                    <ul>
-                        <li>
-                            <span class="myPage-myComplaintTitleNumberZero">4</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne">xx 같은 xxxx@%*#&</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo">댓글</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree">욕설 및 비방</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour">2024-10-05</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="myPage-myComplaintTitleMainOne">
-                    <ul>
-                        <li>
-                            <span class="myPage-myComplaintTitleNumberZero">5</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne">주글래?????</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo">레시피</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree">허위 정보</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour">2024-10-05</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="myPage-myComplaintTitleMainOne">
-                    <ul>
-                        <li>
-                            <span class="myPage-myComplaintTitleNumberZero">6</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne">황금보리 마시고싶다</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo">레시피</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree">스팸 및 광고</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour">2024-10-05</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="myPage-myComplaintTitleMainOne">
-                    <ul>
-                        <li>
-                            <span class="myPage-myComplaintTitleNumberZero">7</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne">아이폰 16 좋아요???</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo">댓글</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree">허위정보</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour">2024-10-05</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="myPage-myComplaintTitleMainOne">
-                    <ul>
-                        <li>
-                            <span class="myPage-myComplaintTitleNumberZero">8</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne">배고파요 죽을것같아요</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo">게시글</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree">욕설 및 비방</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour">2024-10-23</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="myPage-myComplaintTitleMainOne">
-                    <ul>
-                        <li>
-                            <span class="myPage-myComplaintTitleNumberZero">9</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne">너가 뭔데 상관이야!?</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo">댓글</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree">허위정보</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour">2024-10-13</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="myPage-myComplaintTitleMainOne">
-                    <ul>
-                        <li>
-                            <span class="myPage-myComplaintTitleNumberZero">10</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne">디셈버 노래 진짜 좋네요</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo">게시판</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree">스팸 및 광고</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour">2024-11-05</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="myPage-myComplaintTitleMainOne">
-                    <ul>
-                        <li>
-                            <span class="myPage-myComplaintTitleNumberZero">11</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne">하리보 너무 맛있어요 영선쌤</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo">게시판</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree">스팸 및 광고</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour">2024-11-05</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="myPage-myComplaintTitleMainOne">
-                    <ul>
-                        <li>
-                            <span class="myPage-myComplaintTitleNumberZero">12</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne">누네띠네가 더 맛있어요 그죠?</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo">게시판</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree">스팸 및 광고</span>
-                            <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour">2024-11-05</span>
+                            <span class="myPage-myComplaintTitleDateFour" th:text="${siren.SirenDate}"></span>
                         </li>
                     </ul>
                 </div>

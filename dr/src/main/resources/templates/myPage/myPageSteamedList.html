@@ -56,9 +56,10 @@
                             <div class="myPage-pictureName" th:text="${steam.userNickname}">작성자 닉네임</div>
                         </div>
                         <div class="myPage-pictureSideRight">
-                            <form action="/myPageSteamedList" method="post" style="display: inline;">
+                            <form th:action="@{/myPage/steamedDelete}" method="post" style="display: inline;" onsubmit="confirmDelete(event);">
                                 <input type="hidden" name="recipeNumber" th:value="${steam.recipeNumber}" />
-                                <button type="submit" onclick="return confirm('찜을 삭제하시겠습니까?');" class="myPage-pictureListDelete">찜 삭제</button>
+                                <input type="hidden" name="userNumber" th:value="${steam.userNumber}" />
+                                <button type="submit" class="myPage-pictureListDelete">찜 삭제</button>
                             </form>
                         </div>
                     </div>

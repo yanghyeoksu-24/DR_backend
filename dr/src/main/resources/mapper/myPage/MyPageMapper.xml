@@ -47,6 +47,13 @@
             U.USER_NUMBER = #{userNumber}
     </select>
 
+    <!-- 닉네임 중복 확인 -->
+    <select id="checkNickname" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM DR_USER
+        WHERE USER_NICKNAME = #{userNickname}
+    </select>
+
     <!--  회원 탈퇴 -->
     <delete id="deleteUser" parameterType="Long">
         DELETE FROM DR_USER
@@ -122,6 +129,7 @@
     <!-- 내정보 찜 목록 -->
     <select id="getUserSteam" parameterType="Long" resultType="UserSteamDTO">
         SELECT
+        R.RECIPE_NUMBER,
         R.RECIPE_TITLE,               -- 레시피 제목
         U.USER_NICKNAME,              -- 작성자 닉네임
         P.PHOTO_LOCAL                 -- 레시피 사진
@@ -146,14 +154,47 @@
     </select>
 
     <!-- 내정보 찜 목록 삭제 -->
-    <delete id="deleteUserSteam" parameterType="Long">
+    <delete id="deleteUserSteam" parameterType="UserSteamDTO">
     DELETE FROM DR_STEAM
     WHERE USER_NUMBER = #{userNumber}
     AND RECIPE_NUMBER = #{recipeNumber}
     </delete>
 
+    <!-- 내정보 신고 내역  -->
+    <select id="getSirenList" parameterType="Long" resultType="SirenListDTO">
+        SELECT
+            S.SIREN_NUMBER AS sirenNumber,
+            COALESCE(B.BOARD_TITLE, R.RECIPE_TITLE, RP.REPLY_TEXT) AS titleAndContent,
+            S.SIREN_TYPE AS sirenType,
+            S.SIREN_REASON AS sirenReason,
+            TO_CHAR(S.SIREN_DATE, 'YYYY-MM-DD') AS sirenDate
+        FROM DR_SIREN S
+        LEFT JOIN DR_BOARD B ON S.BOARD_NUMBER = B.BOARD_NUMBER
+        LEFT JOIN DR_RECIPE R ON S.RECIPE_NUMBER = R.RECIPE_NUMBER
+        LEFT JOIN DR_REPLY RP ON S.REPLY_NUMBER = RP.REPLY_NUMBER
+        WHERE S.USER_NUMBER = #{userNumber}
+        ORDER BY S.SIREN_DATE DESC
+    </select>
 
 
+<!--    &lt;!&ndash; 내정보 출석체크를 위한 데이터 &ndash;&gt;-->
+<!--    <insert id="insertAttendanceCheck" parameterType="UserCheckDTO">-->
+<!--        INSERT INTO DR_DAILY (DAILY_NUMBER, DAILY_DATE, USER_NUMBER)-->
+<!--        VALUES (SEQ_DAILY_NUMBER.NEXTVAL, #{date}, #{userNumber})-->
+<!--    </insert>-->
 
+<!--    &lt;!&ndash; 내정보 출석체크 포인트 기록을 위한 데이터 &ndash;&gt;-->
+<!--    <insert id="insertPointRecord" parameterType="PointRecordDTO">-->
+<!--        INSERT INTO DR_POINT (POINT_NUMBER, POINT_GET, POINT_NOTE, POINT_DATE, USER_NUMBER)-->
+<!--        VALUES (SEQ_POINT_NUMBER.NEXTVAL, #{points}, #{}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), #{userNumber})-->
+<!--    </insert>-->
+
+<!--    &lt;!&ndash; 월간 출석 체크 카운트 조회 &ndash;&gt;-->
+<!--    <select id="checkMonthlyAttendance" parameterType="UserCheckDTO" resultType="int">-->
+<!--        SELECT COUNT(*)-->
+<!--        FROM DR_DAILY-->
+<!--        WHERE USER_NUMBER = #{userNumber}-->
+<!--        AND DAILY_DATE BETWEEN TRUNC(SYSDATE, 'MM') AND LAST_DAY(SYSDATE)-->
+<!--    </select>-->
 
 </mapper>

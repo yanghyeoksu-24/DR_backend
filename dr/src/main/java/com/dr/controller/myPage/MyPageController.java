@@ -1,17 +1,21 @@
 package com.dr.controller.myPage;
 
 import com.dr.dto.myPage.*;
+import com.dr.service.myPage.AttendanceService;
 import com.dr.service.myPage.MyPageService;
-import com.dr.service.rank.RankService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor // 생성자를 자동 생성
@@ -21,6 +25,7 @@ import java.util.List;
 public class MyPageController {
 
     private final MyPageService myPageService;
+    private final AttendanceService attendanceService;
 
     // -- 내 정보 확인하기 --
     @GetMapping("/myPageInformation")
@@ -38,37 +43,44 @@ public class MyPageController {
 
         return "myPage/myPageInformation";
 
+
     }
+
+    //닉네임 중복 확인
+    @PostMapping("/checkNickname")
+    public ResponseEntity<Boolean> checkNickname(@RequestBody Map<String, String> requestBody) {
+        String nickname = requestBody.get("nickname");
+        String currentNickname = requestBody.get("currentNickname"); // 현재 사용자의 닉네임
+
+        // 닉네임 중복 확인
+        boolean isAvailable = myPageService.checkNickname(nickname, currentNickname);
+
+        if (isAvailable) {
+            return ResponseEntity.ok(false); //중복된 닉네임
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(true); // 사용 가능
+        }
+    }
+
 
     // -- 회원탈퇴 주의사항 페이지로 넘어가기 --
     @GetMapping("/myPageCaution")
-    public String getUserCaution(@SessionAttribute(value = "userNumber", required = false) Long userNumber) {
+    public String getUserCaution() {
 
         return "myPage/myPageCaution";
     }
 
-    // 회원탈퇴 처리 메서드
-    @PostMapping("/myPageDelete")
-    public String deleteUser(@SessionAttribute(value = "userNumber", required = false) Long userNumber,HttpSession session) {
+    // -- 회원탈퇴 -- //
+    @PostMapping("/myPageUserDelete")
+    public RedirectView deleteUser(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
+                                   HttpSession session) {
 
-        if (userNumber == null) {
-            return "redirect:/user/login"; // 로그인 페이지로 리다이렉트
-        }
-
+        // 세션 무효화 및 사용자 삭제 처리
         myPageService.deleteUser(userNumber);
 
-        //세션 종료
-        session.invalidate();
-        log.info("세션 종료됨: userNumber={}", userNumber);
+        session.invalidate(); // 세션 무효화
 
-        return "redirect:/myPage/myPageDelete";
-    }
-
-    // -- 회원탈퇴 완료 페이지 --
-    @GetMapping("/myPageDelete")
-    public String getDeleteConfirmation() {
-
-        return "myPage/myPageDelete";
+        return new RedirectView("/myPage/myPageDeleted"); // 탈퇴 후 성공 페이지로 리다이렉트
     }
 
     // -- 내정보 포인트 내역 확인 -- //
@@ -125,36 +137,64 @@ public class MyPageController {
         }
 
         List<UserSteamDTO> userSteamList = myPageService.getUserSteam(userNumber);
+        System.out.println("찜 번호 : "+userSteamList);
         model.addAttribute("userSteamList", userSteamList);
 
         return "myPage/myPageSteamedList";
     }
 
-    // -- 찜목록 삭제 -- //
-    @PostMapping("/myPageSteamedList")
-    public String deleteSteam(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
-                              @RequestParam Long recipeNumber) {
-        int result = myPageService.deleteUserSteam(userNumber, recipeNumber);
+    // -- 찜 삭제 -- //
+    @PostMapping("/steamedDelete")
+    public RedirectView deleteSteam(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
+                              @RequestParam(name = "recipeNumber") Long recipeNumber) {
 
-        // 삭제 성공 여부 체크
-        if (result > 0) {
-            // 삭제 성공 시
-            log.info("찜 목록 삭제 성공: recipeNumber={}", recipeNumber);
-        } else {
-            // 삭제 실패 시
-            log.warn("찜 목록 삭제 실패: recipeNumber={}", recipeNumber);
+        UserSteamDTO userSteamDTO = new UserSteamDTO();
+        userSteamDTO.setUserNumber(userNumber);
+        userSteamDTO.setRecipeNumber(recipeNumber);
+
+        myPageService.deleteUserSteam(userSteamDTO);
+
+        return new RedirectView("/myPage/myPageSteamedList");// 목록 페이지로 리다이렉트
+    }
+
+
+    // -- 신고 내역 목록 -- //
+    @GetMapping("/myPageMyComplaint")
+    public String getSirenList(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model) {
+        // 세션에 userNumber가 없는 경우 로그인 페이지로 리다이렉트
+        if (userNumber == null) {
+            return "redirect:/user/login";
         }
 
-        // 삭제 후 다시 찜 목록 페이지로 리다이렉트
-        return "redirect:/myPage/myPageSteamedList";
+        // 사용자의 신고 내역 목록 가져오기
+        List<SirenListDTO> sirenList = myPageService.getSirenList(userNumber);
+        model.addAttribute("sirenList", sirenList);
+
+        return "myPage/myPageMyComplaint";
     }
 
 
 
-
-
-
-
-
-
+    // -- 출석 체크 --
+    @GetMapping("/myPageCheck")
+    public String checkAttendance(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
+                                  Model model) {
+        if (userNumber == null) {
+            return "redirect:/user/login"; // 로그인 페이지로 리다이렉트
         }
+
+        // 현재 날짜를 가져옵니다.
+        String currentDate = LocalDate.now().toString();
+
+        // 출석 체크 수행
+        UserCheckDTO userCheckDTO = new UserCheckDTO(); // UserCheckDTO 객체 생성
+        userCheckDTO.setUserNumber(userNumber); // 사용자 번호 설정
+        userCheckDTO.setDate(currentDate); // 현재 날짜 설정
+
+        attendanceService.checkAttendance(userCheckDTO); // 출석 체크 수행
+
+        model.addAttribute("message", "출석 체크가 완료되었습니다."); // 메시지를 모델에 추가
+
+        return "myPage/myPageCheck"; // 결과 페이지로 이동
+    }
+}
