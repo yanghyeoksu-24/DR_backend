@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DR - 자유게시판 글쓰기</title>
+    <title th:text="'DR - 자유게시판 글쓰기'">DR - 자유게시판 글쓰기</title>
     <link rel="stylesheet" th:href="@{/css/board/freeBoardWrite.css}">
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
@@ -32,8 +32,8 @@
                 <input type="text" class="freeboardwrite-titleInput" placeholder="제목을 입력하세요" th:value="${post.title}">
             </div>
 
-            <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
             <div id="contsEditor"></div>
+            <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
             <script>
                 const editor = new toastui.Editor({
                     el: document.querySelector('#contsEditor'),
@@ -45,8 +45,11 @@
             </script>
 
             <div class="freeboardwrite-write">
+                <form th:action="@{/board/freeBoardWrite}" method="post">
+                    <button type="submit" class="freeboardwrite-writeButton">등록</button>
+                </form>
                 <a th:href="@{/board/freeBoardList}">
-                    <button class="freeboardwrite-writeButton">등록</button>
+                    <button class="freeboardwrite-writeButton">취소</button>
                 </a>
             </div>
         </div>

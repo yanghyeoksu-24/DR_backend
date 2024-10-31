@@ -2,6 +2,7 @@ package com.dr.controller.user;
 
 import com.dr.dto.user.*;
 import com.dr.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.HashMap;
@@ -72,8 +74,6 @@ public class UserController {
     }
 
 
-
-
     // 아이디 찾기 완료 페이지 이동
     @PostMapping("/user/emailFindOk")
     public String emailFindPage(@RequestParam("phone") String userPhone, Model model) {
@@ -88,44 +88,38 @@ public class UserController {
     }
 
 
-
+    //비밀번호 찾기 페이지
     @PostMapping("/user/PwFind")
-    @ResponseBody
-    public ResponseEntity<?> PwFindPage(@RequestBody PwFindDTO pwFindDTO) {
-        boolean isTrue = userService.userPwFind(pwFindDTO); // 이메일과 휴대폰 번호 확인
+    public String PwFind(Model model, @RequestParam("userEmail") String userEmail, @RequestParam("userPhone") String userPhone) {
+        PwFindDTO pwFindDTO = new PwFindDTO();
 
-        // 응답 데이터
-        Map<String, Object> response = new HashMap<>();
-        response.put("success", isTrue); // 일치 여부 저장
+        log.info("userController PwFind 메소드");
+        pwFindDTO = userService.userPwFind(userEmail, userPhone);
+        log.info(pwFindDTO.toString());
 
-        // 메시지 설정
-        if (isTrue) {
-            response.put("message", "인증이 완료되었습니다."); // 성공 메시지
-            response.put("redirectUrl", "/user/PwReset"); // 비밀번호 재설정 페이지 URL
+        if (pwFindDTO.getUserPhone() != null) {
+            model.addAttribute("userEmail", pwFindDTO.getUserEmail());
+            model.addAttribute("userPhone", pwFindDTO.getUserPhone());
+            log.info(pwFindDTO.toString());
+
+            return "redirect:/user/PwReset";
         } else {
-            response.put("message", "없는 이메일입니다."); // 실패 메시지
-            response.put("redirectUrl", "/user/PwFind"); // 비밀번호 찾기 페이지 URL
+            return "/user/PwFind";
         }
-
-        return ResponseEntity.ok(response); // JSON 형태로 응답
     }
 
 
-
-
+    //비밀번호 변경 페이지
     @PostMapping("/user/PwReset")
-    @ResponseBody
-    public ResponseEntity<?> resetPassword(@RequestBody PwResetDTO pwResetDTO) {
-        // 비밀번호 변경 메서드 호출
-        userService.changePassword(pwResetDTO.getUserEmail(), pwResetDTO.getNewPassword());
+    public String PwReset(Model model, @RequestParam("newPassword") String userPw, @RequestParam("userPhone") String userPhone) {
+        PwFindDTO pwFindDTO = new PwFindDTO();
 
-        return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
+        model.addAttribute("userPhone", pwFindDTO.getUserPhone());
+        log.info(pwFindDTO.getUserPhone() +"출력");
+
+        userService.updatePassword(userPw, userPhone);
+        return "redirect:/user/login";
     }
-
-
-
-
-
 
 
     //drjoin 회원가입 요청 컨트롤러
@@ -144,7 +138,7 @@ public class UserController {
         return ResponseEntity.ok(exists);
     }
 
-
+    // 핸드폰 중복 확인 요청 처리
     @PostMapping("/api/user/checkPhone")
     @ResponseBody
     public Map<String, Boolean> checkPhone(@RequestBody Map<String, String> request) {
@@ -155,7 +149,7 @@ public class UserController {
         return response;
     }
 
-
+    //로그인 페이지
     @PostMapping("/user/login")
     public ResponseEntity<Map<String, String>> login(@RequestParam("userEmail") String userEmail,
                                                      @RequestParam("userPw") String userPw,
@@ -184,13 +178,13 @@ public class UserController {
     }
 
 
-
-
     // 로그아웃 요청 처리
     @GetMapping("/logout")
     public RedirectView logout(HttpSession session) {
         session.invalidate();
         return new RedirectView("/main");
     }
+
 }
+
 

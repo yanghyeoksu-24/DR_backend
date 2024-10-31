@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dr.mapper.board.BoardMapper">
+    <!-- 자유게시판 리스트-->
+    <select id="freeBoardList" resultType="FreeBoardListDTO">
+        SELECT B.BOARD_NUMBER,
+               B.BOARD_TITLE,
+               U.USER_NICKNAME,
+               COUNT(G.GOOD_NUMBER) AS goodCount,
+               B.BOARD_WRITE_DATE
+        FROM DR_BOARD B
+                 JOIN
+             DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
+                 LEFT JOIN
+             DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
+        WHERE B.BOARD_TYPE = '자유게시판'
+        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, U.USER_NICKNAME, B.BOARD_WRITE_DATE
+        ORDER BY B.BOARD_WRITE_DATE DESC
+    </select>
+<!--    꿀팁게시판 리스트-->
+    <select id="honeyBoardList" resultType="HoneyBoardListDTO">
+        SELECT B.BOARD_NUMBER,
+               B.BOARD_TITLE,
+               U.USER_NICKNAME,
+               COUNT(G.GOOD_NUMBER) AS goodCount,
+               B.BOARD_WRITE_DATE
+        FROM DR_BOARD B
+                 JOIN
+             DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
+                 LEFT JOIN
+             DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
+        WHERE B.BOARD_TYPE = '꿀팁게시판'
+        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, U.USER_NICKNAME, B.BOARD_WRITE_DATE
+        ORDER BY B.BOARD_WRITE_DATE DESC
+    </select>
+
+
+    <!-- 자유게시판 상세 정보 조회 -->
+    <select id="freeBoardDetail" parameterType="int" resultType="FreeBoardDetailDTO">
+        SELECT B.BOARD_NUMBER,
+               B.BOARD_TITLE,
+               B.BOARD_CONTENT,
+               B.BOARD_WRITE_DATE,
+               U.USER_NICKNAME,
+               COUNT(G.GOOD_NUMBER) AS recommendCount
+        FROM DR_BOARD B
+                 JOIN DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
+                 LEFT JOIN DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
+        WHERE B.BOARD_NUMBER = #{boardNumber}
+        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_WRITE_DATE, U.USER_NICKNAME
+    </select>
+
+    <!-- 댓글 목록 조회 -->
+    <select id="commentList" parameterType="int" resultType="FreeBoardCommentDTO">
+        SELECT C.COMMENT_ID,
+               C.COMMENT_CONTENT,
+               C.COMMENT_WRITE_DATE,
+               U.USER_NICKNAME
+        FROM DR_COMMENT C
+                 JOIN DR_USER U ON C.USER_NUMBER = U.USER_NUMBER
+        WHERE C.BOARD_NUMBER = #{boardNumber}
+        ORDER BY C.COMMENT_WRITE_DATE ASC
+    </select>
+
+
+</mapper>
