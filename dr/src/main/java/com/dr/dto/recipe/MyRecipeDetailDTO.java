@@ -18,5 +18,4 @@ public class MyRecipeDetailDTO {
     private String userNickName;         // 작성자
     private String recipeWriteDate;      // 작성일
     private int goodCount;               // 추천수
-    // 댓글 관련 필드는 필요시 추가
 }
