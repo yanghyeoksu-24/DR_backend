@@ -8,9 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
     <script defer th:src="@{/js/fragment/header.js}"></script>
-    <!-- 네비바 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
-    <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
@@ -19,62 +17,53 @@
 
 <body>
 <header th:replace="~{/fragment/header :: header}"></header>
-<!-- 메인 부분 -->
 <main>
     <div class="honeyBoardDetail-mainContainer">
         <div class="honeyBoardDetail-mainBox">
             <div class="honeyBoardDetail-infobox">
                 <div class="honeyBoardDetail-infoFirst">
                     <div class="honeyBoardDetail-infoInBox1">
-                        <!-- 프로필 이미지 -->
                         <img src="./../../image/basicProfile.png" alt="" th:src="@{/image/basicProfile.png}">
                     </div>
                     <div class="honeyBoardDetail-infoInBox2">
-                        <!-- 작성자, 제목, 작성 날짜 -->
-                        <p class="honeyBoardDetail-writeName" th:text="${writerName}">김찰수</p>
-                        <p class="honeyBoardDetail-foodTitle" th:text="${foodTitle}">숙주나물 무침</p>
-                        <p class="honeyBoardDetail-date" th:text="${writeDate}">2024-10-04 14:50</p>
+                        <p class="honeyBoardDetail-writeName" th:text="${honeyBoardDetail.userNickName}">김찰수</p>
+                        <p class="honeyBoardDetail-foodTitle" th:text="${honeyBoardDetail.boardTitle}">숙주나물 무침</p>
+                        <p class="honeyBoardDetail-date" th:text="${honeyBoardDetail.boardWriteDate}">2024-10-04 14:50</p>
                     </div>
                 </div>
 
                 <div class="honeyBoardDetail-infoSecond">
                     <div class="honeyBoardDetail-firstButton">
-                        <!-- 수정 및 삭제 버튼 -->
-                        <a th:href="@{/board/freeBoardModify/{id}(id=${postId})}">
+                        <a th:href="@{/board/honeyBoardModify/{id}(id=${honeyBoardDetail.boardNumber})}">
                             <button class="honeyBoardDetail-buttonOne">수정</button>
                         </a>
-                        <a th:href="@{/board/freeBoardList}">
+                        <a th:href="@{/board/honeyBoardList}">
                             <button id="deleteButton" class="honeyBoardDetail-buttonOne">삭제</button>
                         </a>
                     </div>
 
                     <div class="honeyBoardDetail-secondButton">
-                        <!-- 신고 버튼 -->
-                        <a th:href="@{/board/boardReport/{id}(id=${postId})}">
+                        <a th:href="@{/board/boardReport/{id}(id=${honeyBoardDetail.boardNumber})}">
                             <button class="honeyBoardDetail-buttonTwo">신고</button>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- 글 내용 -->
             <div class="honeyBoardDetail-writetext">
-                <p class="honeyBoardDetail-texts" th:text="${postContent}">
+                <p class="honeyBoardDetail-texts" th:text="${honeyBoardDetail.boardText}">
                     바쁜 일상 속에서 푸짐한 식탁을 차리는 건 쉽지 않죠. 하지만 걱정 마세요! 오늘 소개할 "아삭아삭 숙주나물 무침" 레시피는 단 5분 만에 뚝딱 만들 수 있는 초간단 요리입니다.
                     ...
                 </p>
-                <!-- 이미지 -->
                 <img src="./../../image/recipe/숙주나물무침.png" alt="" th:src="@{/image/recipe/숙주나물무침.png}">
 
-                <!-- 추천 -->
                 <div class="honeyBoardDetail-recommendImg">
                     <img src="./../../image/recommend.png" id="recommendImg" class="recommend-inactive"
                          alt="recommend" th:src="@{/image/recommend.png}">
-                    <p id="recommendCount" th:text="'추천수: ' + ${recommendCount}">추천수: 0</p>
+                    <p id="recommendCount" th:text="'추천수: ' + ${honeyBoardDetail.goodCount}">추천수: 0</p>
                 </div>
             </div>
 
-            <!-- 댓글들 -->
             <div class="honeyBoardDetail-commentSection">
                 <div class="honeyBoardDetail-commentInput" id="commentInput">
                     <textarea placeholder="댓글을 입력하세요..." rows="3"></textarea>
@@ -83,8 +72,7 @@
                     </div>
                 </div>
 
-                <!-- 댓글 반복 출력 -->
-                <div th:each="comment : ${comments}">
+                <div th:each="comment : ${honeyBoardComments}">
                     <div class="honeyBoardDetail-comment">
                         <div class="honeyBoardDetail-commentUserImg">
                             <img src="./../../image/basicProfile.png" alt="User Image"
@@ -92,41 +80,38 @@
                         </div>
                         <div class="honeyBoardDetail-commentContent">
                             <div class="honeyBoardDetail-commentHeader">
-                                <span class="honeyBoardDetail-commentUsername" th:text="${comment.username}">홍상철</span>
-                                <a th:href="@{/board/boardReport/{commentId}(commentId=${comment.id})}">
+                                <span class="honeyBoardDetail-commentUsername" th:text="${comment.userNickName}">홍상철</span>
+                                <a th:href="@{/board/boardReport/{commentId}(commentId=${comment.replyNumber})}">
                                     <button class="honeyBoardDetail-reportBtn">신고</button>
                                 </a>
                             </div>
-                            <div class="honeyBoardDetail-commentText" th:text="${comment.text}">댓글 내용</div>
-                            <div class="honeyBoardDetail-commentTime" th:text="${comment.time}">14:53:14</div>
+                            <div class="honeyBoardDetail-commentText" th:text="${comment.replyText}">댓글 내용</div>
+                            <div class="honeyBoardDetail-commentTime" th:text="${comment.replyWriteDate}">14:53:14</div>
 
-                            <!-- 수정 및 삭제 버튼 -->
                             <div class="honeyBoardDetail-buttonGroup">
                                 <button class="honeyBoardDetail-editBtn"
-                                        th:onclick="'editComment(' + ${comment.id} + ')'">수정
+                                        th:onclick="'editComment(' + ${comment.replyNumber} + ')'">수정
                                 </button>
                                 <button class="honeyBoardDetail-deleteBtn"
-                                        th:onclick="'deleteComment(' + ${comment.id} + ')'">삭제
+                                        th:onclick="'deleteComment(' + ${comment.replyNumber} + ')'">삭제
                                 </button>
                             </div>
 
-                            <!-- 댓글 수정 입력창, 기본적으로 숨김 상태 -->
-                            <div class="honeyBoardDetail-commentInput" th:id="'editInput' + ${comment.id}"
+                            <div class="honeyBoardDetail-commentInput" th:id="'editInput' + ${comment.replyNumber}"
                                  style="display:none;">
-                                <textarea th:id="'editTextarea' + ${comment.id}" placeholder="댓글을 입력하세요..."></textarea>
+                                <textarea th:id="'editTextarea' + ${comment.replyNumber}" placeholder="댓글을 입력하세요..."></textarea>
                                 <div class="honeyBoardDetail-commentActions">
                                     <button class="honeyBoardDetail-editBtn"
-                                            th:onclick="'saveComment(' + ${comment.id} + ')'">저장
+                                            th:onclick="'saveComment(' + ${comment.replyNumber} + ')'">저장
                                     </button>
                                     <button class="honeyBoardDetail-deleteBtn"
-                                            th:onclick="'cancelEdit(' + ${comment.id} + ')'">취소
+                                            th:onclick="'cancelEdit(' + ${comment.replyNumber} + ')'">취소
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

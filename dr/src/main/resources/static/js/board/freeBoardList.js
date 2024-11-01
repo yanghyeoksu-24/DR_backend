@@ -21,16 +21,30 @@ $(function () {
   container.pagination('goToPage', 1);
 });
 
-// 최신순, 추천순 버튼 액티브
-$(document).ready(function() {
-  // 페이지 로드 시 최신순 버튼에 active 클래스 추가
-  $('.freeboardlist-firstButton').addClass('active');
+$(document).ready(function () {
+  // 페이지 로드 시, sessionStorage에서 현재 active 상태를 가져옴
+  const activeButton = sessionStorage.getItem('activeButton') || 'latest'; // 기본값은 'latest'
 
-  $('.freeboardlist-rightButton button').click(function() {
+  // 해당하는 버튼에 active 클래스 추가
+  if (activeButton === 'latest') {
+    $('.freeboardlist-firstButton').addClass('active');
+  } else if (activeButton === 'recommend') {
+    $('.freeboardlist-thirdButton').addClass('active');
+  }
+
+  // 버튼 클릭 이벤트 설정
+  $('.freeboardlist-firstButton').click(function () {
     // 모든 버튼에서 active 클래스 제거
     $('.freeboardlist-rightButton button').removeClass('active');
-
-    // 클릭한 버튼에 active 클래스 추가
+    // 클릭된 버튼에 active 클래스 추가
     $(this).addClass('active');
+    // sessionStorage에 상태 저장
+    sessionStorage.setItem('activeButton', 'latest');
+  });
+
+  $('.freeboardlist-thirdButton').click(function () {
+    $('.freeboardlist-rightButton button').removeClass('active');
+    $(this).addClass('active');
+    sessionStorage.setItem('activeButton', 'recommend');
   });
 });
