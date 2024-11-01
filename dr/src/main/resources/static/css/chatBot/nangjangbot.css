@@ -339,7 +339,6 @@ main {
     margin: 50px 5px 5px 30px;
 }
 
-/*.nangjangbot-chatBotMsg,*/
 .botMsgBox {
     padding: 0 10px 10px 10px;
     max-width: 50vh;
@@ -350,7 +349,6 @@ main {
 }
 
 .nangjangbot-block,
-.nangjangbot-myMsg,
 .nangjangbot-chatBotMsg {
     display: none;
 }

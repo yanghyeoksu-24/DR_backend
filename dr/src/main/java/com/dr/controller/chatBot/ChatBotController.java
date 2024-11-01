@@ -21,8 +21,10 @@ public class ChatBotController {
     private final ChatBotService chatBotService;
     private final NangjangbotService nangjangbotService;
 
+    // ****GET요청에서는 JSON 형식의 데이터를 본문에 포함할 수 없고 쿼리 매개변수로 전달할 수 없음
     @PostMapping("/chat")
-    public ResponseEntity<ChatResponse> chat(@RequestBody ChatRequest request, @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
+    public ResponseEntity<ChatResponse> chat(@RequestBody ChatRequest request,
+                                             @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
         //로그인하지 않았을 경우 처리
         if (userNumber == null) {
 //            checkUserLogin(userNumber);
@@ -45,8 +47,11 @@ public class ChatBotController {
             sessionNumber = nangjangbotService.getSessionNumber(userNumber);
         }
 
-        // 응답메세지 저장할 변수
-        String botReply;
+        // 사이드바에 뿌릴 정보 초기화
+        ChatResponse chatResponse = new ChatResponse();
+        chatResponse.setSessionNumber(sessionNumber);
+        chatResponse.setSessionTitle(userMessage);
+        chatResponse.setCreateDate("방금전");
 
         // 채팅방에 유저 질문 저장
         nangjangbotDTO.setUserNumber(userNumber);
@@ -54,39 +59,60 @@ public class ChatBotController {
         nangjangbotDTO.setUserMsg(userMessage);
         nangjangbotService.insertUserMsg(nangjangbotDTO);
 
-        //이전 채팅방 목록 불러오기
-        List<NangjangbotDTO> chatList = nangjangbotService.getChatList(userNumber);
-
         // api 응답
         try {
-            botReply = chatBotService.getChatbotResponse(userMessage);
-            System.out.println("지피티 답변 : " + botReply);
+            chatResponse.setReply(chatBotService.getChatbotResponse(userMessage));
+//            botReply = chatBotService.getChatbotResponse(userMessage);
+            System.out.println("지피티 답변 : " + chatResponse.getReply());
 
             // 채팅방에 챗봇 응답 저장 (세션번호와 유저번호는 위에서 저장했으므로 여기서는 botReply만 셋팅)
-            nangjangbotDTO.setBotReply(botReply);
+            nangjangbotDTO.setBotReply(chatResponse.getReply());
             nangjangbotService.insertBotReply(nangjangbotDTO);
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ChatResponse("죄송합니다. 오류가 발생했습니다. 다시 시도해 주세요. 오류발생 채팅방 : ", sessionNumber));
+                    .body(chatResponse);
         }
 
-        // 생성된,현재 유지중인 세션 번호와 함께 챗봇 메세지 반환
-        return ResponseEntity.ok(new ChatResponse(botReply, sessionNumber));
+        // 생성된,현재 유지중인 세션 번호와 세션타이틀, 생성날짜, 챗봇 메세지 chatResponse에 담아 함께 반환
+        return ResponseEntity.ok(chatResponse);
     }
 
+    // ****GET요청에서는 JSON 형식의 데이터를 본문에 포함할 수 없고 쿼리 매개변수로 전달할 수 없음
     @PostMapping("/delete")
     public ResponseEntity<Void> deleteChat(@RequestBody NangjangbotDTO nangjangbotDTO,
                                                            @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
-//        //로그인하지 않았을 경우 처리
-//        if (userNumber == null) {
-//            return "redirect:/user/login";
-//        }
+        //로그인하지 않았을 경우 처리
+        if (userNumber == null) {
+            //401 반환
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        //채팅 삭제메소드
         Long sessionNumber = nangjangbotDTO.getSessionNumber();
         nangjangbotService.deleteChat(sessionNumber);
 
         return ResponseEntity.noContent().build();
     }
 
+    // ****GET요청에서는 JSON 형식의 데이터를 본문에 포함할 수 없고 쿼리 매개변수로 전달할 수 없음
+    @PostMapping("/getChating")
+    public ResponseEntity<List<NangjangbotDTO>> getChating(@RequestBody NangjangbotDTO nangjangbotDTO,
+                                                           @SessionAttribute(value = "userNumber", required = false) Long userNumber,
+                                                           Model model) {
+        //로그인하지 않았을 경우 처리
+        if (userNumber == null) {
+            // 401 반환
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        //세션번호를 채팅내용 조회 메소드에 적용하여 호출
+        Long sessionNumber = nangjangbotDTO.getSessionNumber();
+        List<NangjangbotDTO> chatList = nangjangbotService.getChatContents(sessionNumber);
+
+        System.out.println("아 뒷목아파"+chatList);
+        return ResponseEntity.ok(chatList);
+    }
 }
