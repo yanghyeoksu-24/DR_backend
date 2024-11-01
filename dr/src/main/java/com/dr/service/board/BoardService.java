@@ -17,10 +17,17 @@ import java.util.List;
 public class BoardService {
     private final BoardMapper boardMapper;
 
-    // 자유게시판
+    // 자유게시판 최신순
     public List<FreeBoardListDTO> freeBoardList() {
         return boardMapper.freeBoardList();
     }
+
+
+    // 추천순으로 자유게시판 리스트 가져오기
+    public List<FreeBoardListDTO> freeBoardListGood() {
+        return boardMapper.freeBoardListGood();
+    }
+
 
     // 꿀팁게시판
     public List<HoneyBoardListDTO> honeyBoardList() {
@@ -28,13 +35,13 @@ public class BoardService {
     }
 
     // 자유게시판 상세 조회
-    public FreeBoardDetailDTO getFreeBoardDetail(int boardNumber) {
-        return boardMapper.getFreeBoardDetail(boardNumber);
+    public FreeBoardDetailDTO freeBoardDetail(Long boardNumber) {
+        return boardMapper.freeBoardDetail(boardNumber);
     }
 
     // 댓글 목록 조회
-    public List<FreeBoardCommentDTO> getCommentsByBoardNumber(int boardNumber) {
-        return boardMapper.getCommentsByBoardNumber(boardNumber);
+    public List<FreeBoardCommentDTO> freeBoardCommentList(Long boardNumber) {
+        return boardMapper.freeBoardCommentList(boardNumber);
     }
 
 

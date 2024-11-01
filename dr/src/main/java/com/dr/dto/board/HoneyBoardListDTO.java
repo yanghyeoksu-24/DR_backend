@@ -13,6 +13,6 @@ public class HoneyBoardListDTO {
     private int boardNumber;
     private String boardTitle;
     private String userNickName;
-    private String goodCount;
+    private int goodCount;
     private String boardWriteDate;
 }
