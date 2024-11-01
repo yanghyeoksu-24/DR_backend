@@ -43,14 +43,12 @@
     
 <!-- 사이드바 채팅목록 -->
     <select id="getChatList" parameterType="Long" resultType="NangjangbotDTO">
-        <![CDATA[
         SELECT SESSION_NUMBER, SESSION_TITLE, CREATE_DATE
         FROM (
-        SELECT SESSION_NUMBER, SESSION_TITLE, CREATE_DATE
-        FROM DR_CHAT_SESSION
-        WHERE USER_NUMBER = #{userNumber}
-        ORDER BY SESSION_NUMBER DESC)
-        WHERE ROWNUM <= 10]]>
+                 SELECT SESSION_NUMBER, SESSION_TITLE, CREATE_DATE
+                 FROM DR_CHAT_SESSION
+                 WHERE USER_NUMBER = #{userNumber})
+        ORDER BY SESSION_NUMBER DESC
     </select>
 
 <!-- 이전채팅내용 조회 -->

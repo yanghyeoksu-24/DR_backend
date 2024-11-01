@@ -37,3 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
         dateElement.textContent = timeAgo; // DOM 업데이트
     });
 });
+
+// timeForToday를 최신 HTML에도 적용하기 위한 함수
+export function applyTimeForToday() {
+    const chatDates = document.querySelectorAll('.nangjangbot-lastChatDate');
+    chatDates.forEach(dateElement => {
+        const originalDate = dateElement.textContent;
+        const timeAgo = timeForToday(originalDate);
+        dateElement.textContent = timeAgo;
+    });
+}

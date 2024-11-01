@@ -42,8 +42,6 @@ $(document).ready(function () {
                     $('#sessionNumber').val(response.sessionNumber);
                 }
 
-                console.log(response.reply);
-
                 // 챗봇 응답을 화면에 추가
                 $('#nangjangbot-conversationContainer').append(`
                         <img src="/image/nangjangbot/apple.png" class="nangjangbot-mascot" alt="챗봇 마스코트">
@@ -75,44 +73,6 @@ $(document).ready(function () {
         $('.nangjangbot-pageTitle, #nangjangbot-text').css('display', 'none');
         $('.nangjangbot-block, .nangjangbot-myMsg, .nangjangbot-chatBotMsg').css('display', 'block');
 
-
-        // 삭제 버튼 클릭 이벤트 처리
-        $(document).on('click', '.nangjangbot-imgFrame', function () {
-            const sessionNumber = $(this).siblings('.lastChat').val(); // sessionNumber 가져오기
-
-            if (confirm("정말로 삭제하시겠습니까?\n삭제된 채팅은 복구가 불가능합니다.")) {
-                $.ajax({
-                    type: "GET",
-                    url: "/api/chatbot/delete",
-                    contentType: "application/json",
-                    data: JSON.stringify(sessionNumber), // sessionNumber를 JSON 형태로 전송
-                    success: function (newChatList) {
-                        alert("삭제되었습니다.");
-
-                        // 기존 채팅 목록을 초기화
-                        $('#nangjangbot-sideBar').find('.nangjangbot-lastChat').remove();
-
-                        // 새로운 채팅 목록으로 업데이트
-                        newChatList.forEach(chat => {
-                            $('#nangjangbot-sideBar').append(`
-                            <div class="nangjangbot-lastChat">
-                                <span class="nangjangbot-lastChatTitle">${chat.sessionTitle}</span>
-                                <span class="nangjangbot-lastChatDate">${chat.createDate}</span>
-                                <button class="nangjangbot-imgFrame">
-                                    <img th:src="@{/image/nangjangbot/delete.png}">
-                                </button>
-                                <input type="hidden" class="lastChat" value="${chat.sessionNumber}" />
-                            </div>
-                        `);
-                        });
-                    },
-                    error: function () {
-                        alert("삭제 중 오류가 발생했습니다.");
-                    }
-                });
-            }
-        });
-
     });
 });
 
@@ -134,28 +94,47 @@ let isOpen = true; // 사이드바가 열려있는 상태
 
 button.addEventListener('click', () => {
     if (isOpen) {
-        sidebar.style.left = '-350px'; // 사이드바 닫기
+        sidebar.style.left = '-350px'; // 사이드메뉴 닫기
     } else {
-        sidebar.style.left = '0'; // 사이드바 열기
+        sidebar.style.left = '0'; // 사이드메뉴 열기
     }
     isOpen = !isOpen; // 상태 토글
 });
 
 closeBtn.addEventListener('click', () => {
-    sidebar.style.left = '-400px'; // 사이드바 닫기
-    isOpen = false; // 상태를 닫힘으로 설정
+    sidebar.style.left = '-400px'; // 사이드바 닫음
+    isOpen = false; // 상태 토글 설정
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    // 모든 .nangjangbot-imgFrame 요소를 선택
-    const deleteButtons = document.querySelectorAll('.nangjangbot-imgFrame');
 
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            if (confirm("정말로 삭제하시겠습니까?\n삭제된 채팅은 복구가 불가능합니다.")) {
+// 삭제 버튼 클릭 이벤트 처리
+$(document).on('click', '.nangjangbot-imgFrame', function () {
+    // 모든 요소에서 클릭한 세션넘버 추출
+    const sessionNumber = $(this).siblings('.lastChatSession').val();
+
+    if (confirm("정말로 삭제하시겠습니까?\n삭제된 채팅은 복구가 불가능합니다.")) {
+        $.ajax({
+            type: "POST",
+            url: `/api/chatbot/delete`,
+            contentType: "application/json",
+            data: JSON.stringify({ sessionNumber: sessionNumber }), // DeleteRequest에 맞춰 JSON 형태로 전송
+            success: function () {
                 alert("삭제되었습니다.");
-                // 삭제 관련 로직 필요
+                // 삭제한 항목만 DOM에서 제거
+                $(`input.lastChatSession[value="${sessionNumber}"]`).closest('.nangjangbot-lastChat').remove();
+            },
+            error: function () {
+                alert("삭제 중 오류가 발생했습니다.");
             }
         });
-    });
+    }
 });
+
+// 지난 채팅 클릭 이벤트 처리
+$(document).on('click', '.nangjangbot-chatListContainer', function(){
+    // 모든 요소에서 클릭한 세션넘버 추출
+    const sessiongNumber = $(this).siblings('.lastChatSession').val();
+
+    console.log(sessiongNumber);
+    console.log(this);
+})
