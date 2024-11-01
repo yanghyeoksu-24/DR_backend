@@ -86,6 +86,16 @@ public class BoardController {
         return "/board/freeBoardList";
     }
 
+
+
+
+
+
+
+
+
+
+
     //꿀팁게시판 리스트 보여주기
     @GetMapping("/honeyBoardList")
     public String honeyBoardList(Model model) {
@@ -97,16 +107,18 @@ public class BoardController {
 
 
 
-
-    // 자유게시판 상세 페이지
+    //자유게시판 상세페이지
     @GetMapping("/freeBoardDetail")
-    public String getFreeBoardDetail(@RequestParam("boardNumber") int boardNumber, Model model) {
-        FreeBoardDetailDTO boardDetail = boardService.getFreeBoardDetail(boardNumber);
-        List<FreeBoardCommentDTO> comments = boardService.getCommentsByBoardNumber(boardNumber);
-        model.addAttribute("board", boardDetail);
-        model.addAttribute("comments", comments);
-        return "/board/freeBoardDetail"; // Thymeleaf 템플릿 경로
+    public String freeBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model) {
+        FreeBoardDetailDTO freeBoardDetail = boardService.freeBoardDetail(boardNumber);
+        List<FreeBoardCommentDTO> freeBoardComments = boardService.freeBoardCommentList(boardNumber);
+
+        model.addAttribute("freeBoardDetail", freeBoardDetail);
+        model.addAttribute("freeBoardComments", freeBoardComments);
+
+        return "/board/freeBoardDetail";
     }
+
 
 
 

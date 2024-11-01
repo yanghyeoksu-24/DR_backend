@@ -10,8 +10,13 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class FreeBoardCommentDTO {
-    private int commentId;
-    private String commentContent;
-    private String commentWriteDate;
+    private Long replyNumber;
+    private String replyText;
+    private String replyWriteDate;
+    private String replyModifyDate;
+    private String photoLocal;
+    private int userNumber;
+    private int boardNumber;
+    private int recipeNumber;
     private String userNickName;
 }
