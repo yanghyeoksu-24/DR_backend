@@ -399,8 +399,15 @@ public class ManagerController {
     }
 
 
-    // 9-4. 상품 수정
-
+    // 9-4. 상품 수정 페이지 이동
+//    @PostMapping("/manager/manageUpdate")
+//    @ResponseBody
+//    public ResponseEntity<String> manageUpdate(@RequestParam("productName") String productName , Model model) {
+//
+//
+//        // 성공 시
+//        return ResponseEntity.ok();
+//    }
 
 
     // 로그아웃

@@ -77,41 +77,46 @@
             </div>
 
 
-            <div id="register-right">
-                <form th:action="@{/upload/file}" method="post" enctype="multipart/form-data">
+            <div class="register-right">
+                <div class="register-right1">
+                    <form class="register-right" th:action="@{/upload/file}" method="post"
+                          enctype="multipart/form-data">
+                        <div class="register-right-con2">
+                            <input type="text" name="productName" placeholder="ex&#41; 비타500">
+                        </div>
+
+                        <div id="register-right-img">
+                            <input type="file" name="file"><br><br>
+                            <button type="submit">사진등록</button>
+                        </div>
+
+                        <span th:if="${message}"
+                              th:text="${message}"
+                              th:classappend="${status == 'success' ? 'success-message' : 'error-message'}">
+                        </span>
+                    </form>
+                </div>
+
+
+                <div class="register-right2">
                     <div class="register-right-con">
-                        <input type="text" name="productName" placeholder="ex&#41; 비타500">
+                        <input type="text" name="productCodePlus" placeholder="ex&#41; F51K5" readonly>&nbsp;
+                        <button id="numberUp">+</button>
                     </div>
 
-                    <div id="register-right-img">
-                        <input type="file" name="file"><br><br>
-                        <button type="submit">사진등록</button>
+                    <div class="register-right-con" id="targetDiv"></div>
 
-                        <!-- 메시지 출력 -->
-                        <div th:if="${message}"
-                             th:text="${message}"
-                             th:classappend="${status == 'success' ? 'success-message' : 'error-message'}"></div>
+                    <div class="register-right-con">
+                        <input type="text" name="productPoint" placeholder="ex&#41; 500">
                     </div>
-                </form>
 
-
-                <div class="register-right-con">
-                    <input type="text" name="productCodePlus" placeholder="ex&#41; F51K5" readonly>&nbsp;
-                    <button id="numberUp">+</button>
+                    <button id="productButton">상품 등록</button>
                 </div>
 
-                <div class="register-right-con" id="targetDiv"></div>
-
-                <div class="register-right-con">
-                    <input type="text" name="productPoint" placeholder="ex&#41; 500">
-                </div>
-
-                <button id="productButton">상품 등록</button>
             </div>
 
         </div>
     </div>
-
 
 </div>
 

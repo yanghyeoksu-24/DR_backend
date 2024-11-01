@@ -1,6 +1,6 @@
 // + 버튼에 대한 클릭 이벤트 설정
 document.getElementById('numberUp').addEventListener('click', function() {
-  const targetDiv = document.querySelectorAll('.register-right-con')[2];  // 3번째 div 선택
+  const targetDiv = document.querySelectorAll('.register-right-con')[1];  // 3번째 div 선택
 
   const inputCount = targetDiv.querySelectorAll('input').length;
 
