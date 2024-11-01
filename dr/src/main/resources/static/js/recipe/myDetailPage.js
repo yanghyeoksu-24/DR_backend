@@ -42,7 +42,6 @@ const heartImage = document.getElementById('heartImage');
       buttonGroup.style.display = 'none';
     }
 
-    // 댓글 저장 버튼을 눌렀을 때 실행되는 함수
 // 댓글 저장 버튼을 눌렀을 때 실행되는 함수
 function saveComment(commentId) {
   var commentText = document.getElementById('commentText' + commentId);
@@ -85,6 +84,8 @@ function saveComment(commentId) {
       buttonGroup.style.display = 'flex';
     }
 
+
+    //댓글등록버튼
     function submitComment() {
       const confirmation = confirm("댓글을 등록하시겠습니까?");
       if (confirmation) {
@@ -129,3 +130,6 @@ document.getElementById('recommendImg').addEventListener('click', function() {
   // 추천 수 업데이트
   recommendCountDisplay.innerText = `추천수: ${recommendCount}`;
 });
+
+
+
