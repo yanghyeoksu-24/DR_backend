@@ -12,17 +12,22 @@ import java.util.List;
 @Mapper
 public interface BoardMapper {
 
-    //자유게시판
+    //자유게시판 최신순
     List<FreeBoardListDTO> freeBoardList();
+
+    //자유게시판 추천순 추가
+    List<FreeBoardListDTO> freeBoardListGood();
+
+
 
     //꿀팁 게시판
     List<HoneyBoardListDTO> honeyBoardList();
 
     // 자유게시판 상세페이지 조회 메서드
-    FreeBoardDetailDTO getFreeBoardDetail(@Param("boardNumber") int boardNumber);
+    FreeBoardDetailDTO freeBoardDetail(@Param("boardNumber") Long boardNumber);
 
     // 자유게시판 댓글 목록 조회 메서드
-    List<FreeBoardCommentDTO> getCommentsByBoardNumber(@Param("boardNumber") int boardNumber);
+    List<FreeBoardCommentDTO> freeBoardCommentList(@Param("boardNumber") Long boardNumber);
 
 
 }
