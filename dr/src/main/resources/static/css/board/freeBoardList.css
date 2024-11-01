@@ -62,6 +62,8 @@ main {
   color: white;
 }
 
+
+
 .freeboardlist-smallTitle {
   color: rgba(0, 0, 0, 0.35);
   font-size: 25px;
@@ -130,5 +132,5 @@ main {
 #pagination {
   margin-top: 30px;
   position: relative;
-  left: 37%;
+  left: 470px;
 }
