@@ -17,7 +17,7 @@
 
   <script defer th:src="@{/js/fragment/header.js}"></script>
   <!--    script 태그에 stype=module 설정을 해야 모듈을 사용할 수 있다.-->
-  <script defer type="module" th:src="@{/js/chatBot/module.js}"></script>
+  <script defer type="module" th:src="@{/js/module/module.js}"></script>
 
   <!-- 폰트 -->
   <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
@@ -51,10 +51,15 @@
 
       <div id="nangjangbot-sideBarTitle">이전 채팅</div>
 
+      <div id="nangjangbot-chatListContainer">
       <div class="nangjangbot-lastChat" th:each="chat : ${chatList}">
-        <span class="nangjangbot-lastChatTitle" th:text="${chat.sessionTitle}"> </span> <span class="nangjangbot-lastChatDate" th:text="${chat.createDate}"></span>
-        <button class="nangjangbot-imgFrame"><img th:src="@{/image/nangjangbot/delete.png}"></button>
-        <input type="hidden" class="lastChat" th:value="${chat.sessionNumber}" />
+        <span class="nangjangbot-lastChatTitle" th:text="${chat.sessionTitle}"> </span>
+        <span class="nangjangbot-lastChatDate" th:text="${chat.createDate}"></span>
+        <input type="hidden" class="lastChatSession" th:value="${chat.sessionNumber}" />
+        <button class="nangjangbot-imgFrame">
+          <img th:src="@{/image/nangjangbot/delete.png}">
+        </button>
+      </div>
       </div>
 
       <div id="nangjangbot-notice">최근 열개의 채팅만 나타납니다</div>
@@ -86,10 +91,11 @@
 
     <div id="loading-spinner">냉장봇 답변 로딩 중...</div>
 
-    <!-- 이전채팅내용 -->
-
     <!-- 대화 컨테이너 -->
     <div id="nangjangbot-conversationContainer">
+      <!-- 이전채팅내용 -->
+
+
       <!-- 유저와 챗봇의 대화가 이곳에 추가 -->
     </div>
 
@@ -97,7 +103,7 @@
     <!-- 채팅입력 -->
     <form action="#컨트롤러로" method="" id="nangjangbot-chating">
       <div id="nangjangbot-btnContainer"><img th:src="@{/image/nangjangbot/sideBar.png}" id="nangjangbot-listBtn"></div>
-      <input type="text" id="nangjangbot-sendMsg" autocomplete="off" placeholder="냉장고에 남은 재료와 원하는 요리를 말씀해주세요! ex: 계란과 토마토가 남았는데 한식이 먹고싶어">
+      <input type="text" id="nangjangbot-sendMsg" name="userMessage" autocomplete="off" placeholder="냉장고에 남은 재료와 원하는 요리를 말씀해주세요! ex: 계란과 토마토가 남았는데 한식이 먹고싶어">
       <button id="nangjangbot-sendBtn"><img th:src="@{/image/nangjangbot/send.png}"></button>
     </form>
 
