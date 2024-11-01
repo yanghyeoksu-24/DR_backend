@@ -155,10 +155,9 @@ li {
 
 .myPge-informationEmail {
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding-right: 239px;
-    width: 173px;
+    width: 438px;
+    margin-left: 33px;
 }
 
 .myPage-informationPhone {
@@ -168,7 +167,7 @@ li {
     font-weight: bold;
     display: flex;
     align-items: center;
-    padding-left: 10px;
+    padding-left: 12px;
 }
 
 .myPage-informationNumber {
@@ -198,7 +197,7 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-right: 303px;
+    padding-right: 362px;
     width: 109px;
 }
 
