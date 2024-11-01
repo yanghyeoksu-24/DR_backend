@@ -24,18 +24,17 @@ public class RecipeController {
     public String MyRecipeList(Model model) {
         // 전체 레시피 목록 조회
         List<MyRecipeListDTO> recipeList = recipeService.findAllRecipes();
-
         // 모델에 레시피 목록 추가
         model.addAttribute("recipeList", recipeList);
-
         return "recipe/myRecipeList";  // myRecipeList.html로 데이터 전달
     }
 
     //    나만의 레시피 추천순
     @GetMapping("/myRecipeListGood")
-    @ResponseBody
-    public List<MyRecipeListDTO> myRecipeListGood() {
-        return recipeService.findAllRecipesGood();
+    public String myRecipeListGood(Model model) {
+        List<MyRecipeListDTO> recipeListGood = recipeService.findAllRecipesGood();
+        model.addAttribute("recipeList", recipeListGood);
+        return "recipe/myRecipeList";  // myRecipeList.html로 데이터 전달
     }
 
     //    챗봇 레시피 최신순
@@ -43,11 +42,16 @@ public class RecipeController {
     public String chatBotRecipeList(Model model) {
         // 전체 레시피 목록 조회
         List<ChatBotRecipeListDTO> recipeList = recipeService.findAllRecipes1();
-
         // 모델에 레시피 목록 추가
         model.addAttribute("recipeList", recipeList);
-
         return "recipe/chatBotRecipeList";  // chatBotRecipeList.html로 데이터 전달
+    }
+
+    @GetMapping("/ChatBotRecipeListGood")
+    public String chatBotRecipeListGood(Model model) {
+        List<ChatBotRecipeListDTO> recipeListGood = recipeService.findAllRecipes1Good();
+        model.addAttribute("recipeList", recipeListGood);
+        return "recipe/chatBotRecipeList";
     }
 
     //    나만의레시피 상세페이지 + 댓글 조회
@@ -67,22 +71,31 @@ public class RecipeController {
 
         return "recipe/myDetailPage";  // myDetailPage.html로 데이터 전달
     }
+
+
 //    나만의 레시피 상세페이지 댓글작성
-// 댓글 작성 처리
 @PostMapping("/myDetailPage")
 public String insertComment(@RequestParam("recipeNumber") Long recipeNumber,
                             @RequestParam("replyText") String replyText,
-                            @RequestParam("userNumber") Long userNumber) {
-    MyRecipeWriteCommetDTO commentDTO = new MyRecipeWriteCommetDTO();
+                            @RequestParam("userNumber") Long userNumber,
+                            RedirectAttributes redirectAttributes) {
+    // 댓글 DTO 생성 및 값 설정
+    MyRecipeWriteCommentDTO commentDTO = new MyRecipeWriteCommentDTO();
     commentDTO.setRecipeNumber(recipeNumber);
     commentDTO.setReplyText(replyText);
     commentDTO.setUserNumber(userNumber);
 
+    // 댓글 추가 서비스 호출
     recipeService.insertMyRecipeComment(commentDTO);
 
-    // 댓글 작성 후 동일한 상세 페이지로 리다이렉트하여 갱신된 댓글 목록을 확인
-    return "redirect:/recipe/myDetailPage?recipeNumber=" + recipeNumber;
+    // 리다이렉트 시 파라미터 전달
+    redirectAttributes.addAttribute("recipeNumber", recipeNumber);
+
+    // 상세 페이지로 리다이렉트하여 전체 페이지 새로고침
+    return "redirect:/myDetailPage?recipeNumber=" + recipeNumber; // 올바르게 리다이렉트
 }
+
+
 
 
     //    챗봇레시피 상세페이지
@@ -90,12 +103,9 @@ public String insertComment(@RequestParam("recipeNumber") Long recipeNumber,
     public String ChatBotDetailPage(@RequestParam("recipeNumber") Long recipeNumber, Model model) {
         // 특정 레시피의 상세 정보 조회
         ChatBotRecipeDetailDTO recipeDetail = recipeService.findChatBotRecipeDetail(recipeNumber);
-
         log.info(recipeDetail + "ekwnlfgml;frmekrfgbn.");
-
         // 모델에 레시피 상세 정보 추가
         model.addAttribute("recipeDetail", recipeDetail);
-
         return "recipe/ChatBotDetailPage";  // ChatBotDetailPage.html로 데이터 전달
     }
 
