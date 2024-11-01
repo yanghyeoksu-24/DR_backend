@@ -61,13 +61,14 @@
       <!-- 글 내용 -->
       <div class="myDetailPage-writetext">
         <p class="myDetailPage-texts" th:text="${recipeDetail.recipeText}"></p>
-        <img th:src="@{'/image/recipe/' + ${recipeDetail.photoLocal}}" alt="레시피 이미지">
+        <img th:src="@{/image/recipe/ + ${recipeDetail.photoLocal}}" alt="레시피 이미지">
         <div class="myDetailPage-recommendImg">
 <!--          <img th:src="@{|/images/recommend.png|}" id="recommendImg" class="recommend-inactive" alt="추천 이미지">-->
           <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="추천 이미지">
           <p id="recommendCount" th:text="'추천수: ' + ${recipeDetail.goodCount}">추천수: 0</p>
         </div>
       </div>
+
 
       <!-- 댓글들 -->
       <div class="myDetailPage-commentSection">
