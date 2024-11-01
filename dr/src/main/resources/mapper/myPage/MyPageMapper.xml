@@ -47,6 +47,20 @@
             U.USER_NUMBER = #{userNumber}
     </select>
 
+    <!-- 닉네임 업데이트 -->
+    <update id="updateNickname">
+        UPDATE DR_USER
+        SET USER_NICKNAME = #{nickname}
+        WHERE USER_NUMBER = #{userNumber}
+    </update>
+
+    <!-- 프로필 이미지 경로 업데이트 -->
+    <update id="updateProfileImage">
+        UPDATE DR_PHOTO
+        SET PHOTO_LOCAL = #{photoLocal}
+        WHERE USER_NUMBER = #{userNumber}
+    </update>
+
     <!-- 닉네임 중복 확인 -->
     <select id="checkNickname" parameterType="string" resultType="int">
         SELECT COUNT(*)
@@ -175,26 +189,5 @@
         WHERE S.USER_NUMBER = #{userNumber}
         ORDER BY S.SIREN_DATE DESC
     </select>
-
-
-<!--    &lt;!&ndash; 내정보 출석체크를 위한 데이터 &ndash;&gt;-->
-<!--    <insert id="insertAttendanceCheck" parameterType="UserCheckDTO">-->
-<!--        INSERT INTO DR_DAILY (DAILY_NUMBER, DAILY_DATE, USER_NUMBER)-->
-<!--        VALUES (SEQ_DAILY_NUMBER.NEXTVAL, #{date}, #{userNumber})-->
-<!--    </insert>-->
-
-<!--    &lt;!&ndash; 내정보 출석체크 포인트 기록을 위한 데이터 &ndash;&gt;-->
-<!--    <insert id="insertPointRecord" parameterType="PointRecordDTO">-->
-<!--        INSERT INTO DR_POINT (POINT_NUMBER, POINT_GET, POINT_NOTE, POINT_DATE, USER_NUMBER)-->
-<!--        VALUES (SEQ_POINT_NUMBER.NEXTVAL, #{points}, #{}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), #{userNumber})-->
-<!--    </insert>-->
-
-<!--    &lt;!&ndash; 월간 출석 체크 카운트 조회 &ndash;&gt;-->
-<!--    <select id="checkMonthlyAttendance" parameterType="UserCheckDTO" resultType="int">-->
-<!--        SELECT COUNT(*)-->
-<!--        FROM DR_DAILY-->
-<!--        WHERE USER_NUMBER = #{userNumber}-->
-<!--        AND DAILY_DATE BETWEEN TRUNC(SYSDATE, 'MM') AND LAST_DAY(SYSDATE)-->
-<!--    </select>-->
 
 </mapper>
