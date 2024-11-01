@@ -14,6 +14,12 @@ public interface MyPageMapper {
     // 닉네임 중복 확인
     int checkNickname(@Param("userNickname") String userNickname); // 파라미터 이름 변경
 
+    // 닉네임 업데이트
+    void updateNickname(@Param("userNumber") Long userNumber, @Param("nickname") String nickname);
+
+    // 프로필 이미지 경로 업데이트
+    void updateProfileImage(@Param("userNumber") Long userNumber, @Param("photoLocal") String photoLocal);
+
     // 회원 탈퇴
     int deleteUser(@Param("userNumber") Long userNumber);
 
@@ -34,17 +40,6 @@ public interface MyPageMapper {
 
     //신고 내역
     List<SirenListDTO> getSirenList(@Param("userNumber") Long userNumber);
-
-    // 내 정보 출석체크를 위한 데이터
-    void insertAttendanceCheck(@Param("userNumber") Long userNumber, @Param("date") String date);
-
-    // 내 정보 출석체크 포인트 기록을 위한 데이터
-    void insertPointRecord(PointRecordDTO pointRecordDTO);
-
-    // 월간 출석 체크 카운트 조회
-    int checkMonthlyAttendance(@Param("userNumber") Long userNumber);
-
-
 
 
 }
