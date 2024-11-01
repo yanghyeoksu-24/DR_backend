@@ -316,13 +316,13 @@
         VALUES (#{productNumber}, #{productName}, #{productCode}, #{productPrice})
     </insert>
 
-
-
     <!-- 9-3. 상품 사진 -->
 
 
 
     <!-- 9-4. 상품 수정 -->
+
+
 
 
 

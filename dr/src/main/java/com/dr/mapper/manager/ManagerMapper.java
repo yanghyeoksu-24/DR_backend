@@ -61,4 +61,5 @@ public interface ManagerMapper {
    void productRegister(ManagerRegisterDTO managerRegisterDTO);
 
 
+
 }
