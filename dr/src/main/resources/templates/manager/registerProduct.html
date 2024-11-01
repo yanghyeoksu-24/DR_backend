@@ -78,14 +78,22 @@
 
 
             <div id="register-right">
-                <div class="register-right-con">
-                    <input type="text" name="productName" placeholder="ex&#41; 비타500">
-                </div>
+                <form th:action="@{/upload/file}" method="post" enctype="multipart/form-data">
+                    <div class="register-right-con">
+                        <input type="text" name="productName" placeholder="ex&#41; 비타500">
+                    </div>
 
-                <div id="register-right-img">
-                    <input type="file" class="real-upload" accept="image/*" required multiple>
-                    <div class="upload"></div>
-                </div>
+                    <div id="register-right-img">
+                        <input type="file" name="file"><br><br>
+                        <button type="submit">사진등록</button>
+
+                        <!-- 메시지 출력 -->
+                        <div th:if="${message}"
+                             th:text="${message}"
+                             th:classappend="${status == 'success' ? 'success-message' : 'error-message'}"></div>
+                    </div>
+                </form>
+
 
                 <div class="register-right-con">
                     <input type="text" name="productCodePlus" placeholder="ex&#41; F51K5" readonly>&nbsp;
