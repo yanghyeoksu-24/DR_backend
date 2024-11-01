@@ -77,18 +77,16 @@ public class ChatBotController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<List> deleteChat(@RequestBody Long sessionNumber, @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
+    public ResponseEntity<Void> deleteChat(@RequestBody NangjangbotDTO nangjangbotDTO,
+                                                           @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
 //        //로그인하지 않았을 경우 처리
 //        if (userNumber == null) {
 //            return "redirect:/user/login";
 //        }
-        System.out.println("ddd" + sessionNumber);
-
+        Long sessionNumber = nangjangbotDTO.getSessionNumber();
         nangjangbotService.deleteChat(sessionNumber);
-        List<NangjangbotDTO> newChatList = nangjangbotService.getChatList(userNumber);
 
-        // 새로운 채팅 목록을 응답으로 반환
-        return ResponseEntity.ok(newChatList);
+        return ResponseEntity.noContent().build();
     }
 
 }
