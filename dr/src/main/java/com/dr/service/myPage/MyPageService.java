@@ -98,4 +98,19 @@ public class MyPageService {
         return myPageMapper.getSirenList(userNumber);
     }
 
+    // 오늘의 출석 여부 확인
+    public int todayCheck(Long userNumber) {
+        return myPageMapper.todayCheck(userNumber);
+    }
+
+    // 출석 기록 삽입
+    public void insertCheck(Long userNumber) {
+        myPageMapper.insertCheck(userNumber);
+    }
+
+    // 개근 여부 확인
+    public int monthFullCheck(Long userNumber) {
+        return myPageMapper.monthFullCheck(userNumber);
+    }
+
 }
