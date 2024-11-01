@@ -17,6 +17,9 @@ public interface RecipeMapper {
 //    챗봇레시피 목록 조회 (최신순)
     List<ChatBotRecipeListDTO> selectAllPages1();
 
+    // 챗봇의 레시피 목록 조회 (추천순)
+    List<ChatBotRecipeListDTO> selectRecipesGood1();
+
 //    나만의레시피 상세페이지
     MyRecipeDetailDTO selectMyRecipeDetail(@Param("recipeNumber") Long recipeNumber);
 
@@ -26,8 +29,9 @@ public interface RecipeMapper {
 //    나만의 레시피 댓글조회
     List<MyRecipeCommentDTO> selectMyRecipeComment(@Param("recipeNumber") Long recipeNumber);
 
+
     // 나만의 레시피 댓글 작성
-    void insertComment(MyRecipeWriteCommetDTO myRecipeWriterCommentDTO);
+    void insertReply(MyRecipeWriteCommentDTO myRecipeWriterCommentDTO);
 
 
 //    나만의 레시피 글쓰기
