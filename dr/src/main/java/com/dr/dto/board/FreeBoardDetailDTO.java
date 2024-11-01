@@ -13,11 +13,11 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 public class FreeBoardDetailDTO {
-    private int boardNumber;
+    private Long boardNumber;
     private String boardTitle;
-    private String boardContent;
+    private String boardText;
     private String boardWriteDate;
     private String userNickName;
-    private int recommendCount;
-    private List<FreeBoardCommentDTO> comments;
+    private int goodCount;
+    private String photoLocal;
 }
