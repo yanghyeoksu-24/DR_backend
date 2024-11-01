@@ -1,7 +1,6 @@
 package com.dr.controller.myPage;
 
 import com.dr.dto.myPage.*;
-import com.dr.service.myPage.AttendanceService;
 import com.dr.service.myPage.MyPageService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,6 @@ import java.util.Map;
 public class MyPageController {
 
     private final MyPageService myPageService;
-    private final AttendanceService attendanceService;
 
     // -- 내 정보 확인하기 --
     @GetMapping("/myPageInformation")
@@ -58,8 +58,32 @@ public class MyPageController {
         if (isAvailable) {
             return ResponseEntity.ok(false); //중복된 닉네임
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(true); // 사용 가능
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(true);
+//            HTTP 응답 상태를 409(CONFLICT)로 설정하고 true를 반환합// 사용 가능
         }
+    }
+
+
+    //닉네임 및 이미지 파일 수정
+    @PostMapping("/updateProfile")
+    public String updateProfile(
+            @SessionAttribute("userNumber") Long userNumber,  // 현재 로그인한 사용자의 번호
+            @RequestParam("nickname") String nickname,        // 변경할 닉네임
+            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage, //MultipartFile 파일 업로드를 처리할 때 사용하는 인터페이스
+            Model model, HttpSession session) throws IOException {
+
+        // 닉네임이 입력되면 닉네임을 업데이트
+        if (nickname != null && !nickname.isEmpty()) {
+            myPageService.updateNickname(userNumber, nickname);
+        }
+
+        // 이미지 파일이 있으면 저장하기
+        if (profileImage != null && !profileImage.isEmpty()) {
+            String photoPath = myPageService.saveProfileImage(userNumber, profileImage);
+            model.addAttribute("photoPath", photoPath);
+        }
+
+        return "redirect:/myPage/myPageInformation";  // 업데이트 후 마이페이지로 리다이렉트. . . . .
     }
 
 
@@ -173,28 +197,4 @@ public class MyPageController {
         return "myPage/myPageMyComplaint";
     }
 
-
-
-    // -- 출석 체크 --
-    @GetMapping("/myPageCheck")
-    public String checkAttendance(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
-                                  Model model) {
-        if (userNumber == null) {
-            return "redirect:/user/login"; // 로그인 페이지로 리다이렉트
-        }
-
-        // 현재 날짜를 가져옵니다.
-        String currentDate = LocalDate.now().toString();
-
-        // 출석 체크 수행
-        UserCheckDTO userCheckDTO = new UserCheckDTO(); // UserCheckDTO 객체 생성
-        userCheckDTO.setUserNumber(userNumber); // 사용자 번호 설정
-        userCheckDTO.setDate(currentDate); // 현재 날짜 설정
-
-        attendanceService.checkAttendance(userCheckDTO); // 출석 체크 수행
-
-        model.addAttribute("message", "출석 체크가 완료되었습니다."); // 메시지를 모델에 추가
-
-        return "myPage/myPageCheck"; // 결과 페이지로 이동
-    }
 }

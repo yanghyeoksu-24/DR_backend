@@ -42,7 +42,7 @@
                 <!-- 마이페이지 이미지 사진 -->
                 <div class="myPage-pictureImage">
                     <div class="myPage-profile">
-                        <img id="profileImage" th:src="@{/image/photo/} + ${userInfo.photo}"
+                        <img id="profileImage" th:src="@{/image/photo/{photoName}(photoName=${userInfo.photo})}"
                              alt="프로필 이미지" width="150" height="150">
                         <input type="file" id="imageUpload" style="display: none;">
                         <!-- 이미지 업로드 버튼 (수레바퀴 이미지) -->
@@ -61,7 +61,7 @@
                     </div>
                     <div class="myPage-informationId">
                         <div class="mypage-informationIdLeft">아이디</div>
-                        <div class="myPge-informationEmail" th:text="${userInfo.userEmail}">shjeong1944@gmail.com</div>
+                        <div class="myPge-informationEmail" th:text="${userInfo.userEmail}"></div>
                         <div class="myPage-informationPhone">휴대폰번호</div>
                         <div class="myPage-informationNumber" th:text="${userInfo.userPhone}">010-4828-2574</div>
                     </div>
