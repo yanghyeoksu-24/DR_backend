@@ -49,7 +49,7 @@ public class RecipeService {
     public List<MyRecipeCommentDTO> selectMyRecipeReply(Long recipeNumber) {
         // 특정 레시피의 댓글 목록을 조회하여 반환
         return recipeMapper.selectMyRecipeComment(recipeNumber);
-}
+    }
 
 //    나만으레시피 글쓰기
     public void insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO) {
