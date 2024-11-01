@@ -51,7 +51,7 @@ document.getElementById('completeWriteBtn').addEventListener('click', function()
         .then(response => {
             if (response.ok) {
                 // 성공적으로 업데이트된 경우 처리
-                alert('수정이 완료되었습니다.\n상단 프로필 사진은 다음 로그인 시 적용됩니다.');
+                alert('수정이 완료되었습니다.\n상단 프로필은 다음 로그인 시 적용됩니다.');
                 window.location.href = '/myPage/myPageInformation'; // 업데이트 후 마이페이지로 이동
             } else {
                 alert('닉네임 또는 이미지를 다시 확인해주세요.'); // 실패 메시지

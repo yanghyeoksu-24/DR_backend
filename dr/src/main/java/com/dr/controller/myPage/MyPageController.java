@@ -80,7 +80,8 @@ public class MyPageController {
         // 이미지 파일이 있으면 저장하기
         if (profileImage != null && !profileImage.isEmpty()) {
             String photoPath = myPageService.saveProfileImage(userNumber, profileImage);
-            model.addAttribute("photoPath", photoPath);
+            String photoPathWithTimestamp = photoPath + "?timestamp=" + System.currentTimeMillis();
+            model.addAttribute("photoPath", photoPathWithTimestamp);
         }
 
         return "redirect:/myPage/myPageInformation";  // 업데이트 후 마이페이지로 리다이렉트. . . . .
@@ -94,17 +95,24 @@ public class MyPageController {
         return "myPage/myPageCaution";
     }
 
+    //+테스트용 추가
+    @GetMapping("/myPageUserDelete")
+    public String deleteUser(){
+        return "/myPage/myPageDeleted";
+    }
+
     // -- 회원탈퇴 -- //
     @PostMapping("/myPageUserDelete")
     public RedirectView deleteUser(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
                                    HttpSession session) {
 
         // 세션 무효화 및 사용자 삭제 처리
+//        myPageService.deleteUser(userNumber);
+        session.invalidate(); // 세션 무효화
         myPageService.deleteUser(userNumber);
 
-        session.invalidate(); // 세션 무효화
-
         return new RedirectView("/myPage/myPageDeleted"); // 탈퇴 후 성공 페이지로 리다이렉트
+//        return new RedirectView("/myPageDeleted"); // 탈퇴 후 성공 페이지로 리다이렉트
     }
 
     // -- 내정보 포인트 내역 확인 -- //
@@ -196,5 +204,8 @@ public class MyPageController {
 
         return "myPage/myPageMyComplaint";
     }
+
+    // -- 대망의 출석체크 또르르.... -- //
+
 
 }

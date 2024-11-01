@@ -17,7 +17,7 @@ public interface MyPageMapper {
     // 닉네임 업데이트
     void updateNickname(@Param("userNumber") Long userNumber, @Param("nickname") String nickname);
 
-    // 프로필 이미지 경로 업데이트
+    // 프로필 이미지 경로 업 데이트
     void updateProfileImage(@Param("userNumber") Long userNumber, @Param("photoLocal") String photoLocal);
 
     // 회원 탈퇴
@@ -40,6 +40,15 @@ public interface MyPageMapper {
 
     //신고 내역
     List<SirenListDTO> getSirenList(@Param("userNumber") Long userNumber);
+
+    // 오늘의 출석 여부 확인
+    int todayCheck(@Param("userNumber") Long userNumber);
+
+    // 출석 기록 삽입
+    void insertCheck(@Param("userNumber") Long userNumber);
+
+    // 개근 여부 확인
+    int monthFullCheck(@Param("userNumber") Long userNumber);
 
 
 }

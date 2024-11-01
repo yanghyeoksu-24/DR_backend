@@ -190,4 +190,42 @@
         ORDER BY S.SIREN_DATE DESC
     </select>
 
+    <!-- 1. 오늘의 출석 여부 확인 -->
+    <select id="todayCheck" parameterType="long" resultType="int">
+        SELECT COUNT(*)
+        FROM DR_DAILY
+        WHERE USER_NUMBER = #{userNumber}
+          AND TRUNC(TO_DATE(daily_date, 'YYYY-MM-DD')) = TRUNC(SYSDATE)
+    </select>
+
+    <!-- 2. 출석 기록 삽입 -->
+    <insert id="insertCheck" parameterType="CheckDTO">
+        INSERT INTO DR_DAILY (DAILY_NUMBER, DAILY_DATE, USER_NUMBER)
+        VALUES (SEQ_DAILY_NUMBER.NEXTVAL, TO_DATE(#{dailyDate}, 'YYYY-MM-DD'), #{userNumber})
+    </insert>
+
+    <!-- 3. 개근 여부 확인 (한 달간 개근 시 개근 인정) -->
+    <select id="monthFullCheck" parameterType="long" resultType="int">
+        <![CDATA[
+        SELECT
+        CASE
+        WHEN COUNT(DISTINCT TRUNC(TO_DATE(daily_date, 'YYYY-MM-DD'))) =
+        (SELECT COUNT(*)
+        FROM (
+        SELECT TRUNC(SYSDATE, 'MM') + LEVEL - 1 AS day
+        FROM DUAL
+        CONNECT BY LEVEL <= TO_CHAR(LAST_DAY(TRUNC(SYSDATE, 'MM')), 'DD')
+        )
+        )
+        THEN 1  -- 개근
+        ELSE 0   -- 개근 아님
+        END AS full_attendance
+        FROM
+        DR_DAILY
+        WHERE
+        USER_NUMBER = #{userNumber}
+        AND TRUNC(TO_DATE(daily_date, 'YYYY-MM-DD')) BETWEEN TRUNC(SYSDATE, 'MM') AND LAST_DAY(SYSDATE)
+        GROUP BY USER_NUMBER;
+        ]]>
+    </select>
 </mapper>
