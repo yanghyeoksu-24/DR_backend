@@ -25,11 +25,11 @@ $(function () {
 $(document).ready(function() {
   // 페이지 로드 시 최신순 버튼에 active 클래스 추가
   $('.freeboardlist-firstButton').addClass('active');
-  
+
   $('.freeboardlist-rightButton button').click(function() {
     // 모든 버튼에서 active 클래스 제거
     $('.freeboardlist-rightButton button').removeClass('active');
-    
+
     // 클릭한 버튼에 active 클래스 추가
     $(this).addClass('active');
   });
