@@ -50,7 +50,7 @@ public class RecipeController {
         return "recipe/chatBotRecipeList";  // chatBotRecipeList.html로 데이터 전달
     }
 
-    //    나만의레시피 상세페이지
+    //    나만의레시피 상세페이지 + 댓글 조회
     @GetMapping("/myDetailPage")
     public String myDetailPage(@RequestParam("recipeNumber") Long recipeNumber, Model model) {
         // 특정 레시피의 상세 정보 조회
