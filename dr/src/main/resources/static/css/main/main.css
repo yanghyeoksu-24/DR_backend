@@ -23,295 +23,317 @@ a:active {
 
 /* 메인섹션 */
 .main-section1Container {
-  width: 100%;
-  height: 700px;
-  display: flex;
-  justify-content: center;
+    width: 100%;
+    height: 700px;
+    display: flex;
+    justify-content: center;
 }
 
 .main-section1Frame {
-  width: 1100px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+    width: 1100px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 #main-refrigerator {
-  width: 500px;
-  height: 300px;
-  margin-top: 50px;
+    width: 500px;
+    height: 300px;
+    margin-top: 50px;
 }
 
 #main-logoFont {
-  width: 250px;
+    width: 250px;
 }
 
 .main-slogan {
-  font-weight: bold;
-  font-size: 21px;
-  letter-spacing: 1px;
-  line-height: 1.6;
-  color: #424242;
+    font-weight: bold;
+    font-size: 21px;
+    letter-spacing: 1px;
+    line-height: 1.6;
+    color: #424242;
 }
 
 .main-ourcesFrom {
-  position: relative;
-  left: 100px;
-  margin-top: 20px;
-  font-size: 13px;
+    position: relative;
+    left: 100px;
+    margin-top: 20px;
+    font-size: 13px;
 }
 
 .main-section2Container,
 .main-section3Container,
 .main-section4Container {
-  width: 100%;
-  height: 1462px;
-  background-color: #FFD507;
-  display: flex;
-  justify-content: center;
+    width: 100%;
+    height: 1462px;
+    background-color: #FFD507;
+    display: flex;
+    justify-content: center;
 }
 
 .main-section2Frame,
 .main-section3Frame,
 .main-section4Frame {
-  width: 1100px;
-  padding: 54px 9px 0 9px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+    width: 1100px;
+    padding: 54px 9px 0 9px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .main-sectionTitle,
 .main-sectionSubTitle {
-  letter-spacing: -1.5px;
-  font-size: 36px;
-  margin: 10px 0;
-  color: #404040;
+    letter-spacing: -1.5px;
+    font-size: 36px;
+    margin: 10px 0;
+    color: #404040;
 }
 
 .main-titleText {
-  color: #F44336;
+    color: #F44336;
 }
 
 .main-sectionSubTitle {
-  margin-top: 60px;
-  font-size: 30px;
+    margin-top: 60px;
+    font-size: 30px;
 }
 
 .main-sectionInfo span {
-  font-weight: lighter;
-  font-size: 45px;
-  color: #222222;
+    font-weight: lighter;
+    font-size: 45px;
+    color: #222222;
+}
+
+#main-choiceContainer{
+    display: flex;
+}
+
+.main-halfYear{
+    width: 250px;
+    height: 100px;
+    background-color: #317ff0;
+    color: #EBAA39;
+    font-size: 40px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+.main-choiceMenth{
+    display: none;
 }
 
 #main-dataGraph {
-  width: 100%;
-  height: 531px;
-  display: flex;
+    width: 100%;
+    height: 531px;
+    display: flex;
 }
 
 .main-weight {
-  width: 80px;
-  height: 531px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-size: 12px;
-  color: gray;
+    width: 80px;
+    height: 531px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 12px;
+    color: gray;
 }
 
 .main-graphBlock {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .main-graphBlock div {
-  width: 70px;
+    width: 70px;
 }
 
 .main-lastMonth {
-  height: 350px;
-  background-color: powderblue;
+    height: 350px;
+    background-color: powderblue;
 }
 
 .main-thisMonth {
-  height: 300px;
-  background-color: tomato;
+    height: 300px;
+    background-color: tomato;
 }
 
 .main-month {
-  width: 100%;
-  font-size: 14px;
-  margin-top: 5px;
-  color: gray;
-  display: flex;
+    width: 100%;
+    font-size: 14px;
+    margin-top: 5px;
+    color: gray;
+    display: flex;
 }
 
 .main-hSpace {
-  width: 74.58px;
+    width: 74.58px;
 }
 
 .main-month div {
-  width: 70px;
-  display: flex;
-  justify-content: center;
+    width: 70px;
+    display: flex;
+    justify-content: center;
 }
 
 #main-monthArray {
-  width: 98%;
-  display: flex;
-  justify-content: space-between;
+    width: 98%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .main-blank {
-  height: 36px;
+    height: 36px;
 }
 
 .main-resultTitleFrame {
-  width: 100%;
-  display: flex;
+    width: 100%;
+    display: flex;
 }
 
 .main-resultTitle {
-  width: 100%;
-  height: 36px;
-  font-size: 24px;
-  font-weight: bold;
-  margin: 10px 0;
-  display: flex;
-  justify-content: center;
-  color: #353535;
+    width: 100%;
+    height: 36px;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    color: #353535;
 }
 
 .topResult {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }
 
 .main-resultBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .main-resultBox img {
-  width: 168px;
-  height: 168px;
-  margin: 10px;
+    width: 168px;
+    height: 168px;
+    margin: 10px;
 }
 
 .resultName {
-  font-size: 20px;
-  letter-spacing: -0.5px;
-  margin: 5px 0;
-  color: #353535;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    margin: 5px 0;
+    color: #353535;
 }
 
 .main-result {
-  font-size: 30px;
-  letter-spacing: -0.8px;
-  color: #353535;
+    font-size: 30px;
+    letter-spacing: -0.8px;
+    color: #353535;
 }
 
 .main-section3Container {
-  width: 100%;
-  height: 905px;
-  background-color: white;
+    width: 100%;
+    height: 905px;
+    background-color: white;
 }
 
 .main-calculator {
-  width: 500px;
-  display: flex;
-  justify-content: space-between;
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .main-calculator div {
-  font-size: 40px;
+    font-size: 40px;
 }
 
 .main-weightInput {
-  width: 200px;
-  height: 70px;
-  font-size: 40px;
+    width: 200px;
+    height: 70px;
+    font-size: 40px;
 }
 
 .main-section4Container {
-  height: 1000px;
+    height: 1000px;
 }
 
 .main-boxFrame {
-  display: flex;
+    display: flex;
 }
 
-.main-bestAndWorst{
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
+.main-bestAndWorst {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }
 
 .main-bestBox,
 .main-worstBox {
-  width: 500px;
-  height: 620px;
-  padding: 10px;
-  margin: 0 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 500px;
+    height: 620px;
+    padding: 10px;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .main-boxTable {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .main-boxTitle {
-  margin: 10px 0;
-  font-size: 24px;
-  font-weight: bold;
-  letter-spacing: -1px;
+    margin: 10px 0;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: -1px;
 }
 
 .main-boxTableText,
 .main-boxTableTextWorst {
-  width: 520px;
-  height: 55px;
-  display: flex;
-  border-top: 1px solid #317FF0;
-  border-bottom: 1px solid #317FF0;
-  justify-content: space-between;
-  align-items: center;
+    width: 520px;
+    height: 55px;
+    display: flex;
+    border-top: 1px solid #317FF0;
+    border-bottom: 1px solid #317FF0;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .main-boxTableText span,
-.main-boxTableTextWorst span{
-  width: 130px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.main-boxTableTextWorst span {
+    width: 130px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #main-tableTitle,
 #main-tableTitleWorst {
-  font-weight: bold;
-  font-size: 20px;
-  background-color: #317FF0;
-  color: white;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #317FF0;
+    color: white;
 }
 
-#main-tableTitleWorst{
-  background-color: tomato;
+#main-tableTitleWorst {
+    background-color: tomato;
 }
 
-.main-boxTableTextWorst{
-  border-top: 1px solid tomato;
-  border-bottom: 1px solid tomato;
+.main-boxTableTextWorst {
+    border-top: 1px solid tomato;
+    border-bottom: 1px solid tomato;
 }

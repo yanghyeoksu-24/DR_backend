@@ -51,7 +51,7 @@ public class ChatBotController {
         ChatResponse chatResponse = new ChatResponse();
         chatResponse.setSessionNumber(sessionNumber);
         chatResponse.setSessionTitle(userMessage);
-        chatResponse.setCreateDate("방금전");
+        chatResponse.setCreateDate("방금 전");
 
         // 채팅방에 유저 질문 저장
         nangjangbotDTO.setUserNumber(userNumber);

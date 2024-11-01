@@ -49,10 +49,6 @@ $(document).ready(function () {
                         <div class="botMsgBox">${response.reply}</div>
                 `);
 
-                console.log(response.sessionTitle);
-                console.log(response.createDate);
-                console.log(response.sessionNumber);
-
                 // #temporary 요소에 데이터 추가
                 const temporaryDiv = $('#temporary');
 
