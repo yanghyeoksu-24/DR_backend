@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,4 +15,6 @@ import lombok.Setter;
 public class ChatResponse {
     private String reply;
     private Long sessionNumber;
+    private String sessionTitle;
+    private String createDate;
 }

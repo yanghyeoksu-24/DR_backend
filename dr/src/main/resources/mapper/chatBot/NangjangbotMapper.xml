@@ -53,7 +53,7 @@
 
 <!-- 이전채팅내용 조회 -->
     <select id="getChatContents" parameterType="Long" resultType="NangjangbotDTO">
-        SELECT C.USER_MSG ,C.BOT_REPLY
+        SELECT C.SESSION_NUMBER, C.USER_MSG ,C.BOT_REPLY
         FROM DR_CHAT_SESSION CS JOIN DR_CHAT C ON CS.SESSION_NUMBER = C.SESSION_NUMBER
         WHERE C.SESSION_NUMBER = #{sessionNumber}
         ORDER BY C.CHAT_NUMBER ASC
