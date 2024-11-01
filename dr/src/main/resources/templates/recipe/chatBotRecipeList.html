@@ -27,29 +27,28 @@
 <main>
     <div class="chatBotRecipeList-mainContainer">
         <div class="chatBotRecipeList-mainBox">
-            <!-- 나만의 레시피 목록 제목 -->
+            <!-- 챗봇 레시피 목록 제목 -->
             <div class="chatBotRecipeList-title">
                 <span class="chatBotRecipeList-text1">챗봇</span>
                 <span class="chatBotRecipeList-text2">레시피</span>
             </div>
 
-            <!-- 글작성,전체보기,최신순,추천순 버튼들 -->
+            <!-- 글작성, 전체보기, 최신순, 추천순 버튼들 -->
             <div class="chatBotRecipeList-button">
-                <a th:href="@{/chatBotRecipeWriter}">
+                <form action="/chatBotRecipeWriter" method="get">
                     <button class="chatBotRecipeList-writeButton">글작성</button>
-                </a>
-
+                </form>
                 <div class="chatBotRecipeList-rightButton">
-                    <button class="chatBotRecipeList-secondButton">최신순</button>
-                    <button class="chatBotRecipeList-thirdButton">추천순</button>
+                    <button class="chatBotRecipeList-secondButton" onclick="location.href='/recipe/chatBotRecipeList'">최신순</button>
+                    <button class="chatBotRecipeList-thirdButton" onclick="location.href='/recipe/chatBotRecipeListGood'">추천순</button>
                 </div>
             </div>
 
-            <!-- 나만의 레시피 목록 -->
+            <!-- 챗봇 레시피 목록 -->
             <div class="chatBotRecipeList-outbox">
                 <div class="chatBotRecipeList-listbox" th:each="recipeList : ${recipeList}">
-                    <a th:href="@{/recipe/chatBOtDetailPage}">
-                        <img th:src="@{${recipeList.photoOriginal}}" alt="레시피 이미지">
+                    <a th:href="@{/recipe/chatBotDetailPage(recipeNumber=${recipeList.recipeNumber})}">
+                        <img th:src="@{'/image/recipe/' + ${recipeList.photoOriginal}}" alt="레시피 이미지">
                     </a>
                     <p class="chatBotRecipeList-foodTitle" th:text="${recipeList.recipeTitle}"></p>
                     <span class="chatBotRecipeList-writer" th:text="${recipeList.userNickName}"></span>
