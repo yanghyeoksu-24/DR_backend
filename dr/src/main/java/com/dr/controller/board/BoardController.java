@@ -1,9 +1,6 @@
 package com.dr.controller.board;
 
-import com.dr.dto.board.FreeBoardCommentDTO;
-import com.dr.dto.board.FreeBoardDetailDTO;
-import com.dr.dto.board.FreeBoardListDTO;
-import com.dr.dto.board.HoneyBoardListDTO;
+import com.dr.dto.board.*;
 import com.dr.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,17 +19,9 @@ import java.util.List;
 public class BoardController {
     private final BoardService boardService;
 
-    // 자유게시판 페이지 이동
-//    @GetMapping("/freeBoardList")
-//    public String freeBoardListPage() {
-//        return "/board/freeBoardList";
-//    }
 
-    // 꿀팁게시판 페이지 이동
-//    @GetMapping("/honeyBoardList")
-//    public String honeyBoardListPage() {
-//        return "/board/honeyBoardList";
-//    }
+
+
 
     // 게시판 신고 페이지 이동
     @GetMapping("/boardReport")
@@ -59,10 +48,10 @@ public class BoardController {
     }
 
     // 꿀팁게시판 상세 페이지 이동
-    @GetMapping("/honeyBoardDetail")
-    public String honeyBoardDetailPage() {
-        return "/board/honeyBoardDetail";
-    }
+//    @GetMapping("/honeyBoardDetail")
+//    public String honeyBoardDetailPage() {
+//        return "/board/honeyBoardDetail";
+//    }
 
     // 꿀팁게시판 글 수정 이동
     @GetMapping("/honeyBoardModify")
@@ -77,23 +66,21 @@ public class BoardController {
     }
 
 
-    //자유게시판 리스트 보여주기
+    // 자유게시판 최신순 리스트 보여주기
     @GetMapping("/freeBoardList")
     public String freeBoardList(Model model) {
         List<FreeBoardListDTO> freeBoardList = boardService.freeBoardList();
         model.addAttribute("freeBoardList", freeBoardList);
-        System.out.println(freeBoardList + "여기서 확인해보자");
         return "/board/freeBoardList";
     }
 
-
-
-
-
-
-
-
-
+    // 자유게시판 추천순 리스트 보여주기
+    @GetMapping("/freeBoardListGood")
+    public String freeBoardListGood(Model model) {
+        List<FreeBoardListDTO> freeBoardListGood = boardService.freeBoardListGood();
+        model.addAttribute("freeBoardList", freeBoardListGood);
+        return "/board/freeBoardList";
+    }
 
 
     //꿀팁게시판 리스트 보여주기
@@ -105,9 +92,15 @@ public class BoardController {
         return "/board/honeyBoardList";
     }
 
+    // 꿀팁게시판 최신순 리스트 보여주기
+    @GetMapping("/honeyBoardListGood")
+    public String honeyBoardListGood(Model model) {
+        List<HoneyBoardListDTO> honeyBoardListGood = boardService.honeyBoardListGood();
+        model.addAttribute("honeyBoardList", honeyBoardListGood);
+        return "/board/honeyBoardList";
+    }
 
-
-    //자유게시판 상세페이지
+    //자유게시판 상세페이지(게시글 상세 + 댓글)
     @GetMapping("/freeBoardDetail")
     public String freeBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model) {
         FreeBoardDetailDTO freeBoardDetail = boardService.freeBoardDetail(boardNumber);
@@ -119,11 +112,16 @@ public class BoardController {
         return "/board/freeBoardDetail";
     }
 
+    //꿀팁게시판 상세페이지(게시글 상세 + 댓글)
+    @GetMapping("/honeyBoardDetail")
+    public String honeyBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model) {
+        HoneyBoardDetailDTO honeyBoardDetail = boardService.honeyBoardDetail(boardNumber);
+        List<HoneyBoardCommentDTO> honeyBoardComments = boardService.honeyBoardCommentList(boardNumber);
 
+        model.addAttribute("honeyBoardDetail", honeyBoardDetail);
+        model.addAttribute("honeyBoardComments", honeyBoardComments);
 
-
-
-
-
+        return "/board/honeyBoardDetail";
+    }
 
 }

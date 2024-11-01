@@ -1,18 +1,3 @@
-// 최신순, 추천순 버튼 액티브
-$(document).ready(function() {
-  // 페이지 로드 시 최신순 버튼에 active 클래스 추가
-  $('.honeyboardlist-secondButton').addClass('active');
-  
-  // 버튼 클릭 시 active 클래스 변경
-  $('.honeyboardlist-rightButton button').click(function() {
-    // 모든 버튼에서 active 클래스 제거
-    $('.honeyboardlist-rightButton button').removeClass('active');
-    
-    // 클릭한 버튼에 active 클래스 추가
-    $(this).addClass('active');
-  });
-});
-
 $(function () {
   const items = $('#honeyboardlist-page .honeyboardlist-row'); // 게시글 항목 선택
 
@@ -34,4 +19,32 @@ $(function () {
 
   // 처음 로드 시 첫 번째 페이지의 항목만 보여주기
   container.pagination('goToPage', 1);
+});
+
+$(document).ready(function () {
+  // 페이지 로드 시, sessionStorage에서 현재 active 상태를 가져옴
+  const activeButton = sessionStorage.getItem('activeButton') || 'latest'; // 기본값은 'latest'
+
+  // 해당하는 버튼에 active 클래스 추가
+  if (activeButton === 'latest') {
+    $('.honeyboardlist-firstButton').addClass('active');
+  } else if (activeButton === 'recommend') {
+    $('.honeyboardlist-thirdButton').addClass('active');
+  }
+
+  // 버튼 클릭 이벤트 설정
+  $('.honeyboardlist-firstButton').click(function () {
+    // 모든 버튼에서 active 클래스 제거
+    $('.honeyboardlist-rightButton button').removeClass('active');
+    // 클릭된 버튼에 active 클래스 추가
+    $(this).addClass('active');
+    // sessionStorage에 상태 저장
+    sessionStorage.setItem('activeButton', 'latest');
+  });
+
+  $('.honeyboardlist-thirdButton').click(function () {
+    $('.honeyboardlist-rightButton button').removeClass('active');
+    $(this).addClass('active');
+    sessionStorage.setItem('activeButton', 'recommend');
+  });
 });
