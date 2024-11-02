@@ -72,6 +72,10 @@ a:active {
     justify-content: center;
 }
 
+.main-section2Container {
+    height: 1580px;
+}
+
 .main-section2Frame,
 .main-section3Frame,
 .main-section4Frame {
@@ -105,26 +109,25 @@ a:active {
     color: #222222;
 }
 
-#main-choiceContainer{
-    display: flex;
-}
-
-.main-halfYear{
-    width: 250px;
-    height: 100px;
-    background-color: #317ff0;
-    color: #EBAA39;
-    font-size: 40px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px;
+#main-monthSelect {
+    width: 200px;
+    height: 60px;
     border-radius: 5px;
+    font-size: 25px;
+    border: none;
+    outline: none;
+    appearance: none; /* 기본 화살표 제거 */
+    padding: 10px;
+    background-color: lightgray;
+    color: black;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.main-choiceMenth{
-    display: none;
+#main-monthSelect:hover {
+    background-color: gray;
+    color: white
 }
 
 #main-dataGraph {

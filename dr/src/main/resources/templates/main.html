@@ -50,36 +50,34 @@
                 <h1 class="main-sectionTitle">음<span class="main-titleText">쓰</span> NOW</h1>
                 <h2 class="main-sectionSubTitle" id="currentYearMonth"></h2>
                 <div class="main-sectionInfo">
-                    <span th:text="${totalWaste ?: 0} + ' kg = ' + (${totalPortion} ?: 0) + ' 인분'"></span>
+                    <span th:text="'전국 총 ' + ${totalWaste ?: 0} + ' kg = ' + (${totalPortion} ?: 0) + ' 인분'"></span>
                 </div>
                 <div class="main-blank"></div>
 
                 <!-- 그래프 -->
                 <canvas id="myChart" style="width:100%;max-width:950px"></canvas>
 
-                <!-- 월 선택 -->
-                <div id="main-choiceContainer">
-                    <div class="main-halfYear">상반기
-                        <div class="main-choiceMenth">1월</div>
-                        <div class="main-choiceMenth">2월</div>
-                        <div class="main-choiceMenth">3월</div>
-                        <div class="main-choiceMenth">4월</div>
-                        <div class="main-choiceMenth">5월</div>
-                        <div class="main-choiceMenth">6월</div>
-                    </div>
-                    <div class="main-halfYear">하반기
-                        <div class="main-choiceMenth">7월</div>
-                        <div class="main-choiceMenth">8월</div>
-                        <div class="main-choiceMenth">9월</div>
-                        <div class="main-choiceMenth">10월</div>
-                        <div class="main-choiceMenth">11월</div>
-                        <div class="main-choiceMenth">12월</div>
-                    </div>
-                </div>
+                <div class="main-blank"></div>
+                <div class="main-blank"></div>
+
+                <select name="monthSelect" id="main-monthSelect">
+                    <option value="1월">1월</option>
+                    <option value="2월">2월</option>
+                    <option value="3월">3월</option>
+                    <option value="4월">4월</option>
+                    <option value="5월">5월</option>
+                    <option value="6월">6월</option>
+                    <option value="7월">7월</option>
+                    <option value="8월">8월</option>
+                    <option value="9월">9월</option>
+                    <option value="10월">10월</option>
+                    <option value="11월">11월</option>
+                    <option value="12월">12월</option>
+                </select>
 
                 <div class="main-blank"></div>
                 <div class="main-blank"></div>
-                <div class="main-blank"></div>
+
                 <div class="main-resultTitleFrame">
                     <div class="main-resultTitle">온실가스 배출량</div>
                     <div class="main-resultTitle">에너지 소비량</div>

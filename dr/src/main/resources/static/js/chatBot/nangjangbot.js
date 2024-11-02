@@ -53,8 +53,8 @@ $(document).ready(function () {
                 const temporaryDiv = $('#temporary');
 
                 // #temporary 요소가 비어 있을 때만 데이터 추가
-                if (temporaryDiv.is(':empty')) {
-                     $('#temporary').append(`
+                if (temporaryDiv.is(':empty') && sessionNumber == 0) {
+                    $('#temporary').append(`
                         <div class="nangjangbot-lastChat">
                             <span class="nangjangbot-lastChatTitle">${response.sessionTitle}</span>
                             <span class="nangjangbot-lastChatDate">${response.createDate}</span>
@@ -183,27 +183,52 @@ $(document).on('click', '.nangjangbot-imgFrame', function (e) {
     e.stopPropagation();
     // 모든 요소에서 클릭한 세션넘버 추출
     const sessionNumber = $(this).siblings('.lastChatSession').val();
+    const nowSession = $('#sessionNumber').val();
 
-    if (confirm("정말로 삭제하시겠습니까?\n삭제된 채팅은 복구가 불가능합니다.")) {
-        $.ajax({
-            // ****GET요청에서는 JSON 형식의 데이터를 본문에 포함할 수 없고 쿼리 매개변수로 전달할 수 없음
-            type: "POST",
-            url: "/api/chatbot/delete",
-            contentType: "application/json",
-            data: JSON.stringify({sessionNumber: sessionNumber}),
-            success: function () {
-                alert("삭제되었습니다.");
-                $('#sessionNumber').val(0); // 세션번호 초기화
-                $('#nangjangbot-conversationContainer').empty(); // 기존 대화 내용 초기화
-                $('.nangjangbot-pageTitle, #nangjangbot-text').css('display', 'block'); // 타이틀 다시 보이게
+    if (sessionNumber == nowSession) {
+        if (confirm("현재 채팅중인 채팅방 입니다.\n계속 진행 하시겠습니까?\n삭제된 채팅은 복구가 불가능합니다.")) {
+            $.ajax({
+                // ****GET요청에서는 JSON 형식의 데이터를 본문에 포함할 수 없고 쿼리 매개변수로 전달할 수 없음
+                type: "POST",
+                url: "/api/chatbot/delete",
+                contentType: "application/json",
+                data: JSON.stringify({sessionNumber: sessionNumber}),
+                success: function () {
+                    alert("삭제되었습니다.");
+                    $('#sessionNumber').val(0); // 세션번호 초기화
+                    $('#nangjangbot-conversationContainer').empty(); // 기존 대화 내용 초기화
+                    $('.nangjangbot-pageTitle, #nangjangbot-text').css('display', 'block'); // 타이틀 다시 보이게
 
-                // 삭제한 항목만 제거
-                $(`input.lastChatSession[value="${sessionNumber}"]`).closest('.nangjangbot-lastChat').remove();
-            },
-            error: function () {
-                alert("삭제 중 오류가 발생했습니다.");
-            }
-        });
+                    // 삭제한 항목만 제거
+                    $(`input.lastChatSession[value="${sessionNumber}"]`).closest('.nangjangbot-lastChat').remove();
+                },
+                error: function () {
+                    alert("삭제 중 오류가 발생했습니다.");
+                }
+            });
+        }
+    } else {
+        if (confirm("정말로 삭제하시겠습니까?\n삭제된 채팅은 복구가 불가능합니다.")) {
+            $.ajax({
+                // ****GET요청에서는 JSON 형식의 데이터를 본문에 포함할 수 없고 쿼리 매개변수로 전달할 수 없음
+                type: "POST",
+                url: "/api/chatbot/delete",
+                contentType: "application/json",
+                data: JSON.stringify({sessionNumber: sessionNumber}),
+                success: function () {
+                    alert("삭제되었습니다.");
+                    $('#sessionNumber').val(0); // 세션번호 초기화
+                    $('#nangjangbot-conversationContainer').empty(); // 기존 대화 내용 초기화
+                    $('.nangjangbot-pageTitle, #nangjangbot-text').css('display', 'block'); // 타이틀 다시 보이게
+
+                    // 삭제한 항목만 제거
+                    $(`input.lastChatSession[value="${sessionNumber}"]`).closest('.nangjangbot-lastChat').remove();
+                },
+                error: function () {
+                    alert("삭제 중 오류가 발생했습니다.");
+                }
+            });
+        }
     }
 });
 
