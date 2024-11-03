@@ -57,6 +57,7 @@ public class PublicDataApiService {
         HttpHeaders headers = new HttpHeaders();
         List<ItemDTO> itemList = new ArrayList<>();
 
+        // 공공데이터 달마다 페이지가 있어서 모든 페이지 접근하여 List에 추가
         for (int i = 1; i <= 10; i++) {
             String url = baseUrl + "?page=" + i + "&serviceKey=" + serviceKey;
 
@@ -76,20 +77,6 @@ public class PublicDataApiService {
                 }
             }
         }
-
-        double total = 0.0;
-        int count = 0;
-        double avg = 0.0;
-        // 각 ItemDTO의 month, county, amount 출력
-        for (ItemDTO item : itemList) {
-            if(item.getCountry().equals("서울특별시")){
-                total += Double.parseDouble(item.getAmount());
-                count++;
-            }
-        }
-
-        avg = total / count;
-        System.out.println("서울 평균 총합 : " + total + "\n총합 평균 : " + avg);
 
         return itemList;
     }

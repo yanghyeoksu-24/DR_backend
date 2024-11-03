@@ -50,7 +50,7 @@
                 <h1 class="main-sectionTitle">음<span class="main-titleText">쓰</span> NOW</h1>
                 <h2 class="main-sectionSubTitle" id="currentYearMonth"></h2>
                 <div class="main-sectionInfo">
-                    <span th:text="'전국 총 ' + ${totalWaste ?: 0} + ' kg = ' + (${totalPortion} ?: 0) + ' 인분'"></span>
+                    <span id="totalWaste"></span><span id="portion"></span>
                 </div>
                 <div class="main-blank"></div>
 
