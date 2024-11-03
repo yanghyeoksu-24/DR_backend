@@ -149,6 +149,13 @@ public class ManagerService {
         managerMapper.productRegister(managerRegisterDTO);
     }
 
+    // 상품 추가 페이지 이동
+    public ManagerRegisterDTO updateShow(String productName) {
+        return managerMapper.updateShow(productName);
+    }
+
+    // 상품 추가
+
 
 
 }

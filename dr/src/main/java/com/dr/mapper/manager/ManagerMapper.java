@@ -60,6 +60,10 @@ public interface ManagerMapper {
 
    void productRegister(ManagerRegisterDTO managerRegisterDTO);
 
+   ManagerRegisterDTO updateShow(String productName);
+
+   void productUpdate(ManagerRegisterDTO managerRegisterDTO);
+
 
 
 }

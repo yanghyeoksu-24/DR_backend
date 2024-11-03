@@ -78,10 +78,10 @@
 
             <div id="register-right">
                 <div class="register-right-con">
-                    <input type="text" name="productName">
+                    <input type="text" name="productName" th:value="${showProduct.productName}">
                 </div>
                 <div id="register-right-img">
-                    <img id="vita500" src="./../../image/vita500.jpeg">
+                    <img th:src="@{/image/photo/} + ${showProduct.photoLocal}">
                 </div>
                 <div class="register-right-con">
                     <input type="text" name="productCode">
@@ -92,14 +92,14 @@
 
                 </div>
                 <div class="register-right-con">
-                    <input type="text" name="productPoint">
+                    <input type="text" name="productPoint" th:value="${showProduct.productPrice}">
                 </div>
             </div>
 
         </div>
 
         <a href="./../../html/manager/manageProduct.html">
-            <button id="memberOut">상품 등록</button>
+            <button id="memberOut">상품 추가</button>
         </a>
 
     </div>
