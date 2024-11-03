@@ -1,6 +1,7 @@
 package com.dr.service.board;
 
 import com.dr.dto.board.*;
+import com.dr.dto.recipe.MyRecipeWriteCommentDTO;
 import com.dr.mapper.board.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,10 @@ public class BoardService {
         return boardMapper.honeyBoardCommentList(boardNumber);
     }
 
+    //    자유게시판 댓글작성
+    public void freeBoardInsertReply(FreeBoardCommentDTO freeBoardCommentDTO) {
+        boardMapper.freeBoardInsertReply(freeBoardCommentDTO);
+    }
 
 
 }

@@ -101,6 +101,16 @@
     </select>
 
 
+    <!--  자유게시판 댓글작성-->
+    <insert id="freeBoardInsertReply" parameterType="FreeBoardCommentDTO">
+        <selectKey keyProperty="replyNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_REPLY.nextval FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_REPLY(REPLY_NUMBER, REPLY_TEXT, BOARD_NUMBER, USER_NUMBER)
+        VALUES (#{replyNumber}, #{replyText}, #{boardNumber}, #{userNumber})
+    </insert>
+
+
     <!-- 꿀팁게시판 상세 정보 조회 -->
     <select id="honeyBoardDetail" resultType="HoneyBoardDetailDTO">
         SELECT B.BOARD_NUMBER,
