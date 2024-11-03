@@ -15,8 +15,8 @@ public class FreeBoardCommentDTO {
     private String replyWriteDate;
     private String replyModifyDate;
     private String photoLocal;
-    private int userNumber;
-    private int boardNumber;
-    private int recipeNumber;
+    private Long userNumber;
+    private Long boardNumber;
+    private Long recipeNumber;
     private String userNickName;
 }
