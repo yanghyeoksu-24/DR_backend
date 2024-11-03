@@ -29,9 +29,11 @@ public interface RecipeMapper {
 //    나만의 레시피 댓글조회
     List<MyRecipeCommentDTO> selectMyRecipeComment(@Param("recipeNumber") Long recipeNumber);
 
+//    챗봇 레시피 댓글조회
+    List<ChatBotRecipeCommentDTO> selectChatBotRecipeComment(@Param("recipeNumber") Long recipeNumber);
 
     // 나만의 레시피 댓글 작성
-    void insertReply(MyRecipeWriteCommentDTO myRecipeWriterCommentDTO);
+    void insertReply(MyRecipeWriteCommentDTO myRecipeWriteCommentDTO);
 
 
 //    나만의 레시피 글쓰기

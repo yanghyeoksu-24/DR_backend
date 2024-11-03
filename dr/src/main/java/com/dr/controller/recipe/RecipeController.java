@@ -2,8 +2,10 @@ package com.dr.controller.recipe;
 
 import com.dr.dto.recipe.*;
 import com.dr.service.recipe.RecipeService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.javassist.CtBehavior;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +49,8 @@ public class RecipeController {
         return "recipe/chatBotRecipeList";  // chatBotRecipeList.html로 데이터 전달
     }
 
-    @GetMapping("/ChatBotRecipeListGood")
+//    챗봇 레시피 추천순
+    @GetMapping("/chatBotRecipeListGood")
     public String chatBotRecipeListGood(Model model) {
         List<ChatBotRecipeListDTO> recipeListGood = recipeService.findAllRecipes1Good();
         model.addAttribute("recipeList", recipeListGood);
@@ -61,7 +64,9 @@ public class RecipeController {
         MyRecipeDetailDTO recipeDetail = recipeService.findMyRecipeDetail(recipeNumber);
 
         // 특정 레시피의 댓글 목록 조회
-        List<MyRecipeCommentDTO> recipeComments = recipeService.selectMyRecipeReply(recipeNumber);
+        List<MyRecipeCommentDTO> recipeComments = recipeService.selectMyRecipeComment(recipeNumber);
+
+
 
         log.info(recipeDetail+"ekwnlfgml;frmekrfgbn.");
 
@@ -98,15 +103,17 @@ public String insertComment(@RequestParam("recipeNumber") Long recipeNumber,
 
 
 
-    //    챗봇레시피 상세페이지
-    @GetMapping("/ChatBotDetailPage")
+    //    챗봇레시피 상세페이지 + 댓글조회
+    @GetMapping("/chatBotDetailPage")
     public String ChatBotDetailPage(@RequestParam("recipeNumber") Long recipeNumber, Model model) {
         // 특정 레시피의 상세 정보 조회
         ChatBotRecipeDetailDTO recipeDetail = recipeService.findChatBotRecipeDetail(recipeNumber);
+        List<ChatBotRecipeCommentDTO> recipeComments = recipeService.selectChatBotRecipeComment(recipeNumber);
         log.info(recipeDetail + "ekwnlfgml;frmekrfgbn.");
         // 모델에 레시피 상세 정보 추가
         model.addAttribute("recipeDetail", recipeDetail);
-        return "recipe/ChatBotDetailPage";  // ChatBotDetailPage.html로 데이터 전달
+        model.addAttribute("recipeComments", recipeComments);
+        return "recipe/chatBotDetailPage";  // ChatBotDetailPage.html로 데이터 전달
     }
 
 
