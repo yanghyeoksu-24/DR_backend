@@ -67,9 +67,6 @@ public class RecipeController {
         List<MyRecipeCommentDTO> recipeComments = recipeService.selectMyRecipeComment(recipeNumber);
 
 
-
-        log.info(recipeDetail+"ekwnlfgml;frmekrfgbn.");
-
         // 모델에 레시피 상세 정보 추가
         model.addAttribute("recipeDetail", recipeDetail);
         model.addAttribute("recipeComments", recipeComments);
@@ -84,21 +81,22 @@ public String insertComment(@RequestParam("recipeNumber") Long recipeNumber,
                             @RequestParam("replyText") String replyText,
                             @RequestParam("userNumber") Long userNumber,
                             RedirectAttributes redirectAttributes) {
-    // 댓글 DTO 생성 및 값 설정
+    if (recipeNumber == null) {
+        throw new IllegalArgumentException("Recipe number is required.");
+    }
+
     MyRecipeWriteCommentDTO commentDTO = new MyRecipeWriteCommentDTO();
     commentDTO.setRecipeNumber(recipeNumber);
     commentDTO.setReplyText(replyText);
     commentDTO.setUserNumber(userNumber);
 
-    // 댓글 추가 서비스 호출
     recipeService.insertMyRecipeComment(commentDTO);
 
-    // 리다이렉트 시 파라미터 전달
     redirectAttributes.addAttribute("recipeNumber", recipeNumber);
-
-    // 상세 페이지로 리다이렉트하여 전체 페이지 새로고침
-    return "redirect:/myDetailPage?recipeNumber=" + recipeNumber; // 올바르게 리다이렉트
+    return "redirect:/recipe/myDetailPage";
 }
+
+
 
 
 

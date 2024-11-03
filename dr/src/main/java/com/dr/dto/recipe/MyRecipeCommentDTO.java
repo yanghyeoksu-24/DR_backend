@@ -18,5 +18,4 @@ public class MyRecipeCommentDTO {
     private String photoOriginal;           // 원본 사진 경로
     private String photoLocal;              // 로컬 사진 경로
     private String replyModifyDate;
-
 }

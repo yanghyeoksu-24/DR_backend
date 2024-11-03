@@ -89,11 +89,16 @@
 <!--    나만의 레시피 댓글작성-->
     <insert id="insertReply" parameterType="MyRecipeWriteCommentDTO">
         <selectKey keyProperty="replyNumber" resultType="Long" order="BEFORE">
-            SELECT SEQ_REPLY.nextval FROM DUAL
+            SELECT SEQ_REPLY_NUMBER.nextval FROM DUAL
         </selectKey>
-        INSERT INTO TBL_REPLY(REPLY_NUMBER, REPLY_TEXT, RECIPE_NUMBER, USER_NUMBER)
+        INSERT INTO DR_REPLY(REPLY_NUMBER, REPLY_TEXT, RECIPE_NUMBER, USER_NUMBER)
         VALUES (#{replyNumber}, #{replyText}, #{recipeNumber}, #{userNumber})
     </insert>
+
+<!--    나만의 레시피 댓글 수정-->
+    <update id="deleteReply" parameterType="MyRecipeCommentDTO">
+        UPDATE
+    </update>
 
     <!--    챗봇레시피 최신순-->
     <select id="selectAllPages1" resultType="ChatBotRecipeListDTO">

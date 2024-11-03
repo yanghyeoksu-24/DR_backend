@@ -44,10 +44,11 @@ public class RecipeService {
     public ChatBotRecipeDetailDTO findChatBotRecipeDetail(Long recipeNumber) {
         return recipeMapper.selectChatBotRecipeDetail(recipeNumber);  // 특정 레시피의 상세 정보를 조회합니다.
     }
-//    나만의 레시피 댓글작성              
+    // 나만의 레시피 댓글 작성
     public void insertMyRecipeComment(MyRecipeWriteCommentDTO myRecipeWriteCommentDTO) {
         recipeMapper.insertReply(myRecipeWriteCommentDTO);
     }
+
 
 
 //    나만의 레시피 댓글조회
