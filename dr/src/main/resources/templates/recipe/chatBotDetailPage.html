@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,8 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
   <!-- 제이쿼리 -->
   <script src="https://code.jquery.com/jquery-3.7.1.js"
-          integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-          crossorigin="anonymous"></script>
+          integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
   <!-- 페이지네이션 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
@@ -24,140 +22,74 @@
 </head>
 
 <body>
-  <!-- 메인 부분 -->
-  <main>
-    <div class="chatBotDetailPage-mainContainer">
-      <div class="chatBotDetailPage-mainBox">
-        <div class="chatBotDetailPage-infobox">
-          <div class="chatBotDetailPage-infoFirst">
-            <div class="chatBotDetailPage-infoInBox1">
-              <img src="./../../image/basicProfile.png" alt="">
-            </div>
-            <div class="chatBotDetailPage-infoInBox2">
-              <p class="chatBotDetailPage-writeName">김찰수</p>
-              <p class="chatBotDetailPage-foodTitle">숙주나물 무침</p>
-              <p class="chatBotDetailPage-date">2024-10-04 14:50</p>
-            </div>
+<header th:replace="~{/fragment/header :: header}"></header>
+<main>
+  <div class="chatBotDetailPage-mainContainer">
+    <div class="chatBotDetailPage-mainBox">
+      <div class="chatBotDetailPage-infobox">
+        <div class="chatBotDetailPage-infoFirst">
+          <div class="chatBotDetailPage-infoInBox1">
+            <img th:src="@{/image/photo/} + ${recipeDetail.photoLocal}" alt="사용자 이미지">
           </div>
-
-          <div class="chatBotDetailPage-infoSecond">
-            <div class="chatBotDetailPage-firstButton">
-              <a href="./chatBotRecipeModify.html"><button class="chatBotDetailPage-buttonOne">수정</button></a>
-              <a href="./chatBotRecipeList.html"><button id="deleteButton" class="chatBotDetailPage-buttonOne">삭제</button></a>
-            </div>
-
-            <div class="chatBotDetailPage-secondButton">
-              <div class="chatBotDetailPage-buttonImg">
-                <img id="heartImage" src="./../../image/heartGray.png" alt="">
-              </div>
-
-              <a href="./report.html"><button class="chatBotDetailPage-buttonTwo">신고</button></a>
-            </div>
+          <div class="chatBotDetailPage-infoInBox2">
+            <p class="chatBotDetailPage-writeName" th:text="${recipeDetail.userNickName}"></p>
+            <p class="chatBotDetailPage-foodTitle" th:text="${recipeDetail.recipeTitle}"></p>
+            <p class="chatBotDetailPage-date" th:text="${recipeDetail.recipeWriteDate}"></p>
           </div>
         </div>
 
-        <!-- 글 내용 -->
-        <div class="chatBotDetailPage-writetext">
-          <p class="chatBotDetailPage-texts">
-            바쁜 일상 속에서 푸짐한 식탁을 차리는 건 쉽지 않죠. 하지만 걱정 마세요! 오늘 소개할 "아삭아삭 숙주나물 무침" 레시피는 단 5분 만에 뚝딱 만들 수 있는 초간단 요리입니다. 숙주나물은
-            섬유질이 풍부하여 다이어트에도 좋고, 비타민과 미네랄이 풍부하여 건강에도 이로운 채소입니다. 특히 숙주나물 무침은 밑반찬으로도 좋고, 시원한 술안주로도 손색없습니다. 아삭아삭 숙주나물 무침의
-            매력적인 식감과 풍부한 영양소를 함께 즐겨보세요!
-            숙주나물 무침은 밑반찬으로도 좋고, 술안주로도 손색없습니다. 밥과 함께 먹으면 든든한 한 끼 식사가 되고, 맥주나 소주와 함께 먹으면 시원한 술안주가 됩니다. 숙주나물 무침은 냉장 보관하면
-            3~4일 정도 보관 가능합니다.
-            오늘 저녁 식탁에 아삭아삭 숙주나물 무침을 올려보세요. 5분 만에 완성할 수 있는 초간단 레시피로 건강과 맛을 동시에 잡을 수 있습니다.
-            [출처] 아삭아삭 숙주나물 무침 레시피| 초간단 5분 완성 | 숙주나물 요리, 밑반찬, 술안주|작성자 소예공방
-          </p>
-          <img src="./../../image/recipe/숙주나물무침.png" alt="">
-
-          <div class="chatBotDetailPage-recommendImg">
-            <img src="./../../image/recommend.png" id="recommendImg" class="recommend-inactive" alt="">
-            <!-- 추천 수를 표시할 요소 -->
-            <p id="recommendCount">추천수: 0</p>
+        <div class="chatBotDetailPage-infoSecond">
+          <div class="chatBotDetailPage-firstButton">
+              <button class="chatBotDetailPage-buttonOne">수정</button>
+            <button id="deleteButton" class="chatBotDetailPage-buttonOne">삭제</button>
           </div>
 
+          <div class="chatBotDetailPage-secondButton">
+            <div class="chatBotDetailPage-buttonImg">
+              <img id="heartImage" src="/image/heartGray.png" alt="하트 이미지">
+            </div>
+            <button class="chatBotDetailPage-buttonTwo">신고</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chatBotDetailPage-writetext">
+        <p class="chatBotDetailPage-texts" th:text="${recipeDetail.recipeText}"></p>
+        <img th:src="@{/image/recipe/ + ${recipeDetail.photoLocal}}" alt="레시피 이미지">
+        <div class="chatBotDetailPage-recommendImg">
+          <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="추천 이미지">
+          <p id="recommendCount" th:text="'추천수: ' + ${recipeDetail.goodCount}">추천수: 0</p>
+        </div>
+      </div>
+
+      <div class="chatBotDetailPage-commentSection">
+        <div class="chatBotDetailPage-commentInput" id="commentInput">
+          <textarea placeholder="댓글을 입력하세요" rows="3"></textarea>
+          <div class="chatBotDetailPage-commentActions">
+            <button class="chatBotDetailPage-addBtn" onclick="submitComment()">등록</button>
+          </div>
         </div>
 
-        <!-- 댓글들 -->
-        <div class="chatBotDetailPage-commentSection">
-          <div class="chatBotDetailPage-commentInput" id="commentInput">
-            <textarea placeholder="댓글을 입력하세요..." rows="3"></textarea>
-            <div class="chatBotDetailPage-commentActions">
-                <button class="chatBotDetailPage-addBtn" onclick="submitComment()">등록</button>
-            </div>
-          </div>
-          <!-- 첫 번째 댓글: 홍상철 -->
+        <div th:each="recipeComments : ${recipeComments}">
           <div class="chatBotDetailPage-comment">
             <div class="chatBotDetailPage-commentUserImg">
-              <img src="./../../image/basicProfile.png" alt="User Image">
-            </div>
-            <div class="chatBotDetailPage-commentContent" id="commentContent1">
-              <div class="chatBotDetailPage-commentHeader">
-                <span class="chatBotDetailPage-commentUsername">홍상철</span>
-                <a href="./report.html"><button class="chatBotDetailPage-reportBtn">신고</button></a>
-              </div>
-              <div class="chatBotDetailPage-commentText" id="commentText1">그 뒤로는 크리스마스까지 공휴일 없음</div>
-              <div class="chatBotDetailPage-commentTime">14:53:14</div>
-
-              <!-- 신고 버튼 밑에 수정 및 삭제 버튼 추가 -->
-              <div class="chatBotDetailPage-buttonGroup" id="buttonGroup1">
-                <button class="chatBotDetailPage-editBtn" onclick="editComment(1)">수정</button>
-                <button class="chatBotDetailPage-deleteBtn" id="deleteButtons">삭제</button>
-              </div>
-
-              <!-- 댓글 수정 입력창, 기본적으로 숨김 상태 -->
-              <div class="chatBotDetailPage-commentInput" id="editInput1" style="display:none;">
-                <textarea id="editTextarea1" placeholder="댓글을 입력하세요..."></textarea>
-                <div class="chatBotDetailPage-commentActions">
-                  <button class="chatBotDetailPage-editBtn" onclick="saveComment(1)">저장</button>
-                  <button class="chatBotDetailPage-deleteBtn" onclick="cancelEdit(1)">취소</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 두 번째 댓글: 김기찬 -->
-          <div class="chatBotDetailPage-reply">
-            <div class="chatBotDetailPage-replyUserImg">
-              <img src="./../../image/basicProfile.png" alt="User Image">
-            </div>
-            <div class="chatBotDetailPage-replyContent">
-              <div class="chatBotDetailPage-replyHeader">
-                <span class="chatBotDetailPage-replyUsername">김기찬</span>
-                <button class="chatBotDetailPage-reportBtn">신고</button>
-              </div>
-              <div class="chatBotDetailPage-replyText">연차 3.5일 남았는데 잘 써야겠네영 ㅠ,ㅠ</div>
-              <div class="chatBotDetailPage-replyTime">15:03:25</div>
-            </div>
-          </div>
-
-          <!-- 세 번째 댓글: 박상희 -->
-          <div class="chatBotDetailPage-comment">
-            <div class="chatBotDetailPage-commentUserImg">
-              <img src="./../../image/basicProfile.png" alt="User Image">
+              <img th:src="@{/image/photo/} + ${recipeComments.photoLocal}" alt="사용자 이미지">
             </div>
             <div class="chatBotDetailPage-commentContent">
               <div class="chatBotDetailPage-commentHeader">
-                <span class="chatBotDetailPage-commentUsername">박상희</span>
+                <span class="chatBotDetailPage-commentUsername" th:text="${recipeComments.userNickName}"></span>
                 <button class="chatBotDetailPage-reportBtn">신고</button>
               </div>
-              <div class="chatBotDetailPage-commentText">이번에도 슬로...</div>
-              <div class="chatBotDetailPage-commentTime">14:53:14</div>
+              <div class="chatBotDetailPage-commentText" th:text="${recipeComments.replyText}"></div>
+              <div class="chatBotDetailPage-commentTime" th:text="${recipeComments.replyWriteDate}"></div>
             </div>
           </div>
-
-          <!-- 댓글 입력창 -->
-          <!-- <div class="chatBotDetailPage-commentInput" id="commentInput">
-            <textarea placeholder="댓글을 입력하세요..."></textarea>
-            <div class="chatBotDetailPage-commentActions">
-              <button class="chatBotDetailPage-editBtn">수정</button>
-              <button id="deleteButtons" class="chatBotDetailPage-deleteBtn">삭제</button>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
-  </main>
-  <script src="./../../js/recipe/chatBotDetailPage.js" defer></script>
+  </div>
+</main>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
+<script src="./../../js/recipe/myDetailPage.js" defer></script>
 </body>
-
 </html>

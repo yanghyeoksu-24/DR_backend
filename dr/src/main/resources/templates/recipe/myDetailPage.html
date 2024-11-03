@@ -44,6 +44,7 @@
         </div>
 
         <div class="myDetailPage-infoSecond">
+<!--          <div class="myDetailPage-firstButton" th:if="${recipeDetail.userNumber == session.userNumber}">-->
           <div class="myDetailPage-firstButton">
             <button class="myDetailPage-buttonOne">수정</button>
             <button id="deleteButton" class="myDetailPage-buttonOne">삭제</button>
@@ -73,7 +74,7 @@
       <!-- 댓글들 -->
       <div class="myDetailPage-commentSection">
         <div class="myDetailPage-commentInput" id="commentInput">
-              <textarea placeholder="댓글을 입력하세요" rows="3"></textarea>
+              <textarea id="commentTextArea" placeholder="댓글을 입력하세요" rows="3"></textarea>
               <div class="myDetailPage-commentActions">
                   <button class="myDetailPage-addBtn" onclick="submitComment()">등록</button>
               </div>

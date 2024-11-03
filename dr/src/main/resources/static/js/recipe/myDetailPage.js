@@ -1,46 +1,38 @@
 const heartImage = document.getElementById('heartImage');
-    
-    heartImage.addEventListener('click', function() {
-      if (heartImage.src.includes('heartGray.png')) {
-        heartImage.src = './../../image/heartColor.png'; // 빨간 하트 이미지 경로
-      } else {
-        heartImage.src = './../../image/heartGray.png'; // 검정 하트 이미지 경로
-      }
-    });
 
-    document.getElementById('deleteButton').addEventListener('click', function () {
-      if (confirm("정말로 삭제하시겠습니까?")) {
-        alert("삭제완료되었습니다.");
-      } else {
-        return;
-      }
-    });
+heartImage.addEventListener('click', function() {
+  if (heartImage.src.includes('heartGray.png')) {
+    heartImage.src = './../../image/heartColor.png'; // 빨간 하트 이미지 경로
+  } else {
+    heartImage.src = './../../image/heartGray.png'; // 검정 하트 이미지 경로
+  }
+});
 
-    document.getElementById('deleteButtons').addEventListener('click', function () {
-      if (confirm("정말로 삭제하시겠습니까?")) {
-        alert("삭제완료되었습니다.");
-      } else {
-        return;
-      }
-    });
+document.getElementById('deleteButtons').addEventListener('click', function () {
+  if (confirm("정말로 삭제하시겠습니까?")) {
+    alert("삭제완료되었습니다.");
+  } else {
+    return;
+  }
+});
 
-    // 댓글 수정 버튼을 눌렀을 때 실행되는 함수
-    function editComment(commentId) {
-      var commentText = document.getElementById('commentText' + commentId);
-      var editInput = document.getElementById('editInput' + commentId);
-      var editTextarea = document.getElementById('editTextarea' + commentId);
-      var buttonGroup = document.getElementById('buttonGroup' + commentId); // 수정/삭제 버튼 그룹
+// 댓글 수정 버튼을 눌렀을 때 실행되는 함수
+function editComment(commentId) {
+  var commentText = document.getElementById('commentText' + commentId);
+  var editInput = document.getElementById('editInput' + commentId);
+  var editTextarea = document.getElementById('editTextarea' + commentId);
+  var buttonGroup = document.getElementById('buttonGroup' + commentId); // 수정/삭제 버튼 그룹
 
-      // 기존 댓글 텍스트를 textarea에 삽입
-      editTextarea.value = commentText.innerText;
+  // 기존 댓글 텍스트를 textarea에 삽입
+  editTextarea.value = commentText.innerText;
 
-      // 댓글 텍스트를 숨기고 수정창을 보이게 함
-      commentText.style.display = 'none';
-      editInput.style.display = 'block';
+  // 댓글 텍스트를 숨기고 수정창을 보이게 함
+  commentText.style.display = 'none';
+  editInput.style.display = 'block';
 
-      // 수정/삭제 버튼 숨김
-      buttonGroup.style.display = 'none';
-    }
+  // 수정/삭제 버튼 숨김
+  buttonGroup.style.display = 'none';
+}
 
 // 댓글 저장 버튼을 눌렀을 때 실행되는 함수
 function saveComment(commentId) {
@@ -70,34 +62,34 @@ function saveComment(commentId) {
 }
 
 
-    // 댓글 수정 취소 버튼을 눌렀을 때 실행되는 함수
-    function cancelEdit(commentId) {
-      var commentText = document.getElementById('commentText' + commentId);
-      var editInput = document.getElementById('editInput' + commentId);
-      var buttonGroup = document.getElementById('buttonGroup' + commentId); // 수정/삭제 버튼 그룹
+// 댓글 수정 취소 버튼을 눌렀을 때 실행되는 함수
+function cancelEdit(commentId) {
+  var commentText = document.getElementById('commentText' + commentId);
+  var editInput = document.getElementById('editInput' + commentId);
+  var buttonGroup = document.getElementById('buttonGroup' + commentId); // 수정/삭제 버튼 그룹
 
-      // 수정창을 숨기고, 댓글 텍스트를 다시 보이게 함
-      editInput.style.display = 'none';
-      commentText.style.display = 'block';
+  // 수정창을 숨기고, 댓글 텍스트를 다시 보이게 함
+  editInput.style.display = 'none';
+  commentText.style.display = 'block';
 
-      // 수정/삭제 버튼 다시 보이게 함
-      buttonGroup.style.display = 'flex';
-    }
+  // 수정/삭제 버튼 다시 보이게 함
+  buttonGroup.style.display = 'flex';
+}
 
 
-    //댓글등록버튼
-    function submitComment() {
-      const confirmation = confirm("댓글을 등록하시겠습니까?");
-      if (confirmation) {
-          // 댓글 등록 로직을 여기에 추가하세요.
-          alert("댓글이 등록되었습니다."); // 예시: 댓글 등록 후 알림
-      } else {
-          // 취소 시 아무것도 하지 않음
-          return;
-      }
+//댓글등록버튼
+function submitComment() {
+  const confirmation = confirm("댓글을 등록하시겠습니까?");
+  if (confirmation) {
+    // 댓글 등록 로직을 여기에 추가하세요.
+    alert("댓글이 등록되었습니다."); // 예시: 댓글 등록 후 알림
+  } else {
+    // 취소 시 아무것도 하지 않음
+    return;
   }
+}
 
-  // 초기 추천 수를 0으로 설정
+// 초기 추천 수를 0으로 설정
 let recommendCount = 0;
 
 // recommend 이미지를 클릭할 때 색상 토글 및 추천 수 증가/감소 기능을 적용
@@ -113,14 +105,14 @@ document.getElementById('recommendImg').addEventListener('click', function() {
     if (recommendCount > 0) {
       recommendCount--; // 추천 수 감소
     }
-  } 
+  }
   // 회색 상태인 경우 (또는 아무 색상도 없을 경우)
   else if (recommendImg.classList.contains('recommend-inactive')) {
     // 회색에서 파란색으로 전환 (추천 추가)
     recommendImg.classList.remove('recommend-inactive');
     recommendImg.classList.add('recommend-active');
     recommendCount++; // 추천 수 증가
-  } 
+  }
   // 처음 상태일 때 파란색으로 전환 (기본 초록색에서 파란색으로)
   else {
     recommendImg.classList.add('recommend-active');
