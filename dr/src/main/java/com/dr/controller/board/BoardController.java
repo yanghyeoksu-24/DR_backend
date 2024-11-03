@@ -1,14 +1,17 @@
 package com.dr.controller.board;
 
 import com.dr.dto.board.*;
+import com.dr.dto.recipe.MyRecipeWriteCommentDTO;
 import com.dr.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -122,6 +125,24 @@ public class BoardController {
         model.addAttribute("honeyBoardComments", honeyBoardComments);
 
         return "/board/honeyBoardDetail";
+    }
+
+
+    // 댓글 작성 후 리다이렉트 시 댓글을 함께 로드하도록 하는 메서드
+    @PostMapping("/freeBoardDetail")
+    public String freeBoardInsertReply(@RequestParam("boardNumber") Long boardNumber,
+                                       @RequestParam("replyText") String replyText,
+                                       @RequestParam("userNumber") Long userNumber,
+                                       RedirectAttributes redirectAttributes) {
+        FreeBoardCommentDTO freeBoardCommentDTO = new FreeBoardCommentDTO();
+        freeBoardCommentDTO.setBoardNumber(boardNumber);
+        freeBoardCommentDTO.setReplyText(replyText);
+        freeBoardCommentDTO.setUserNumber(userNumber);
+
+        boardService.freeBoardInsertReply(freeBoardCommentDTO);
+        redirectAttributes.addAttribute("boardNumber", boardNumber);
+
+        return "redirect:/freeBoardDetail"; // boardNumber를 쿼리 매개변수로 포함하지 않아도 리다이렉트시 자동 전달됨
     }
 
 }
