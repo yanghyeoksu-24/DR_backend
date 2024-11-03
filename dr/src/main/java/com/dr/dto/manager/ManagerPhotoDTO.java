@@ -11,9 +11,9 @@ import lombok.ToString;
 @NoArgsConstructor
 public class ManagerPhotoDTO {
     private int photoNumber;
-    private String photoName;
+    private String photoOriginal;
+    private String photoLocal;
+    private String photoSize;
     private String photoUpload;
-    private int productNumber;
-    private String photoUuid;
-
+    private int productName;
 }

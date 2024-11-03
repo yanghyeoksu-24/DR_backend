@@ -155,7 +155,13 @@ public class ManagerService {
     }
 
     // 상품 추가
+    public void productUpdate(ManagerRegisterDTO managerRegisterDTO) {
+        managerMapper.productUpdate(managerRegisterDTO);
+    }
 
+    public void productPhoto(ManagerPhotoDTO managerPhotoDTO) {
+        managerMapper.productPhoto(managerPhotoDTO);
+    }
 
 
 }

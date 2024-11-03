@@ -317,6 +317,13 @@
     </insert>
 
     <!-- 9-3. 상품 사진 -->
+    <insert id="productPhoto" parameterType="ManagerPhotoDTO">
+        <selectKey keyProperty="photoNumber" resultType="int" order="BEFORE">
+            SELECT SEQ_PHOTO_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+            INSERT INTO DR_PHOTO (PHOTO_NUMBER , PHOTO_ORIGINAL , PHOTO_LOCAL, PHOTO_SIZE , PHOTO_UPLOAD , PRODUCT_NUMBER)
+            VALUES (#{photoNumber} , #{productOriginal} , #{productLocal} , #{photoSize} , #{photoUpload} , #{productNumber} )
+    </insert>
 
 
 

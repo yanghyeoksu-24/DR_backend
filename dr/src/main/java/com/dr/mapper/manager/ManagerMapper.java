@@ -64,6 +64,6 @@ public interface ManagerMapper {
 
    void productUpdate(ManagerRegisterDTO managerRegisterDTO);
 
-
+   void productPhoto(ManagerPhotoDTO managerPhotoDTO);
 
 }
