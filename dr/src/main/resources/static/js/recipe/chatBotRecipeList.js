@@ -1,16 +1,28 @@
-const buttons = document.querySelectorAll('.chatBotRecipeList-rightButton button');
+$(document).ready(function () {
+    // 페이지 로드 시, sessionStorage에서 현재 active 상태를 가져옴
+    const activeButton = sessionStorage.getItem('activeButton') || 'latest'; // 기본값은 'latest'
 
-// 기본적으로 첫 번째 버튼에 스타일을 적용합니다.
-buttons[0].classList.add('active');
+    // 해당하는 버튼에 active 클래스 추가
+    if (activeButton === 'latest') {
+        $('.chatBotRecipeList-secondButton').addClass('active');
+    } else if (activeButton === 'recommend') {
+        $('.chatBotRecipeList-thirdButton').addClass('active');
+    }
 
-// 버튼 클릭 시 이벤트 핸들러
-buttons.forEach(button => {
-    button.addEventListener('click', function() {
-        // 모든 버튼에서 active 클래스를 제거합니다.
-        buttons.forEach(btn => btn.classList.remove('active'));
+    // 버튼 클릭 이벤트 설정
+    $('.chatBotRecipeList-secondButton').click(function () {
+        // 모든 버튼에서 active 클래스 제거
+        $('.chatBotRecipeList-rightButton button').removeClass('active');
+        // 클릭된 버튼에 active 클래스 추가
+        $(this).addClass('active');
+        // sessionStorage에 상태 저장
+        sessionStorage.setItem('activeButton', 'latest');
+    });
 
-        // 클릭한 버튼에 active 클래스를 추가합니다.
-        this.classList.add('active');
+    $('.chatBotRecipeList-thirdButton').click(function () {
+        $('.chatBotRecipeList-rightButton button').removeClass('active');
+        $(this).addClass('active');
+        sessionStorage.setItem('activeButton', 'recommend');
     });
 });
 
