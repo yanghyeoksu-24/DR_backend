@@ -80,6 +80,16 @@ nicknameDisplay.addEventListener('click', function() {
     nicknameInput.style.border = '1px solid #317FF0';
 });
 
+// 닉네임 변경 클릭 시 input 필드 보여주기
+nicknameChangeButton.addEventListener('click', function() {
+    nicknameDisplay.style.display = 'none';
+    nicknameInput.style.display = 'inline'; // 입력 필드 보이기
+    nicknameInput.focus(); // 입력 필드에 포커스 주기
+    nicknameInput.style.border = '1px solid #317FF0'; // 입력 필드 테두리 색상 변경
+});
+
+
+
 // 닉네임 중복 확인 및 유효성 검사 //
 nicknameInput.addEventListener('blur', function() {
     const newNickname = nicknameInput.value.trim(); // 입력 값 가져오기

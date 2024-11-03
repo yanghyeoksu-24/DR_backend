@@ -14,7 +14,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -98,19 +100,35 @@ public class MyPageService {
         return myPageMapper.getSirenList(userNumber);
     }
 
-    // 오늘의 출석 여부 확인
-    public int todayCheck(Long userNumber) {
-        return myPageMapper.todayCheck(userNumber);
+    // 출석 여부 확인
+    public boolean todayCheck(Long userNumber) {
+        int count = myPageMapper.todayCheck(userNumber);
+        return count > 0; // 오늘 출석 여부 반환
     }
 
     // 출석 기록 삽입
-    public void insertCheck(Long userNumber) {
-        myPageMapper.insertCheck(userNumber);
+    public void insertCheck(Long userNumber, String dailyDate) {
+        myPageMapper.insertCheck(userNumber, dailyDate);
     }
 
     // 개근 여부 확인
-    public int monthFullCheck(Long userNumber) {
-        return myPageMapper.monthFullCheck(userNumber);
+    public boolean monthFullCheck(Long userNumber) {
+        int result = myPageMapper.monthFullCheck(userNumber);
+        return result == 1; // 개근 여부 반환
     }
+
+    // 포인트 기록 삽입
+    public void insertPointRecord(Long userNumber, int pointGet, String pointNote) {
+        PointCheckDTO pointCheckDTO = new PointCheckDTO();
+        pointCheckDTO.setUserNumber(userNumber);
+        pointCheckDTO.setPointGet(pointGet);
+        pointCheckDTO.setPointNote(pointNote);
+
+        myPageMapper.insertPointRecord(pointCheckDTO);
+    }
+
+
+
+
 
 }
