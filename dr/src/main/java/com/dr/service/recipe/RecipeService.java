@@ -32,8 +32,8 @@ public class RecipeService {
 
 //    챗봇의 레시피 추천순
     public List<ChatBotRecipeListDTO> findAllRecipes1Good() {
-    return recipeMapper.selectRecipesGood1();
-}
+        return recipeMapper.selectRecipesGood1();
+    }
 
 //    나만의레시피상세페이지
     public MyRecipeDetailDTO findMyRecipeDetail(Long recipeNumber) {
@@ -51,9 +51,14 @@ public class RecipeService {
 
 
 //    나만의 레시피 댓글조회
-    public List<MyRecipeCommentDTO> selectMyRecipeReply(Long recipeNumber) {
+    public List<MyRecipeCommentDTO> selectMyRecipeComment(Long recipeNumber) {
         // 특정 레시피의 댓글 목록을 조회하여 반환
         return recipeMapper.selectMyRecipeComment(recipeNumber);
+    }
+
+//    챗봇 레시피 댓글조회
+    public List<ChatBotRecipeCommentDTO> selectChatBotRecipeComment(Long recipeNumber) {
+        return recipeMapper.selectChatBotRecipeComment(recipeNumber);
     }
 
 
