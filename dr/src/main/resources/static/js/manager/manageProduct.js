@@ -74,3 +74,26 @@ document.getElementById('memberOut').addEventListener('click', function() {
   });
 });
 
+// "수정" 버튼 선택 및 클릭 이벤트 설정
+const updateButton = document.getElementById("memberUpdate");
+if (updateButton) {
+  updateButton.addEventListener("click", redirectToUpdate);
+}
+
+
+// "수정" 버튼 클릭 시 체크된 상품의 이름을 URL 쿼리 스트링으로 전달하는 함수
+function redirectToUpdate() {
+  // 체크된 상품 체크박스 선택
+  const checkedProduct = document.querySelector('input[type="checkbox"]:checked');
+
+  if (checkedProduct && checkedProduct.value !== "전체선택") {
+    const productName = checkedProduct.value;
+
+    // URL에 productName을 쿼리 스트링으로 포함해 이동
+    window.location.href = `/manager/showProduct?productName=${encodeURIComponent(productName)}`;
+  } else {
+    alert("수정할 상품을 선택해주세요.");
+  }
+}
+
+

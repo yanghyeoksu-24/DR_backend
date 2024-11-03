@@ -398,16 +398,24 @@ public class ManagerController {
         }
     }
 
-
     // 9-4. 상품 수정 페이지 이동
-//    @PostMapping("/manager/manageUpdate")
-//    @ResponseBody
-//    public ResponseEntity<String> manageUpdate(@RequestParam("productName") String productName , Model model) {
-//
-//
-//        // 성공 시
-//        return ResponseEntity.ok();
-//    }
+    @GetMapping("/showProduct")
+    public String updateShow(@RequestParam("productName") String productName , Model model) {
+        ManagerRegisterDTO showProduct =  managerService.updateShow(productName);
+        model.addAttribute("showProduct" , showProduct);
+        return "/manager/manageUpdate";
+    }
+
+    @GetMapping("/updateProduct")
+    public String updateProduct(){
+        return "/manager/manageUpdate";
+    }
+
+
+
+
+
+
 
 
     // 로그아웃

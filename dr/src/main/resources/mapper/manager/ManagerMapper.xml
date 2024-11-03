@@ -320,7 +320,23 @@
 
 
 
+    <!-- 9-4. 상품 수정 페이징 이동 -->
+    <select id="updateShow" parameterType="String" resultType="ManagerRegisterDTO">
+        SELECT P.PRODUCT_NAME , P.PRODUCT_PRICE , PP.PHOTO_LOCAL
+        FROM DR_PRODUCT P
+        JOIN DR_PHOTO PP ON P.PRODUCT_NUMBER = PP.PRODUCT_NUMBER
+        WHERE P.PRODUCT_NAME = #{productName}
+        AND ROWNUM = 1
+    </select>
+
     <!-- 9-4. 상품 수정 -->
+    <insert id="productUpdate" parameterType="ManagerRegisterDTO">
+        <selectKey keyProperty="productNumber" resultType="int" order="BEFORE">
+            SELECT SEQ_PRODUCT_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_PRODUCT (PRODUCT_NUMBER , PRODUCT_NAME , PRODUCT_CODE , PRODUCT_PRICE)
+        VALUES (#{productNumber}, #{productName}, #{productCode}, #{productPrice})
+    </insert>
 
 
 
