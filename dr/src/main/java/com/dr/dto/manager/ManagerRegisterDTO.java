@@ -14,4 +14,5 @@ public class ManagerRegisterDTO {
         private String productName;
         private String productCode;
         private int productPrice;
+        private String photoLocal;
 }
