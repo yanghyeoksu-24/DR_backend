@@ -110,7 +110,7 @@ function DataUpdateChart(month) {
 
             // 모든 amount 값을 더하여 totalWaste 계산
             const totalWaste = amount.reduce((acc, curr) => acc + roundToTwo(curr), 0);
-            document.getElementById("totalWaste").textContent = "전국 가구당 월 평균 배출량 " + totalWaste.toFixed(2) + " kg" ; // 소수점 2자리로 표시
+            document.getElementById("totalWaste").textContent = "전국 가구당 평균 총 합 " + totalWaste.toFixed(2) + " kg" ; // 소수점 2자리로 표시
 
             // 차트를 업데이트하는 함수 호출
             updateChart(myChart, country, amount.map(roundToTwo));
