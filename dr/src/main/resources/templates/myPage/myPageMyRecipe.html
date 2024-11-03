@@ -48,11 +48,16 @@
             <div class="myPage-myRecipeWrap">
                 <div th:each="recipe : ${userRecipes}" class="myPage-myRecipeprideOne">
                     <div class="myPage-myRecipeLeft">
+                        <a th:href="${recipe.recipeType == '챗봇레시피' ? '/recipe/chatBotDetailPage?recipeNumber=' + recipe.recipeNumber : '/recipe/myDetailPage?recipeNumber=' + recipe.recipeNumber}">
                             <img id="myPage-myRecipeOne" th:src="@{/image/myPage/{photo}(photo=${recipe.recipePhoto})}" alt="레시피 사진">
+                        </a>
                     </div>
                     <div class="myPage-myRecipeInside">
                         <div class="myPage-myRecipeSide">
-                            <div class="myPage-myRecipeMiddleTitle" th:text="${recipe.recipeTitle}">레시피 제목</div>
+                            <div class="myPage-myRecipeMiddleTitle">
+                                <a th:href="${recipe.recipeType == '챗봇레시피' ? '/recipe/chatBotDetailPage?recipeNumber=' + recipe.recipeNumber : '/recipe/myDetailPage?recipeNumber=' + recipe.recipeNumber}"
+                                   th:text="${recipe.recipeTitle}">레시피 제목</a>
+                            </div>
                             <div class="myPage-myRecipeName" th:text="${recipe.recipeWriteDate}">작성일</div>
                             <div class="myPage-myRecipeListDelete" th:text="'추천수 ' + ${recipe.goodCount}">추천수 0</div>
                         </div>

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -189,7 +190,6 @@ public class MyPageController {
         return new RedirectView("/myPage/myPageSteamedList");// 목록 페이지로 리다이렉트
     }
 
-
     // -- 신고 내역 목록 -- //
     @GetMapping("/myPageMyComplaint")
     public String getSirenList(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model) {
@@ -205,7 +205,25 @@ public class MyPageController {
         return "myPage/myPageMyComplaint";
     }
 
-    // -- 대망의 출석체크 또르르.... -- //
+    @GetMapping("/myPageCheck")
+    @ResponseBody
+    public ResponseEntity<String> checkAttendance(@RequestParam("userNumber") String userNumber,
+                                                  @RequestParam("date") String date) {
+        // 출석 체크 로직 추가
+        boolean isCheckedIn = checkAttendanceLogic(userNumber, date); // 예시 함수
 
+        if (isCheckedIn) {
+            return ResponseEntity.ok("출석 체크가 완료되었습니다.");
+        } else {
+            return ResponseEntity.ok("이미 출석 체크가 완료되었습니다."); // 예시 메시지
+        }
+    }
 
+    private boolean checkAttendanceLogic(String userNumber, String date) {
+        // 출석 체크 로직을 구현
+        // 출석 체크된 상태인지 확인하고, 그렇지 않으면 체크 처리
+        return true; // 출석 체크 성공 예시
+    }
 }
+
+
