@@ -31,7 +31,7 @@ public class ChatBotService {
 
         requestJson.put("messages", messages); // 필수 파라미터 추가
         requestJson.put("max_tokens", 1000); //최대 글자 수
-        requestJson.put("temperature", 0.8); //창의성
+        requestJson.put("temperature", 0.7); //창의성
 
         // HTTP 요청 헤더 설정
         HttpHeaders headers = new HttpHeaders();
