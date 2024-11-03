@@ -15,4 +15,6 @@ public class UserPostDTO {
     private String myPostType;
     private int myPostgoodCount;
     private String myPostWriteDate;
+    private int userNumber;
+    private int boardNumber;
 }

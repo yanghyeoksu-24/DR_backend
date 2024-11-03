@@ -48,11 +48,16 @@
             <div class="myPage-pictureWrap">
                 <div class="myPage-pictureprideOne" th:each="steam : ${userSteamList}">
                     <div class="myPage-pictureLeft">
-                        <img id="myPage-pictureOne" th:src="@{/image/myPage/{photo}(photo=${steam.photoLocal})}" alt="레시피 사진">
+                        <a th:href="${steam.recipeType == '챗봇레시피' ? '/recipe/chatBotDetailPage?recipeNumber=' + steam.recipeNumber : '/recipe/myDetailPage?recipeNumber=' + steam.recipeNumber}">
+                            <img id="myPage-pictureOne" th:src="@{/image/myPage/{photo}(photo=${steam.photoLocal})}" alt="레시피 사진">
+                        </a>
                     </div>
                     <div class="myPage-pictureInside">
                         <div class="myPage-pictureSide">
-                            <div class="myPage-pictureTitle" th:text="${steam.recipeTitle}">레시피 제목</div>
+                            <div class="myPage-pictureTitle">
+                                <a th:href="${steam.recipeType == '챗봇레시피' ? '/recipe/chatBotDetailPage?recipeNumber=' + steam.recipeNumber : '/recipe/myDetailPage?recipeNumber=' + steam.recipeNumber}"
+                                   th:text="${steam.recipeTitle}">레시피 제목</a>
+                            </div>
                             <div class="myPage-pictureName" th:text="${steam.userNickname}">작성자 닉네임</div>
                         </div>
                         <div class="myPage-pictureSideRight">

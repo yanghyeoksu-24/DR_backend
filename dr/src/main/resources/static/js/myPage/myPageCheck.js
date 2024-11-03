@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var events = []; // 출석 체크된 날짜 배열
-    var userNumber = 1; // 사용자 번호 설정 (예시)
+
+    // 사용자 번호 가져오기
+    var userNumber = document.getElementById('userInfo').getAttribute('data-user-number'); // data-user-number에서 가져오기
 
     // 캘린더 생성
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -27,21 +29,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // 출석 체크 AJAX 요청 함수
     function checkInAttendance() {
         var todayDateString = getTodayDateString();
-
         return fetch(`/myPage/myPageCheck?userNumber=${userNumber}&date=${todayDateString}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
+            method: 'GET' // GET 방식
         })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('출석 체크 요청 실패');
                 }
-                return response.text();
+                return response.json(); // JSON 형태로 응답을 받음
             })
             .then(data => {
-                window.location.href = '/myPage/myPageCheck';
+                if (data === "출석 체크가 완료되었습니다.") { // 서버에서 받은 메시지를 체크
+                    alert("출석 체크가 완료되었습니다. 10 포인트가 적립되었습니다.");
+                    calendar.addEvent({
+                        title: '', // 제목 없음
+                        start: todayDateString,
+                        display: 'auto'
+                    });
+                    events.push({ start: todayDateString }); // 출석 체크된 날짜 추가
+                } else {
+                    alert(data || "출석 체크 중 문제가 발생했습니다.");
+                }
             })
             .catch(error => {
                 console.error('Error checking in attendance:', error);
@@ -59,16 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // 이벤트 추가 및 표시
-        calendar.addEvent({
-            title: '', // 제목 없음
-            start: todayDateString,
-            display: 'auto'
-        });
-
-        events.push({ start: todayDateString }); // 출석 체크된 날짜 추가
-
-        alert("출석 체크가 완료되었습니다. 10 포인트가 적립되었습니다.");
-        checkInAttendance(); // AJAX 요청
+        // 출석 체크 AJAX 요청
+        checkInAttendance();
     });
 });

@@ -63,10 +63,12 @@
                 </div>
                 <div class="myPage-myPostTitleMainOne">
                     <ul>
-                        <li th:each="post : ${userPosts}">
-                            <span class="myPage-myPostTitleNumberZero" th:text="${post.myPostSeq}"></span>
+                        <li th:each="post, iterStat : ${userPosts}">
+                            <span class="myPage-myPostTitleNumberZero" th:text="${iterStat.index + 1}"></span>
                             <div class="vertical-barSecond"></div>
-                            <a th:href="@{/post/{id}(id=${post.myPostSeq})}" class="myPage-myPostTitleContentOne" th:text="${post.myPostTitle}"></a>
+                            <a th:href="${post.myPostType == '자유게시판' ? '/board/freeBoardDetail?boardNumber=' + post.boardNumber : '/board/honeyBoardDetail?boardNumber=' + post.boardNumber}"
+                               class="myPage-myPostTitleContentOne"
+                               th:text="${post.myPostTitle}"></a>
                             <div class="vertical-barSecond"></div>
                             <span class="myPage-myPostTitleContentTypeTwo" th:text="${post.myPostType}"></span>
                             <div class="vertical-barSecond"></div>
