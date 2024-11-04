@@ -18,7 +18,7 @@
             <div class="freeBoardDetail-infobox">
                 <div class="freeBoardDetail-infoFirst">
                     <div class="freeBoardDetail-infoInBox1">
-                        <img th:src="@{'/image/photo/' + ${freeBoardDetail.photoLocal}}">
+                        <img th:src="@{/image/photo/} + ${freeBoardDetail.photoLocal}" alt="User Photo">
                     </div>
                     <div class="freeBoardDetail-infoInBox2">
                         <p class="freeBoardDetail-writeName" th:text="${freeBoardDetail.userNickName}">작성자</p>
@@ -40,10 +40,10 @@
                     </div>
                 </div>
             </div>
-
+            <!--            글 내용-->
             <div class="freeBoardDetail-writetext">
                 <p class="freeBoardDetail-texts" th:text="${freeBoardDetail.boardText}">글 내용</p>
-                <img th:src="@{'/image/recipe/' + ${freeBoardDetail.photoLocal}}" alt="Recipe Image">
+                <img th:src="@{/image/board/} + ${freeBoardDetail.photoLocal}" alt="Board Image">
 
                 <div class="freeBoardDetail-recommendImg">
                     <img src="/image/recommend.png" id="recommendImg" alt="Recommend Image">
@@ -53,27 +53,58 @@
 
             <div class="freeBoardDetail-commentSection">
                 <div class="freeBoardDetail-commentInput">
-                    <textarea placeholder="댓글을 입력하세요..." rows="3"></textarea>
-                    <div class="freeBoardDetail-commentActions">
-                        <button class="freeBoardDetail-addBtn" onclick="submitComment()">등록</button>
-                    </div>
+                    <form th:action="@{/board/freeBoardDetail}" method="post">
+                        <input type="hidden" name="boardNumber" th:value="${freeBoardDetail.boardNumber}"/>
+                        <!-- 올바른 값 사용 -->
+                        <textarea id="commentTextArea" placeholder="댓글을 입력하세요..." rows="3" name="replyText"></textarea>
+                        <input type="hidden" name="userNumber" th:value="${session.userNumber}"/>
+                        <!-- session이나 다른 방법으로 올바른 값을 설정 -->
+                        <div class="freeBoardDetail-commentActions">
+                            <button type="submit" class="freeBoardDetail-addBtn" onclick="submitComment()">등록</button>
+                        </div>
+                    </form>
                 </div>
-
+                <!-- 댓글 리스트 반복문 시작 -->
                 <div th:each="freeBoardComments : ${freeBoardComments}">
                     <div class="freeBoardDetail-comment">
                         <div class="freeBoardDetail-commentUserImg">
-                            <img th:src="@{'/image/photo/' + ${freeBoardComments.photoLocal}}">
+                            <img th:src="@{/image/photo/} + ${freeBoardComments.photoLocal}" alt="User Photo">
                         </div>
                         <div class="freeBoardDetail-commentContent">
+                            <input type="hidden" name="replyNumber" th:value="${freeBoardComments.replyNumber}">
                             <div class="freeBoardDetail-commentHeader">
-                                <span class="freeBoardDetail-commentUsername" th:text="${freeBoardComments.userNickName}">작성자</span>
+                                <span class="freeBoardDetail-commentUsername"
+                                      th:text="${freeBoardComments.userNickName}">작성자</span>
                                 <button class="freeBoardDetail-reportBtn">신고</button>
                             </div>
-                            <div class="freeBoardDetail-commentText" th:text="${freeBoardComments.replyText}">댓글 내용</div>
-                            <div class="freeBoardDetail-commentTime" th:text="${freeBoardComments.replyWriteDate}">시간</div>
+                            <div class="freeBoardDetail-commentText" th:text="${freeBoardComments.replyText}">댓글 내용
+                            </div>
+                            <div class="freeBoardDetail-commentTime" th:text="${freeBoardComments.replyWriteDate}">시간
+                            </div>
 
+                            <!-- 수정 및 삭제 버튼 그룹 (모든 댓글에 표시) -->
                             <div class="freeBoardDetail-buttonGroup">
-                                <!-- 수정 및 삭제 버튼의 onclick 이벤트는 필요에 따라 추가 -->
+                                <button class="freeBoardDetail-editBtn"
+                                        th:attr="onclick='editComment(' + ${freeBoardComments.replyNumber} + ')'">수정
+                                </button>
+                                <button type="button" class="freeBoardDetail-deleteBtn"
+                                        th:attr="data-reply-number=${freeBoardComments.replyNumber}">삭제
+                                </button>
+                            </div>
+
+                            <!-- 댓글 수정 입력창, 기본적으로 숨김 상태 -->
+                            <div class="freeBoardDetail-commentInput"
+                                 th:attr="id='editInput' + ${freeBoardComments.replyNumber}" style="display:none;">
+                <textarea th:attr="id='editTextarea' + ${freeBoardComments.replyNumber}"
+                          placeholder="댓글을 입력하세요..."></textarea>
+                                <div class="freeBoardDetail-commentActions">
+                                    <button class="freeBoardDetail-editBtn"
+                                            th:attr="onclick='saveComment(' + ${freeBoardComments.replyNumber} + ')'">저장
+                                    </button>
+                                    <button class="freeBoardDetail-deleteBtn"
+                                            th:attr="onclick='cancelEdit(' + ${freeBoardComments.replyNumber} + ')'">취소
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
