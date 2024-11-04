@@ -17,9 +17,11 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor // 생성자를 자동 생성
@@ -87,7 +89,7 @@ public class MyPageController {
 
         // 새 이미지 경로와 메시지를 포함하여 응답
         Map<String, Object> response = new HashMap<>();
-        response.put("photoPath", photoPath);
+        response.put("photoPath", photoPath); // 프로필 이미지 경로
         response.put("message", "수정이 완료되었습니다.");
 
         return ResponseEntity.ok(response); // 성공적으로 업데이트된 경우 응답
@@ -114,36 +116,13 @@ public class MyPageController {
     }
 
 
-//    @GetMapping("/myPageDeleted")
-//    public String deletedPage(HttpSession session) {
-//
-//        session.invalidate();
-//        return "myPage/myPageDeleted"; // 뷰 이름 반환
-//    }
-
+    // -- 회원탈퇴 -- //
     @GetMapping("/myPageDeleted")
-    public RedirectView deletedPage(HttpSession session){
+    public RedirectView deletedPage(HttpSession session) {
         session.invalidate();
         return new RedirectView("/main");
     }
 
-//    @GetMapping("/myPageDeleted")
-//    public String showDeletedPage(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
-//                                  HttpSession session) {
-//
-//        if (userNumber != null) {
-//            System.out.println("유저 번호 (삭제 전): " + userNumber);
-//            myPageService.deleteUser(userNumber);
-//            session.invalidate();  // 세션 종료
-//            System.out.println("세션이 종료되었습니다.");
-//
-//            // 삭제 후 다른 페이지로 리다이렉트
-//            return "redirect:/myPage/myPageDeleted";
-//        } else {
-//            System.out.println("유저 번호가 없습니다. 이미 세션이 만료되었거나 로그인되지 않은 상태입니다.");
-//            return "redirect:/login";
-//        }
-//    }
 
     @GetMapping("/myPage/myPageDeleted")
     public String deletedPage(HttpSession session, Model model) {
@@ -244,58 +223,65 @@ public class MyPageController {
         return "myPage/myPageMyComplaint";
     }
 
-    @GetMapping("/myPageCheckedPlease")
-    public String checkAttendance(
-            @SessionAttribute(value = "userNumber", required = false) Long userNumber,
-            @RequestParam(value = "date", required = false) String date,
-            Model model) {
+    // 출석 체크 페이지로 이동
+    @GetMapping("/myPageChecked")
+    public String myPageChecked(Model model) {
 
-        // 현재 날짜를 문자열로 포맷하여 모델에 추가
-        String formattedCurrentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        model.addAttribute("currentDate", formattedCurrentDate);
-
-        // 로그인 여부 확인
-        if (userNumber == null) {
-            model.addAttribute("message", "사용자가 로그인되지 않았습니다.");
-            return "error";
-        }
-
-        // 날짜가 제공되지 않은 경우 현재 날짜로 설정
-        if (date == null) {
-            date = formattedCurrentDate;
-        }
-
-        System.out.println("User Number: " + userNumber);
-        System.out.println("Date: " + date);
-
-        try {
-            // 오늘 출석 체크 여부 확인
-            boolean isCheckedIn = myPageService.todayCheck(userNumber);
-
-            if (!isCheckedIn) { //0보다 크지않으면...(출석체크 안됬을때)
-                // 출석 체크 수행
-                myPageService.insertCheck(userNumber, date);
-
-                // 포인트 적립 로직
-                PointCheckDTO pointCheckDTO = new PointCheckDTO();
-                pointCheckDTO.setUserNumber(userNumber);
-                pointCheckDTO.setPointGet(10); // 적립할 포인트 (여기서는 10포인트)
-                pointCheckDTO.setPointNote("출석체크"); // 포인트 사유
-                pointCheckDTO.setPointDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); // 현재 날짜
-
-                // 포인트 기록 삽입
-                myPageService.insertPointRecord(pointCheckDTO);
-                model.addAttribute("message", "출석 체크가 완료되었습니다. 10 포인트가 적립되었습니다.");
-            } else {
-                model.addAttribute("message", "이미 출석 체크가 완료되었습니다.");
-            }
-        } catch (Exception e) {
-            System.err.println("출석 체크 중 오류 발생: " + e.getMessage());
-            model.addAttribute("message", "출석 체크 중 오류가 발생했습니다. 다시 시도해 주세요.");
-        }
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        model.addAttribute("currentDate", currentDate);
 
         return "myPage/myPageChecked";
     }
+
+    // 출석 체크 날짜 불러오기
+    @GetMapping("/myPageAttendanceDates")
+    @ResponseBody
+    public List<String> getAttendanceDates(
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
+        if (userNumber != null) {
+            return myPageService.getAttendanceDates(userNumber)
+                    .stream()
+                    .map(CheckDTO::getDailyDate) // 날짜만 추출
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList(); // 로그인되지 않은 경우 빈 리스트 반환
+    }
+
+    // 출석체크 포인트 적립
+    @PostMapping("/myPageCheckAttendance")
+    @ResponseBody
+    public String checkAttendance(
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber,
+            @RequestParam(value = "date", required = false) String date) {
+
+        System.out.println("출석 체크 요청 받음, userNumber: " + userNumber + ", date: " + date);
+
+        if (userNumber == null) {
+            return "사용자가 로그인되지 않았습니다.";
+        }
+
+        if (date == null) {
+            date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }
+
+        try {
+            boolean isCheckedIn = myPageService.todayCheck(userNumber);
+
+            if (!isCheckedIn) {
+                myPageService.insertCheck(userNumber, date);
+                PointCheckDTO pointCheckDTO = new PointCheckDTO();
+                pointCheckDTO.setUserNumber(userNumber);
+                pointCheckDTO.setPointGet(10);
+                pointCheckDTO.setPointNote("출석체크");
+                pointCheckDTO.setPointDate(date);
+
+                myPageService.insertPointRecord(pointCheckDTO);
+                return "출석 체크가 완료되었습니다. 10 포인트가 적립되었습니다.";
+            } else {
+                return "이미 출석 체크가 완료되었습니다.";
+            }
+        } catch (Exception e) {
+            return "출석 체크 중 오류가 발생했습니다. 다시 시도해 주세요.";
+        }
+    }
 }
-
-

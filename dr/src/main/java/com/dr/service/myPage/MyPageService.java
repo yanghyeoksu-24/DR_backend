@@ -125,4 +125,9 @@
         public void insertPointRecord(PointCheckDTO pointCheckDTO) {
             myPageMapper.insertPointRecord(pointCheckDTO);
         }
+
+        // 출석 날짜 리스트 조회
+        public List<CheckDTO> getAttendanceDates(Long userNumber) {
+            return myPageMapper.getAttendanceDates(userNumber);
+        }
     }

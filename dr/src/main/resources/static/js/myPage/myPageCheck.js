@@ -1,105 +1,95 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var todayDateString = document.getElementById('date').value;
-
-    // 로컬 스토리지에서 출석 체크 상태를 가져옵니다.
-    var isCheckedIn = localStorage.getItem('isCheckedIn') === 'true';
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'ko',
-        events: [],
-        eventContent: function(arg) {
-            return {
-                html: `<div style="display: flex; justify-content: center; align-items: center; height: 100%; background-color: #fffadf; border: none !important; outline: none !important;">
-                          <img src="./../../image/myPage/checkBox.png" style="width: 30px; height: 25px;" />
-                      </div>`
-            };
+        initialView: 'dayGridMonth',
+        eventDidMount: function(info) { // eventRender 대신 eventDidMount 사용
+            const event = info.event;
+            if (event.extendedProps.imageUrl) {
+                const img = document.createElement('img');
+                img.src = event.extendedProps.imageUrl;
+                img.style.width = '80px'; // 원하는 크기로 변경
+                img.style.height = '80px'; // 원하는 크기로 변경
+                img.style.filter = 'invert(41%) sepia(600%) saturate(5000%)';
+                img.style.position = 'absolute'; // 절대 위치 설정
+                img.style.left = '16%'; // 수평 중앙 위치
+                img.style.transform = 'translateX(-50%, -500%) '; // 중앙 정렬을 위한 변환
+                img.style.marginTop = '-40px'; // 이미지와 텍스트 사이 여백
+
+                // 기존 날짜 요소의 위치를 기준으로 이미지 추가
+                info.el.style.position = 'relative'; // 부모 요소에 상대 위치 설정
+                info.el.appendChild(img); // 이벤트 요소에 이미지 추가
+            }
         }
     });
     calendar.render();
 
-    // 출석 체크가 완료되었는지 서버에서 확인
-    fetch(`/myPage/myPageCheckedPlease`, {
-        method: 'GET',
-        body: JSON.stringify({ userNumber: this.userNumber, date: todayDateString }),
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-            // 서버에서 출석 체크 여부를 받아옵니다.
-            if (data.checkedIn) {
-                alert("이미 출석체크가 완료되었습니다.");
-                isCheckedIn = true; // 로컬 상태 업데이트
-                localStorage.setItem('isCheckedIn', 'true'); // 로컬 스토리지에 상태 저장
-            }
-        })
-        .catch(error => {
-            console.error('출석 체크 상태 확인 중 오류 발생: ', error);
-        });
+    // 출석 체크 버튼 클릭 이벤트
+    document.getElementById("checkInButton").addEventListener("click", function() {
+        const date = document.getElementById("date").value.trim() || new Date().toISOString().split('T')[0];
+        console.log("선택된 날짜: ", date); // 선택된 날짜 로그 출력
 
-    document.getElementById('checkInForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+        const existingEvent = calendar.getEvents().find(event => event.startStr === date);
+        console.log("기존 이벤트: ", existingEvent); // 기존 이벤트 로그 출력 오늘 날짜 사용
 
-        if (isCheckedIn) {
-            alert("이미 출석체크가 완료되었습니다.");
-            return; // 이미 출석 체크가 완료된 경우, 더 이상 진행하지 않음
-        }
 
-        alert("출석체크가 완료되었습니다. 10포인트가 적립됩니다.");
-
-        fetch(`/myPage/myPageCheckedPlease?date=${encodeURIComponent(todayDateString)}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'text/html',
-            }
-        })
-            .then(response => response.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const message = doc.querySelector('div.message')?.textContent;
-
-                // 서버로부터 메시지를 받아와서 사용자에게 알림
-                if (message) {
-                    alert(message);
+        if (existingEvent) {
+            alert("이미 출석 체크가 완료되었습니다.");
+        } else {
+            $.ajax({
+                url: '/myPage/myPageCheckAttendance',
+                method: 'POST',
+                data: { date: date },
+                success: function(response) {
+                    alert(response);
+                    // 출석 체크 성공 시 당일 날짜에 체크 표시 추가
+                    calendar.addEvent({
+                        start: date,
+                        allDay: true,
+                        color: 'white',
+                        rendering: 'background', // 배경으로 표시
+                        extendedProps: {
+                            imageUrl: '../image/check1.png' // 체크 이미지 경로
+                        }
+                    });
+                },
+                error: function() {
+                    alert("출석 체크 중 오류가 발생했습니다.");
                 }
+            });
+        }
+    });
 
-                // 출석 체크가 성공적으로 이루어지면
-                if (message === "출석 체크가 완료되었습니다. 10 포인트가 적립되었습니다.") {
-                    setTimeout(() => {
-                        // 오늘 날짜의 요소 선택
-                        var todayElements = document.querySelectorAll(`.fc-daygrid-day[data-date="${todayDateString}"]`);
-
-                        // 체크 이미지 추가
-                        todayElements.forEach(function(element) {
-                            if (!element.querySelector('.check-image')) {
-                                var checkImageDiv = document.createElement('div');
-                                checkImageDiv.className = 'check-image';
-                                checkImageDiv.style.position = 'absolute';
-                                checkImageDiv.style.top = '50%';
-                                checkImageDiv.style.left = '50%';
-                                checkImageDiv.style.transform = 'translate(-50%, -50%)';
-                                checkImageDiv.style.width = '40px';
-                                checkImageDiv.style.height = '40px';
-                                checkImageDiv.style.backgroundImage = "url('/image/myPage/checkBoxRed.png')";
-                                checkImageDiv.style.backgroundSize = 'contain';
-                                checkImageDiv.style.backgroundRepeat = 'no-repeat';
-                                element.appendChild(checkImageDiv);
+    // 출석 날짜 리스트 불러오기
+    function loadAttendanceDates() {
+        $.ajax({
+            url: '/myPage/myPageAttendanceDates',
+            method: 'GET',
+            success: function(data) {
+                const attendanceList = $('#attendanceList');
+                attendanceList.empty(); // 기존 목록 비우기
+                if (data.length > 0) {
+                    data.forEach(date => {
+                        attendanceList.append(`<li>${date}</li>`); // 출석 날짜 추가
+                        // 달력에 출석 체크 이벤트 추가
+                        calendar.addEvent({
+                            start: date,   // 날짜 문자열 직접 사용
+                            allDay: true,
+                            color: 'white',  // 출석 체크 색상
+                            rendering: 'background', // 배경으로 표시
+                            extendedProps: {
+                                imageUrl: '../image/check1.png' // 체크 이미지 경로
                             }
                         });
-
-                        // 출석 체크 상태 업데이트
-                        isCheckedIn = true;
-                        localStorage.setItem('isCheckedIn', 'true'); // 로컬 스토리지에 상태 저장
-                    }, 100);
+                    });
+                } else {
+                    attendanceList.append('<li>출석 기록이 없습니다.</li>');
                 }
-            })
-            .catch(error => {
-                console.error('출석 체크 중 오류 발생: ', error);
-                alert("출석 체크 중 오류가 발생했습니다. 다시 시도해 주세요.");
-            });
-    });
+            },
+            error: function() {
+                console.error('출석 날짜를 가져오는 데 오류가 발생했습니다.');
+            }
+        });
+    }
+    loadAttendanceDates(); // 페이지 로드 시 출석 날짜 리스트 불러오기
 });
