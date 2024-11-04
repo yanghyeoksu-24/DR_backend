@@ -16,16 +16,21 @@ $(document).ready(function () {
     if (!validatePassword(password)) {
       passwordError.innerHTML = "비밀번호는 최소 8자 이상이어야 하며, 문자, 숫자, 특수문자를 포함해야 합니다.";
       passwordError.style.color = "red";
+      confirmPasswordError.innerHTML = ""; // 비밀번호 오류 시 확인 오류 초기화
     } else {
       passwordError.innerHTML = ""; // 오류 메시지 초기화
     }
   });
 
-  // 두 번째 비밀번호 필드 input 이벤트: 비밀번호 일치 확인
+  // 두 번째 비밀번호 필드 input 이벤트: 비밀번호 일치 확인 및 유효성 검사
   confirmNewPassword.addEventListener("input", function () {
     const password = newPassword.value;
     const confirmPassword = confirmNewPassword.value;
-    if (password === confirmPassword) {
+
+    // 비밀번호 유효성 검사 추가
+    if (!validatePassword(password)) {
+      confirmPasswordError.innerHTML = ""; // 비밀번호가 유효하지 않으면 확인 오류 메시지 초기화
+    } else if (password === confirmPassword) {
       confirmPasswordError.innerHTML = "비밀번호가 일치합니다.";
       confirmPasswordError.style.color = "green";
     } else {
@@ -61,4 +66,22 @@ $(document).ready(function () {
       confirmPasswordToggleIcon.attr('src', './../../image/noView.png'); // 아이콘 변경
     }
   });
+
+  // 폼 제출 시 유효성 검사
+  document.getElementById("pwResetForm").onsubmit = function() {
+    const password = newPassword.value;
+    const confirmPassword = confirmNewPassword.value;
+
+    if (!validatePassword(password)) {
+      alert("비밀번호는 최소 8자 이상이어야 하며, 문자, 숫자, 특수문자를 포함해야 합니다.");
+      return false; // 폼 제출 방지
+    }
+
+    if (password !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return false; // 폼 제출 방지
+    }
+
+    return true; // 모든 검사를 통과하면 폼 제출 허용
+  };
 });

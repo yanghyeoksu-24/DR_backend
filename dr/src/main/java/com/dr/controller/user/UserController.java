@@ -90,36 +90,45 @@ public class UserController {
 
     //비밀번호 찾기 페이지
     @PostMapping("/user/PwFind")
-    public String PwFind(Model model, @RequestParam("userEmail") String userEmail, @RequestParam("userPhone") String userPhone) {
-        PwFindDTO pwFindDTO = new PwFindDTO();
+    public String PwFind(HttpSession session, Model model,
+                         @RequestParam("userEmail") String userEmail,
+                         @RequestParam("userPhone") String userPhone) {
+        PwFindDTO pwFindDTO = userService.userPwFind(userEmail, userPhone);
+        log.info("userController PwFind 메소드 - " + pwFindDTO);
 
-        log.info("userController PwFind 메소드");
-        pwFindDTO = userService.userPwFind(userEmail, userPhone);
-        log.info(pwFindDTO.toString());
-
-        if (pwFindDTO.getUserPhone() != null) {
+        if (pwFindDTO != null && pwFindDTO.getUserPhone() != null) {
             model.addAttribute("userEmail", pwFindDTO.getUserEmail());
-            model.addAttribute("userPhone", pwFindDTO.getUserPhone());
-            log.info(pwFindDTO.toString());
-
+            session.setAttribute("userPhone", pwFindDTO.getUserPhone()); // userPhone을 세션에 저장
             return "redirect:/user/PwReset";
         } else {
-            return "/user/PwFind";
+            model.addAttribute("errorMessage", "이메일 또는 핸드폰 번호가 일치하지 않습니다.");
+            return "/user/PwFind"; // 다시 비밀번호 찾기 페이지로 이동
         }
     }
 
 
+
     //비밀번호 변경 페이지
     @PostMapping("/user/PwReset")
-    public String PwReset(Model model, @RequestParam("newPassword") String userPw, @RequestParam("userPhone") String userPhone) {
-        PwFindDTO pwFindDTO = new PwFindDTO();
+    public String PwReset(HttpSession session, Model model,
+                          @RequestParam("newPassword") String userPw) {
+        String userPhone = (String) session.getAttribute("userPhone"); // 세션에서 userPhone 가져오기
+        log.info("비밀번호 변경 요청 - userPhone: " + userPhone); // 전화번호 확인 로그
 
-        model.addAttribute("userPhone", pwFindDTO.getUserPhone());
-        log.info(pwFindDTO.getUserPhone() +"출력");
+        if (userPhone != null && !userPhone.isEmpty()) {
+            userService.updatePassword(userPw, userPhone); // 비밀번호 업데이트
+        } else {
+            log.error("사용자 전화번호가 비어 있습니다."); // 에러 로그
+            model.addAttribute("errorMessage", "전화번호가 유효하지 않습니다.");
+            return "user/PwReset"; // 다시 비밀번호 변경 페이지로 돌아감
+        }
 
-        userService.updatePassword(userPw, userPhone);
-        return "redirect:/user/login";
+        session.removeAttribute("userPhone"); // 세션에서 userPhone 제거
+        return "redirect:/user/login"; // 로그인 페이지로 리다이렉트
     }
+
+
+
 
 
     //drjoin 회원가입 요청 컨트롤러

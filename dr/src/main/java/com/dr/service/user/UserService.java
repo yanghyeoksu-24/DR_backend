@@ -50,7 +50,6 @@ public class UserService<BCryptPasswordEncoder> {
     //비밀번호 변경
     public void updatePassword(String userPw, String userPhone) {
         userMapper.updatePassword(userPw, userPhone);
-
     }
 
 }
