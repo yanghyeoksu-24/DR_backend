@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface RecipeMapper {
@@ -35,7 +36,20 @@ public interface RecipeMapper {
     // 나만의 레시피 댓글 작성
     void insertReply(MyRecipeWriteCommentDTO myRecipeWriteCommentDTO);
 
+    //나만의 레시피 댓글 수정
+    void updateMyReply(MyRecipeCommentDTO myRecipeCommentDTO);
+
+//    나만의 레시피 댓글 삭제
+    void deleteMyReply(@Param("replyNumber") Long replyNumber);
+
 
 //    나만의 레시피 글쓰기
     void insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO);
+
+    // 추천 수 증가
+    void increaseGoodCount(Map<String, Long> params);
+
+    // 추천 수 감소
+    void decreaseGoodCount(Map<String, Long> params);
 }
+
