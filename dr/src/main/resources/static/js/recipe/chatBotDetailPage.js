@@ -96,7 +96,7 @@ function saveComment(commentId) {
       }
   }
 
-  // 초기 추천 수를 0으로 설정
+// 초기 추천 수를 0으로 설정
 let recommendCount = 0;
 
 // recommend 이미지를 클릭할 때 색상 토글 및 추천 수 증가/감소 기능을 적용
@@ -112,14 +112,14 @@ document.getElementById('recommendImg').addEventListener('click', function() {
     if (recommendCount > 0) {
       recommendCount--; // 추천 수 감소
     }
-  } 
+  }
   // 회색 상태인 경우 (또는 아무 색상도 없을 경우)
   else if (recommendImg.classList.contains('recommend-inactive')) {
     // 회색에서 파란색으로 전환 (추천 추가)
     recommendImg.classList.remove('recommend-inactive');
     recommendImg.classList.add('recommend-active');
     recommendCount++; // 추천 수 증가
-  } 
+  }
   // 처음 상태일 때 파란색으로 전환 (기본 초록색에서 파란색으로)
   else {
     recommendImg.classList.add('recommend-active');
