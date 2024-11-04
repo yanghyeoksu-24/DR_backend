@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/recipe/myRecipeList.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main/recipeSearchList.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
     <script defer th:src="@{/js/fragment/header.js}"></script>
@@ -20,7 +20,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 
-    <title>DR - 나만의 레시피 목록</title>
+    <title>DR - 검색 결과</title>
 
 </head>
 <body>
@@ -60,11 +60,18 @@
                     <p class="myRecipeList-select" th:text="'추천수 ' + ${result.goodCount}"></p>
                 </div>
             </div>
-            <div id="pagination"></div>
+
+            <!-- 검색 결과 -->
+            <div class="resultContainer" th:if="${searchResult.isEmpty()}">
+                <img th:src="@{/image/resultIsNull.png}" alt="검색결과 없음">
+                <div class="resultIsNull">검색 결과가 존재하지 않습니다.</div>
+            </div>
+            <div id="pagination" th:unless="${searchResult.isEmpty()}"></div>
         </div>
     </div>
 </main>
-<footer th:replace="~{/fragment/footer :: footer}"></footer>
+
+    <footer th:replace="~{/fragment/footer :: footer}"></footer>
 <script th:src="@{/js/recipe/myRecipeList.js}" defer></script>
 </body>
 </html>

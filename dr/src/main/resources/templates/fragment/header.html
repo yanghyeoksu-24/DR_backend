@@ -29,10 +29,11 @@
 
                 <input type="text" name="searchValue" class="main-searchInput" th:if="${session.userNumber != null}"
                        placeholder="검색어를 입력하세요">
-                <input type="text" name="searchValue" class="main-searchInput" th:unless="${session.userNumber != null}"
+                <input type="text" class="main-searchInput" th:unless="${session.userNumber != null}"
                        placeholder="로그인 후 이용 가능합니다" readonly>
 
-                <button><img th:src="@{/image/searchButton.png}" id="main-searchBtn"></button>
+                <button type="submit"><img th:src="@{/image/searchButton.png}" class="main-searchBtn" th:if="${session.userNumber != null}"></button>
+                <div><img th:src="@{/image/searchButton.png}" class="main-searchBtn" th:unless="${session.userNumber != null}"></div>
             </form>
 
             <div class="main-welcomeUser" th:if="${session.userNumber != null}">
