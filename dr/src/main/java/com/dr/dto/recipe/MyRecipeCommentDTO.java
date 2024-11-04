@@ -17,6 +17,6 @@ public class MyRecipeCommentDTO {
     private String replyText;               //댓글내용
     private String photoOriginal;           // 원본 사진 경로
     private String photoLocal;              // 로컬 사진 경로
-    private String replyModifyDate;
-
+    private String replyModifyDate;         //댓ㄷ글수정시간
+    private Long replyNumber;               //댓글번호
 }

@@ -48,7 +48,7 @@
             <div class="chatBotRecipeList-outbox">
                 <div class="chatBotRecipeList-listbox" th:each="recipeList : ${recipeList}">
                     <a th:href="@{/recipe/chatBotDetailPage(recipeNumber=${recipeList.recipeNumber})}">
-                        <img th:src="@{'/image/recipe/' + ${recipeList.photoOriginal}}" alt="레시피 이미지">
+                        <img th:src="@{'/image/recipe/' + ${recipeList.photoLocal}}" alt="레시피 이미지">
                     </a>
                     <p class="chatBotRecipeList-foodTitle" th:text="${recipeList.recipeTitle}"></p>
                     <span class="chatBotRecipeList-writer" th:text="${recipeList.userNickName}"></span>
