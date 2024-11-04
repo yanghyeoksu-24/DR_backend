@@ -84,6 +84,13 @@
         WHERE RECIPE_NUMBER = #{recipeNumber};
     </delete>
 
+<!--    추천수 조회-->
+    <select id="selectGoodCount" parameterType="Long" resultType="int">
+        SELECT GOOD_COUNT
+        FROM DR_RECIPE
+        WHERE RECIPE_NUMBER = #{recipeNumber}
+    </select>
+
 
     <!--    나만의 레시피 상세페이지 댓글조회-->
     <select id="selectMyRecipeComment" parameterType="Long" resultType="MyRecipeCommentDTO">

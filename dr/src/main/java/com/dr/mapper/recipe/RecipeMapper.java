@@ -51,5 +51,6 @@ public interface RecipeMapper {
 
     // 추천 수 감소
     void decreaseGoodCount(Map<String, Long> params);
+
 }
 

@@ -57,7 +57,7 @@
             <!-- 글 내용 -->
             <div class="myDetailPage-writetext">
                 <p class="myDetailPage-texts" th:text="${recipeDetail.recipeText}"></p>
-                <img th:src="@{/image/recipe/} + ${recipeDetail.photoLocal}" alt="레시피 이미지">
+                <img th:src="@{/image/photo/} + ${recipeDetail.photoLocal}" alt="레시피 이미지">
                 <div class="myDetailPage-recommendImg">
                     <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="추천 이미지">
                     <p id="recommendCount" th:text="'추천수: ' + ${recipeDetail.goodCount}">추천수: 0</p>
@@ -99,7 +99,7 @@
                                         th:attr="onclick='editComment(' + ${recipeComments.replyNumber} + ')'">수정
                                 </button>
                                 <button type="button" class="myDetailPage-deleteBtn"
-                                        th:attr="data-reply-number=${recipeComments.replyNumber}">삭제
+                                        th:onclick="'CommentDeleteClick(' + ${recipeComments.replyNumber} + ', ' + ${recipeNo} + ')'">삭제
                                 </button>
                             </div>
 
@@ -125,7 +125,6 @@
             </div>
         </div>
     </div>
-    /
 
 
 </main>

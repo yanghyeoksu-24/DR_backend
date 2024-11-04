@@ -77,37 +77,69 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteButtons.forEach(button => {
         // 각 삭제 버튼에 클릭 이벤트 리스너 추가
         button.addEventListener("click", function () {
-            if (confirm("댓글을 삭제하시겠습니까?")) {
-                // replyNumber 값을 숨겨진 input에서 가져오기
-                const replyNumber = button.closest('.myDetailPage-comment')
-                    .querySelector('input[name="replyNumber"]').value;
+            // replyNumber와 recipeNumber를 가져오기
+            const replyNumber = button.getAttribute('data-reply-number');
+            const recipeNumber = button.closest('.myDetailPage-comment')
+                .getAttribute('data-recipe-number'); // 예: data-recipe-number 속성에서 가져옴
 
-                // 서버에 삭제 요청 보내기
-                fetch('/deleteComment', {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'replyNumber=' + replyNumber
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            alert("댓글이 삭제되었습니다.");
-                            window.location.href = "/recipe/myDetailPage"; // 삭제 후 페이지 리다이렉트
-                        } else {
-                            alert("댓글 삭제에 실패했습니다.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                    });
-            }
+            // CommentDeleteClick 함수 호출
+            CommentDeleteClick(replyNumber, recipeNumber);
         });
     });
 });
 
-// 초기 추천 수를 0으로 설정
+// 댓글 삭제 함수
+function CommentDeleteClick(replyNumber, recipeNumber) {
+    console.log(recipeNumber);
+    if (confirm('댓글을 삭제하시겠습니까?')) {
+        // 서버에 삭제 요청 보내기
+        fetch('/deleteComment', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'replyNumber=' + replyNumber + '&recipeNumber=' + recipeNumber
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("댓글이 삭제되었습니다.");
+                    console.log("댓글삭제성공");
+                    window.location.href = "/recipe/myDetailPage"; // 삭제 후 페이지 리다이렉트
+                } else {
+                    alert("댓글 삭제에 실패했습니다.");
+                    console.log("댓글삭제 실패");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+}
+
+//댓글삭제
+// function CommentDeleteClick(replyNumber, callback){
+//     fetch(`/recipe/myDetailPage/${recipeNumber}/${replyNumber}`,{
+//         method:"DELETE"
+//     }).then(response =>{
+//         if(response.status === 200){
+//             callback();
+//         }
+//     })
+//
+// }
+
+
+// 초기 추천 수를 서버에서 받아와 설정
 let recommendCount = 0;
+
+$(document).ready(function() {
+    const recipeNumber = document.querySelector("input[name='recipeNumber']").value;
+
+    $.get(`/myDetailPage/${recipeNumber}/good/count`, function(data) {
+        recommendCount = data; // 서버에서 받아온 추천 수로 초기화
+        document.getElementById('recommendCount').innerText = `추천수: ${recommendCount}`;
+    });
+});
 
 // recommend 이미지를 클릭할 때 색상 토글 및 추천 수 증가/감소 기능을 적용
 document.getElementById('recommendImg').addEventListener('click', function() {
@@ -124,10 +156,12 @@ document.getElementById('recommendImg').addEventListener('click', function() {
         if (recommendCount > 0) {
             recommendCount--; // 추천 수 감소
             // AJAX 요청으로 추천 수 감소
-            $.post(`/recipes/myDetailPage/${recipeNumber}/good/remove`, { userNumber: userNumber })
+            $.post(`/myDetailPage/${recipeNumber}/good/remove`, { userNumber: userNumber })
                 .done(function() {
-                    // 서버에서 성공적으로 처리된 경우
                     recommendCountDisplay.innerText = `추천수: ${recommendCount}`;
+                })
+                .fail(function(jqXHR, textStatus, errorThrown) {
+                    console.error("추천 감소 요청 실패:", textStatus, errorThrown);
                 });
         }
     }
@@ -138,10 +172,12 @@ document.getElementById('recommendImg').addEventListener('click', function() {
         recommendImg.classList.add('recommend-active');
         recommendCount++; // 추천 수 증가
         // AJAX 요청으로 추천 수 증가
-        $.post(`/recipes/myDetailPage/${recipeNumber}/good/add`, { userNumber: userNumber })
+        $.post(`/myDetailPage/${recipeNumber}/good/add`, { userNumber: userNumber })
             .done(function() {
-                // 서버에서 성공적으로 처리된 경우
                 recommendCountDisplay.innerText = `추천수: ${recommendCount}`;
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("추천 증가 요청 실패:", textStatus, errorThrown);
             });
     }
     // 처음 상태일 때 파란색으로 전환 (기본 초록색에서 파란색으로)
@@ -149,11 +185,14 @@ document.getElementById('recommendImg').addEventListener('click', function() {
         recommendImg.classList.add('recommend-active');
         recommendCount++; // 추천 수 증가
         // AJAX 요청으로 추천 수 증가
-        $.post(`/recipes/myDetailPage/${recipeNumber}/good/add`, { userNumber: userNumber })
+        $.post(`/myDetailPage/${recipeNumber}/good/add`, { userNumber: userNumber })
             .done(function() {
-                // 서버에서 성공적으로 처리된 경우
                 recommendCountDisplay.innerText = `추천수: ${recommendCount}`;
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("추천 증가 요청 실패:", textStatus, errorThrown);
             });
     }
 });
+
 

@@ -60,37 +60,43 @@ public class RecipeController {
     }
 
 
-//    나만의 레시피 상세페이지 댓글작성
-@PostMapping("/myDetailPage")
-public String insertComment(@RequestParam("recipeNumber") Long recipeNumber,
-                            @RequestParam("replyText") String replyText,
-                            @RequestParam("userNumber") Long userNumber,
-                            RedirectAttributes redirectAttributes) {
-    if (recipeNumber == null) {
-        throw new IllegalArgumentException("Recipe number is required.");
+    //    나만의 레시피 상세페이지 댓글작성
+    @PostMapping("/myDetailPage")
+    public String insertComment(@RequestParam("recipeNumber") Long recipeNumber,
+                                @RequestParam("replyText") String replyText,
+                                @RequestParam("userNumber") Long userNumber,
+                                RedirectAttributes redirectAttributes) {
+        if (recipeNumber == null) {
+            throw new IllegalArgumentException("Recipe number is required.");
+        }
+
+        MyRecipeWriteCommentDTO commentDTO = new MyRecipeWriteCommentDTO();
+        commentDTO.setRecipeNumber(recipeNumber);
+        commentDTO.setReplyText(replyText);
+        commentDTO.setUserNumber(userNumber);
+
+        recipeService.insertMyRecipeComment(commentDTO);
+
+        redirectAttributes.addAttribute("recipeNumber", recipeNumber);
+        return "redirect:/recipe/myDetailPage";
     }
 
-    MyRecipeWriteCommentDTO commentDTO = new MyRecipeWriteCommentDTO();
-    commentDTO.setRecipeNumber(recipeNumber);
-    commentDTO.setReplyText(replyText);
-    commentDTO.setUserNumber(userNumber);
 
-    recipeService.insertMyRecipeComment(commentDTO);
-
-    redirectAttributes.addAttribute("recipeNumber", recipeNumber);
-    return "redirect:/recipe/myDetailPage";
-}
-
-
-//      나만의 레시피 상세페이지 댓글 삭제
-@PostMapping("/deleteComment")
-public ResponseEntity<String> deleteComment(@RequestParam("replyNumber") Long replyNumber) {
+    //      나만의 레시피 상세페이지 댓글 삭제
+    @PostMapping("/deleteComment")
+    public ResponseEntity<String> deleteComment(@RequestParam("replyNumber") Long replyNumber) {
         log.info(replyNumber + "lkenfvf;bv");
-    recipeService.deleteMyRecipeComment(replyNumber);
-    log.info("Comment deleted successfully: " + replyNumber);
-    return ResponseEntity.ok("Comment deleted successfully"); // Return success response
-}
+        recipeService.deleteMyRecipeComment(replyNumber);
+        log.info("Comment deleted successfully: " + replyNumber);
+        return ResponseEntity.ok("Comment deleted successfully"); // Return success response
+    }
 
+//    삭제예정
+//    @DeleteMapping("/recipe/{replyNumber}")
+//    public void deleteComment(@PathVariable("replyNumber") Long replyNumber){
+//        recipeService.deleteMyRecipeComment(replyNumber);
+//
+//    }
 
     //    챗봇 레시피 최신순
     @GetMapping("/chatBotRecipeList")
