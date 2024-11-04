@@ -52,6 +52,11 @@ document.getElementById('completeWriteBtn').addEventListener('click', function()
             if (response.ok) {
                 // 성공적으로 업데이트된 경우 처리
                 alert('수정이 완료되었습니다.\n상단 프로필은 다음 로그인 시 적용됩니다.');
+
+                // 프로필 이미지를 새로 고침 (캐시 방지)
+                const profileImageElement = document.getElementById('profileImage');
+                profileImageElement.src = profileImageElement.src.split('?')[0] + '?t=' + new Date().getTime(); // 캐시 방지
+
                 window.location.href = '/myPage/myPageInformation'; // 업데이트 후 마이페이지로 이동
             } else {
                 alert('닉네임 또는 이미지를 다시 확인해주세요.'); // 실패 메시지
@@ -62,7 +67,6 @@ document.getElementById('completeWriteBtn').addEventListener('click', function()
             alert('닉네임 또는 이미지를 다시 확인해주세요.'); // AJAX 요청 실패 시 메시지
         });
 });
-
 
 // DOM 요소 가져오기
 const nicknameDisplay = document.getElementById('nicknameDisplay');

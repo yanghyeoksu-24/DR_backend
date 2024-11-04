@@ -67,55 +67,92 @@ public class MyPageController {
     }
 
 
-    //닉네임 및 이미지 파일 수정
     @PostMapping("/updateProfile")
-    public String updateProfile(
-            @SessionAttribute("userNumber") Long userNumber,  // 현재 로그인한 사용자의 번호
-            @RequestParam("nickname") String nickname,        // 변경할 닉네임
-            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage, //MultipartFile 파일 업로드를 처리할 때 사용하는 인터페이스
-            Model model, HttpSession session) throws IOException {
+    public ResponseEntity<?> updateProfile(
+            @SessionAttribute("userNumber") Long userNumber,
+            @RequestParam("nickname") String nickname,
+            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws IOException {
 
-        // 닉네임이 입력되면 닉네임을 업데이트
+        // 닉네임 업데이트
         if (nickname != null && !nickname.isEmpty()) {
             myPageService.updateNickname(userNumber, nickname);
         }
 
-        // 이미지 파일이 있으면 저장하기
+        String photoPath = null;
+
+        // 이미지 파일 저장
         if (profileImage != null && !profileImage.isEmpty()) {
-            String photoPath = myPageService.saveProfileImage(userNumber, profileImage);
-            String photoPathWithTimestamp = photoPath + "?timestamp=" + System.currentTimeMillis();
-            model.addAttribute("photoPath", photoPathWithTimestamp);
+            photoPath = myPageService.saveProfileImage(userNumber, profileImage);
         }
 
-        return "redirect:/myPage/myPageInformation";  // 업데이트 후 마이페이지로 리다이렉트. . . . .
+        // 새 이미지 경로와 메시지를 포함하여 응답
+        Map<String, Object> response = new HashMap<>();
+        response.put("photoPath", photoPath);
+        response.put("message", "수정이 완료되었습니다.");
+
+        return ResponseEntity.ok(response); // 성공적으로 업데이트된 경우 응답
     }
 
 
-    // -- 회원탈퇴 주의사항 페이지로 넘어가기 --
+    // 회원탈퇴 주의사항 페이지
     @GetMapping("/myPageCaution")
-    public String getUserCaution() {
-
+    public String showCaution() {
         return "myPage/myPageCaution";
     }
 
-    //+테스트용 추가
-    @GetMapping("/myPageUserDelete")
-    public String deleteUser() {
-        return "/myPage/myPageDeleted";
-    }
+    @PostMapping("/myPageUserDeleted")
+    public String deleteUser(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
+                             HttpSession session) {
 
-    // -- 회원탈퇴 -- //
-    @PostMapping("/myPageUserDelete")
-    public RedirectView deleteUser(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
-                                   HttpSession session) {
+        System.out.println("유저 번호: " + userNumber);
 
-        // 세션 무효화 및 사용자 삭제 처리
-//        myPageService.deleteUser(userNumber);
-        session.invalidate(); // 세션 무효화
         myPageService.deleteUser(userNumber);
 
-        return new RedirectView("/myPage/myPageDeleted"); // 탈퇴 후 성공 페이지로 리다이렉트
-//        return new RedirectView("/myPageDeleted"); // 탈퇴 후 성공 페이지로 리다이렉트
+        session.invalidate();
+
+        return "redirect:/myPage/myPageDeleted"; // 세션이 무효화된 후 리다이렉트
+    }
+
+
+//    @GetMapping("/myPageDeleted")
+//    public String deletedPage(HttpSession session) {
+//
+//        session.invalidate();
+//        return "myPage/myPageDeleted"; // 뷰 이름 반환
+//    }
+
+    @GetMapping("/myPageDeleted")
+    public RedirectView deletedPage(HttpSession session){
+        session.invalidate();
+        return new RedirectView("/main");
+    }
+
+//    @GetMapping("/myPageDeleted")
+//    public String showDeletedPage(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
+//                                  HttpSession session) {
+//
+//        if (userNumber != null) {
+//            System.out.println("유저 번호 (삭제 전): " + userNumber);
+//            myPageService.deleteUser(userNumber);
+//            session.invalidate();  // 세션 종료
+//            System.out.println("세션이 종료되었습니다.");
+//
+//            // 삭제 후 다른 페이지로 리다이렉트
+//            return "redirect:/myPage/myPageDeleted";
+//        } else {
+//            System.out.println("유저 번호가 없습니다. 이미 세션이 만료되었거나 로그인되지 않은 상태입니다.");
+//            return "redirect:/login";
+//        }
+//    }
+
+    @GetMapping("/myPage/myPageDeleted")
+    public String deletedPage(HttpSession session, Model model) {
+        if (session.getAttribute("userNumber") == null) {
+            return "redirect:/login";  // 세션이 없으면 로그인 페이지로 리다이렉트
+        }
+
+        model.addAttribute("message", "계정이 성공적으로 삭제되었습니다.");
+        return "myPage/myPageDeleted"; // 삭제 완료 페이지로 이동
     }
 
     // -- 내정보 포인트 내역 확인 -- //

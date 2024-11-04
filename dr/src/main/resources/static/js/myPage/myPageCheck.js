@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 출석 체크가 완료되었는지 서버에서 확인
     fetch(`/myPage/myPageCheckedPlease`, {
-        method: 'POST',
-        body: JSON.stringify({ userNumber: userNumber, date: todayDateString }),
+        method: 'GET',
+        body: JSON.stringify({ userNumber: this.userNumber, date: todayDateString }),
         headers: {
             'Content-Type': 'application/json',
         }

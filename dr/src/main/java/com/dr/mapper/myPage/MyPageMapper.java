@@ -21,7 +21,7 @@
         void updateProfileImage(@Param("userNumber") Long userNumber, @Param("photoLocal") String photoLocal);
 
         // 회원 탈퇴
-        int deleteUser(@Param("userNumber") Long userNumber);
+        void deleteUser(@Param("userNumber") Long userNumber);
 
         // 내 정보 포인트 내역
         List<PointDetailDTO> pointHistory(@Param("userNumber") Long userNumber);

@@ -41,7 +41,7 @@
         <div id="calendar"></div>
     </div>
 
-    <form id="checkInForm" method="post" action="/myPage/myPageCheckedPlease">
+    <form id="checkInForm" method="GET" action="/myPage/myPageCheckedPlease">
         <input type="hidden" id="date" name="date" th:value="${currentDate}">
         <button type="submit" id="checkInButton">출석 체크</button>
     </form>
