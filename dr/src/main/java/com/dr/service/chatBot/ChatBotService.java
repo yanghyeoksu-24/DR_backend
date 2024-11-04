@@ -9,6 +9,7 @@ import org.json.JSONArray;
 
 @Service
 public class ChatBotService {
+    // application.properties에서 api키와 url 가져오기
     @Value("${openai.api.key}")
     private String apiKey;
 
@@ -20,7 +21,7 @@ public class ChatBotService {
     public String getChatbotResponse(String message) throws Exception {
         // OpenAI API 요청 JSON 작성
         JSONObject requestJson = new JSONObject();
-        requestJson.put("model", "gpt-4");
+        requestJson.put("model", "gpt-4"); // 모델 값 영향 안받음 어차피 gpt-3
 
         // 'messages' 필드로 사용자 메시지를 추가
         JSONArray messages = new JSONArray();
@@ -53,6 +54,9 @@ public class ChatBotService {
 //      return messageObject.getString("content").trim();
 
         // 받은 응답을 줄바꿈 처리를 추가해 반환
+        // 위 주석처리된 리턴이 api 응답을 바로 반환한 결과인데 콘솔에 확인해 보면
+        // 줄바꿈이 된다는 걸 알 수 있음 -> \n 이 포함되어 있다는 걸 추측
+        // 결과를 가져와 \n을 <br>로 바꾸어 리턴하면 웹 페이지에서도 구조적으로 정리된 응답 재현 가능
         String botReply = messageObject.getString("content").trim();
         return botReply.replace("\n", "<br>");  // \n을 <br>로 변환
 
