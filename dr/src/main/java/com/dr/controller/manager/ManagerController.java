@@ -11,9 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
@@ -31,7 +33,7 @@ public class ManagerController {
 
     // 1-1. 로그인 실패시
     @GetMapping("/managerLogin")
-    public String login(HttpSession session , Model model) {
+    public String login(HttpSession session, Model model) {
         String loginError = (String) session.getAttribute("loginError");
         if (loginError != null) {
             model.addAttribute("loginError", loginError); // 오류 메시지를 모델에 추가
@@ -59,13 +61,13 @@ public class ManagerController {
 
     // 2. 대시보드
     @GetMapping("/dashBoard")
-    public String dashboard(Model model, ManagerDTO managerDTO , DashBoardDTO dashBoardDTO) {
+    public String dashboard(Model model, ManagerDTO managerDTO, DashBoardDTO dashBoardDTO) {
 
         List<ManagerDTO> managerList = managerService.managerInfo();
         dashBoardDTO = managerService.dashBoardInfo();
 
-        model.addAttribute("manager" , managerList);
-        model.addAttribute("dashBoard" ,dashBoardDTO);
+        model.addAttribute("manager", managerList);
+        model.addAttribute("dashBoard", dashBoardDTO);
 
         return "manager/dashBoard";
     }
@@ -74,7 +76,7 @@ public class ManagerController {
     @GetMapping("/manageUser")
     public String manageUser(Model model) {
         List<ManagerUserDTO> userList = managerService.manageUser();
-        model.addAttribute("userList" , userList);
+        model.addAttribute("userList", userList);
 
         return "/manager/manageUser";
     }
@@ -107,8 +109,6 @@ public class ManagerController {
     }
 
 
-
-
     // 3-3. 회원정지
     @PostMapping("/userPause")
     public ResponseEntity<?> updateUser(@RequestBody Map<String, List<Integer>> request) {
@@ -133,15 +133,15 @@ public class ManagerController {
     @PostMapping("/userSearch")
     public String userSearch(@RequestParam("userNumber") int userNumber, Model model) {
         ManagerUserDTO user = managerService.userSearch(userNumber);
-        model.addAttribute("user" , user);
+        model.addAttribute("user", user);
         return "/manager/manageUser";
     }
 
     //4-1. 게시판 관리
     @GetMapping("/manageBoard")
     public String showBoard(Model model) {
-    List<ManagerBoardDTO> boardList = managerService.showBoard();
-    model.addAttribute("boardList" , boardList);
+        List<ManagerBoardDTO> boardList = managerService.showBoard();
+        model.addAttribute("boardList", boardList);
         return "/manager/manageBoard";
     }
 
@@ -168,7 +168,7 @@ public class ManagerController {
     @PostMapping("/boardSearch")
     public String boardSearch(@RequestParam("boardNumber") int boardNumber, Model model) {
         ManagerBoardDTO board = managerService.boardSearch(boardNumber);
-        model.addAttribute("board" , board);
+        model.addAttribute("board", board);
         return "/manager/manageBoard";
     }
 
@@ -176,7 +176,7 @@ public class ManagerController {
     @GetMapping("/manageRecipe")
     public String showRecipe(Model model) {
         List<ManagerRecipeDTO> recipeList = managerService.showRecipe();
-        model.addAttribute("recipeList" , recipeList);
+        model.addAttribute("recipeList", recipeList);
         return "/manager/manageRecipe";
     }
 
@@ -203,7 +203,7 @@ public class ManagerController {
     @PostMapping("/recipeSearch")
     public String recipeSearch(@RequestParam("recipeNumber") int recipeNumber, Model model) {
         ManagerRecipeDTO recipe = managerService.recipeSearch(recipeNumber);
-        model.addAttribute("recipe" , recipe);
+        model.addAttribute("recipe", recipe);
         return "/manager/manageRecipe";
     }
 
@@ -211,7 +211,7 @@ public class ManagerController {
     @GetMapping("/manageComment")
     public String showComment(Model model) {
         List<ManagerCommentDTO> replyList = managerService.showReply();
-        model.addAttribute("replyList" , replyList);
+        model.addAttribute("replyList", replyList);
         log.info(replyList.toString());
         return "/manager/manageComment";
     }
@@ -239,7 +239,7 @@ public class ManagerController {
     @PostMapping("/replySearch")
     public String replySearch(@RequestParam("replyNumber") int replyNumber, Model model) {
         ManagerCommentDTO reply = managerService.replySearch(replyNumber);
-        model.addAttribute("reply" , reply);
+        model.addAttribute("reply", reply);
         return "/manager/manageComment";
     }
 
@@ -309,8 +309,8 @@ public class ManagerController {
     // 7-4. 포인트 검색
     @PostMapping("/pointSearch")
     public String pointSearch(@RequestParam("userNickName") String userNickName, Model model) {
-        List <ManagerPointDTO> point = managerService.pointSearch(userNickName);
-        model.addAttribute("point" , point);
+        List<ManagerPointDTO> point = managerService.pointSearch(userNickName);
+        model.addAttribute("point", point);
         return "/manager/managePoint";
     }
 
@@ -318,7 +318,7 @@ public class ManagerController {
     @GetMapping("/manageReport")
     public String showReport(Model model) {
         List<ManagerReportDTO> reportList = managerService.showReport();
-        model.addAttribute("reportList" , reportList);
+        model.addAttribute("reportList", reportList);
         return "/manager/manageReport";
     }
 
@@ -328,7 +328,7 @@ public class ManagerController {
         List<Integer> sirenLists = request.get("sirenNumber");
         boolean allUpdated = true;
 
-        for (Integer sirenList : sirenLists ) {
+        for (Integer sirenList : sirenLists) {
             if (!managerService.reportDelete(sirenList)) {
                 allUpdated = false; // 하나라도 실패하면 false
             }
@@ -355,7 +355,7 @@ public class ManagerController {
         List<String> productLists = request.get("productName");
         boolean allUpdated = true;
 
-        for (String productList : productLists ) {
+        for (String productList : productLists) {
             if (!managerService.productDelete(productList)) {
                 allUpdated = false; // 하나라도 실패하면 false
             }
@@ -368,7 +368,8 @@ public class ManagerController {
         }
     }
 
-    // 9-3. 상품 등록
+
+
 
     // 상품 등록 페이지 이동
     @GetMapping("/registerProduct")
@@ -376,10 +377,45 @@ public class ManagerController {
         return "/manager/registerProduct";
     }
 
-    // 상품 등록 (사진 제외)
+    // 9-3. 상품 등록
+    // 상품 등록
     @PostMapping("/registerProduct")
-    public ResponseEntity<Map<String, String>> registerProduct(@RequestBody List<ManagerRegisterDTO> products) {
+    public ResponseEntity<String> registerProduct(
+            @ModelAttribute ManagerRegisterDTO managerRegisterDTO,
+            @RequestParam("file") MultipartFile file) {
+
+        try {
+            // 상품 등록과 파일 저장을 서비스 메서드 호출
+            managerService.registerProductAndPhoto(managerRegisterDTO, file);
+            return ResponseEntity.ok("상품이 성공적으로 등록되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("상품 등록 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+
+
+
+    // 9-4. 상품 수정 페이지 이동
+    @GetMapping("/showProduct")
+    public String updateShow(@RequestParam("productName") String productName, Model model) {
+        ManagerRegisterDTO showProduct = managerService.updateShow(productName);
+        model.addAttribute("showProduct", showProduct);
+        return "/manager/manageUpdate";
+    }
+
+    // 9-4. 상품 수정 페이지
+    @GetMapping("/updateProduct")
+    public String updateProduct() {
+        return "/manager/manageUpdate";
+    }
+
+    // 상품 추가
+    @PostMapping("/updateProduct")
+    public ResponseEntity<Map<String, String>> updateProduct(@RequestBody List<ManagerRegisterDTO> products) {
         Map<String, String> response = new HashMap<>();
+
+        log.info(products.toString()+ "dslkfndg");
+
         try {
             for (ManagerRegisterDTO product : products) {
                 ManagerRegisterDTO managerRegisterDTO = new ManagerRegisterDTO();
@@ -387,40 +423,21 @@ public class ManagerController {
                 managerRegisterDTO.setProductCode(product.getProductCode());
                 managerRegisterDTO.setProductPrice(product.getProductPrice());
 
-                managerService.productRegister(managerRegisterDTO);
+                managerService.productUpdate(managerRegisterDTO);
 
             }
-            response.put("message", "상품 등록 성공");
+            response.put("message", "상품 추가 성공");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            response.put("message", "상품 등록 실패");
+            response.put("message", "상품 추가 실패");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
-    // 9-4. 상품 수정 페이지 이동
-    @GetMapping("/showProduct")
-    public String updateShow(@RequestParam("productName") String productName , Model model) {
-        ManagerRegisterDTO showProduct =  managerService.updateShow(productName);
-        model.addAttribute("showProduct" , showProduct);
-        return "/manager/manageUpdate";
-    }
-
-    @GetMapping("/updateProduct")
-    public String updateProduct(){
-        return "/manager/manageUpdate";
-    }
-
-
-
-
-
-
-
 
     // 로그아웃
     @GetMapping("/managerLogout")
-    public RedirectView logout(HttpSession session, HttpServletResponse response){
+    public RedirectView logout(HttpSession session, HttpServletResponse response) {
         session.invalidate();
         return new RedirectView("/manager/managerLogin");
     }
