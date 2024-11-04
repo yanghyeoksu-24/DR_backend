@@ -77,7 +77,7 @@
                 </li>
 
                 <li th:each="item : ${replyList}" th:if="${item != null}">
-                    <a th:href="${item.recipeNumber!= null ?
+                    <a th:href="${item.boardNumber == null ?
         (item.recipeType == '나만의레시피' ?
             '/recipe/myDetailPage?recipeNumber=' + item.recipeNumber :
             '/recipe/chatBotDetailPage?recipeNumber=' + item.recipeNumber)
