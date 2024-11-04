@@ -1,8 +1,10 @@
 // 댓글 등록 함수
 function submitComment() {
-  if (confirm("댓글을 등록하시겠습니까?")) {
-    document.getElementById("commentForm").submit();
+  const confirmation = confirm("댓글을 등록하시겠습니까?");
+  if (confirmation) {
     alert("댓글이 등록되었습니다.");
+  } else {
+    return;
   }
 }
 
