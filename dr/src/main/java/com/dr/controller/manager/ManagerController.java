@@ -11,9 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
@@ -366,7 +368,8 @@ public class ManagerController {
         }
     }
 
-    // 9-3. 상품 등록
+
+
 
     // 상품 등록 페이지 이동
     @GetMapping("/registerProduct")
@@ -374,27 +377,23 @@ public class ManagerController {
         return "/manager/registerProduct";
     }
 
-    // 상품 등록 (사진 제외)
+    // 9-3. 상품 등록
+    // 상품 등록
     @PostMapping("/registerProduct")
-    public ResponseEntity<Map<String, String>> registerProduct(@RequestBody List<ManagerRegisterDTO> products) {
-        Map<String, String> response = new HashMap<>();
+    public ResponseEntity<String> registerProduct(
+            @ModelAttribute ManagerRegisterDTO managerRegisterDTO,
+            @RequestParam("file") MultipartFile file) {
+
         try {
-            for (ManagerRegisterDTO product : products) {
-                ManagerRegisterDTO managerRegisterDTO = new ManagerRegisterDTO();
-                managerRegisterDTO.setProductName(product.getProductName());
-                managerRegisterDTO.setProductCode(product.getProductCode());
-                managerRegisterDTO.setProductPrice(product.getProductPrice());
-
-                managerService.productRegister(managerRegisterDTO);
-
-            }
-            response.put("message", "상품 등록 성공");
-            return ResponseEntity.ok(response);
+            // 상품 등록과 파일 저장을 서비스 메서드 호출
+            managerService.registerProductAndPhoto(managerRegisterDTO, file);
+            return ResponseEntity.ok("상품이 성공적으로 등록되었습니다.");
         } catch (Exception e) {
-            response.put("message", "상품 등록 실패");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            return ResponseEntity.status(500).body("상품 등록 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
+
+
 
     // 9-4. 상품 수정 페이지 이동
     @GetMapping("/showProduct")

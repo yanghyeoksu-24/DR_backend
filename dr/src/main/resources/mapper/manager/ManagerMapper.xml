@@ -308,21 +308,21 @@
     </delete>
 
     <!-- 9-3. 상품 등록 -->
-    <insert id="productRegister" parameterType="ManagerRegisterDTO">
+    <insert id="registerProduct" parameterType="ManagerRegisterDTO">
         <selectKey keyProperty="productNumber" resultType="int" order="BEFORE">
             SELECT SEQ_PRODUCT_NUMBER.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO DR_PRODUCT (PRODUCT_NUMBER , PRODUCT_NAME , PRODUCT_CODE , PRODUCT_PRICE)
+        INSERT INTO DR_PRODUCT (PRODUCT_NUMBER, PRODUCT_NAME, PRODUCT_CODE, PRODUCT_PRICE)
         VALUES (#{productNumber}, #{productName}, #{productCode}, #{productPrice})
     </insert>
 
     <!-- 9-3. 상품 사진 -->
-    <insert id="productPhoto" parameterType="ManagerPhotoDTO">
+    <insert id="registerPhoto" parameterType="ManagerPhotoDTO">
         <selectKey keyProperty="photoNumber" resultType="int" order="BEFORE">
             SELECT SEQ_PHOTO_NUMBER.NEXTVAL FROM DUAL
         </selectKey>
-            INSERT INTO DR_PHOTO (PHOTO_NUMBER , PHOTO_ORIGINAL , PHOTO_LOCAL, PHOTO_SIZE , PHOTO_UPLOAD , PRODUCT_NUMBER)
-            VALUES (#{photoNumber} , #{productOriginal} , #{productLocal} , #{photoSize} , #{photoUpload} , #{productNumber} )
+        INSERT INTO DR_PHOTO (PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_SIZE, PHOTO_UPLOAD, PRODUCT_NUMBER)
+        VALUES (#{photoNumber}, #{productOriginal}, #{productLocal}, #{photoSize}, #{photoUpload}, #{productNumber})
     </insert>
 
 

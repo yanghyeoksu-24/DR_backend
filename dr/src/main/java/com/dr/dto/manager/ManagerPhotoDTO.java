@@ -16,4 +16,5 @@ public class ManagerPhotoDTO {
     private String photoSize;
     private String photoUpload;
     private int productName;
+    private int productNumber;
 }
