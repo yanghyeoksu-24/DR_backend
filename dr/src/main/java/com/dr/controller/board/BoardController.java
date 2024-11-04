@@ -23,20 +23,12 @@ public class BoardController {
     private final BoardService boardService;
 
 
-
-
-
     // 게시판 신고 페이지 이동
     @GetMapping("/boardReport")
     public String boardReportPage() {
         return "/board/boardReport";
     }
 
-    // 자유게시판 상세 페이지 이동
-//    @GetMapping("/freeBoardDetail")
-//    public String freeBoardDetailPage() {
-//        return "/board/freeBoardDetail";
-//    }
 
     // 자유게시판 글 수정 페이지 이동
     @GetMapping("/freeBoardModify")
@@ -50,11 +42,7 @@ public class BoardController {
         return "/board/freeBoardWrite";
     }
 
-    // 꿀팁게시판 상세 페이지 이동
-//    @GetMapping("/honeyBoardDetail")
-//    public String honeyBoardDetailPage() {
-//        return "/board/honeyBoardDetail";
-//    }
+
 
     // 꿀팁게시판 글 수정 이동
     @GetMapping("/honeyBoardModify")
@@ -106,11 +94,15 @@ public class BoardController {
     //자유게시판 상세페이지(게시글 상세 + 댓글)
     @GetMapping("/freeBoardDetail")
     public String freeBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model) {
+
+
         FreeBoardDetailDTO freeBoardDetail = boardService.freeBoardDetail(boardNumber);
+
         List<FreeBoardCommentDTO> freeBoardComments = boardService.freeBoardCommentList(boardNumber);
 
         model.addAttribute("freeBoardDetail", freeBoardDetail);
         model.addAttribute("freeBoardComments", freeBoardComments);
+
 
         return "/board/freeBoardDetail";
     }
@@ -127,22 +119,29 @@ public class BoardController {
         return "/board/honeyBoardDetail";
     }
 
-
-    // 댓글 작성 후 리다이렉트 시 댓글을 함께 로드하도록 하는 메서드
+    //자유게시판 상세 페이지 댓글 작성
     @PostMapping("/freeBoardDetail")
     public String freeBoardInsertReply(@RequestParam("boardNumber") Long boardNumber,
                                        @RequestParam("replyText") String replyText,
                                        @RequestParam("userNumber") Long userNumber,
                                        RedirectAttributes redirectAttributes) {
+
+        if (boardNumber == null) {
+            throw new IllegalArgumentException("Board number is required");
+        }
+
         FreeBoardCommentDTO freeBoardCommentDTO = new FreeBoardCommentDTO();
         freeBoardCommentDTO.setBoardNumber(boardNumber);
         freeBoardCommentDTO.setReplyText(replyText);
         freeBoardCommentDTO.setUserNumber(userNumber);
 
         boardService.freeBoardInsertReply(freeBoardCommentDTO);
+
+        // Redirect 후 댓글을 로드하기 위해 boardNumber를 추가
         redirectAttributes.addAttribute("boardNumber", boardNumber);
 
-        return "redirect:/freeBoardDetail"; // boardNumber를 쿼리 매개변수로 포함하지 않아도 리다이렉트시 자동 전달됨
+        return "redirect:/board/freeBoardDetail"; // boardNumber를 쿼리 매개변수로 포함
     }
+
 
 }
