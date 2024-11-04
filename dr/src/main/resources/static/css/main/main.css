@@ -73,7 +73,7 @@ a:active {
 }
 
 .main-section2Container {
-    height: 1090px;
+    height: 1130px;
 }
 
 .main-section2Frame,
@@ -98,8 +98,12 @@ a:active {
     color: #F44336;
 }
 
-.main-sectionSubTitle {
+#main-titleNotice{
     margin-top: 60px;
+    color: gray;
+}
+
+.main-sectionSubTitle {
     font-size: 30px;
 }
 
