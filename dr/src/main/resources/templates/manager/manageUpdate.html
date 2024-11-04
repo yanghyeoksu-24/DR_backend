@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -53,7 +53,7 @@
 
     <div id="manage-member">
         <div id="manage-memberTop">
-            <p id="manage-memberBold">상품 수정</p>
+            <p id="manage-memberBold">상품 추가</p>
         </div>
 
         <div id="manage-register">
@@ -78,13 +78,13 @@
 
             <div id="register-right">
                 <div class="register-right-con">
-                    <input type="text" name="productName" th:value="${showProduct.productName}">
+                    <input type="text" name="productName1" th:value="${showProduct.productName}" readonly>
                 </div>
                 <div id="register-right-img">
                     <img th:src="@{/image/photo/} + ${showProduct.photoLocal}">
                 </div>
                 <div class="register-right-con">
-                    <input type="text" name="productCode">
+                    <input type="text" name="productCode1" readonly>
                     &nbsp;
                     <button id="numberUp">+</button>
                 </div>
@@ -92,15 +92,15 @@
 
                 </div>
                 <div class="register-right-con">
-                    <input type="text" name="productPoint" th:value="${showProduct.productPrice}">
+                    <input type="text" name="productPoint1" th:value="${showProduct.productPrice}" readonly>
                 </div>
             </div>
 
         </div>
 
-        <a href="./../../html/manager/manageProduct.html">
-            <button id="memberOut">상품 추가</button>
-        </a>
+
+        <button id="updateButton">상품 추가</button>
+
 
     </div>
 
