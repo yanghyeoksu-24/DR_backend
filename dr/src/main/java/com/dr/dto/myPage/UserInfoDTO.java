@@ -17,4 +17,5 @@ public class UserInfoDTO {
     private int environmentRank;
     private int totalPoints;
     private String photo;
+    private Long userNumber;
 }

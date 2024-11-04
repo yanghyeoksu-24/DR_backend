@@ -11,10 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +33,8 @@ public class MyPageController {
     // -- 내 정보 확인하기 --
     @GetMapping("/myPageInformation")
     public String getUserInfo(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model) {
-    // value = userNumber는 세션에 저장된 값
-    // userNumber가 없을 경우 null이 나오고, required = true로 설정하면 "userNumber" 세션이 없을 때 예외 발생
+        // value = userNumber는 세션에 저장된 값
+        // userNumber가 없을 경우 null이 나오고, required = true로 설정하면 "userNumber" 세션이 없을 때 예외 발생
         // 세션에 userNumber가 없는 경우 로그인 페이지로 리다이렉트
         if (userNumber == null) {
             return "redirect:/user/login";
@@ -60,7 +62,7 @@ public class MyPageController {
             return ResponseEntity.ok(false); //중복된 닉네임
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(true);
-//            HTTP 응답 상태를 409(CONFLICT)로 설정하고 true를 반환합// 사용 가능
+            // HTTP 응답 상태를 409(CONFLICT)로 설정하고 true를 반환합// 사용 가능
         }
     }
 
@@ -98,7 +100,7 @@ public class MyPageController {
 
     //+테스트용 추가
     @GetMapping("/myPageUserDelete")
-    public String deleteUser(){
+    public String deleteUser() {
         return "/myPage/myPageDeleted";
     }
 
@@ -118,7 +120,7 @@ public class MyPageController {
 
     // -- 내정보 포인트 내역 확인 -- //
     @GetMapping("/myPageMyPoint")
-    public String getPointHistory(@SessionAttribute(value = "userNumber", required = false) Long userNumber,HttpSession session, Model model) {
+    public String getPointHistory(@SessionAttribute(value = "userNumber", required = false) Long userNumber, HttpSession session, Model model) {
 
         // 세션에 userNumber가 없는 경우 로그인 페이지로 리다이렉트
         if (userNumber == null) {
@@ -149,7 +151,7 @@ public class MyPageController {
 
     // -- 내정보 내가 쓴 게시글 목록 확인 -- //
     @GetMapping("/myPageMyPost")
-    public String getUserPosts(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model){
+    public String getUserPosts(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model) {
         // 세션에 userNumber가 없는 경우 로그인 페이지로 리다이렉트
         if (userNumber == null) {
             return "redirect:/user/login";
@@ -170,7 +172,7 @@ public class MyPageController {
         }
 
         List<UserSteamDTO> userSteamList = myPageService.getUserSteam(userNumber);
-        System.out.println("찜 번호 : "+userSteamList);
+        System.out.println("찜 번호 : " + userSteamList);
         model.addAttribute("userSteamList", userSteamList);
 
         return "myPage/myPageSteamedList";
@@ -179,7 +181,7 @@ public class MyPageController {
     // -- 찜 삭제 -- //
     @PostMapping("/steamedDelete")
     public RedirectView deleteSteam(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
-                              @RequestParam(name = "recipeNumber") Long recipeNumber) {
+                                    @RequestParam(name = "recipeNumber") Long recipeNumber) {
 
         UserSteamDTO userSteamDTO = new UserSteamDTO();
         userSteamDTO.setUserNumber(userNumber);
@@ -205,24 +207,57 @@ public class MyPageController {
         return "myPage/myPageMyComplaint";
     }
 
-    @GetMapping("/myPageCheck")
-    @ResponseBody
-    public ResponseEntity<String> checkAttendance(@RequestParam("userNumber") String userNumber,
-                                                  @RequestParam("date") String date) {
-        // 출석 체크 로직 추가
-        boolean isCheckedIn = checkAttendanceLogic(userNumber, date); // 예시 함수
+    @GetMapping("/myPageCheckedPlease")
+    public String checkAttendance(
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber,
+            @RequestParam(value = "date", required = false) String date,
+            Model model) {
 
-        if (isCheckedIn) {
-            return ResponseEntity.ok("출석 체크가 완료되었습니다.");
-        } else {
-            return ResponseEntity.ok("이미 출석 체크가 완료되었습니다."); // 예시 메시지
+        // 현재 날짜를 문자열로 포맷하여 모델에 추가
+        String formattedCurrentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        model.addAttribute("currentDate", formattedCurrentDate);
+
+        // 로그인 여부 확인
+        if (userNumber == null) {
+            model.addAttribute("message", "사용자가 로그인되지 않았습니다.");
+            return "error";
         }
-    }
 
-    private boolean checkAttendanceLogic(String userNumber, String date) {
-        // 출석 체크 로직을 구현
-        // 출석 체크된 상태인지 확인하고, 그렇지 않으면 체크 처리
-        return true; // 출석 체크 성공 예시
+        // 날짜가 제공되지 않은 경우 현재 날짜로 설정
+        if (date == null) {
+            date = formattedCurrentDate;
+        }
+
+        System.out.println("User Number: " + userNumber);
+        System.out.println("Date: " + date);
+
+        try {
+            // 오늘 출석 체크 여부 확인
+            boolean isCheckedIn = myPageService.todayCheck(userNumber);
+
+            if (!isCheckedIn) { //0보다 크지않으면...(출석체크 안됬을때)
+                // 출석 체크 수행
+                myPageService.insertCheck(userNumber, date);
+
+                // 포인트 적립 로직
+                PointCheckDTO pointCheckDTO = new PointCheckDTO();
+                pointCheckDTO.setUserNumber(userNumber);
+                pointCheckDTO.setPointGet(10); // 적립할 포인트 (여기서는 10포인트)
+                pointCheckDTO.setPointNote("출석체크"); // 포인트 사유
+                pointCheckDTO.setPointDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); // 현재 날짜
+
+                // 포인트 기록 삽입
+                myPageService.insertPointRecord(pointCheckDTO);
+                model.addAttribute("message", "출석 체크가 완료되었습니다. 10 포인트가 적립되었습니다.");
+            } else {
+                model.addAttribute("message", "이미 출석 체크가 완료되었습니다.");
+            }
+        } catch (Exception e) {
+            System.err.println("출석 체크 중 오류 발생: " + e.getMessage());
+            model.addAttribute("message", "출석 체크 중 오류가 발생했습니다. 다시 시도해 주세요.");
+        }
+
+        return "myPage/myPageChecked";
     }
 }
 

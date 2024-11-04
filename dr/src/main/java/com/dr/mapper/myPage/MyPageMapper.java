@@ -35,17 +35,17 @@
         //UserSteamDTO 리스트를 반환하며, userNumber를 매개변수로 받아 사용자의 찜 목록을 조회
         List<UserSteamDTO> getUserSteam(@Param("userNumber") Long userNumber);
 
-        //찜 목록 삭제
+        // 찜 목록 삭제
         void deleteUserSteam(UserSteamDTO userSteamDTO);
 
-        //신고 내역
+        // 신고 내역
         List<SirenListDTO> getSirenList(@Param("userNumber") Long userNumber);
 
         // 오늘의 출석 여부 확인
         int todayCheck(@Param("userNumber") Long userNumber);
 
-        // 출석 기록 삽입
-        void insertCheck(@Param("userNumber") Long userNumber, @Param("dailyDate") String dailyDate);
+        // 출석 기록 삽입 (CheckDTO 객체를 사용하도록 수정 가능)
+        void insertCheck(CheckDTO checkDTO); // 만약 CheckDTO를 사용한다면 이렇게 변경
 
         // 개근 여부 확인
         int monthFullCheck(@Param("userNumber") Long userNumber);
