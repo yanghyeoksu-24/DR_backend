@@ -104,9 +104,9 @@
     <!--  자유게시판 댓글작성-->
     <insert id="freeBoardInsertReply" parameterType="FreeBoardCommentDTO">
         <selectKey keyProperty="replyNumber" resultType="Long" order="BEFORE">
-            SELECT SEQ_REPLY.nextval FROM DUAL
+            SELECT SEQ_REPLY_NUMBER.nextval FROM DUAL
         </selectKey>
-        INSERT INTO TBL_REPLY(REPLY_NUMBER, REPLY_TEXT, BOARD_NUMBER, USER_NUMBER)
+        INSERT INTO DR_REPLY(REPLY_NUMBER, REPLY_TEXT, BOARD_NUMBER, USER_NUMBER)
         VALUES (#{replyNumber}, #{replyText}, #{boardNumber}, #{userNumber})
     </insert>
 
