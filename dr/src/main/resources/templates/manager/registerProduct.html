@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -79,35 +79,31 @@
 
             <div class="register-right">
                 <div class="register-right1">
-                    <form class="register-right" th:action="@{/upload/file}" method="post"
-                          enctype="multipart/form-data">
-                        <div class="register-right-con2">
-                            <input type="text" name="productName" placeholder="ex&#41; 비타500">
-                        </div>
+                    <div class="register-right-con2">
+                        <input type="text" name="productName" placeholder="ex&#41; 비타500" required>
+                    </div>
 
-                        <div id="register-right-img">
-                            <input type="file" name="file"><br><br>
-                            <button type="submit">사진등록</button>
-                        </div>
+                    <div id="register-right-img">
+                        <input type="file" name="file" required><br><br>
+                    </div>
 
-                        <span th:if="${message}"
-                              th:text="${message}"
-                              th:classappend="${status == 'success' ? 'success-message' : 'error-message'}">
+                    <span th:if="${message}"
+                          th:text="${message}"
+                          th:classappend="${status == 'success' ? 'success-message' : 'error-message'}">
                         </span>
-                    </form>
                 </div>
 
 
                 <div class="register-right2">
                     <div class="register-right-con">
-                        <input type="text" name="productCodePlus" placeholder="ex&#41; F51K5" readonly>&nbsp;
+                        <input type="text" name="productCode" placeholder="ex&#41; F51K5">&nbsp;
                         <button id="numberUp">+</button>
                     </div>
 
                     <div class="register-right-con" id="targetDiv"></div>
 
                     <div class="register-right-con">
-                        <input type="text" name="productPoint" placeholder="ex&#41; 500">
+                        <input type="text" name="productPoint" placeholder="ex&#41; 500" required>
                     </div>
 
                     <button id="productButton">상품 등록</button>
@@ -119,7 +115,6 @@
     </div>
 
 </div>
-
 
 <script src="./../../js/manager/registerProduct.js"></script>
 </body>
