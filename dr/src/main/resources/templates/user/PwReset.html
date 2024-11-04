@@ -23,11 +23,11 @@
         </div>
         <form method="post" id="pwResetForm" class="pwreset-form" th:action="@{/user/PwReset}">
 
-            <input type="hidden" name="userPhone" th:value="${userPhone}"> <!-- 수정된 부분 -->
+            <input type="text" name="userPhone"  th:value="${userPhone}">
 
             <label for="newPassword" class="pwreset-label">새 비밀번호</label>
             <div class="input-withButton">
-                <input type="newPassword" id="newPassword" name="userPw" class="pwreset-input"
+                <input type="password" id="newPassword" name="userPw" class="pwreset-input"
                        placeholder="새 비밀번호를 입력하세요." required>
                 <img th:src="@{/image/noView.png}" id="passwordToggle" class="toggle-password" alt="비밀번호 보기/숨기기">
             </div>

@@ -322,7 +322,7 @@
             SELECT SEQ_PHOTO_NUMBER.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO DR_PHOTO (PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_SIZE, PHOTO_UPLOAD, PRODUCT_NUMBER)
-        VALUES (#{photoNumber}, #{productOriginal}, #{productLocal}, #{photoSize}, #{photoUpload}, #{productNumber})
+        VALUES (#{photoNumber}, #{photoOriginal}, #{photoLocal}, #{photoSize}, TO_DATE(#{photoUpload}, 'YYYY-MM-DD HH24:MI:SS'), #{productNumber})
     </insert>
 
 
