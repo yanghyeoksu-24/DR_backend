@@ -7,7 +7,7 @@
         R.RECIPE_TITLE AS recipeTitle,
         U.USER_NICKNAME AS userNickName,
         TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
-        P.PHOTO_LOCAL AS photoOriginal,
+        P.PHOTO_LOCAL AS photoLocal,
         COUNT(G.GOOD_NUMBER) AS goodCount  -- 추천수 조회
         FROM DR_RECIPE R
         JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
@@ -24,7 +24,7 @@
                R.RECIPE_TITLE AS recipeTitle,
                U.USER_NICKNAME AS userNickName,
                TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
-               P.PHOTO_LOCAL AS photoOriginal,
+               P.PHOTO_LOCAL AS photoLocal,
                COUNT(G.GOOD_NUMBER) AS goodCount
         FROM DR_RECIPE R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
@@ -64,6 +64,26 @@
             R.USER_NUMBER
     </select>
 
+    <!-- 추천 수 증가 -->
+    <insert id="increaseGoodCount" parameterType="Map">
+        INSERT INTO DR_GOOD (GOOD_NUMBER, RECIPE_NUMBER, USER_NUMBER)
+        VALUES (SEQ_GOOD_NUMBER.NEXTVAL, #{recipeNumber}, #{userNumber});
+
+        UPDATE DR_RECIPE
+        SET GOOD_COUNT = GOOD_COUNT + 1
+        WHERE RECIPE_NUMBER = #{recipeNumber};
+    </insert>
+
+    <!-- 추천 수 감소 -->
+    <delete id="decreaseGoodCount" parameterType="Map">
+        DELETE FROM DR_GOOD
+        WHERE RECIPE_NUMBER = #{recipeNumber} AND USER_NUMBER = #{userNumber};
+
+        UPDATE DR_RECIPE
+        SET GOOD_COUNT = GOOD_COUNT - 1
+        WHERE RECIPE_NUMBER = #{recipeNumber};
+    </delete>
+
 
     <!--    나만의 레시피 상세페이지 댓글조회-->
     <select id="selectMyRecipeComment" parameterType="Long" resultType="MyRecipeCommentDTO">
@@ -96,9 +116,18 @@
     </insert>
 
 <!--    나만의 레시피 댓글 수정-->
-    <update id="deleteReply" parameterType="MyRecipeCommentDTO">
-        UPDATE
+    <update id="updateReply" parameterType="MyRecipeCommentDTO">
+        UPDATE DR_REPLY
+        SET REPLY_TEXT = #{replyText},
+            REPLY_MODIFY_DATE = SYSDATE
+        WHERE REPLY_NUMBER = #{replyNumber} AND USER_NUMBER = #{userNumber};
     </update>
+
+<!--    나만의 레시피 댓글 삭제-->
+    <delete id="deleteMyReply" parameterType="Long">
+        DELETE FROM DR_REPLY
+        WHERE REPLY_NUMBER = #{replyNumber}
+    </delete>
 
     <!--    챗봇레시피 최신순-->
     <select id="selectAllPages1" resultType="ChatBotRecipeListDTO">
@@ -106,7 +135,7 @@
         R.RECIPE_TITLE AS recipeTitle,
         U.USER_NICKNAME AS userNickName,
         TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
-        P.PHOTO_LOCAL AS photoOriginal,
+        P.PHOTO_LOCAL AS photoLocal,
         COUNT(G.GOOD_NUMBER) AS goodCount  -- 추천수 조회
         FROM DR_RECIPE R
         JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
@@ -123,7 +152,7 @@
                R.RECIPE_TITLE AS recipeTitle,
                U.USER_NICKNAME AS userNickName,
                TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
-               P.PHOTO_LOCAL AS photoOriginal,
+               P.PHOTO_LOCAL AS photoLocal,
                COUNT(G.GOOD_NUMBER) AS goodCount
         FROM DR_RECIPE R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER

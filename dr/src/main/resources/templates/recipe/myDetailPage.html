@@ -11,7 +11,8 @@
     <!-- 네비바 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
     <!-- 제이쿼리 -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
     <!-- 페이지네이션 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
@@ -67,9 +68,9 @@
             <div class="myDetailPage-commentSection">
                 <div class="myDetailPage-commentInput" id="commentInput">
                     <form th:action="@{/recipe/myDetailPage}" method="post">
-                        <input type="hidden" name="recipeNumber" th:value="${recipeDetail.recipeNumber}" />
+                        <input type="hidden" name="recipeNumber" th:value="${recipeDetail.recipeNumber}"/>
                         <textarea id="commentTextArea" placeholder="댓글을 입력하세요" rows="3" name="replyText"></textarea>
-                        <input type="hidden" name="userNumber" th:value="${recipeDetail.userNumber}" />
+                        <input type="hidden" name="userNumber" th:value="${recipeDetail.userNumber}"/>
                         <div class="myDetailPage-commentActions">
                             <button class="myDetailPage-addBtn" onclick="submitComment()">등록</button>
                         </div>
@@ -80,22 +81,53 @@
                 <div th:each="recipeComments : ${recipeComments}">
                     <div class="myDetailPage-comment">
                         <div class="myDetailPage-commentUserImg">
-                            <img th:src="@{/image/photo/} + ${recipeComments.photoLocal}">
+                            <img th:src="@{/image/photo/} + ${recipeComments.photoLocal}" alt="User Image">
                         </div>
                         <div class="myDetailPage-commentContent">
+                            <input type="hidden" name="replyNumber" th:value="${recipeComments.replyNumber}">
                             <div class="myDetailPage-commentHeader">
-                                <span class="myDetailPage-commentUsername" th:text="${recipeComments.userNickName}"></span>
+                                <span class="myDetailPage-commentUsername"
+                                      th:text="${recipeComments.userNickName}"></span>
                                 <button class="myDetailPage-reportBtn">신고</button>
                             </div>
                             <div class="myDetailPage-commentText" th:text="${recipeComments.replyText}"></div>
                             <div class="myDetailPage-commentTime" th:text="${recipeComments.replyWriteDate}"></div>
+
+                            <!-- 수정 및 삭제 버튼 그룹 (모든 댓글에 표시) -->
+                            <div class="myDetailPage-buttonGroup">
+                                <button class="myDetailPage-editBtn"
+                                        th:attr="onclick='editComment(' + ${recipeComments.replyNumber} + ')'">수정
+                                </button>
+                                <button type="button" class="myDetailPage-deleteBtn"
+                                        th:attr="data-reply-number=${recipeComments.replyNumber}">삭제
+                                </button>
+                            </div>
+
+                            <!-- 댓글 수정 입력창, 기본적으로 숨김 상태 -->
+                            <div class="myDetailPage-commentInput"
+                                 th:attr="id='editInput' + ${recipeComments.replyNumber}" style="display:none;">
+                                <textarea th:attr="id='editTextarea' + ${recipeComments.replyNumber}"
+                                          placeholder="댓글을 입력하세요..."></textarea>
+                                <div class="myDetailPage-commentActions">
+                                    <button class="myDetailPage-editBtn"
+                                            th:attr="onclick='saveComment(' + ${recipeComments.replyNumber} + ')'">저장
+                                    </button>
+                                    <button class="myDetailPage-deleteBtn"
+                                            th:attr="onclick='cancelEdit(' + ${recipeComments.replyNumber} + ')'">취소
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- 댓글 리스트 반복문 끝 -->
+
             </div>
         </div>
     </div>
+    /
+
+
 </main>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 <script src="./../../js/recipe/myDetailPage.js" defer></script>

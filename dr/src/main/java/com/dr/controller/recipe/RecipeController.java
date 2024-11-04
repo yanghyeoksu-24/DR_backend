@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.CtBehavior;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,23 +40,7 @@ public class RecipeController {
         return "recipe/myRecipeList";  // myRecipeList.html로 데이터 전달
     }
 
-    //    챗봇 레시피 최신순
-    @GetMapping("/chatBotRecipeList")
-    public String chatBotRecipeList(Model model) {
-        // 전체 레시피 목록 조회
-        List<ChatBotRecipeListDTO> recipeList = recipeService.findAllRecipes1();
-        // 모델에 레시피 목록 추가
-        model.addAttribute("recipeList", recipeList);
-        return "recipe/chatBotRecipeList";  // chatBotRecipeList.html로 데이터 전달
-    }
 
-//    챗봇 레시피 추천순
-    @GetMapping("/chatBotRecipeListGood")
-    public String chatBotRecipeListGood(Model model) {
-        List<ChatBotRecipeListDTO> recipeListGood = recipeService.findAllRecipes1Good();
-        model.addAttribute("recipeList", recipeListGood);
-        return "recipe/chatBotRecipeList";
-    }
 
     //    나만의레시피 상세페이지 + 댓글 조회
     @GetMapping("/myDetailPage")
@@ -97,9 +82,33 @@ public String insertComment(@RequestParam("recipeNumber") Long recipeNumber,
 }
 
 
+//      나만의 레시피 상세페이지 댓글 삭제
+@PostMapping("/deleteComment")
+public ResponseEntity<String> deleteComment(@RequestParam("replyNumber") Long replyNumber) {
+        log.info(replyNumber + "lkenfvf;bv");
+    recipeService.deleteMyRecipeComment(replyNumber);
+    log.info("Comment deleted successfully: " + replyNumber);
+    return ResponseEntity.ok("Comment deleted successfully"); // Return success response
+}
 
 
+    //    챗봇 레시피 최신순
+    @GetMapping("/chatBotRecipeList")
+    public String chatBotRecipeList(Model model) {
+        // 전체 레시피 목록 조회
+        List<ChatBotRecipeListDTO> recipeList = recipeService.findAllRecipes1();
+        // 모델에 레시피 목록 추가
+        model.addAttribute("recipeList", recipeList);
+        return "recipe/chatBotRecipeList";  // chatBotRecipeList.html로 데이터 전달
+    }
 
+    //    챗봇 레시피 추천순
+    @GetMapping("/chatBotRecipeListGood")
+    public String chatBotRecipeListGood(Model model) {
+        List<ChatBotRecipeListDTO> recipeListGood = recipeService.findAllRecipes1Good();
+        model.addAttribute("recipeList", recipeListGood);
+        return "recipe/chatBotRecipeList";
+    }
 
     //    챗봇레시피 상세페이지 + 댓글조회
     @GetMapping("/chatBotDetailPage")
@@ -136,6 +145,20 @@ public String insertComment(@RequestParam("recipeNumber") Long recipeNumber,
             model.addAttribute("errorMessage", "레시피 작성 중 오류가 발생했습니다.");
             return "recipe/myRecipeWriter";  // 오류 발생 시 작성 페이지로 다시 이동
         }
+    }
+
+    // 추천 수 증가
+    @PostMapping("/myDetailPage/{recipeNumber}/good/add")
+    public ResponseEntity<Void> addGood(@PathVariable Long recipeNumber, @RequestParam Long userNumber) {
+        recipeService.addGood(recipeNumber, userNumber);
+        return ResponseEntity.ok().build();
+    }
+
+    // 추천 수 감소
+    @PostMapping("/myDetailPage/{recipeNumber}/good/remove")
+    public ResponseEntity<Void> removeGood(@PathVariable Long recipeNumber, @RequestParam Long userNumber) {
+        recipeService.removeGood(recipeNumber, userNumber);
+        return ResponseEntity.ok().build();
     }
 
 
