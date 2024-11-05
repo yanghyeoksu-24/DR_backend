@@ -110,6 +110,13 @@
         VALUES (#{replyNumber}, #{replyText}, #{boardNumber}, #{userNumber})
     </insert>
 
+<!--    자유게시판 댓글수정-->
+    <update id="freeBoardUpdateReply">
+        UPDATE DR_REPLY
+        SET REPLY_TEXT = #{replyText}
+        WHERE REPLY_NUMBER = #{replyNumber}
+        AND USER_NUMBER = #{userNumber}
+    </update>
 
     <!-- 꿀팁게시판 상세 정보 조회 -->
     <select id="honeyBoardDetail" resultType="HoneyBoardDetailDTO">
