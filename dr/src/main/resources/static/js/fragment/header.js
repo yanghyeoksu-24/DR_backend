@@ -12,6 +12,16 @@ $(document).ready(function () {
     });
   }
 
+  // 검색 버튼 클릭 이벤트
+  $('.main-searchBar').on('submit', function (event) {
+    let searchValue = $(this).find('input[name="searchValue"]').val(); // 입력값 가져오기
+
+    if (!searchValue) { // 입력값이 없을 경우
+      event.preventDefault(); // 폼 제출 방지
+      alert('검색어를 입력하세요'); // 경고 메시지 표시
+    }
+  });
+
   // 각 메뉴에 대해 함수 호출
   setupMenuToggle('.main-recipe', '.main-recipeList');
   setupMenuToggle('.main-board', '.main-boardList');

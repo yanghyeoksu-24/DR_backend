@@ -90,6 +90,38 @@ $(document).ready(function () {
         }
     });
 
+    // 닉네임 확인
+    // 닉네임 정규표현식: 이메일 형식 검사
+    const nicknameRegex = /^[a-zA-Z0-9가-힣]{2,5}$/; // 2자 이상 5자 이내의 한글, 영문, 숫자
+
+    $('#userNickName').on('blur', function () {
+        const userNickName = $('#userNickName').val().trim();
+
+        // 이메일 중복 확인 요청
+        $.ajax({
+            url: '/checkNickName', // 이메일 중복 확인 API 경로
+            type: 'POST',
+            data: ({userNickName: userNickName}),
+            success: function (response) {
+
+                if (userNickName.length > 0 && !nicknameRegex.test(userNickName)) {
+                    $("#nameError").text("2글자 이상, 5글자 이하만 가능합니다").css({"color": "red", "display": "block"});
+                } else if (response === 1) {
+                    // 중복된 이메일일 경우
+                    $("#nameError").text("이미 존재하는 닉네임 입니다.").css({"color": "red", "display": "block"});
+                } else {
+                    // 사용 가능한 이메일일 경우
+                    $("#nameError").text("사용 가능한 닉네임 입니다.").css({"color": "green", "display": "block"});
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("에러 발생: " + error);
+                alert("서버와의 통신 중 오류가 발생했습니다.");
+            }
+        });
+    });
+
+
     // 휴대폰 번호 유효성 검사 정규표현식 (하이픈 없이 숫자만 10~11자리)
     const phonePattern = /^[0-9]{10,11}$/;
 

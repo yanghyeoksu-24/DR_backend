@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DR - 자유게시판 목록</title>
-    <link rel="stylesheet" th:href="@{/css/board/freeBoardList.css}">
+    <title>DR - 검색 결과</title>
+    <link rel="stylesheet" th:href="@{/css/main/boardSearchList.css}">
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
     <script defer th:src="@{/js/fragment/header.js}"></script>
@@ -32,12 +32,12 @@
         <br><br><br>
 
         <div class="freeboardlist-rightButton">
-            <button class="freeboardlist-thirdButton" onclick="location.href='/board/freeBoardList'">자유 게시판</button>
-            <button class="freeboardlist-thirdButton" onclick="location.href='/board/honeyBoardList'">꿀팁 게시판</button>
+            <button class="freeboardlist-firstButton" onclick="location.href='/board/freeBoardList'">자유 게시판</button>
+            <button class="freeboardlist-firstButton" onclick="location.href='/board/honeyBoardList'">꿀팁 게시판</button>
         </div>
         <br>
 
-        <div class="freeboardlist-row header">
+        <div class="freeboardlist-row header" th:unless="${searchResult.isEmpty()}">
             <div class="freeboardlist-titleColumn">제목</div>
             <div class="freeboardlist-nameColumn">닉네임</div>
             <div class="freeboardlist-voteColumn">추천 수</div>
@@ -67,7 +67,12 @@
             </div>
         </div>
 
-        <div id="pagination"></div>
+        <!-- 검색 결과 -->
+        <div class="resultContainer" th:if="${searchResult.isEmpty()}">
+            <img th:src="@{/image/resultIsNull.png}" alt="검색결과 없음">
+            <div class="resultIsNull">검색 결과가 존재하지 않습니다.</div>
+        </div>
+        <div id="pagination" th:unless="${searchResult.isEmpty()}"></div>
 
     </div>
 </main>
