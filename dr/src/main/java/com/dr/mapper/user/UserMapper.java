@@ -29,5 +29,6 @@ public interface UserMapper {
     void updatePassword(String userPw , String userPhone);
 
 
-
+    // 닉네임 중복확인
+    int checkNickName(String userNickName);
 }

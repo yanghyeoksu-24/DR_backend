@@ -93,7 +93,7 @@ header {
     font-size: 12px;
 }
 
-#main-searchBtn {
+.main-searchBtn {
     cursor: pointer;
     width: 35px;
 }
