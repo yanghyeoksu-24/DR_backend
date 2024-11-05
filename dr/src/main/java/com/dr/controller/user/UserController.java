@@ -174,6 +174,8 @@ public class UserController {
             session.setAttribute("userNickName", userLogin.getUserNickName());
             session.setAttribute("photoLocal", userLogin.getPhotoLocal());
 
+
+
             // 로그인 성공 시 성공 메시지와 리다이렉트 URL 반환
             response.put("message", "환영합니다.");
             response.put("redirect", "/main");
