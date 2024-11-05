@@ -19,4 +19,5 @@ public class MyRecipeDetailDTO {
     private String recipeWriteDate;      // 작성일
     private int goodCount;               // 추천수
     private Long userNumber;
+    private boolean liked;
 }
