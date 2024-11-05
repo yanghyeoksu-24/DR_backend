@@ -21,7 +21,7 @@
         void updateProfileImage(@Param("userNumber") Long userNumber, @Param("photoLocal") String photoLocal);
 
         // 회원 탈퇴
-        int deleteUser(@Param("userNumber") Long userNumber);
+        void deleteUser(@Param("userNumber") Long userNumber);
 
         // 내 정보 포인트 내역
         List<PointDetailDTO> pointHistory(@Param("userNumber") Long userNumber);
@@ -52,6 +52,9 @@
 
         // 포인트 기록 삽입 메서드
         void insertPointRecord(PointCheckDTO pointCheckDTO);
+
+        // 출석 날짜 리스트 조회
+        List<CheckDTO> getAttendanceDates(@Param("userNumber") Long userNumber);
 
 
     }

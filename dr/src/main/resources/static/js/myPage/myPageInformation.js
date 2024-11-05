@@ -19,50 +19,46 @@ document.getElementById('imageUpload').addEventListener('change', function(event
 
 // ------ 수정 완료 alert 창 ----- //
 document.getElementById('completeWriteBtn').addEventListener('click', function() {
-    // 수정 확인 대화 상자 표시
     if (!confirm('정말 수정하시겠습니까?')) {
-        return; // 사용자가 취소를 선택한 경우 함수 종료
+        return;
     }
 
-    const nickname = document.getElementById('nicknameInput').value.trim(); // 새로운 닉네임
-    const profileImage = document.getElementById('imageUpload').files[0]; // 선택된 이미지 파일
+    const nickname = document.getElementById('nicknameInput').value.trim();
+    const profileImage = document.getElementById('imageUpload').files[0];
 
-    // 닉네임 유효성 검사
-    const nicknameRegex = /^[a-zA-Z0-9가-힣]{2,5}$/; // 2자 이상 5자 이내의 한글, 영문, 숫자
+    const nicknameRegex = /^[a-zA-Z0-9가-힣]{2,5}$/;
     if (!nicknameRegex.test(nickname)) {
         alert('닉네임을 다시 확인해주세요.');
         return;
     }
 
-    // FormData 객체 생성
     const formData = new FormData();
     formData.append('nickname', nickname);
-
-    // 프로필 이미지를 선택한 경우에만 FormData에 추가
     if (profileImage) {
         formData.append('profileImage', profileImage);
     }
 
-    // AJAX 요청을 통해 업데이트
     fetch('/myPage/updateProfile', {
         method: 'POST',
         body: formData,
     })
         .then(response => {
             if (response.ok) {
-                // 성공적으로 업데이트된 경우 처리
                 alert('수정이 완료되었습니다.\n상단 프로필은 다음 로그인 시 적용됩니다.');
-                window.location.href = '/myPage/myPageInformation'; // 업데이트 후 마이페이지로 이동
+
+                // 프로필 이미지를 새로 고침 (캐시 무효화)
+                const profileImageElement = document.getElementById('profileImage');
+                profileImageElement.src = `/path/to/updated/image.jpg?t=${new Date().getTime()}`;
+
             } else {
-                alert('닉네임 또는 이미지를 다시 확인해주세요.'); // 실패 메시지
+                alert('닉네임 또는 이미지를 다시 확인해주세요.');
             }
         })
         .catch(error => {
             console.error('수정 요청 중 오류가 발생했습니다:', error);
-            alert('닉네임 또는 이미지를 다시 확인해주세요.'); // AJAX 요청 실패 시 메시지
+            alert('닉네임 또는 이미지를 다시 확인해주세요.');
         });
 });
-
 
 // DOM 요소 가져오기
 const nicknameDisplay = document.getElementById('nicknameDisplay');
