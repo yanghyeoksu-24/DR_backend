@@ -29,13 +29,14 @@ document.querySelector("#productButton").addEventListener('click', function () {
   const productPrice = document.querySelector('input[name="productPoint"]').value;
   const fileInput = document.querySelector('input[name="file"]'); // 파일 입력 선택
 
-  const formData = new FormData(); // 새로운 FormData 객체 생성
+  // FormData 객체 생성
+  const formData = new FormData();
 
-  // FormData 객체에 데이터 추가
-  productCodes.forEach(code => {
-    formData.append('productName[]', productName); // 상품 이름 추가
-    formData.append('productPrice[]', productPrice); // 상품 가격 추가
-    formData.append('productCode[]', code); // 상품 코드 추가
+  // 상품 이름, 가격, 코드 추가
+  productCodes.forEach((code) => {
+    formData.append('productName', productName); // 상품 이름 추가
+    formData.append('productPrice', productPrice); // 상품 가격 추가
+    formData.append('productCode', code); // 상품 코드 추가
   });
 
   // 파일은 한 번만 추가
@@ -49,16 +50,24 @@ document.querySelector("#productButton").addEventListener('click', function () {
     body: formData // FormData 객체 전송
   })
       .then(response => {
+        // 응답의 Content-Type을 확인하여 JSON인지 확인
+        const contentType = response.headers.get("Content-Type");
         if (!response.ok) {
           throw new Error("등록에 실패했습니다."); // 오류 응답 처리
         }
-        return response.json(); // JSON 응답 파싱
+        if (contentType && contentType.includes("application/json")) {
+          return response.json(); // JSON 응답 파싱
+        } else {
+          throw new Error("응답이 JSON 형식이 아닙니다.");
+        }
       })
       .then(data => {
-        alert('상품이 성공적으로 등록되었습니다.'); // 성공 메시지
+        alert(data.message); // 성공 메시지
         window.location.href = "/manager/manageProduct"; // 상품 관리 페이지로 리디렉션
       })
       .catch(error => {
         alert('상품 등록 중 오류가 발생했습니다: ' + error.message); // 오류 처리
       });
 });
+
+

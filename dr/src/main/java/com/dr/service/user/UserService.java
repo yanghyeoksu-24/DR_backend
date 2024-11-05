@@ -41,13 +41,13 @@ public class UserService<BCryptPasswordEncoder> {
 
 
     //비밀번호 찾기
-    public PwFindDTO userPwFind(String userEmail, String userPhone) {
-        return userMapper.userPwFind(userEmail, userPhone);
+    public String userPwFind(String userPhone, String userEmail) {
+        return userMapper.userPwFind(userPhone, userEmail);
     }
 
     //비밀번호 변경
-    public void updatePassword(String userPw, String userPhone) {
-        userMapper.updatePassword(userPw, userPhone);
+    public void updatePassword(String userPw , String userPhone) {
+        userMapper.updatePassword(userPw , userPhone);
     }
 
     // 닉네임 중복확인
