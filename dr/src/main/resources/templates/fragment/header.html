@@ -47,10 +47,10 @@
             </div>
 
             <div class="main-visitorBtn" th:unless="${session.userNumber != null}">
-                <form th:action="@{user/login}" method="get">
+                <form th:action="@{/user/login}" method="get">
                     <button class="main-login">로그인</button>
                 </form>
-                <form th:action="@{user/join}" method="get">
+                <form th:action="@{/user/join}" method="get">
                     <button class="main-join">회원가입</button>
                 </form>
             </div>
@@ -59,23 +59,23 @@
         <!-- 비로그인 네비바 -->
         <div class="main-headerNav" th:unless="${session.userNumber != null}">
             <ul class="main-navMenu">
-                <li class="main-chatBot"><a th:href="@{user/login}" class="header-goLogin">냉장봇</a></li>
-                <li class="main-rank"><a th:href="@{user/login}" class="header-goLogin">환경기여 랭킹</a></li>
+                <li class="main-chatBot"><a th:href="@{/user/login}" class="header-goLogin">냉장봇</a></li>
+                <li class="main-rank"><a th:href="@{/user/login}" class="header-goLogin">환경기여 랭킹</a></li>
                 <li class="main-recipe">
                     레시피
                     <ul class="main-recipeList">
-                        <li><a th:href="@{user/login}" class="header-goLogin">챗봇레시피</a></li>
-                        <li><a th:href="@{user/login}" class="header-goLogin">나만의레시피</a></li>
+                        <li><a th:href="@{/user/login}" class="header-goLogin">챗봇레시피</a></li>
+                        <li><a th:href="@{/user/login}" class="header-goLogin">나만의레시피</a></li>
                     </ul>
                 </li>
                 <li class="main-board">
                     게시판
                     <ul class="main-boardList">
-                        <li><a th:href="@{user/login}" class="header-goLogin">자유게시판</a></li>
-                        <li><a th:href="@{user/login}" class="header-goLogin">꿀팁게시판</a></li>
+                        <li><a th:href="@{/user/login}" class="header-goLogin">자유게시판</a></li>
+                        <li><a th:href="@{/user/login}" class="header-goLogin">꿀팁게시판</a></li>
                     </ul>
                 </li>
-                <li class="main-shop"><a th:href="@{user/login}" class="header-goLogin">포인트샵</a></li>
+                <li class="main-shop"><a th:href="@{/user/login}" class="header-goLogin">포인트샵</a></li>
                 <li class="main-myPage">
                     마이페이지
                     <ul class="main-myPageList">
@@ -119,7 +119,7 @@
                         <li><a th:href="@{/myPage/myPageMyRecipe}">내가 쓴 레시피</a></li>
                         <li><a th:href="@{/myPage/myPageMyPost}">내가 쓴 게시글</a></li>
                         <li><a th:href="@{/myPage/myPageMyComplaint}">신고 받은 글</a></li>
-                        <li><a th:href="@{/myPage/myPageCheckedPlease}">출석체크</a></li>
+                        <li><a th:href="@{/myPage/myPageChecked}">출석체크</a></li>
                         <li><a th:href="@{/myPage/myPageMyPoint}">포인트 내역</a></li>
                     </ul>
                 </li>

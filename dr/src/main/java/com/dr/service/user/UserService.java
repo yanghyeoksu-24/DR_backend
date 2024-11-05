@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-
 @Slf4j
 @Service
 @Transactional
@@ -41,7 +40,6 @@ public class UserService<BCryptPasswordEncoder> {
     }
 
 
-
     //비밀번호 찾기
     public PwFindDTO userPwFind(String userEmail, String userPhone) {
         return userMapper.userPwFind(userEmail, userPhone);
@@ -50,6 +48,11 @@ public class UserService<BCryptPasswordEncoder> {
     //비밀번호 변경
     public void updatePassword(String userPw, String userPhone) {
         userMapper.updatePassword(userPw, userPhone);
+    }
+
+    // 닉네임 중복확인
+    public int checkNickName(String userNickName) {
+        return userMapper.checkNickName(userNickName);
     }
 
 }

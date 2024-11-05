@@ -111,7 +111,7 @@ public class UserController {
     //비밀번호 변경 페이지
     @PostMapping("/user/PwReset")
     public String PwReset(HttpSession session, Model model,
-                          @RequestParam("newPassword") String userPw) {
+                          @RequestParam("confirmNewPassword") String userPw) {
         String userPhone = (String) session.getAttribute("userPhone"); // 세션에서 userPhone 가져오기
         log.info("비밀번호 변경 요청 - userPhone: " + userPhone); // 전화번호 확인 로그
 
@@ -192,6 +192,12 @@ public class UserController {
     public RedirectView logout(HttpSession session) {
         session.invalidate();
         return new RedirectView("/main");
+    }
+
+    // 닉네임 검사
+    @PostMapping("/checkNickName")
+    public ResponseEntity<Integer> checkNickName(@RequestParam("userNickName") String userNickName){
+        return ResponseEntity.ok(userService.checkNickName(userNickName));
     }
 
 }
