@@ -5,6 +5,7 @@ import com.dr.dto.recipe.MyRecipeWriteCommentDTO;
 import com.dr.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,6 +108,8 @@ public class BoardController {
         return "/board/freeBoardDetail";
     }
 
+
+
     //꿀팁게시판 상세페이지(게시글 상세 + 댓글)
     @GetMapping("/honeyBoardDetail")
     public String honeyBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model) {
@@ -142,6 +145,22 @@ public class BoardController {
 
         return "redirect:/board/freeBoardDetail"; // boardNumber를 쿼리 매개변수로 포함
     }
+    
+    @PostMapping("/updateReply")
+    public ResponseEntity<Void> updateFreeBoardReply(@RequestParam("replyNumber") Long replyNumber,
+                                                     @RequestParam("replyText") String replyText) {
+        if (replyNumber == null || replyText == null || replyText.trim().isEmpty()) {
+            return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
+        }
+
+        // 댓글 수정 서비스 호출
+        boardService.freeBoardUpdateReply(replyNumber, replyText);
+
+        // 수정 완료 후 성공 응답 반환
+        return ResponseEntity.ok().build();
+    }
+
+
 
 
 }

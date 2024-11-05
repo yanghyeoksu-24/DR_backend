@@ -38,4 +38,11 @@ public interface BoardMapper {
     void freeBoardInsertReply(FreeBoardCommentDTO freeBoardCommentDTO);
 
 
+    // 자유게시판 댓글 수정
+    void freeBoardUpdateReply(FreeBoardCommentDTO comment);
+
+
+
+
+
 }
