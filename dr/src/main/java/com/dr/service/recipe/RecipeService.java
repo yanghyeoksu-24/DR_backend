@@ -80,20 +80,27 @@ public class RecipeService {
     }
 
     // 추천 수 증가
-    public void addGood(Long recipeNumber, Long userNumber) {
-        Map<String, Long> params = new HashMap<>();
-        params.put("recipeNumber", recipeNumber);
-        params.put("userNumber", userNumber);
-        recipeMapper.increaseGoodCount(params);
+    public void addGood(MyRecipeGoodDTO myRecipeGoodDTO) {
+        recipeMapper.increaseGoodCount(myRecipeGoodDTO);
     }
 
     // 추천 수 감소
-    public void removeGood(Long recipeNumber, Long userNumber) {
-        Map<String, Long> params = new HashMap<>();
-        params.put("recipeNumber", recipeNumber);
-        params.put("userNumber", userNumber);
-        recipeMapper.decreaseGoodCount(params);
+    public void removeGood(MyRecipeGoodDTO myRecipeGoodDTO) {
+        recipeMapper.decreaseGoodCount(myRecipeGoodDTO);
     }
+
+    // 찜 추가 메서드
+    public void addSteam(MyRecipeDetailDTO myRecipeDetailDTO) {
+        recipeMapper.addSteam(myRecipeDetailDTO);
+    }
+
+    // 찜 삭제 메서드
+    public void removeSteam(MyRecipeDetailDTO myRecipeDetailDTO) {
+        recipeMapper.removeSteam(myRecipeDetailDTO);
+    }
+
+
+
 
 
 
