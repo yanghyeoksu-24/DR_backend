@@ -14,9 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 img.style.position = 'absolute'; // 절대 위치 설정
                 img.style.left = '16%'; // 수평 중앙 위치
                 img.style.transform = 'translateX(-50%, -500%) '; // 중앙 정렬을 위한 변환
-                img.style.marginTop = '-40px'; // 이미지와 텍스트 사이 여백
+                img.style.marginTop = '-40px';
 
-                // 기존 날짜 요소의 위치를 기준으로 이미지 추가
+                // 날짜 요소의 위치를 기준으로 이미지 추가하기 . .
                 info.el.style.position = 'relative'; // 부모 요소에 상대 위치 설정
                 info.el.appendChild(img); // 이벤트 요소에 이미지 추가
             }
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("선택된 날짜: ", date); // 선택된 날짜 로그 출력
 
         const existingEvent = calendar.getEvents().find(event => event.startStr === date);
-        console.log("기존 이벤트: ", existingEvent); // 기존 이벤트 로그 출력 오늘 날짜 사용
+        console.log("오늘 날짜 선택 : ", existingEvent);
 
 
         if (existingEvent) {
