@@ -1,12 +1,43 @@
-const heartImage = document.getElementById('heartImage');
+// const heartImage = document.getElementById('heartImage');
+//
+// heartImage.addEventListener('click', function () {
+//     if (heartImage.src.includes('heartGray.png')) {
+//         heartImage.src = './../../image/heartColor.png'; // 빨간 하트 이미지 경로
+//     } else {
+//         heartImage.src = './../../image/heartGray.png'; // 검정 하트 이미지 경로
+//     }
+// });
 
-heartImage.addEventListener('click', function () {
-    if (heartImage.src.includes('heartGray.png')) {
-        heartImage.src = './../../image/heartColor.png'; // 빨간 하트 이미지 경로
-    } else {
-        heartImage.src = './../../image/heartGray.png'; // 검정 하트 이미지 경로
-    }
-});
+// const heartImage = document.getElementById('heartImage');
+// const recipeNumber = /* 레시피 번호 */;
+// const userNumber = /* 사용자 번호 */;
+//
+// heartImage.addEventListener('click', function () {
+//     if (heartImage.src.includes('heartGray.png')) {
+//         // 찜 추가 요청
+//         fetch('/recipe/like', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({ recipeNumber: recipeNumber, userNumber: userNumber })
+//         })
+//             .then(response => response.ok ? heartImage.src = './../../image/heartColor.png' : alert("찜 추가에 실패했습니다."))
+//             .catch(error => console.error("찜 추가 오류:", error));
+//     } else {
+//         // 찜 삭제 요청
+//         fetch('/recipe/unlike', {
+//             method: 'DELETE',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({ recipeNumber: recipeNumber, userNumber: userNumber })
+//         })
+//             .then(response => response.ok ? heartImage.src = './../../image/heartGray.png' : alert("찜 삭제에 실패했습니다."))
+//             .catch(error => console.error("찜 삭제 오류:", error));
+//     }
+// });
+
 
 document.getElementById('deleteButton').addEventListener('click', function () {
     if (confirm("정말로 삭제하시겠습니까?")) {
@@ -129,70 +160,39 @@ function CommentDeleteClick(replyNumber, recipeNumber) {
 // }
 
 
-// 초기 추천 수를 서버에서 받아와 설정
-let recommendCount = 0;
-
 $(document).ready(function() {
-    const recipeNumber = document.querySelector("input[name='recipeNumber']").value;
+    const recommendImg = $('#recommendImg');
+    let isLiked = false;
 
-    $.get(`/myDetailPage/${recipeNumber}/good/count`, function(data) {
-        recommendCount = data; // 서버에서 받아온 추천 수로 초기화
-        document.getElementById('recommendCount').innerText = `추천수: ${recommendCount}`;
+    // 숨겨진 input에서 recipeNumber 가져오기
+    const recipeNumber = $('input[name="recipeNumber"]').val(); // 숨겨진 input의 값 가져오기
+    console.log(`recipeNumber: ${recipeNumber}`);
+
+    recommendImg.on('click', function () {
+        // 상태 토글
+        isLiked = !isLiked;
+
+        // 추천 상태에 따라 클래스 변경
+        if (isLiked) {
+            recommendImg.addClass('recommend-active').removeClass('recommend-inactive');
+        } else {
+            recommendImg.addClass('recommend-inactive').removeClass('recommend-active');
+        }
+
+        const url = isLiked ? `/recipe/goodPlus` : `/recipe/goodMinus`;
+        const requestData = JSON.stringify({recipeNumber: recipeNumber});
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            contentType: 'application/json', // JSON 형식으로 데이터 전송
+            data: requestData,
+            success: function (response) {
+                console.log(isLiked ? '추천 등록 완료' : '추천 취소 완료');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('추천 상태 변경 오류:', textStatus, errorThrown);
+            }
+        });
     });
 });
-
-// recommend 이미지를 클릭할 때 색상 토글 및 추천 수 증가/감소 기능을 적용
-document.getElementById('recommendImg').addEventListener('click', function() {
-    var recommendImg = document.getElementById('recommendImg'); // 추천 이미지 요소
-    var recommendCountDisplay = document.getElementById('recommendCount'); // 추천 수 표시 요소
-    const recipeNumber = document.querySelector("input[name='recipeNumber']").value; // 레시피 번호
-    const userNumber = document.querySelector("input[name='userNumber']").value; // 사용자 번호
-
-    // 추천 이미지가 파란색 활성화 상태인 경우
-    if (recommendImg.classList.contains('recommend-active')) {
-        // 파란색에서 회색으로 전환 (추천 해제)
-        recommendImg.classList.remove('recommend-active');
-        recommendImg.classList.add('recommend-inactive');
-        if (recommendCount > 0) {
-            recommendCount--; // 추천 수 감소
-            // AJAX 요청으로 추천 수 감소
-            $.post(`/myDetailPage/${recipeNumber}/good/remove`, { userNumber: userNumber })
-                .done(function() {
-                    recommendCountDisplay.innerText = `추천수: ${recommendCount}`;
-                })
-                .fail(function(jqXHR, textStatus, errorThrown) {
-                    console.error("추천 감소 요청 실패:", textStatus, errorThrown);
-                });
-        }
-    }
-    // 회색 상태인 경우 (또는 아무 색상도 없을 경우)
-    else if (recommendImg.classList.contains('recommend-inactive')) {
-        // 회색에서 파란색으로 전환 (추천 추가)
-        recommendImg.classList.remove('recommend-inactive');
-        recommendImg.classList.add('recommend-active');
-        recommendCount++; // 추천 수 증가
-        // AJAX 요청으로 추천 수 증가
-        $.post(`/myDetailPage/${recipeNumber}/good/add`, { userNumber: userNumber })
-            .done(function() {
-                recommendCountDisplay.innerText = `추천수: ${recommendCount}`;
-            })
-            .fail(function(jqXHR, textStatus, errorThrown) {
-                console.error("추천 증가 요청 실패:", textStatus, errorThrown);
-            });
-    }
-    // 처음 상태일 때 파란색으로 전환 (기본 초록색에서 파란색으로)
-    else {
-        recommendImg.classList.add('recommend-active');
-        recommendCount++; // 추천 수 증가
-        // AJAX 요청으로 추천 수 증가
-        $.post(`/myDetailPage/${recipeNumber}/good/add`, { userNumber: userNumber })
-            .done(function() {
-                recommendCountDisplay.innerText = `추천수: ${recommendCount}`;
-            })
-            .fail(function(jqXHR, textStatus, errorThrown) {
-                console.error("추천 증가 요청 실패:", textStatus, errorThrown);
-            });
-    }
-});
-
-

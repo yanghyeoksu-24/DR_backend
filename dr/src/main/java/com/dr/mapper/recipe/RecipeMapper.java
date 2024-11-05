@@ -47,10 +47,17 @@ public interface RecipeMapper {
     void insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO);
 
     // 추천 수 증가
-    void increaseGoodCount(Map<String, Long> params);
+    void increaseGoodCount(MyRecipeGoodDTO myRecipeGoodDTO);
 
     // 추천 수 감소
-    void decreaseGoodCount(Map<String, Long> params);
+    void decreaseGoodCount(MyRecipeGoodDTO myRecipeGoodDTO);
+
+    // 찜 추가 메서드
+    void addSteam(MyRecipeDetailDTO myRecipeDetailDTO);
+
+    // 찜 삭제 메서드
+    void removeSteam(MyRecipeDetailDTO myRecipeDetailDTO);
+
 
 }
 
