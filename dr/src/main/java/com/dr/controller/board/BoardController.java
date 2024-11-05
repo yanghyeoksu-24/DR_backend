@@ -3,6 +3,7 @@ package com.dr.controller.board;
 import com.dr.dto.board.*;
 import com.dr.dto.recipe.MyRecipeWriteCommentDTO;
 import com.dr.service.board.BoardService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -96,6 +97,7 @@ public class BoardController {
     public String freeBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model) {
 
 
+
         FreeBoardDetailDTO freeBoardDetail = boardService.freeBoardDetail(boardNumber);
 
         List<FreeBoardCommentDTO> freeBoardComments = boardService.freeBoardCommentList(boardNumber);
@@ -125,7 +127,6 @@ public class BoardController {
                                        @RequestParam("replyText") String replyText,
                                        @RequestParam("userNumber") Long userNumber,
                                        RedirectAttributes redirectAttributes) {
-
         if (boardNumber == null) {
             throw new IllegalArgumentException("Board number is required");
         }
@@ -136,12 +137,14 @@ public class BoardController {
         freeBoardCommentDTO.setUserNumber(userNumber);
 
         boardService.freeBoardInsertReply(freeBoardCommentDTO);
+        log.info("댓글 추가됨: {}", freeBoardCommentDTO);
 
         // Redirect 후 댓글을 로드하기 위해 boardNumber를 추가
         redirectAttributes.addAttribute("boardNumber", boardNumber);
 
         return "redirect:/board/freeBoardDetail"; // boardNumber를 쿼리 매개변수로 포함
     }
+
 
 
 }
