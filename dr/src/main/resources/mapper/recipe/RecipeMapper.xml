@@ -225,7 +225,7 @@
         )
     </insert>
 
-<!--    찜 추가 삭제 조회-->
+    <!--    찜 추가 삭제 조회-->
     <!-- 찜 추가 -->
     <insert id="addSteam" parameterType="Long">
         <selectKey keyProperty="steamNumber" resultType="Long" order="BEFORE">

@@ -6,9 +6,6 @@ heartImage.addEventListener('click', function() {
     } else {
         heartImage.src = './../../image/heartGray.png'; // 검정 하트 이미지 경로
     }
-    if(num){
-
-    }
 });
 
 
