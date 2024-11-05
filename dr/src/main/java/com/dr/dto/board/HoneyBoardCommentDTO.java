@@ -15,8 +15,8 @@ public class HoneyBoardCommentDTO {
     private String replyWriteDate;
     private String replyModifyDate;
     private String photoLocal;
-    private Long userNumber;
-    private Long boardNumber;
-    private Long recipeNumber;
+    private int userNumber;
+    private int boardNumber;
+    private int recipeNumber;
     private String userNickName;
 }

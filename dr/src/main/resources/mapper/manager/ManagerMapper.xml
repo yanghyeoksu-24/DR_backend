@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dr.mapper.manager.ManagerMapper">
 
-<!-- 1. 관리자 로그인-->
+    <!-- 1. 관리자 로그인-->
     <select id="managerLogin" resultType="ManagerSessionDTO">
         SELECT MANAGER_NAME
         FROM DR_MANAGER
         WHERE MANAGER_EMAIL = #{managerEmail} AND MANAGER_PW = #{managerPw}
     </select>
 
-<!-- 2-1. 대시보드-->
+    <!-- 2-1. 대시보드-->
     <select id="dashBoardInfo" resultType="DashBoardDTO">
         SELECT
                 (SELECT COUNT(*) FROM DR_USER) AS userAll,
@@ -24,14 +24,14 @@
     <!-- 2-2. 관리자 정보-->
     <select id="managerInfo" resultType="ManagerDTO">
         SELECT
-        M.MANAGER_NAME AS managerName,
-        M.MANAGER_EMAIL AS managerEmail,
-        M.MANAGER_SORT AS managerSort
+            M.MANAGER_NAME AS managerName,
+            M.MANAGER_EMAIL AS managerEmail,
+            M.MANAGER_SORT AS managerSort
         FROM
-        DR_MANAGER M
+            DR_MANAGER M
     </select>
 
-<!-- 3-1. 회원관리-->
+    <!-- 3-1. 회원관리-->
     <select id="manageUser" resultType="ManagerUserDTO">
         SELECT
             U.USER_NUMBER,
@@ -70,7 +70,7 @@
         WHERE U.USER_NUMBER = #{userNumber}
     </select>
 
-<!-- 4-1. 게시판 관리-->
+    <!-- 4-1. 게시판 관리-->
     <select id="showBoard" parameterType="ManagerBoardDTO">
         SELECT
             B.BOARD_NUMBER,
@@ -176,13 +176,13 @@
 
 
 
-<!-- 6-1. 댓글관리-->
+    <!-- 6-1. 댓글관리-->
     <select id="showReply" parameterType="ManagerCommentDTO">
         select R.REPLY_NUMBER , R.REPLY_TEXT , U.USER_NICKNAME , U.USER_PHONE , R.REPLY_WRITE_DATE , B.BOARD_NUMBER , RR.RECIPE_NUMBER , B.BOARD_TYPE , RR.RECIPE_TYPE
         from DR_REPLY R
-        JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
-        LEFT JOIN DR_BOARD B ON R.BOARD_NUMBER = B.BOARD_NUMBER
-        LEFT JOIN DR_RECIPE RR ON R.RECIPE_NUMBER = RR.RECIPE_NUMBER
+                 JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
+                 LEFT JOIN DR_BOARD B ON R.BOARD_NUMBER = B.BOARD_NUMBER
+                 LEFT JOIN DR_RECIPE RR ON R.RECIPE_NUMBER = RR.RECIPE_NUMBER
         ORDER BY R.REPLY_WRITE_DATE DESC
     </select>
 
@@ -202,7 +202,7 @@
             R.REPLY_NUMBER = #{replyNumber}
     </select>
 
-<!-- 7-1. 포인트 관리-->
+    <!-- 7-1. 포인트 관리-->
     <select id="showPoint" parameterType="ManagerPointDTO">
         SELECT
             P.POINT_NUMBER,
@@ -284,7 +284,7 @@
         WHERE S.SIREN_NUMBER = #{sirenNumber}
     </delete>
 
-<!-- 9-1. 상품관리-->
+    <!-- 9-1. 상품관리-->
     <select id="showProduct" parameterType="ManagerProductDTO">
         SELECT
             P.PRODUCT_NAME,
@@ -322,7 +322,7 @@
             SELECT SEQ_PHOTO_NUMBER.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO DR_PHOTO (PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_SIZE, PHOTO_UPLOAD, PRODUCT_NUMBER)
-        VALUES (#{photoNumber}, #{productOriginal}, #{productLocal}, #{photoSize}, #{photoUpload}, #{productNumber})
+        VALUES (#{photoNumber}, #{photoOriginal}, #{photoLocal}, #{photoSize}, TO_DATE(#{photoUpload}, 'YYYY-MM-DD HH24:MI:SS'), #{productNumber})
     </insert>
 
 
@@ -331,9 +331,9 @@
     <select id="updateShow" parameterType="String" resultType="ManagerRegisterDTO">
         SELECT P.PRODUCT_NAME , P.PRODUCT_PRICE , PP.PHOTO_LOCAL
         FROM DR_PRODUCT P
-        JOIN DR_PHOTO PP ON P.PRODUCT_NUMBER = PP.PRODUCT_NUMBER
+                 JOIN DR_PHOTO PP ON P.PRODUCT_NUMBER = PP.PRODUCT_NUMBER
         WHERE P.PRODUCT_NAME = #{productName}
-        AND ROWNUM = 1
+          AND ROWNUM = 1
     </select>
 
     <!-- 9-4. 상품 수정 -->

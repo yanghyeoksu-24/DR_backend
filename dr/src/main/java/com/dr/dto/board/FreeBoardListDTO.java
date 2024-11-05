@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class FreeBoardListDTO {
-    private Long boardNumber;
+    private int boardNumber;
     private String boardTitle;
     private String userNickName;
     private int goodCount;
