@@ -82,6 +82,7 @@ $(document).ready(function () {
       return false; // 폼 제출 방지
     }
 
+    alert("비밀번호 변경이 완료 되었습니다.\n로그인 페이지로 이동합니다.")
     return true; // 모든 검사를 통과하면 폼 제출 허용
   };
 });

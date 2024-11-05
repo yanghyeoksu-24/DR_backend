@@ -378,33 +378,20 @@ public class ManagerController {
     }
 
     // 9-3. 상품 등록
+    // 상품 등록
     @PostMapping("/registerProduct")
-    public ResponseEntity<Map<String, String>> registerProduct(
-            @RequestParam("productName") List<String> productNames,
-            @RequestParam("productPrice") List<Integer> productPrices,
-            @RequestParam("productCode") List<String> productCodes,
+    public ResponseEntity<String> registerProduct(
+            @ModelAttribute ManagerRegisterDTO managerRegisterDTO,
             @RequestParam("file") MultipartFile file) {
 
-        Map<String, String> response = new HashMap<>();
-
         try {
-            for (int i = 0; i < productCodes.size(); i++) {
-                ManagerRegisterDTO managerRegisterDTO = new ManagerRegisterDTO();
-                managerRegisterDTO.setProductName(productNames.get(i));
-                managerRegisterDTO.setProductPrice(productPrices.get(i));
-                managerRegisterDTO.setProductCode(productCodes.get(i));
-                // 상품 등록과 파일 저장을 서비스 메서드 호출
-                managerService.registerProductAndPhoto(managerRegisterDTO, file);
-            }
-            response.put("message", "상품이 성공적으로 등록되었습니다.");
-            return ResponseEntity.ok(response);
+            // 상품 등록과 파일 저장을 서비스 메서드 호출
+            managerService.registerProductAndPhoto(managerRegisterDTO, file);
+            return ResponseEntity.ok("상품이 성공적으로 등록되었습니다.");
         } catch (Exception e) {
-            response.put("message", "상품 등록 중 오류가 발생했습니다: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            return ResponseEntity.status(500).body("상품 등록 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
-
-
 
 
 
