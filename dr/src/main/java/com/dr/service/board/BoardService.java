@@ -62,5 +62,17 @@ public class BoardService {
         boardMapper.freeBoardInsertReply(freeBoardCommentDTO);
     }
 
+    // 추천 플러스
+    public void honeyGoodPlus(HoneyGoodDTO honeyGoodDTO) {
+        boardMapper.honeyGoodPlus(honeyGoodDTO);
+    }
+
+    // 추천 마이너스
+    public void honeyGoodMinus(HoneyGoodDTO honeyGoodDTO) {
+        boardMapper.honeyGoodMinus(honeyGoodDTO);
+    }
+
+
+
 
 }

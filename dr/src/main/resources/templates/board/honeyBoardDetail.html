@@ -28,7 +28,8 @@
                     <div class="honeyBoardDetail-infoInBox2">
                         <p class="honeyBoardDetail-writeName" th:text="${honeyBoardDetail.userNickName}">김찰수</p>
                         <p class="honeyBoardDetail-foodTitle" th:text="${honeyBoardDetail.boardTitle}">숙주나물 무침</p>
-                        <p class="honeyBoardDetail-date" th:text="${honeyBoardDetail.boardWriteDate}">2024-10-04 14:50</p>
+                        <p class="honeyBoardDetail-date" th:text="${honeyBoardDetail.boardWriteDate}">2024-10-04
+                            14:50</p>
                     </div>
                 </div>
 
@@ -58,10 +59,12 @@
                 <img src="./../../image/recipe/숙주나물무침.png" alt="" th:src="@{/image/recipe/숙주나물무침.png}">
 
                 <div class="honeyBoardDetail-recommendImg">
+                    <input type="hidden" id="boardNumber" name="boardNumber" th:value="${honeyBoardDetail.boardNumber}">
                     <img src="./../../image/recommend.png" id="recommendImg" class="recommend-inactive"
                          alt="recommend" th:src="@{/image/recommend.png}">
-                    <p id="recommendCount" th:text="'추천수: ' + ${honeyBoardDetail.goodCount}">추천수: 0</p>
+                    <p id="recommendCount" th:text="'추천수: ' + ${honeyBoardDetail.goodCount}"></p>
                 </div>
+
             </div>
 
             <div class="honeyBoardDetail-commentSection">
@@ -80,7 +83,8 @@
                         </div>
                         <div class="honeyBoardDetail-commentContent">
                             <div class="honeyBoardDetail-commentHeader">
-                                <span class="honeyBoardDetail-commentUsername" th:text="${comment.userNickName}">홍상철</span>
+                                <span class="honeyBoardDetail-commentUsername"
+                                      th:text="${comment.userNickName}">홍상철</span>
                                 <a th:href="@{/board/boardReport/{commentId}(commentId=${comment.replyNumber})}">
                                     <button class="honeyBoardDetail-reportBtn">신고</button>
                                 </a>
@@ -99,7 +103,8 @@
 
                             <div class="honeyBoardDetail-commentInput" th:id="'editInput' + ${comment.replyNumber}"
                                  style="display:none;">
-                                <textarea th:id="'editTextarea' + ${comment.replyNumber}" placeholder="댓글을 입력하세요..."></textarea>
+                                <textarea th:id="'editTextarea' + ${comment.replyNumber}"
+                                          placeholder="댓글을 입력하세요..."></textarea>
                                 <div class="honeyBoardDetail-commentActions">
                                     <button class="honeyBoardDetail-editBtn"
                                             th:onclick="'saveComment(' + ${comment.replyNumber} + ')'">저장

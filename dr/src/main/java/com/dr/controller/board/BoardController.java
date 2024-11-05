@@ -3,17 +3,19 @@ package com.dr.controller.board;
 import com.dr.dto.board.*;
 import com.dr.dto.recipe.MyRecipeWriteCommentDTO;
 import com.dr.service.board.BoardService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -41,7 +43,6 @@ public class BoardController {
     public String freeBoardWritePage() {
         return "/board/freeBoardWrite";
     }
-
 
 
     // 꿀팁게시판 글 수정 이동
@@ -143,5 +144,27 @@ public class BoardController {
         return "redirect:/board/freeBoardDetail"; // boardNumber를 쿼리 매개변수로 포함
     }
 
+    // 추천 수 증가
+    @PostMapping("/goodPlus")
+    public ResponseEntity<Void> goodPlus(
+            @RequestBody HoneyGoodDTO honeyGoodDTO,
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber
+    ) {
+        honeyGoodDTO.setUserNumber(userNumber);
+        boardService.honeyGoodPlus(honeyGoodDTO);
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 추천수 감소
+    @PostMapping("/goodMinus")
+    public ResponseEntity<Void> goodMinus(
+            @RequestBody HoneyGoodDTO honeyGoodDTO,
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber
+    ) {
+        honeyGoodDTO.setUserNumber(userNumber);
+        boardService.honeyGoodMinus(honeyGoodDTO);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
