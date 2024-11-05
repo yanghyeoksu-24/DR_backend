@@ -1,3 +1,35 @@
+const heartImage = document.getElementById('heartImage');
+
+heartImage.addEventListener('click', function() {
+    if (heartImage.src.includes('heartGray.png')) {
+        heartImage.src = './../../image/heartColor.png'; // 빨간 하트 이미지 경로
+    } else {
+        heartImage.src = './../../image/heartGray.png'; // 검정 하트 이미지 경로
+    }
+    if(num){
+
+    }
+});
+
+
+
+const heartImage1 = document.getElementById('heartImage1'); // 빨간색 하트
+const heartImage2 = document.getElementById('heartImage2'); // 회색 하트
+
+// 회색 하트 이미지를 클릭했을 때 빨간색으로 전환
+heartImage2.addEventListener('click', function(event) {
+    event.preventDefault(); // 기본 a 태그 동작 막기
+    heartImage1.style.display = 'block'; // 빨간색 하트를 보이게 함
+    heartImage2.style.display = 'none';  // 회색 하트를 숨김
+});
+
+// 빨간 하트 이미지를 클릭했을 때 회색으로 전환
+heartImage1.addEventListener('click', function(event) {
+    event.preventDefault(); // 기본 a 태그 동작 막기
+    heartImage1.style.display = 'none';  // 빨간색 하트를 숨김
+    heartImage2.style.display = 'block'; // 회색 하트를 보이게 함
+});
+
 // const heartImage = document.getElementById('heartImage');
 //
 // heartImage.addEventListener('click', function () {

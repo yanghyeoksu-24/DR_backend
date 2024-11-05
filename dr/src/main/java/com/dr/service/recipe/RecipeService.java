@@ -90,13 +90,14 @@ public class RecipeService {
     }
 
     // 찜 추가 메서드
-    public void addSteam(MyRecipeDetailDTO myRecipeDetailDTO) {
-        recipeMapper.addSteam(myRecipeDetailDTO);
+    public void addSteam(Long recipeNumber, Long userNumber) {
+        recipeMapper.addSteam(recipeNumber, userNumber);
     }
 
     // 찜 삭제 메서드
-    public void removeSteam(MyRecipeDetailDTO myRecipeDetailDTO) {
-        recipeMapper.removeSteam(myRecipeDetailDTO);
+    public void removeSteam(Long recipeNumber, Long userNumber) {
+
+        recipeMapper.removeSteam(recipeNumber, userNumber);
     }
 
 

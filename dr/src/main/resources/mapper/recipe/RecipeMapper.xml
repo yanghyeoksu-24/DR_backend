@@ -36,6 +36,7 @@
     </select>
 
     <!--    나만의 레시피 상세페이지-->
+    <!--    나만의 레시피 상세페이지-->
     <select id="selectMyRecipeDetail" resultType="MyRecipeDetailDTO">
         SELECT R.RECIPE_NUMBER,                                               -- 레시피 번호
                R.RECIPE_TITLE,                                                -- 레시피 제목
@@ -226,16 +227,16 @@
 
 <!--    찜 추가 삭제 조회-->
     <!-- 찜 추가 -->
-    <insert id="addSteam" parameterType="MyRecipeDetailDTO">
+    <insert id="addSteam" parameterType="Long">
         <selectKey keyProperty="steamNumber" resultType="Long" order="BEFORE">
-            SELECT SEQ_DR_STEAM.NEXTVAL FROM DUAL
+            SELECT SEQ_STEAM_NUMBER.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO DR_STEAM (STEAM_NUMBER, RECIPE_NUMBER, USER_NUMBER)
-        VALUES (#{steamNumber}, #{recipeNumber}, #{userNumber})
+        INSERT INTO DR_STEAM (RECIPE_NUMBER, USER_NUMBER)
+        VALUES (#{recipeNumber}, #{userNumber})
     </insert>
 
     <!-- 찜 삭제 -->
-    <delete id="removeSteam" parameterType="MyRecipeDetailDTO">
+    <delete id="removeSteam" parameterType="Long">
         DELETE FROM DR_STEAM
         WHERE RECIPE_NUMBER = #{recipeNumber}
           AND USER_NUMBER = #{userNumber}

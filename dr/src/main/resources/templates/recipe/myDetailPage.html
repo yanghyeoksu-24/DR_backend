@@ -31,7 +31,7 @@
             <div class="myDetailPage-infobox">
                 <div class="myDetailPage-infoFirst">
                     <div class="myDetailPage-infoInBox1">
-                        <img th:src="@{/image/photo/} + ${recipeDetail.photoLocal}" alt="레시피 이미지">
+                        <img th:src="@{/image/photo/} + ${recipeDetail.photoLocal}" alt="유저 이미지">
                     </div>
                     <div class="myDetailPage-infoInBox2">
                         <p class="myDetailPage-writeName" th:text="${recipeDetail.userNickName}"></p>
@@ -47,8 +47,16 @@
                     </div>
                     <div class="myDetailPage-secondButton">
                         <div class="myDetailPage-buttonImg">
-                            <img id="heartImage" src="/image/heartGray.png" alt="하트 이미지">
+                            <a id="heartLink" th:href="@{/recipe/like}">
+                                <img id="heartImage1" th:src="@{/image/heartColor.png}" alt="하트 이미지">
+                            </a>
                         </div>
+                        <div class="myDetailPage-buttonImg">
+                            <a id="heartUnlink" th:href="@{/recipe/unlike}">
+                                <img id="heartImage2" th:src="@{/image/heartGray.png}" alt="하트 이미지">
+                            </a>
+                        </div>
+
                         <button class="myDetailPage-buttonTwo">신고</button>
                     </div>
                 </div>
@@ -73,7 +81,7 @@
                     <form th:action="@{/recipe/myDetailPage}" method="post">
                         <input type="hidden" name="recipeNumber" th:value="${recipeDetail.recipeNumber}"/>
                         <textarea id="commentTextArea" placeholder="댓글을 입력하세요" rows="3" name="replyText"></textarea>
-                        <input type="hidden" name="userNumber" th:value="${recipeDetail.userNumber}"/>
+                        <input type="hidden" name="userNumber" th:value="${session.userNumber}"/> <!-- 세션 값을 폼에 포함 -->
                         <div class="myDetailPage-commentActions">
                             <button class="myDetailPage-addBtn" onclick="submitComment()">등록</button>
                         </div>

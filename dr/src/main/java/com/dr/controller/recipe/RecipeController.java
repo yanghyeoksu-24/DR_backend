@@ -21,6 +21,7 @@ import java.util.List;
 public class RecipeController {
 
     private final RecipeService recipeService;
+    private final HttpSession session;
 
     //    나만의레시피최신순
     @GetMapping("/myRecipeList")
@@ -168,16 +169,32 @@ public class RecipeController {
     }
 
     // 찜 추가 메서드
-    @PostMapping("/like")
-    public ResponseEntity<String> addSteam(@RequestBody MyRecipeDetailDTO myRecipeDetailDTO) {
-        recipeService.addSteam(myRecipeDetailDTO);
-        return ResponseEntity.ok("찜이 추가되었습니다.");
+//    @PostMapping("/like")
+//    public ResponseEntity<String> addSteam(@RequestParam(name = "recipeNumber") Long recipeNumber) {
+//
+//        Long userNumber = (Long) session.getAttribute("userNumber");
+//
+//        recipeService.addSteam(recipeNumber, userNumber);
+//        return ResponseEntity.ok("찜이 추가되었습니다.");
+//    }
+
+    @GetMapping("/like")
+    public String addSteam(@RequestParam(name = "recipeNumber") Long recipeNumber) {
+
+        Long userNumber = (Long) session.getAttribute("userNumber");
+
+        recipeService.addSteam(recipeNumber, userNumber);
+        return "redirect:/recipe/myDetailPage";
     }
 
     // 찜 삭제 메서드
-    @DeleteMapping("/unlike")
-    public ResponseEntity<String> removeSteam(@RequestBody MyRecipeDetailDTO myRecipeDetailDTO) {
-        recipeService.removeSteam(myRecipeDetailDTO);
+    @GetMapping("/unlike")
+    public ResponseEntity<String> removeSteam(@RequestParam(name = "recipeNumber") Long recipeNumber) {
+
+        Long userNumber = (Long) session.getAttribute("userNumber");
+
+
+        recipeService.removeSteam(recipeNumber, userNumber);
         return ResponseEntity.ok("찜이 삭제되었습니다.");
     }
 
