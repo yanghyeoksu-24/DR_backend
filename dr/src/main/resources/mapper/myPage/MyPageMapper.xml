@@ -233,4 +233,12 @@
         INSERT INTO DR_POINT (POINT_NUMBER, POINT_GET, POINT_NOTE, USER_NUMBER, POINT_DATE)
         VALUES (SEQ_POINT_NUMBER.NEXTVAL, #{pointGet}, #{pointNote}, #{userNumber}, TO_DATE(#{pointDate}, 'YYYY-MM-DD'))
     </insert>
+
+    <!-- 유저의 출석 체크 날짜 리스트 조회 -->
+    <select id="getAttendanceDates" parameterType="long" resultType="CheckDTO">
+        SELECT TO_CHAR(DAILY_DATE, 'YYYY-MM-DD') AS dailyDate
+        FROM DR_DAILY
+        WHERE USER_NUMBER = #{userNumber}
+        ORDER BY DAILY_DATE DESC
+    </select>
 </mapper>
