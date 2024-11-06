@@ -12,5 +12,4 @@ import lombok.ToString;
 public class MyRecipeGoodDTO {
     private int goodNumber;
     private Long recipeNumber;
-    private Long userNumber;
 }

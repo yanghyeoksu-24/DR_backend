@@ -60,6 +60,22 @@
                  R.USER_NUMBER
     </select>
 
+    <!-- 추천 수 증가 -->
+    <insert id="increaseGoodCount" parameterType="MyRecipeGoodDTO">
+        <selectKey keyProperty="goodNumber" resultType="int" order="BEFORE">
+            SELECT SEQ_GOOD_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_GOOD(GOOD_NUMBER, RECIPE_NUMBER)
+        VALUES (#{goodNumber} , #{recipeNumber})
+    </insert>
+
+    <!-- 추천 수 감소 -->
+    <delete id="decreaseGoodCount" parameterType="MyRecipeGoodDTO">
+        DELETE
+        FROM DR_GOOD
+        WHERE RECIPE_NUMBER = #{recipeNumber}
+    </delete>
+
     <!--    나만의 레시피 상세페이지 댓글조회-->
     <select id="selectMyRecipeComment" parameterType="Long" resultType="MyRecipeCommentDTO">
         SELECT R.RECIPE_NUMBER     AS recipeNumber,
@@ -78,22 +94,6 @@
         WHERE RP.RECIPE_NUMBER = #{recipeNumber}
     </select>
 
-    <!-- 추천 수 증가 -->
-    <insert id="increaseGoodCount" parameterType="MyRecipeGoodDTO">
-        <selectKey keyProperty="goodNumber" resultType="int" order="BEFORE">
-            SELECT SEQ_GOOD_NUMBER.NEXTVAL FROM DUAL
-        </selectKey>
-        INSERT INTO DR_GOOD(GOOD_NUMBER, RECIPE_NUMBER, USER_NUMBER)
-        VALUES (#{goodNumber} , #{recipeNumber}, #{userNumber})
-    </insert>
-
-    <!-- 추천 수 감소 -->
-    <delete id="decreaseGoodCount" parameterType="MyRecipeGoodDTO">
-        DELETE
-        FROM DR_GOOD
-        WHERE RECIPE_NUMBER = #{recipeNumber} AND USER_NUMBER = #{userNumber}
-    </delete>
-
     <!--    나만의 레시피 댓글작성-->
     <insert id="insertReply" parameterType="MyRecipeWriteCommentDTO">
         <selectKey keyProperty="replyNumber" resultType="Long" order="BEFORE">
@@ -106,8 +106,10 @@
     <!--    나만의 레시피 댓글 수정-->
     <update id="updateReply" parameterType="MyRecipeCommentDTO">
         UPDATE DR_REPLY
-        SET REPLY_TEXT = #{replyText}
+        SET REPLY_TEXT        = #{replyText},
+            REPLY_MODIFY_DATE = SYSDATE
         WHERE REPLY_NUMBER = #{replyNumber}
+          AND USER_NUMBER = #{userNumber};
     </update>
 
     <!--    나만의 레시피 댓글 삭제-->
@@ -194,9 +196,12 @@
 
     <!--    나만의레시피 글쓰기-->
     <insert id="insertMyRecipe" parameterType="MyRecipeWriteDTO">
+        <!-- 레시피 번호 자동 생성 -->
         <selectKey keyProperty="recipeNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_DR_RECIPE.NEXTVAL FROM DUAL
         </selectKey>
+
+        <!-- DR_RECIPE 테이블에 데이터 삽입 -->
         INSERT INTO DR_RECIPE (
         RECIPE_NUMBER,
         USER_NUMBER,
@@ -219,20 +224,24 @@
         )
     </insert>
 
+    <!--    찜 추가 삭제 조회-->
     <!-- 찜 추가 -->
-    <insert id="addSteam" parameterType="Long">
+    <insert id="addSteam" parameterType="MyRecipeDetailDTO">
         <selectKey keyProperty="steamNumber" resultType="Long" order="BEFORE">
-            SELECT SEQ_STEAM_NUMBER.NEXTVAL FROM DUAL
+            SELECT SEQ_DR_STEAM.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO DR_STEAM (RECIPE_NUMBER, USER_NUMBER)
-        VALUES (#{recipeNumber}, #{userNumber})
+        INSERT INTO DR_STEAM (STEAM_NUMBER, RECIPE_NUMBER, USER_NUMBER)
+        VALUES (#{steamNumber}, #{recipeNumber}, #{userNumber})
     </insert>
 
     <!-- 찜 삭제 -->
-    <delete id="removeSteam" parameterType="Long">
+    <delete id="removeSteam" parameterType="MyRecipeDetailDTO">
         DELETE FROM DR_STEAM
         WHERE RECIPE_NUMBER = #{recipeNumber}
           AND USER_NUMBER = #{userNumber}
     </delete>
+
+
+
 
 </mapper>

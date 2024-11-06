@@ -164,7 +164,7 @@
         WHERE
         S.USER_NUMBER = #{userNumber}
         ORDER BY
-        S.STEAM_DATE DESC              <!-- 찜한 날짜 기준 최신순 정렬 -->
+        S.STEAM_DATE DESC <!-- 최신순 정렬하기! -->
     </select>
 
     <!-- 내정보 찜 목록 삭제 -->
@@ -226,15 +226,15 @@
           AND TRUNC(DAILY_DATE) BETWEEN TRUNC(SYSDATE, 'MM') AND LAST_DAY(SYSDATE)
         GROUP BY USER_NUMBER
         ]]>
-</select>
+    </select>
 
-    <!-- 출석체크 시 포인트 적립 -->
+    <!-- 4. 출석체크 시 포인트 적립 -->
     <insert id="insertPointRecord" parameterType="PointCheckDTO">
         INSERT INTO DR_POINT (POINT_NUMBER, POINT_GET, POINT_NOTE, USER_NUMBER, POINT_DATE)
         VALUES (SEQ_POINT_NUMBER.NEXTVAL, #{pointGet}, #{pointNote}, #{userNumber}, TO_DATE(#{pointDate}, 'YYYY-MM-DD'))
     </insert>
 
-    <!-- 유저의 출석 체크 날짜 리스트 조회 -->
+    <!-- 5. 출석 체크 날짜 리스트 조회 -->
     <select id="getAttendanceDates" parameterType="long" resultType="CheckDTO">
         SELECT TO_CHAR(DAILY_DATE, 'YYYY-MM-DD') AS dailyDate
         FROM DR_DAILY
