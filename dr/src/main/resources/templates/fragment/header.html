@@ -46,7 +46,8 @@
                 </form>
             </div>
 
-            <div class="main-visitorBtn" th:unless="${session.userNumber != null}">
+<!--            <div class="main-visitorBtn" th:unless="${session.userNumber != null}">-->
+            <div class="main-visitorBtn" th:if="${session.userNumber == null}">
                 <form th:action="@{/user/login}" method="get">
                     <button class="main-login">로그인</button>
                 </form>

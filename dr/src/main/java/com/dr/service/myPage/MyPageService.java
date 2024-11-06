@@ -47,8 +47,9 @@
             myPageMapper.updateNickname(userNumber, nickname);
         }
 
-        // 프로필 사진 저장 및 경로 업데이트 메서드
-        public String saveProfileImage(Long userNumber, MultipartFile profileImage) throws IOException {
+        //마이페이지 내정보 이미지 변경
+        public String updateProfileImage(Long userNumber, MultipartFile profileImage) throws IOException {
+
             // 파일 이름 생성 (예: userNumber_파일이름)
             String fileName = profileImage.getOriginalFilename();
 
@@ -63,6 +64,7 @@
 
             // 클라이언트가 접근할 수 있는 URL 경로 반환
             return fileName; // 웹 경로
+
         }
 
         // userNumber를 사용하여 회원 탈퇴하기!
@@ -125,6 +127,7 @@
         public void insertPointRecord(PointCheckDTO pointCheckDTO) {
             myPageMapper.insertPointRecord(pointCheckDTO);
         }
+
 
         // 출석 날짜 리스트 조회
         public List<CheckDTO> getAttendanceDates(Long userNumber) {

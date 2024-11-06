@@ -83,7 +83,7 @@ public class ChatBotController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteChat(@RequestBody NangjangbotDTO nangjangbotDTO,
-                                                           @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
+                                           @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
         //로그인하지 않았을 경우 처리
         if (userNumber == null) {
             //401 반환
