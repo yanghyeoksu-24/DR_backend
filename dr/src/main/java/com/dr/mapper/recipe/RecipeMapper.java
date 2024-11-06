@@ -36,29 +36,50 @@ public interface RecipeMapper {
     // 나만의 레시피 댓글 작성
     void insertReply(MyRecipeWriteCommentDTO myRecipeWriteCommentDTO);
 
+    // 챗봇의 레시피 댓글 작성
+//    void insertChatReply(ChatBotRecipeWriteCommentDTO chatBotRecipeWriteCommentDTO);
+
     //나만의 레시피 댓글 수정
-    void updateMyReply(MyRecipeCommentDTO myRecipeCommentDTO);
+    void updateReply(MyRecipeCommentDTO myRecipeCommentDTO);
+
+    //챗봇 레시피 댓글 수정
+//    void updateChatBotReply(ChatBotRecipeCommentDTO chatBotRecipeCommentDTO);
 
     //    나만의 레시피 댓글 삭제
     void deleteMyReply(@Param("replyNumber") Long replyNumber);
 
+    //  챗봇 레시피 댓글 삭제
+//    void deleteChatBotReply(@Param("replyNumber") Long replyNumber);
 
-    //    나만의 레시피 글쓰기
-    void insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO);
 
-    // 추천 수 증가
+    // 나만의 레시피 추천 수 증가
     void increaseGoodCount(MyRecipeGoodDTO myRecipeGoodDTO);
 
-    // 추천 수 감소
+    // 나만의 레시피 추천 수 감소
     void decreaseGoodCount(MyRecipeGoodDTO myRecipeGoodDTO);
 
-    // 찜 추가 메서드
-//    void addSteam(MyRecipeDetailDTO myRecipeDetailDTO);
+    // 챗봇의 레시피 추천 수 증가
+//    void increaseChatBotGoodCount(ChatBotRecipeGoodDTO chatBotRecipeGoodDTO);
 
+    // 챗봇의 레시피 추천 수 감소
+//    void decreasechatBotGoodCount(ChatBotRecipeGoodDTO chatBotRecipeGoodDTO);
+
+    // 찜 추가 메서드
+    //void addSteam(MyRecipeDetailDTO myRecipeDetailDTO);
     void addSteam(Long recipeNumber, Long userNumber);
     // 찜 삭제 메서드
     void removeSteam(Long recipeNumber, Long userNumber);
 
+    //챗봇레시피 찜 추가
+//    void addChatBotSteam(Long recipeNumber, Long userNumber);
 
+    //챗봇레시피 찜 삭제
+//    void  removeChatBotSteam(Long recipeNumber, Long userNumber);
+
+    //    나만의 레시피 글쓰기
+    void insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO);
+
+    // 챗봇레시피 글쓰기
+//    void insertChatBotRecipe(ChatBotRecipeWriteDTO chatBotRecipeWriteDTO);
 }
 

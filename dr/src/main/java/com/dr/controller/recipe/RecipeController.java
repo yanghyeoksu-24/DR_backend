@@ -82,6 +82,22 @@ public class RecipeController {
         return "redirect:/recipe/myDetailPage";
     }
 
+    //나만의 레시피 상세페이지 댓글 수정
+    @PostMapping("/updateReply")
+    public ResponseEntity<Void> updateReply(@RequestParam("replyNumber") Long replyNumber,
+                                                     @RequestParam("replyText") String replyText) {
+        if (replyNumber == null || replyText == null || replyText.trim().isEmpty()) {
+            return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
+        }
+
+        // 댓글 수정 서비스 호출
+        recipeService.updateReply(replyNumber, replyText);
+
+        // 수정 완료 후 성공 응답 반환
+        return ResponseEntity.ok().build();
+    }
+
+
 
     //      나만의 레시피 상세페이지 댓글 삭제
     @PostMapping("/deleteComment")
@@ -155,18 +171,33 @@ public class RecipeController {
     }
 
     // 추천 수 증가
+//    @PostMapping("/goodPlus")
+//    public ResponseEntity<?> addGood(@RequestBody MyRecipeGoodDTO recipeNumber) {
+//        recipeService.addGood(recipeNumber);
+//        return ResponseEntity.ok("추천이 성공적으로 추가되었습니다.");
+//    }
+
+    // 추천 수 감소
+//    @PostMapping("/goodMinus")
+//    public ResponseEntity<?> removeGood(@RequestBody MyRecipeGoodDTO recipeNumber) {
+//        recipeService.removeGood(recipeNumber);
+//        return ResponseEntity.ok("추천이 성공적으로 제거되었습니다.");
+//    }
+
+    // 추천 수 증가
     @PostMapping("/goodPlus")
-    public ResponseEntity<?> addGood(@RequestBody MyRecipeGoodDTO recipeNumber) {
-        recipeService.addGood(recipeNumber);
+    public ResponseEntity<?> addGood(@RequestBody MyRecipeGoodDTO myRecipeGoodDTO) {
+        recipeService.addGood(myRecipeGoodDTO);
         return ResponseEntity.ok("추천이 성공적으로 추가되었습니다.");
     }
 
     // 추천 수 감소
     @PostMapping("/goodMinus")
-    public ResponseEntity<?> removeGood(@RequestBody MyRecipeGoodDTO recipeNumber) {
-        recipeService.removeGood(recipeNumber);
+    public ResponseEntity<?> removeGood(@RequestBody MyRecipeGoodDTO myRecipeGoodDTO) {
+        recipeService.removeGood(myRecipeGoodDTO);
         return ResponseEntity.ok("추천이 성공적으로 제거되었습니다.");
     }
+
 
     // 찜 추가 메서드
 //    @PostMapping("/like")

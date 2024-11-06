@@ -53,9 +53,16 @@ public class RecipeService {
     }
 
     //나만의 레시피 댓글 수정
-    public void updateMyRecipeComment(MyRecipeCommentDTO myRecipeCommentDTO) {
-        recipeMapper.updateMyReply(myRecipeCommentDTO);
+    public void updateReply(Long replyNumber, String replyText){
+        MyRecipeCommentDTO myRecipeCommentDTO = new MyRecipeCommentDTO();
+        myRecipeCommentDTO.setReplyNumber(replyNumber);
+        myRecipeCommentDTO.setReplyText(replyText);
+
+        recipeMapper.updateReply(myRecipeCommentDTO);
     }
+
+
+
 
     //나만의 레시피 댓글 삭제
     public void deleteMyRecipeComment(Long replyNumber) {
@@ -64,14 +71,28 @@ public class RecipeService {
 
     //나만의 레시피 댓글조회
     public List<MyRecipeCommentDTO> selectMyRecipeComment(Long recipeNumber) {
-        // 특정 레시피의 댓글 목록을 조회하여 반환
         return recipeMapper.selectMyRecipeComment(recipeNumber);
     }
+
+    // 챗봇레시피 댓글 작성
+//    public void insertChatBotRecipeComment(ChatBotRecipeWriteCommentDTO chatBotRecipeWriteCommentDTO) {
+//        recipeMapper.insertChatReply(chatBotRecipeWriteCommentDTO);
+//    }
 
     //챗봇 레시피 댓글조회
     public List<ChatBotRecipeCommentDTO> selectChatBotRecipeComment(Long recipeNumber) {
         return recipeMapper.selectChatBotRecipeComment(recipeNumber);
     }
+
+    //챗봇의 레시피 댓글 수정
+//    public void updateChatBotRecipeComment(ChatBotRecipeCommentDTO chatBotRecipeCommentDTO) {
+//        recipeMapper.updateChatBotReply(chatBotRecipeCommentDTO);
+//    }
+
+    //챗봇의 레시피 댓글 삭제
+//    public void deleteChatBotRecipeComment(Long replyNumber) {
+//        recipeMapper.deleteChatBotReply(replyNumber);
+//    }
 
 
     //나만으레시피 글쓰기
@@ -79,26 +100,41 @@ public class RecipeService {
         recipeMapper.insertMyRecipe(myRecipeWriteDTO);  // Toast API로 전달된 레시피 데이터를 DB에 삽입
     }
 
-    // 추천 수 증가
+    // 나만으레시피 추천 수 증가
     public void addGood(MyRecipeGoodDTO myRecipeGoodDTO) {
         recipeMapper.increaseGoodCount(myRecipeGoodDTO);
     }
 
-    // 추천 수 감소
+    // 나만으레시피 추천 수 감소
     public void removeGood(MyRecipeGoodDTO myRecipeGoodDTO) {
         recipeMapper.decreaseGoodCount(myRecipeGoodDTO);
     }
 
-    // 찜 추가 메서드
+    // 챗봇레시피 추천 수 증가
+//    public void addChatBotGood(ChatBotRecipeGoodDTO chatBotRecipeGoodDTO) { recipeMapper.increaseChatBotGoodCount(chatBotRecipeGoodDTO);}
+
+    // 챗봇레시피 추천 수 감소
+//    public void removeChatBotGood(ChatBotRecipeGoodDTO chatBotRecipeGoodDTO) { recipeMapper.decreasechatBotGoodCount(chatBotRecipeGoodDTO);}
+
+    // 나만으레시피 찜 추가 메서드
     public void addSteam(Long recipeNumber, Long userNumber) {
         recipeMapper.addSteam(recipeNumber, userNumber);
     }
 
-    // 찜 삭제 메서드
+    // 나만으레시피 찜 삭제 메서드
     public void removeSteam(Long recipeNumber, Long userNumber) {
-
         recipeMapper.removeSteam(recipeNumber, userNumber);
     }
+
+//    챗봇의 레시피 찜 추가 메서드
+//    public void addChatBotSteam(Long recipeNumber, Long userNumber) {
+//        recipeMapper.addChatBotSteam(recipeNumber, userNumber);
+//    }
+
+//    챗봇 레시피 찜 삭제 메소드
+//    public void removeChatBotSteam(Long recipeNumber, Long userNumber) {
+//        recipeMapper.removeChatBotSteam(recipeNumber, userNumber);
+//    }
 
 
 

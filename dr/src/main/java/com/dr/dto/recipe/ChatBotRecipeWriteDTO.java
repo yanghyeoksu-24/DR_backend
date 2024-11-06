@@ -9,8 +9,13 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class MyRecipeGoodDTO {
-    private int goodNumber;
+public class ChatBotRecipeWriteDTO {
     private Long recipeNumber;
     private Long userNumber;
+    private String recipeTitle;
+    private String recipeText;
+    private String recipeOriginal;
+    private String userNickName;
+    private String recipeWriteDate;
+    private String recipeType;
 }

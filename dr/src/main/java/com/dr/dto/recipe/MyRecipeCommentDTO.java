@@ -19,4 +19,5 @@ public class MyRecipeCommentDTO {
     private String photoLocal;              // 로컬 사진 경로
     private String replyModifyDate;         //댓ㄷ글수정시간
     private Long replyNumber;               //댓글번호
+    private Long userNumber;
 }
