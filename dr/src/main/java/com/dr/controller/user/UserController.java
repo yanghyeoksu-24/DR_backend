@@ -178,7 +178,7 @@ public class UserController {
 
             // 로그인 성공 시 성공 메시지와 리다이렉트 URL 반환
             response.put("message", "환영합니다.");
-            response.put("redirect", "/main");
+            response.put("redirect", "/DRmain");
             return ResponseEntity.ok(response);
         } else {
             // 로그인 실패 시 오류 메시지와 리다이렉트 URL 반환
@@ -193,7 +193,7 @@ public class UserController {
     @GetMapping("/logout")
     public RedirectView logout(HttpSession session) {
         session.invalidate();
-        return new RedirectView("/main");
+        return new RedirectView("/DRmain");
     }
 
     // 닉네임 검사

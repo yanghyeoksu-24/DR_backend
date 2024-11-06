@@ -57,6 +57,12 @@ dependencies {
 	// Json 의존성 추가
 	implementation 'org.json:json:20210307'
 
+	// 카카오API에 필요한 의존성 주입
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' //OAuth2서비스와 연동
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' //타임리프 템플릿에서 Spring Security 기능 사용가능
+	testImplementation 'org.springframework.security:spring-security-test' //관련테스트를 위한 라이브러리
+
 }
 
 tasks.named('test') {
