@@ -1,6 +1,9 @@
 package com.dr.mapper.user;
 
-import com.dr.dto.user.*;
+import com.dr.dto.user.EmailFindDTO;
+import com.dr.dto.user.PwFindDTO;
+import com.dr.dto.user.UserDTO;
+import com.dr.dto.user.UserSessionDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,11 +25,11 @@ public interface UserMapper {
 
 
     // 비밀번호 찾기 메서드
-   String userPwFind(String userPhone, String userEmail);
+    PwFindDTO userPwFind(String userPhone, String userEmail);
 
 
     // 비밀번호 변경 메서드
-    void updatePassword(String userPw , String userPhone);
+    void updatePassword(@Param("userPw") String userPw , @Param("userPhone") String userPhone);
 
 
     // 닉네임 중복확인
