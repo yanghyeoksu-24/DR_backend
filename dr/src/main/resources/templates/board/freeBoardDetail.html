@@ -7,9 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
     <script defer th:src="@{/js/fragment/header.js}"></script>
-    <!-- 네비바 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
-    <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <title>DR - 자유게시판 상세페이지</title>
@@ -29,6 +27,8 @@
                         <p class="freeBoardDetail-writeName" th:text="${freeBoardDetail.userNickName}">작성자</p>
                         <p class="freeBoardDetail-foodTitle" th:text="${freeBoardDetail.boardTitle}">제목</p>
                         <p class="freeBoardDetail-date" th:text="${freeBoardDetail.boardWriteDate}">날짜</p>
+
+
                     </div>
                 </div>
 
@@ -45,7 +45,6 @@
                     </div>
                 </div>
             </div>
-            <!--            글 내용-->
             <div class="freeBoardDetail-writetext">
                 <p class="freeBoardDetail-texts" th:text="${freeBoardDetail.boardText}">글 내용</p>
                 <img th:src="@{/image/board/} + ${freeBoardDetail.photoLocal}" alt="Board Image">
@@ -69,10 +68,11 @@
                 </div>
                 <!-- 댓글 리스트 반복문 시작 -->
                 <div th:each="freeBoardComments : ${freeBoardComments}">
-                    <div class="freeBoardDetail-comment">
+                    <div class="freeBoardDetail-comment" id="comment${freeBoardComments.replyNumber}">
                         <div class="freeBoardDetail-commentUserImg">
                             <img th:src="@{/image/photo/} + ${freeBoardComments.photoLocal}" alt="User Image">
                         </div>
+
                         <div class="freeBoardDetail-commentContent">
                             <input type="hidden" name="replyNumber" th:value="${freeBoardComments.replyNumber}">
                             <div class="freeBoardDetail-commentHeader">
@@ -80,38 +80,44 @@
                                       th:text="${freeBoardComments.userNickName}">작성자</span>
                                 <button class="freeBoardDetail-reportBtn">신고</button>
                             </div>
-                            <div class="freeBoardDetail-commentText" th:text="${freeBoardComments.replyText}">댓글 내용
+
+                            <!-- 수정된 날짜가 있으면 수정된 날짜를 보이고, 없으면 작성 날짜만 보이도록 처리 -->
+                            <div class="freeBoardDetail-commentDate"
+                                 th:text="${freeBoardComments.replyModifyDate != null ? freeBoardComments.replyModifyDate : freeBoardComments.replyWriteDate}">
+                                작성 날짜
                             </div>
-                            <div class="freeBoardDetail-commentTime" th:text="${freeBoardComments.replyWriteDate}">시간
+                            <br><br>
+                            <div class="freeBoardDetail-commentText" id="commentText${freeBoardComments.replyNumber}"
+                                 th:text="${freeBoardComments.replyText}">댓글 내용
                             </div>
 
-                            <!-- 수정 및 삭제 버튼 그룹 (모든 댓글에 표시) -->
-                            <div class="freeBoardDetail-buttonGroup">
-                                <button class="freeBoardDetail-editBtn"
-                                        th:attr="onclick='editComment(' + ${freeBoardComments.replyNumber} + ')'">수정
+                            <!--                            <p>userNumber: <span th:if="${userNumber}==null">userNumber = null</span></p>-->
+                            <!--                            <p>freeBoardComments.userNumber: <span th:if="${freeBoardComments.userNickName} == null">freeBoardComments.userNumber = null</span></p>-->
+                            <!--                            <p>freeBoardComments.userNumber: <span th:if="${userNumber != null && userNickName == freeBoardComments.userNickName} == false">값</span></p>-->
+                            <div class="freeBoardDetail-buttonGroup"
+                                 th:if="${userNickName != null and userNickName == freeBoardComments.userNickName}">
+                                <button type="button" class="freeBoardDetail-editBtn"
+                                        th:attr="data-reply-number=${freeBoardComments.replyNumber}">수정
                                 </button>
                                 <button type="button" class="freeBoardDetail-deleteBtn"
                                         th:attr="data-reply-number=${freeBoardComments.replyNumber}">삭제
                                 </button>
                             </div>
 
+
                             <!-- 댓글 수정 입력창, 기본적으로 숨김 상태 -->
-                            <div class="freeBoardDetail-commentInput"
-                                 th:attr="id='editInput' + ${freeBoardComments.replyNumber}" style="display:none;">
-                <textarea th:attr="id='editTextarea' + ${freeBoardComments.replyNumber}"
-                          placeholder="댓글을 입력하세요..."></textarea>
+                            <div class="freeBoardDetail-commentInput"  style="display:none;"
+                                 id="editInput${freeBoardComments.replyNumber}">
+                                <textarea id="editTextarea${freeBoardComments.replyNumber}" rows="3"></textarea>
                                 <div class="freeBoardDetail-commentActions">
-                                    <button class="freeBoardDetail-editBtn"
-                                            th:attr="onclick='saveComment(' + ${freeBoardComments.replyNumber} + ')'">저장
-                                    </button>
-                                    <button class="freeBoardDetail-deleteBtn"
-                                            th:attr="onclick='cancelEdit(' + ${freeBoardComments.replyNumber} + ')'">취소
-                                    </button>
+                                    <button class="freeBoardDetail-saveBtn">저장</button>
+                                    <button class="freeBoardDetail-cancelBtn">취소</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- 댓글 리스트 반복문 끝 -->
             </div>
         </div>
     </div>
