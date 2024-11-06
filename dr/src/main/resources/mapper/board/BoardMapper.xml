@@ -68,29 +68,37 @@
         ORDER BY goodCount DESC, B.BOARD_WRITE_DATE DESC
     </select>
 
-
-    <!-- 자유게시판 상세 정보 조회 -->
+<!--    자유게시판 상세 페이지 댓글-->
     <select id="freeBoardDetail" resultType="FreeBoardDetailDTO">
         SELECT B.BOARD_NUMBER,
                B.BOARD_TITLE,
                B.BOARD_TEXT,
                B.BOARD_WRITE_DATE,
+               U.USER_NUMBER,
                U.USER_NICKNAME,
                P.PHOTO_LOCAL,
                COUNT(G.GOOD_NUMBER) AS goodCount
         FROM DR_BOARD B
                  JOIN DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
+                 LEFT JOIN DR_PHOTO P ON U.USER_NUMBER = P.USER_NUMBER
                  LEFT JOIN DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
-                 LEFT JOIN DR_PHOTO P ON B.BOARD_NUMBER = P.PHOTO_NUMBER
         WHERE B.BOARD_NUMBER = #{boardNumber}
-        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, B.BOARD_TEXT, B.BOARD_WRITE_DATE, U.USER_NICKNAME, P.PHOTO_LOCAL
+        GROUP BY B.BOARD_NUMBER,
+                 B.BOARD_TITLE,
+                 B.BOARD_TEXT,
+                 B.BOARD_WRITE_DATE,
+                 U.USER_NUMBER,
+                 U.USER_NICKNAME,
+                 P.PHOTO_LOCAL
     </select>
+
 
     <!-- 자유게시판 댓글 목록 조회 -->
     <select id="freeBoardCommentList" parameterType="Long" resultType="FreeBoardCommentDTO">
         SELECT R.REPLY_NUMBER,
                U.USER_NICKNAME,
                R.REPLY_WRITE_DATE,
+               R.REPLY_MODIFY_DATE,
                R.REPLY_TEXT,
                P.PHOTO_LOCAL
         FROM DR_REPLY R
@@ -110,13 +118,22 @@
         VALUES (#{replyNumber}, #{replyText}, #{boardNumber}, #{userNumber})
     </insert>
 
-<!--    자유게시판 댓글수정-->
-    <update id="freeBoardUpdateReply">
+    <!-- 자유게시판 댓글 수정 -->
+    <update id="freeBoardUpdateReply" parameterType="FreeBoardCommentDTO">
         UPDATE DR_REPLY
-        SET REPLY_TEXT = #{replyText}
+        SET REPLY_TEXT = #{replyText},
+        REPLY_MODIFY_DATE = SYSDATE  <!-- 현재 시간을 저장 -->
         WHERE REPLY_NUMBER = #{replyNumber}
-        AND USER_NUMBER = #{userNumber}
     </update>
+
+    <!-- 자유게시판 댓글 삭제 -->
+    <delete id="freeBoardDeleteReply" parameterType="Long">
+        DELETE FROM DR_REPLY
+        WHERE REPLY_NUMBER = #{replyNumber}
+    </delete>
+
+
+
 
     <!-- 꿀팁게시판 상세 정보 조회 -->
     <select id="honeyBoardDetail" resultType="HoneyBoardDetailDTO">
@@ -129,11 +146,12 @@
                COUNT(G.GOOD_NUMBER) AS goodCount
         FROM DR_BOARD B
                  JOIN DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
+                 LEFT JOIN DR_PHOTO P ON U.USER_NUMBER = P.USER_NUMBER
                  LEFT JOIN DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
-                 LEFT JOIN DR_PHOTO P ON B.BOARD_NUMBER = P.PHOTO_NUMBER
         WHERE B.BOARD_NUMBER = #{boardNumber}
         GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, B.BOARD_TEXT, B.BOARD_WRITE_DATE, U.USER_NICKNAME, P.PHOTO_LOCAL
     </select>
+
 
     <!-- 꿀팁게시판 댓글 목록 조회 -->
     <select id="honeyBoardCommentList" parameterType="Long" resultType="HoneyBoardCommentDTO">
