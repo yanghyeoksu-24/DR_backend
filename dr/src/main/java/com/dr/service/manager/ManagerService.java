@@ -25,7 +25,7 @@ import java.util.UUID;
 public class ManagerService {
     private final ManagerMapper managerMapper;
 
-    @Value("C:/upload/")
+    @Value("C:/backend/SpringBoot/Spring Project/dr/src/main/resources/static/image/product/")
     private String fileDir;
 
     // 로그인
@@ -167,56 +167,46 @@ public class ManagerService {
         managerMapper.registerProduct(managerRegisterDTO);
         log.info("상품 등록 완료: {}", managerRegisterDTO);
 
-        // 상품 번호 설정 (DB에 저장 후 할당된 번호 사용)
+        // 사진 등록을 위한 정보 설정
         int productNumber = managerRegisterDTO.getProductNumber();
-        managerRegisterDTO.setProductNumber(productNumber);
-
-        // 파일 정보 설정
         String originalFilename = file.getOriginalFilename();
-        String filePath = "C:/upload/" + originalFilename;
-        String fileSize = "1000"; // 고정값 설정
-        Date photoUploadDate = new Date(); // 현재 날짜
 
-        // 파일 저장
+        String filePath = fileDir + originalFilename;
+        String fileSize = "1000"; // 고정값 설정
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = dateFormat.format(new Date());
+
+        // 파일 저장 및 사진 정보 등록
         log.info("파일 저장 시작: 원본 파일 이름: {}, 파일 경로: {}", originalFilename, filePath);
         try {
-            saveFile(file, (long) productNumber, originalFilename, filePath, fileSize, photoUploadDate);
-            log.info("파일 저장 완료: {}", originalFilename);
-        } catch (Exception e) {
-            log.error("파일 저장 중 오류 발생: {}", e.getMessage());
-            throw new RuntimeException("파일 저장 중 오류가 발생했습니다.", e);
-        }
-    }
+            // 파일 저장 경로 확인 및 폴더 생성
+            File uploadDir = new File(fileDir); // "상품" 폴더 경로 생성
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs(); // 폴더가 존재하지 않으면 생성
+                log.info("업로드 디렉토리가 생성되었습니다: {}", uploadDir.getAbsolutePath());
+            }
 
-    private void saveFile(MultipartFile file, Long productNumber, String originalFilename, String filePath, String fileSize, Date photoUploadDate) {
-        // 파일 저장 경로 확인 및 폴더 생성
-        File uploadDir = new File("C:/upload");
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs(); // 폴더가 존재하지 않으면 생성
-            log.info("업로드 디렉토리가 생성되었습니다: {}", uploadDir.getAbsolutePath());
-        }
-
-        // 파일 저장 로직
-        try {
+            // 파일 저장
             File destinationFile = new File(filePath);
             file.transferTo(destinationFile); // 선택한 파일을 해당 경로에 저장
-            log.info("파일이 성공적으로 저장되었습니다: {}", filePath); // 성공 로그 추가
+            log.info("파일이 성공적으로 저장되었습니다: {}", filePath);
+
+            // DB에 사진 정보 저장
+            ManagerPhotoDTO managerPhotoDTO = new ManagerPhotoDTO();
+            managerPhotoDTO.setProductNumber(productNumber);
+            managerPhotoDTO.setPhotoOriginal(originalFilename);
+            managerPhotoDTO.setPhotoLocal(originalFilename); // 로컬 파일 이름은 원본 파일 이름
+            managerPhotoDTO.setPhotoSize(fileSize);
+            managerPhotoDTO.setPhotoUpload(formattedDate);
+            managerMapper.registerPhoto(managerPhotoDTO);
+
+            log.info("사진 정보가 DB에 성공적으로 저장되었습니다: {}", managerPhotoDTO);
+
         } catch (IOException e) {
-            log.error("파일 저장 중 오류가 발생했습니다: {}", e.getMessage()); // 오류 메시지 로그
-            log.error("오류 세부정보: ", e); // 예외의 전체 스택 추적을 로그에 기록
+            log.error("파일 저장 중 오류가 발생했습니다: {}", e.getMessage());
+            log.error("오류 세부정보: ", e);
             throw new RuntimeException("파일 저장 중 오류가 발생했습니다.", e);
         }
-
-        // 사진 정보 설정
-        ManagerPhotoDTO managerPhotoDTO = new ManagerPhotoDTO();
-        managerPhotoDTO.setProductNumber(Math.toIntExact(productNumber));
-        managerPhotoDTO.setPhotoOriginal(originalFilename);
-        managerPhotoDTO.setPhotoLocal(originalFilename); // 로컬 파일 이름은 원본 파일 이름
-        managerPhotoDTO.setPhotoSize(fileSize);
-        managerPhotoDTO.setPhotoUpload(String.valueOf(photoUploadDate)); // Date 객체를 직접 사용
-
-        // 사진 등록
-        managerMapper.registerPhoto(managerPhotoDTO);
     }
 
 

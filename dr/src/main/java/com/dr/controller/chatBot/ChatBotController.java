@@ -21,13 +21,13 @@ public class ChatBotController {
     private final ChatBotService chatBotService;
     private final NangjangbotService nangjangbotService;
 
-    // ****GET요청에서는 JSON 형식의 데이터를 본문에 포함할 수 없고 쿼리 매개변수로 전달할 수 없음
     @PostMapping("/chat")
     public ResponseEntity<ChatResponse> chat(@RequestBody ChatRequest request,
                                              @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
         //로그인하지 않았을 경우 처리
         if (userNumber == null) {
-//            checkUserLogin(userNumber);
+            //401 반환
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         // 메세지와 현재 세션 가져오기
@@ -81,7 +81,6 @@ public class ChatBotController {
     }
 
 
-// ****GET요청에서는 JSON 형식의 데이터를 본문에 포함할 수 없고 쿼리 매개변수로 전달할 수 없음
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteChat(@RequestBody NangjangbotDTO nangjangbotDTO,
                                                            @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
@@ -98,7 +97,6 @@ public class ChatBotController {
         return ResponseEntity.noContent().build();
     }
 
-    // ****GET요청에서는 JSON 형식의 데이터를 본문에 포함할 수 없고 쿼리 매개변수로 전달할 수 없음
     @PostMapping("/getChating")
     public ResponseEntity<List<NangjangbotDTO>> getChating(@RequestBody NangjangbotDTO nangjangbotDTO,
                                                            @SessionAttribute(value = "userNumber", required = false) Long userNumber) {

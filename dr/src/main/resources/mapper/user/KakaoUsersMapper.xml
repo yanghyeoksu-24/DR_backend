@@ -1,0 +1,23 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dr.mapper.user.KakaoUsersMapper">
+    <!-- 사용자 정보 조회 -->
+    <select id="findByProviderId" resultType="KakaoUsersDTO">
+        SELECT * FROM DR_USER WHERE provider_id = #{providerId}
+    </select>
+
+    <!--    사용자 정보 저장 -->
+    <insert id="insertUser" parameterType="KakaoUsersDTO">
+        <selectKey keyProperty="userNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_USER_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_USER (USER_NUMBER, USER_EMAIL, USER_PW, USER_NICKNAME, USER_PHONE, PROVIDER, PROVIDER_ID, PROFILE_PIC)
+        VALUES (#{userNumber}, #{accountEmail}, #{userPw어떠카지???}, #{name}, #{userPhone}, #{provider}, #{providerId}, #{PROFILE_PIC})
+    </insert>
+
+    <!--    사용자 정보 업데이트 -->
+    <update id="updateUser" parameterType="KakaoUsersDTO">
+        UPDATE DR_USER
+        SET USER_NICKNAME=#{name}, PROFILE_PIC=#{profilePic}
+        where provider_id = #{providerId}
+    </update>
+</mapper>
