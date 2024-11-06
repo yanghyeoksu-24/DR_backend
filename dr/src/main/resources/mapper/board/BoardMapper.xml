@@ -68,12 +68,13 @@
         ORDER BY goodCount DESC, B.BOARD_WRITE_DATE DESC
     </select>
 
-    <!--    자유게시판 상세페이지 -->
+<!--    자유게시판 상세 페이지 댓글-->
     <select id="freeBoardDetail" resultType="FreeBoardDetailDTO">
         SELECT B.BOARD_NUMBER,
                B.BOARD_TITLE,
                B.BOARD_TEXT,
                B.BOARD_WRITE_DATE,
+               U.USER_NUMBER,
                U.USER_NICKNAME,
                P.PHOTO_LOCAL,
                COUNT(G.GOOD_NUMBER) AS goodCount
@@ -82,7 +83,13 @@
                  LEFT JOIN DR_PHOTO P ON U.USER_NUMBER = P.USER_NUMBER
                  LEFT JOIN DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
         WHERE B.BOARD_NUMBER = #{boardNumber}
-        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, B.BOARD_TEXT, B.BOARD_WRITE_DATE, U.USER_NICKNAME, P.PHOTO_LOCAL
+        GROUP BY B.BOARD_NUMBER,
+                 B.BOARD_TITLE,
+                 B.BOARD_TEXT,
+                 B.BOARD_WRITE_DATE,
+                 U.USER_NUMBER,
+                 U.USER_NICKNAME,
+                 P.PHOTO_LOCAL
     </select>
 
 
@@ -91,6 +98,7 @@
         SELECT R.REPLY_NUMBER,
                U.USER_NICKNAME,
                R.REPLY_WRITE_DATE,
+               R.REPLY_MODIFY_DATE,
                R.REPLY_TEXT,
                P.PHOTO_LOCAL
         FROM DR_REPLY R
@@ -113,9 +121,16 @@
     <!-- 자유게시판 댓글 수정 -->
     <update id="freeBoardUpdateReply" parameterType="FreeBoardCommentDTO">
         UPDATE DR_REPLY
-        SET REPLY_TEXT = #{replyText}
+        SET REPLY_TEXT = #{replyText},
+        REPLY_MODIFY_DATE = SYSDATE  <!-- 현재 시간을 저장 -->
         WHERE REPLY_NUMBER = #{replyNumber}
     </update>
+
+    <!-- 자유게시판 댓글 삭제 -->
+    <delete id="freeBoardDeleteReply" parameterType="Long">
+        DELETE FROM DR_REPLY
+        WHERE REPLY_NUMBER = #{replyNumber}
+    </delete>
 
 
 
@@ -166,6 +181,7 @@
         FROM DR_GOOD
         WHERE BOARD_NUMBER = #{boardNumber} AND user_number = #{userNumber}
     </delete>
+
 
 
 </mapper>

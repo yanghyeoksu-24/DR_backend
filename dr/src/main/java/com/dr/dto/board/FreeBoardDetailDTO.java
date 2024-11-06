@@ -17,7 +17,9 @@ public class FreeBoardDetailDTO {
     private String boardTitle;
     private String boardText;
     private String boardWriteDate;
+    private String replyModifyDate;
     private String userNickName;
+    private Long userNumber;
     private int goodCount;
     private String photoLocal;
 }

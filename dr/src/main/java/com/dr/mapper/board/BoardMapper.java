@@ -44,4 +44,11 @@ public interface BoardMapper {
     void honeyGoodMinus(HoneyGoodDTO HoneyGoodDTO);
 
 
+    // 자유게시판 댓글 수정
+    void freeBoardUpdateReply(FreeBoardCommentDTO comment);
+
+    // 자유게시판 댓글 삭제
+    void freeBoardDeleteReply(Long replyNumber);
+
+
 }

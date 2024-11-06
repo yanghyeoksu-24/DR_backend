@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/board/honeyBoardDetail.css" th:href="@{/css/board/honeyBoardDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/board/honeyBoardDetail.css}">
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
     <script defer th:src="@{/js/fragment/header.js}"></script>
@@ -12,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
-    <title th:text="'DR - 꿀팁게시판 상세페이지'">DR - 꿀팁게시판 상세페이지</title>
+    <title>DR - 꿀팁게시판 상세페이지</title>
 </head>
 
 <body>
@@ -23,13 +22,12 @@
             <div class="honeyBoardDetail-infobox">
                 <div class="honeyBoardDetail-infoFirst">
                     <div class="honeyBoardDetail-infoInBox1">
-                        <img src="./../../image/basicProfile.png" alt="" th:src="@{/image/basicProfile.png}">
+                        <img th:src="@{/image/photo/} + ${honeyBoardDetail.photoLocal}" alt="User Photo">
                     </div>
                     <div class="honeyBoardDetail-infoInBox2">
-                        <p class="honeyBoardDetail-writeName" th:text="${honeyBoardDetail.userNickName}">김찰수</p>
-                        <p class="honeyBoardDetail-foodTitle" th:text="${honeyBoardDetail.boardTitle}">숙주나물 무침</p>
-                        <p class="honeyBoardDetail-date" th:text="${honeyBoardDetail.boardWriteDate}">2024-10-04
-                            14:50</p>
+                        <p class="honeyBoardDetail-writeName" th:text="${honeyBoardDetail.userNickName}">작성자</p>
+                        <p class="honeyBoardDetail-foodTitle" th:text="${honeyBoardDetail.boardTitle}">제목</p>
+                        <p class="honeyBoardDetail-date" th:text="${honeyBoardDetail.boardWriteDate}">날짜</p>
                     </div>
                 </div>
 
@@ -38,9 +36,7 @@
                         <a th:href="@{/board/honeyBoardModify/{id}(id=${honeyBoardDetail.boardNumber})}">
                             <button class="honeyBoardDetail-buttonOne">수정</button>
                         </a>
-                        <a th:href="@{/board/honeyBoardList}">
-                            <button id="deleteButton" class="honeyBoardDetail-buttonOne">삭제</button>
-                        </a>
+                        <button id="deleteButton" class="honeyBoardDetail-buttonOne" onclick="deleteBoard()">삭제</button>
                     </div>
 
                     <div class="honeyBoardDetail-secondButton">
@@ -52,59 +48,53 @@
             </div>
 
             <div class="honeyBoardDetail-writetext">
-                <p class="honeyBoardDetail-texts" th:text="${honeyBoardDetail.boardText}">
-                    바쁜 일상 속에서 푸짐한 식탁을 차리는 건 쉽지 않죠. 하지만 걱정 마세요! 오늘 소개할 "아삭아삭 숙주나물 무침" 레시피는 단 5분 만에 뚝딱 만들 수 있는 초간단 요리입니다.
-                    ...
-                </p>
-                <img src="./../../image/recipe/숙주나물무침.png" alt="" th:src="@{/image/recipe/숙주나물무침.png}">
+                <p class="honeyBoardDetail-texts" th:text="${honeyBoardDetail.boardText}">글 내용</p>
+                <img th:src="@{/image/recipe/} + ${honeyBoardDetail.photoLocal}" alt="Board Image">
 
                 <div class="honeyBoardDetail-recommendImg">
-                    <input type="hidden" id="boardNumber" name="boardNumber" th:value="${honeyBoardDetail.boardNumber}">
-                    <img src="./../../image/recommend.png" id="recommendImg" class="recommend-inactive"
-                         alt="recommend" th:src="@{/image/recommend.png}">
-                    <p id="recommendCount" th:text="'추천수: ' + ${honeyBoardDetail.goodCount}"></p>
+                    <img src="/image/recommend.png" id="recommendImg" alt="Recommend Image">
+                    <p id="recommendCount" th:text="'추천수: ' + ${honeyBoardDetail.goodCount}">추천수: 0</p>
                 </div>
-
             </div>
 
             <div class="honeyBoardDetail-commentSection">
-                <div class="honeyBoardDetail-commentInput" id="commentInput">
-                    <textarea placeholder="댓글을 입력하세요..." rows="3"></textarea>
-                    <div class="honeyBoardDetail-commentActions">
-                        <button class="honeyBoardDetail-addBtn" onclick="submitComment()">등록</button>
-                    </div>
+                <div class="honeyBoardDetail-commentInput">
+                    <form th:action="@{/board/honeyBoardDetail}" method="post">
+                        <input type="hidden" name="boardNumber" th:value="${honeyBoardDetail.boardNumber}"/>
+                        <textarea id="commentTextArea" placeholder="댓글을 입력하세요..." rows="3" name="replyText"></textarea>
+                        <input type="hidden" name="userNumber" th:value="${session.userNumber}"/> <!-- 세션 값을 폼에 포함 -->
+                        <div class="honeyBoardDetail-commentActions">
+                            <button type="submit" class="honeyBoardDetail-addBtn">등록</button>
+                        </div>
+                    </form>
                 </div>
 
                 <div th:each="comment : ${honeyBoardComments}">
                     <div class="honeyBoardDetail-comment">
                         <div class="honeyBoardDetail-commentUserImg">
-                            <img src="./../../image/basicProfile.png" alt="User Image"
-                                 th:src="@{/image/basicProfile.png}">
+                            <img th:src="@{/image/photo/} + ${comment.photoLocal}" alt="User Image">
                         </div>
                         <div class="honeyBoardDetail-commentContent">
                             <div class="honeyBoardDetail-commentHeader">
-                                <span class="honeyBoardDetail-commentUsername"
-                                      th:text="${comment.userNickName}">홍상철</span>
+                                <span class="honeyBoardDetail-commentUsername" th:text="${comment.userNickName}">작성자</span>
                                 <a th:href="@{/board/boardReport/{commentId}(commentId=${comment.replyNumber})}">
                                     <button class="honeyBoardDetail-reportBtn">신고</button>
                                 </a>
                             </div>
                             <div class="honeyBoardDetail-commentText" th:text="${comment.replyText}">댓글 내용</div>
-                            <div class="honeyBoardDetail-commentTime" th:text="${comment.replyWriteDate}">14:53:14</div>
+                            <div class="honeyBoardDetail-commentTime" th:text="${comment.replyWriteDate}">시간</div>
 
                             <div class="honeyBoardDetail-buttonGroup">
                                 <button class="honeyBoardDetail-editBtn"
                                         th:onclick="'editComment(' + ${comment.replyNumber} + ')'">수정
                                 </button>
-                                <button class="honeyBoardDetail-deleteBtn"
+                                <button type="button" class="honeyBoardDetail-deleteBtn"
                                         th:onclick="'deleteComment(' + ${comment.replyNumber} + ')'">삭제
                                 </button>
                             </div>
 
-                            <div class="honeyBoardDetail-commentInput" th:id="'editInput' + ${comment.replyNumber}"
-                                 style="display:none;">
-                                <textarea th:id="'editTextarea' + ${comment.replyNumber}"
-                                          placeholder="댓글을 입력하세요..."></textarea>
+                            <div class="honeyBoardDetail-commentInput" th:id="'editInput' + ${comment.replyNumber}" style="display:none;">
+                                <textarea th:id="'editTextarea' + ${comment.replyNumber}" placeholder="댓글을 입력하세요..."></textarea>
                                 <div class="honeyBoardDetail-commentActions">
                                     <button class="honeyBoardDetail-editBtn"
                                             th:onclick="'saveComment(' + ${comment.replyNumber} + ')'">저장
@@ -122,7 +112,6 @@
     </div>
 </main>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
-<script src="./../../js/board/honeyBoardDetail.js" defer th:src="@{/js/board/honeyBoardDetail.js}"></script>
+<script th:src="@{/js/board/honeyBoardDetail.js}" defer></script>
 </body>
-
 </html>
