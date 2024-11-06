@@ -8,13 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -92,9 +93,9 @@ public class BoardController {
         return "/board/honeyBoardList";
     }
 
-    //자유게시판 상세페이지(게시글 상세 + 댓글)
+    //자유게시판 상세페이지(게시글 상세 + 댓글 조회)
     @GetMapping("/freeBoardDetail")
-    public String freeBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model) {
+    public String freeBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model, @SessionAttribute(value = "userNickName", required = false) String userNickName) {
 
 
         FreeBoardDetailDTO freeBoardDetail = boardService.freeBoardDetail(boardNumber);
@@ -103,7 +104,10 @@ public class BoardController {
 
         model.addAttribute("freeBoardDetail", freeBoardDetail);
         model.addAttribute("freeBoardComments", freeBoardComments);
+        model.addAttribute("userNickName",userNickName);
 
+        log.info(userNickName + "아아dkfsjgaljsdkgjng");
+        log.info("===== BoardController 확인 : " + freeBoardComments);
 
         return "/board/freeBoardDetail";
     }
@@ -145,7 +149,8 @@ public class BoardController {
 
         return "redirect:/board/freeBoardDetail"; // boardNumber를 쿼리 매개변수로 포함
     }
-    
+
+    //자유게시판 댓글 수정
     @PostMapping("/updateReply")
     public ResponseEntity<Void> updateFreeBoardReply(@RequestParam("replyNumber") Long replyNumber,
                                                      @RequestParam("replyText") String replyText) {
@@ -156,7 +161,25 @@ public class BoardController {
         // 댓글 수정 서비스 호출
         boardService.freeBoardUpdateReply(replyNumber, replyText);
 
+
+
         // 수정 완료 후 성공 응답 반환
+        return ResponseEntity.ok().build();
+    }
+
+
+
+    // 자유게시판 댓글 삭제
+    @PostMapping("/deleteReply")
+    public ResponseEntity<Void> deleteFreeBoardReply(@RequestParam("replyNumber") Long replyNumber) {
+        if (replyNumber == null) {
+            return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
+        }
+
+        // 댓글 삭제 서비스 호출
+        boardService.freeBoardDeleteReply(replyNumber);
+
+        // 삭제 완료 후 성공 응답 반환
         return ResponseEntity.ok().build();
     }
 

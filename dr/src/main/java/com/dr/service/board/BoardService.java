@@ -63,6 +63,7 @@ public class BoardService {
     }
 
 
+    // 자유게시판 댓글수정
     // 서비스 계층 메서드에서 replyText를 인자로 받도록 수정
     public void freeBoardUpdateReply(Long replyNumber, String replyText) {
         // 댓글 객체 생성 및 데이터 설정
@@ -72,6 +73,11 @@ public class BoardService {
 
         // 업데이트 호출
         boardMapper.freeBoardUpdateReply(comment);
+    }
+
+    // 자유게시판 댓글 삭제
+    public void freeBoardDeleteReply(Long replyNumber) {
+        boardMapper.freeBoardDeleteReply(replyNumber);
     }
 
 
