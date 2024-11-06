@@ -16,7 +16,7 @@ public class MainController {
     private final SearchService searchService;
 
     //메인페이지
-    @GetMapping("/main")
+    @GetMapping("/DRmain")
     public String openMain() {
         return "main";
     }
