@@ -11,7 +11,7 @@ document.getElementById('imageUpload').addEventListener('change', function(event
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            document.getElementById('profileImage').src = e.target.result;
+            document.getElementById('profileImage').src = e.target.result + `?timestamp=${Date.now()}`;
         };
         reader.readAsDataURL(file);
     }
@@ -34,6 +34,8 @@ document.getElementById('completeWriteBtn').addEventListener('click', function()
 
     const formData = new FormData();
     formData.append('nickname', nickname);
+
+    // 프로필 이미지가 있는 경우에만 FormData에 추가
     if (profileImage) {
         formData.append('profileImage', profileImage);
     }
@@ -42,16 +44,12 @@ document.getElementById('completeWriteBtn').addEventListener('click', function()
         method: 'POST',
         body: formData,
     })
-        .then(response => {
-            if (response.ok) {
+        .then(response => response.json())
+        .then(data => {
+            if (data.photoPath) {
+                // 서버에서 반환된 photoPath로 이미지 URL을 업데이트
+                document.getElementById('profileImage').src = `/static/image/photo/${data.photoPath}?timestamp=${Date.now()}`;
                 alert('수정이 완료되었습니다.\n상단 프로필은 다음 로그인 시 적용됩니다.');
-
-                // 프로필 이미지를 새로 고침 (캐시 무효화)
-                const profileImageElement = document.getElementById('profileImage');
-                profileImageElement.src = `/path/to/updated/image.jpg?t=${new Date().getTime()}`;
-
-            } else {
-                alert('닉네임 또는 이미지를 다시 확인해주세요.');
             }
         })
         .catch(error => {

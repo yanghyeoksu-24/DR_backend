@@ -68,7 +68,7 @@
         ORDER BY goodCount DESC, B.BOARD_WRITE_DATE DESC
     </select>
 
-<!--    자유게시판 상세 페이지 댓글-->
+    <!--    자유게시판 상세 페이지 댓글-->
     <select id="freeBoardDetail" resultType="FreeBoardDetailDTO">
         SELECT B.BOARD_NUMBER,
                B.BOARD_TITLE,

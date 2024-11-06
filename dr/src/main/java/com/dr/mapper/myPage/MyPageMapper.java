@@ -17,7 +17,7 @@
         // 닉네임 업데이트
         void updateNickname(@Param("userNumber") Long userNumber, @Param("nickname") String nickname);
 
-        // 프로필 이미지 경로 업 데이트
+        // 프로필 이미지 경로 업데이트
         void updateProfileImage(@Param("userNumber") Long userNumber, @Param("photoLocal") String photoLocal);
 
         // 회원 탈퇴
