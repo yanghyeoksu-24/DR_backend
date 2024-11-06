@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 img.style.transform = 'translateX(-50%, -500%) '; // 중앙 정렬을 위한 변환
                 img.style.marginTop = '-40px';
 
-                // 날짜 요소의 위치를 기준으로 이미지 추가하기 . .
+                // 날짜 요소의 위치를 기준으로 이미지 추가하기
                 info.el.style.position = 'relative'; // 부모 요소에 상대 위치 설정
                 info.el.appendChild(img); // 이벤트 요소에 이미지 추가
             }
@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const existingEvent = calendar.getEvents().find(event => event.startStr === date);
         console.log("오늘 날짜 선택 : ", existingEvent);
 
-
         if (existingEvent) {
             alert("이미 출석 체크가 완료되었습니다.");
         } else {
@@ -42,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 data: { date: date },
                 success: function(response) {
                     alert(response);
+
                     // 출석 체크 성공 시 당일 날짜에 체크 표시 추가
                     calendar.addEvent({
                         start: date,
@@ -52,6 +52,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             imageUrl: '../image/check1.png' // 체크 이미지 경로
                         }
                     });
+
+                    // 개근 여부 확인
+                    checkFullAttendance();
                 },
                 error: function() {
                     alert("출석 체크 중 오류가 발생했습니다.");
@@ -59,6 +62,20 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+
+    // 개근 여부 확인
+    function checkFullAttendance() {
+        $.ajax({
+            url: '/myPage/myPageFullAttendance', // 개근 여부 확인 URL
+            method: 'GET',
+            success: function(response) {
+                alert(response); // 개근 여부에 대한 응답 알림
+            },
+            error: function() {
+                console.error('개근 여부 확인 중 오류가 발생했습니다.');
+            }
+        });
+    }
 
     // 출석 날짜 리스트 불러오기
     function loadAttendanceDates() {
@@ -91,5 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
     loadAttendanceDates(); // 페이지 로드 시 출석 날짜 리스트 불러오기
 });
