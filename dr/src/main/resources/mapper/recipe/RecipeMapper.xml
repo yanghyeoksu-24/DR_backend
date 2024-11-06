@@ -94,9 +94,6 @@
         WHERE RECIPE_NUMBER = #{recipeNumber} AND USER_NUMBER = #{userNumber}
     </delete>
 
-
-
-
     <!--    나만의 레시피 댓글작성-->
     <insert id="insertReply" parameterType="MyRecipeWriteCommentDTO">
         <selectKey keyProperty="replyNumber" resultType="Long" order="BEFORE">
@@ -197,12 +194,9 @@
 
     <!--    나만의레시피 글쓰기-->
     <insert id="insertMyRecipe" parameterType="MyRecipeWriteDTO">
-        <!-- 레시피 번호 자동 생성 -->
         <selectKey keyProperty="recipeNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_DR_RECIPE.NEXTVAL FROM DUAL
         </selectKey>
-
-        <!-- DR_RECIPE 테이블에 데이터 삽입 -->
         INSERT INTO DR_RECIPE (
         RECIPE_NUMBER,
         USER_NUMBER,
@@ -240,8 +234,5 @@
         WHERE RECIPE_NUMBER = #{recipeNumber}
           AND USER_NUMBER = #{userNumber}
     </delete>
-
-
-
 
 </mapper>

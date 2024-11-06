@@ -19,7 +19,7 @@ public interface RecipeMapper {
     List<ChatBotRecipeListDTO> selectAllPages1();
 
     // 챗봇의 레시피 목록 조회 (추천순)
-    List<ChatBotRecipeListDTO> selectRecipesGood1();
+    List<ChatBotRecipeListDTO> selectAllPagesGood1();
 
     //    나만의레시피 상세페이지
     MyRecipeDetailDTO selectMyRecipeDetail(@Param("recipeNumber") Long recipeNumber);

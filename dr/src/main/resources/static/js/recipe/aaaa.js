@@ -12,8 +12,8 @@ document.querySelectorAll('.myDetailPage-editBtn').forEach(function (button) {
 
         // 댓글 텍스트와 버튼 그룹을 숨기고 수정 입력창을 보이게 함
         commentText.style.display = 'none';
-        buttonGroup.style.display = 'none'; // 버튼 그룹 숨김
-        editInput.style.display = 'block'; // 수정 입력창 보임
+        buttonGroup.style.display = 'none';
+        editInput.style.display = 'block';
     });
 });
 
@@ -34,8 +34,11 @@ document.querySelectorAll('.myDetailPage-saveBtn').forEach(function (button) {
                     replyText: editTextarea
                 },
                 success: function () {
-                    // 페이지를 새로고침하여 업데이트된 내용 표시
-                    window.location.reload();  // 페이지를 새로고침
+                    // 수정 후에 수정 입력창을 숨기고, 댓글 텍스트를 업데이트
+                    commentContainer.querySelector('.myDetailPage-commentText').innerText = editTextarea;
+                    commentContainer.querySelector('.myDetailPage-commentText').style.display = 'block';
+                    commentContainer.querySelector('.myDetailPage-commentInput').style.display = 'none';
+                    commentContainer.querySelector('.myDetailPage-buttonGroup').style.display = 'block';
                 },
                 error: function (xhr, status, error) {
                     console.error("오류 발생: " + error);
@@ -50,45 +53,15 @@ document.querySelectorAll('.myDetailPage-saveBtn').forEach(function (button) {
 document.querySelectorAll('.myDetailPage-cancelBtn').forEach(function (button) {
     button.addEventListener('click', function () {
         var commentContainer = button.closest('.myDetailPage-comment');
-        var commentText = commentContainer.querySelector('.myDetailPage-commentText'); // 댓글 텍스트 선택
-        var editInput = commentContainer.querySelector('.myDetailPage-commentInput'); // 수정 입력창 선택
-        var editTextarea = editInput.querySelector('textarea'); // 수정 textarea 선택
-        var buttonGroup = commentContainer.querySelector('.myDetailPage-buttonGroup'); // 버튼 그룹 선택
+        var commentText = commentContainer.querySelector('.myDetailPage-commentText');
+        var editInput = commentContainer.querySelector('.myDetailPage-commentInput');
+        var editTextarea = editInput.querySelector('textarea');
+        var buttonGroup = commentContainer.querySelector('.myDetailPage-buttonGroup');
 
-        // 수정창을 숨기고, 댓글 텍스트를 다시 보이게 함
+        // 수정창을 숨기고, 댓글 텍스트와 버튼 그룹을 다시 보이게 함
         editInput.style.display = 'none';
         commentText.style.display = 'block';
-        buttonGroup.style.display = 'block'; // 버튼 그룹 다시 보이게 함
-
-        editTextarea.value = ''; // 수정 전 댓글 내용을 비워줌
+        buttonGroup.style.display = 'block';
+        editTextarea.value = ''; // textarea 내용을 비움
     });
 });
-
-// 댓글 삭제 버튼을 눌렀을 때 실행되는 함수
-document.querySelectorAll('.myDetailPage-deleteBtn').forEach(function (button) {
-    button.addEventListener('click', function () {
-        var replyNumber = button.getAttribute('data-reply-number');
-        deleteComment(replyNumber);
-    });
-});
-
-// 댓글 삭제 함수
-function deleteComment(replyNumber) {
-    if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
-        // AJAX 요청을 통해 서버에 댓글 삭제 요청
-        $.ajax({
-            type: 'POST',
-            url: '/recipe/deleteReply', // 서버의 댓글 삭제 요청 URL
-            data: { replyNumber: replyNumber },
-            success: function () {
-                // 댓글 요소를 제거
-                var commentElement = document.getElementById('comment' + replyNumber);
-                commentElement.remove();
-                alert("댓글이 삭제되었습니다.");
-            },
-            error: function () {
-                alert("댓글 삭제에 실패했습니다.");
-            }
-        });
-    }
-}

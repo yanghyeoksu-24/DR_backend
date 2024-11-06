@@ -43,6 +43,34 @@ function submitComment() {
     }
 }
 
+// 댓글 삭제 버튼을 눌렀을 때 실행되는 함수
+document.querySelectorAll('.myDetailPage-deleteBtn').forEach(function (button) {
+    button.addEventListener('click', function () {
+        var replyNumber = button.getAttribute('data-reply-number');
+        deleteComment(replyNumber);
+    });
+});
+
+// 댓글 삭제 함수
+function deleteComment(replyNumber) {
+    if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
+        // AJAX 요청을 통해 서버에 댓글 삭제 요청
+        $.ajax({
+            type: 'POST',
+            url: '/recipe/deleteReply', // 서버의 댓글 삭제 요청 URL
+            data: { replyNumber: replyNumber },
+            success: function () {
+                // 댓글 요소를 제거
+                var commentElement = document.getElementById('comment' + replyNumber);
+                commentElement.remove();
+                alert("댓글이 삭제되었습니다.");
+            },
+            error: function () {
+                alert("댓글 삭제에 실패했습니다.");
+            }
+        });
+    }
+}
 
 
 

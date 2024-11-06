@@ -48,15 +48,11 @@ public class RecipeController {
     public String myDetailPage(@RequestParam("recipeNumber") Long recipeNumber, Model model) {
         // 특정 레시피의 상세 정보 조회
         MyRecipeDetailDTO recipeDetail = recipeService.findMyRecipeDetail(recipeNumber);
-
         // 특정 레시피의 댓글 목록 조회
         List<MyRecipeCommentDTO> recipeComments = recipeService.selectMyRecipeComment(recipeNumber);
-
-
         // 모델에 레시피 상세 정보 추가
         model.addAttribute("recipeDetail", recipeDetail);
         model.addAttribute("recipeComments", recipeComments);
-
         return "recipe/myDetailPage";  // myDetailPage.html로 데이터 전달
     }
 
@@ -70,14 +66,11 @@ public class RecipeController {
         if (recipeNumber == null) {
             throw new IllegalArgumentException("Recipe number is required.");
         }
-
         MyRecipeWriteCommentDTO commentDTO = new MyRecipeWriteCommentDTO();
         commentDTO.setRecipeNumber(recipeNumber);
         commentDTO.setReplyText(replyText);
         commentDTO.setUserNumber(userNumber);
-
         recipeService.insertMyRecipeComment(commentDTO);
-
         redirectAttributes.addAttribute("recipeNumber", recipeNumber);
         return "redirect:/recipe/myDetailPage";
     }
@@ -85,14 +78,12 @@ public class RecipeController {
     //나만의 레시피 상세페이지 댓글 수정
     @PostMapping("/updateReply")
     public ResponseEntity<Void> updateReply(@RequestParam("replyNumber") Long replyNumber,
-                                                     @RequestParam("replyText") String replyText) {
+                                            @RequestParam("replyText") String replyText) {
         if (replyNumber == null || replyText == null || replyText.trim().isEmpty()) {
-            return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
+            return ResponseEntity.badRequest().build();
         }
-
         // 댓글 수정 서비스 호출
         recipeService.updateReply(replyNumber, replyText);
-
         // 수정 완료 후 성공 응답 반환
         return ResponseEntity.ok().build();
     }
@@ -108,12 +99,6 @@ public class RecipeController {
         return ResponseEntity.ok("Comment deleted successfully"); // Return success response
     }
 
-//    삭제예정
-//    @DeleteMapping("/recipe/{replyNumber}")
-//    public void deleteComment(@PathVariable("replyNumber") Long replyNumber){
-//        recipeService.deleteMyRecipeComment(replyNumber);
-//
-//    }
 
     //    챗봇 레시피 최신순
     @GetMapping("/chatBotRecipeList")
@@ -171,20 +156,6 @@ public class RecipeController {
     }
 
     // 추천 수 증가
-//    @PostMapping("/goodPlus")
-//    public ResponseEntity<?> addGood(@RequestBody MyRecipeGoodDTO recipeNumber) {
-//        recipeService.addGood(recipeNumber);
-//        return ResponseEntity.ok("추천이 성공적으로 추가되었습니다.");
-//    }
-
-    // 추천 수 감소
-//    @PostMapping("/goodMinus")
-//    public ResponseEntity<?> removeGood(@RequestBody MyRecipeGoodDTO recipeNumber) {
-//        recipeService.removeGood(recipeNumber);
-//        return ResponseEntity.ok("추천이 성공적으로 제거되었습니다.");
-//    }
-
-    // 추천 수 증가
     @PostMapping("/goodPlus")
     public ResponseEntity<?> addGood(@RequestBody MyRecipeGoodDTO myRecipeGoodDTO) {
         recipeService.addGood(myRecipeGoodDTO);
@@ -198,16 +169,6 @@ public class RecipeController {
         return ResponseEntity.ok("추천이 성공적으로 제거되었습니다.");
     }
 
-
-    // 찜 추가 메서드
-//    @PostMapping("/like")
-//    public ResponseEntity<String> addSteam(@RequestParam(name = "recipeNumber") Long recipeNumber) {
-//
-//        Long userNumber = (Long) session.getAttribute("userNumber");
-//
-//        recipeService.addSteam(recipeNumber, userNumber);
-//        return ResponseEntity.ok("찜이 추가되었습니다.");
-//    }
 
     @GetMapping("/like")
     public String addSteam(@RequestParam(name = "recipeNumber") Long recipeNumber) {

@@ -34,7 +34,7 @@ public class RecipeService {
 
     //챗봇의 레시피 추천순
     public List<ChatBotRecipeListDTO> findAllRecipes1Good() {
-        return recipeMapper.selectRecipesGood1();
+        return recipeMapper.selectAllPagesGood1();
     }
 
     //나만의레시피상세페이지
@@ -57,11 +57,8 @@ public class RecipeService {
         MyRecipeCommentDTO myRecipeCommentDTO = new MyRecipeCommentDTO();
         myRecipeCommentDTO.setReplyNumber(replyNumber);
         myRecipeCommentDTO.setReplyText(replyText);
-
         recipeMapper.updateReply(myRecipeCommentDTO);
     }
-
-
 
 
     //나만의 레시피 댓글 삭제
