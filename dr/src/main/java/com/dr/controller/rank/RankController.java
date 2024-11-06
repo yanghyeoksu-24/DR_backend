@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/rank")
-@SessionAttributes("userNumber")
 public class RankController {
 
     private final RankService rankService;
@@ -25,11 +23,6 @@ public class RankController {
     // 사용자 랭킹 페이지
     @GetMapping("/userRank")
     public String getUserRank(@SessionAttribute(value = "userNumber", required = false) Long userNumber, Model model, HttpSession session) {
-
-        // 세션에 userNumber가 없는 경우 로그인 페이지로 리다이렉트
-        if (userNumber == null) {
-            return "redirect:/user/login";
-        }
 
         // RankService를 사용하여 특정 사용자의 랭킹 데이터를 가져옴
         List<RankDTO> rankList = rankService.getRankList(userNumber);
