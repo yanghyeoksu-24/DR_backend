@@ -63,7 +63,7 @@ public class SecurityConfig {
             // 로그인 성공 후 리다이렉션할 경로 지정
             HttpSession session = request.getSession();
             session.setAttribute("loginId", ((CustomOAuth2User)(authentication.getPrincipal())).getProviderId());
-            response.sendRedirect("/main");
+            response.sendRedirect("/DRmain");
         };
     }
 

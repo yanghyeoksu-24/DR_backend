@@ -11,7 +11,7 @@
             SELECT SEQ_USER_NUMBER.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO DR_USER (USER_NUMBER, USER_EMAIL, USER_PW, USER_NICKNAME, USER_PHONE, PROVIDER, PROVIDER_ID, PROFILE_PIC)
-        VALUES (#{userNumber}, #{accountEmail}, #{userPw어떠카지???}, #{name}, #{userPhone}, #{provider}, #{providerId}, #{PROFILE_PIC})
+        VALUES (#{userNumber}, #{accountEmail}, #{userPw}, #{name}, #{userPhone}, #{provider}, #{providerId}, #{PROFILE_PIC})
     </insert>
 
     <!--    사용자 정보 업데이트 -->
