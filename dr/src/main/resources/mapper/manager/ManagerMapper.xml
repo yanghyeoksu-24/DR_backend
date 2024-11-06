@@ -275,9 +275,6 @@
             S.SIREN_DATE
     </select>
 
-
-
-
     <!-- 8-2. 신고 삭제-->
     <delete id="reportDelete" parameterType="Integer">
         DELETE
