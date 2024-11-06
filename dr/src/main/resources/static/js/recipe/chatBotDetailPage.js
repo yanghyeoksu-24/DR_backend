@@ -42,7 +42,6 @@ const heartImage = document.getElementById('heartImage');
       buttonGroup.style.display = 'none';
     }
 
-    // 댓글 저장 버튼을 눌렀을 때 실행되는 함수
 // 댓글 저장 버튼을 눌렀을 때 실행되는 함수
 function saveComment(commentId) {
   var commentText = document.getElementById('commentText' + commentId);
