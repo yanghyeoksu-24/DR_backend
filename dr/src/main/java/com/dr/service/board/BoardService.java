@@ -62,6 +62,18 @@ public class BoardService {
         boardMapper.freeBoardInsertReply(freeBoardCommentDTO);
     }
 
+    // 추천 플러스
+    public void honeyGoodPlus(HoneyGoodDTO honeyGoodDTO) {
+        boardMapper.honeyGoodPlus(honeyGoodDTO);
+    }
+
+    // 추천 마이너스
+    public void honeyGoodMinus(HoneyGoodDTO honeyGoodDTO) {
+        boardMapper.honeyGoodMinus(honeyGoodDTO);
+    }
+
+
+
 
     // 자유게시판 댓글수정
     // 서비스 계층 메서드에서 replyText를 인자로 받도록 수정

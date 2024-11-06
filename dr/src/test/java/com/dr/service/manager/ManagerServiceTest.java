@@ -1,32 +1,41 @@
 package com.dr.service.manager;
 
-import com.dr.dto.manager.DashBoardDTO;
-import com.dr.dto.manager.ManagerDTO;
-import com.dr.dto.manager.ManagerSessionDTO;
-import com.dr.dto.manager.ManagerUserDTO;
+import com.dr.dto.manager.*;
 import com.dr.mapper.manager.ManagerMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ManagerServiceTest {
-    @Mock
-    ManagerMapper managerMapper;
 
     @InjectMocks
-    ManagerService managerService;
+    private ManagerService managerService; // 서비스 클래스
+
+    @Mock
+    private ManagerMapper managerMapper; // Mapper 인터페이스
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this); // Mock 객체 초기화
+    }
 
     // 1. 관리자 로그인
     @Test
@@ -88,4 +97,99 @@ class ManagerServiceTest {
         assertEquals(managerUserDTO.getUserEmail(), userList.getUserEmail());
     }
 
+    // 4. 게시글 관리 (삭제)
+    @Test
+    public void manageBoard() {
+        Integer boardNumber = 1; // 삭제할 게시글 번호
+        when(managerMapper.boardDelete(boardNumber)).thenReturn(true); // Mock 동작 정의
+
+        // 삭제 메소드 실행
+        boolean result = managerService.boardDelete(boardNumber);
+
+        // 결과 검증
+        assertTrue(result);
+        verify(managerMapper, times(1)).boardDelete(boardNumber); // 메소드 호출 검증
+    }
+
+    // 5. 레시피 관리 (삭제)
+    @Test
+    public void recipeDeleteTest() {
+        Integer recipeNumber = 1; // 삭제할 레시피 번호
+        when(managerMapper.recipeDelete(recipeNumber)).thenReturn(true); // Mock 동작 정의
+
+        // 삭제 메소드 실행
+        boolean result = managerService.recipeDelete(recipeNumber);
+
+        // 결과 검증
+        assertTrue(result);
+        verify(managerMapper, times(1)).recipeDelete(recipeNumber);
+    }
+
+    // 6. 댓글 관리 (조회)
+    @Test
+    public void showReplyTest() {
+        // 테스트 데이터 준비
+        ManagerCommentDTO comment1 = new ManagerCommentDTO(1, "답변 내용 1", "닉네임1", "010-1234-5678", "2024-01-01", 1, 1, "게시판 타입", "레시피 타입");
+        ManagerCommentDTO comment2 = new ManagerCommentDTO(2, "답변 내용 2", "닉네임2", "010-2345-6789", "2024-01-02", 2, 2, "게시판 타입", "레시피 타입");
+        List<ManagerCommentDTO> mockReplies = Arrays.asList(comment1, comment2); // Mock 데이터 리스트
+
+        when(managerMapper.showReply()).thenReturn(mockReplies); // Mock 동작 정의
+
+        // 조회 메소드 실행
+        List<ManagerCommentDTO> result = managerService.showReply();
+
+        // 결과 검증
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals(comment1, result.get(0));
+        assertEquals(comment2, result.get(1));
+        verify(managerMapper, times(1)).showReply();
+    }
+
+    // 7. 포인트 (회수)
+    @Test
+    public void takePointTest() {
+        Integer pointNumber = 1; // 회수할 포인트 번호
+        when(managerMapper.takePoint(pointNumber)).thenReturn(true); // Mock 동작 정의
+
+        // 포인트 회수 메소드 실행
+        boolean result = managerService.takePoint(pointNumber);
+
+        // 결과 검증
+        assertTrue(result);
+        verify(managerMapper, times(1)).takePoint(pointNumber);
+    }
+
+    // 8. 신고 관리 (삭제)
+    @Test
+    public void reportDeleteTest() {
+        Integer sirenNumber = 1; // 삭제할 신고 번호
+        when(managerMapper.reportDelete(sirenNumber)).thenReturn(true); // Mock 동작 정의
+
+        // 신고 삭제 메소드 실행
+        boolean result = managerService.reportDelete(sirenNumber);
+
+        // 결과 검증
+        assertTrue(result);
+        verify(managerMapper, times(1)).reportDelete(sirenNumber);
+    }
+
+
+    // 9. 상품 관리 (삭제)
+    @Test
+    public void productDeleteTest() {
+        String productName = "테스트 상품"; // 삭제할 상품 이름
+
+        // Mock 동작 정의
+        when(managerMapper.productDelete(productName)).thenReturn(true);
+
+        // 삭제 메소드 실행
+        boolean result = managerService.productDelete(productName);
+
+        // 결과 검증
+        assertTrue(result); // 삭제가 성공적으로 이루어졌는지 확인
+
+        // 메소드가 호출되었는지 검증
+        verify(managerMapper, times(1)).productDelete(productName);
+    }
 }

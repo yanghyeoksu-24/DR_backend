@@ -37,6 +37,12 @@ public interface BoardMapper {
     //  자유게시판 댓글 작성
     void freeBoardInsertReply(FreeBoardCommentDTO freeBoardCommentDTO);
 
+    // 추천 플러스
+    void honeyGoodPlus(HoneyGoodDTO HoneyGoodDTO);
+
+    // 추천 마이너스
+    void honeyGoodMinus(HoneyGoodDTO HoneyGoodDTO);
+
 
     // 자유게시판 댓글 수정
     void freeBoardUpdateReply(FreeBoardCommentDTO comment);

@@ -5,6 +5,7 @@ import com.dr.dto.recipe.MyRecipeWriteCommentDTO;
 import com.dr.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -182,6 +183,31 @@ public class BoardController {
         // 삭제 완료 후 성공 응답 반환
         return ResponseEntity.ok().build();
     }
+
+    // 추천 수 증가 (허니)
+    @PostMapping("/goodPlus")
+    public ResponseEntity<Void> goodPlus(
+            @RequestBody HoneyGoodDTO honeyGoodDTO,
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber
+    ) {
+        honeyGoodDTO.setUserNumber(userNumber);
+        boardService.honeyGoodPlus(honeyGoodDTO);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 추천수 감소 (허니)
+    @PostMapping("/goodMinus")
+    public ResponseEntity<Void> goodMinus(
+            @RequestBody HoneyGoodDTO honeyGoodDTO,
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber
+    ) {
+        honeyGoodDTO.setUserNumber(userNumber);
+        boardService.honeyGoodMinus(honeyGoodDTO);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 
 

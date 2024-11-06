@@ -89,6 +89,7 @@
             B.BOARD_NUMBER, B.BOARD_TITLE, U.USER_NICKNAME, B.BOARD_WRITE_DATE, B.BOARD_TYPE
         ORDER BY
             B.BOARD_WRITE_DATE DESC
+
     </select>
 
     <!-- 4-2. 게시판 삭제-->
@@ -273,9 +274,6 @@
         ORDER BY
             S.SIREN_DATE
     </select>
-
-
-
 
     <!-- 8-2. 신고 삭제-->
     <delete id="reportDelete" parameterType="Integer">
