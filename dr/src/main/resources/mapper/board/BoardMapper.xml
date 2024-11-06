@@ -167,5 +167,21 @@
         WHERE R.BOARD_NUMBER = #{boardNumber}
     </select>
 
+    <!-- 추천 -->
+    <insert id="honeyGoodPlus" parameterType="HoneyGoodDTO">
+        <selectKey keyProperty="goodNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_GOOD_NUMBER.nextval FROM DUAL
+        </selectKey>
+        INSERT INTO DR_GOOD(GOOD_NUMBER, BOARD_NUMBER, USER_NUMBER)
+        VALUES (#{goodNumber}, #{boardNumber}, #{userNumber})
+    </insert>
+
+    <delete id="honeyGoodMinus" parameterType="HoneyGoodDTO">
+        DELETE
+        FROM DR_GOOD
+        WHERE BOARD_NUMBER = #{boardNumber} AND user_number = #{userNumber}
+    </delete>
+
+
 
 </mapper>
