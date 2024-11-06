@@ -103,18 +103,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const recommendImg = document.getElementById("recommendImg");
     const boardNumber = document.getElementById("boardNumber").value;
 
-    // 저장된 추천 상태 로드
-    let isActive = localStorage.getItem(`recommend-active-${boardNumber}`) === 'true'; // boolean으로 변환
+    let isActive = localStorage.getItem(`recommend-active-${boardNumber}`) === 'true';
     recommendImg.classList.toggle("recommend-active", isActive);
     recommendImg.classList.toggle("recommend-inactive", !isActive);
 
-    let isRequestInProgress = false; // 요청 진행 상태
+    let isRequestInProgress = false;
 
-    recommendImg.addEventListener("click", function () {
-        if (isRequestInProgress) return; // 요청이 진행 중이면 클릭 무시
+    const handleClick = function () {
+        if (isRequestInProgress) return;
 
-        isRequestInProgress = true; // 요청 시작
-        const url = isActive ? "/board/goodMinus" : "/board/goodPlus"; // 현재 상태에 따라 URL 결정
+        isRequestInProgress = true;
+        const url = isActive ? "/board/goodMinus" : "/board/goodPlus";
 
         fetch(url, {
             method: "POST",
@@ -127,23 +126,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (!response.ok) {
                     throw new Error("요청 실패: " + response.statusText);
                 }
-                // 상태 토글
+
+                // 추천 상태 업데이트 및 localStorage 저장
                 isActive = !isActive;
                 recommendImg.classList.toggle("recommend-active", isActive);
                 recommendImg.classList.toggle("recommend-inactive", !isActive);
+                localStorage.setItem(`recommend-active-${boardNumber}`, isActive);
 
-                // 상태 저장
-                localStorage.setItem(`recommend-active-${boardNumber}`, isActive); // 상태 저장
-
-                location.reload(); // 페이지를 새로 고침하여 추천 수 업데이트
+                // 요청 성공 시 페이지 새로 고침
+                location.reload();
             })
             .catch(error => {
                 console.error("Error:", error);
                 alert("요청 처리 중 오류가 발생했습니다.");
             })
             .finally(() => {
-                isRequestInProgress = false; // 요청 완료
+                // 요청 완료 후 상태 초기화
+                isRequestInProgress = false;
             });
-    });
-});
+    };
 
+    recommendImg.addEventListener("click", handleClick);
+});
