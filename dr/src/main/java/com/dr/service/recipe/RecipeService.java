@@ -3,13 +3,13 @@ package com.dr.service.recipe;
 import com.dr.dto.recipe.*;
 import com.dr.mapper.recipe.RecipeMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -48,12 +48,19 @@ public class RecipeService {
     }
 
     // 나만의 레시피 댓글 작성
-    public void insertMyRecipeComment(MyRecipeWriteCommentDTO myRecipeWriteCommentDTO) {
-        recipeMapper.insertReply(myRecipeWriteCommentDTO);
+    public void insertMyRecipeComment(MyRecipeCommentDTO myRecipeCommentDTO) {
+        recipeMapper.insertReply(myRecipeCommentDTO);
     }
 
     //나만의 레시피 댓글 수정
-    public void updateMyRecipeComment(MyRecipeCommentDTO myRecipeCommentDTO) {
+    public void updateMyRecipeComment(Long replyNumber, String replyText) {
+        log.info("=========서비스 수정 확인======");
+        MyRecipeCommentDTO myRecipeCommentDTO = new MyRecipeCommentDTO();
+        myRecipeCommentDTO.setReplyNumber(replyNumber);
+        myRecipeCommentDTO.setReplyText(replyText);
+        log.info("==== replyNumber 확인 service ===");
+        log.info(myRecipeCommentDTO.getReplyNumber() + "확인");
+        log.info(myRecipeCommentDTO.getReplyText() + "확인");
         recipeMapper.updateMyReply(myRecipeCommentDTO);
     }
 
@@ -79,12 +86,12 @@ public class RecipeService {
         recipeMapper.insertMyRecipe(myRecipeWriteDTO);  // Toast API로 전달된 레시피 데이터를 DB에 삽입
     }
 
-    // 추천 수 증가
+    // 나만의 레시피 추천 수 증가
     public void addGood(MyRecipeGoodDTO myRecipeGoodDTO) {
         recipeMapper.increaseGoodCount(myRecipeGoodDTO);
     }
 
-    // 추천 수 감소
+    // 나만의 레시피 추천 수 감소
     public void removeGood(MyRecipeGoodDTO myRecipeGoodDTO) {
         recipeMapper.decreaseGoodCount(myRecipeGoodDTO);
     }
@@ -98,11 +105,6 @@ public class RecipeService {
     public void removeSteam(MyRecipeDetailDTO myRecipeDetailDTO) {
         recipeMapper.removeSteam(myRecipeDetailDTO);
     }
-
-
-
-
-
 
 
 }

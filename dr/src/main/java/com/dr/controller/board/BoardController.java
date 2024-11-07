@@ -1,7 +1,6 @@
 package com.dr.controller.board;
 
 import com.dr.dto.board.*;
-import com.dr.dto.recipe.MyRecipeWriteCommentDTO;
 import com.dr.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
