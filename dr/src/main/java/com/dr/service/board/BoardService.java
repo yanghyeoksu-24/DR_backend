@@ -118,5 +118,10 @@ public class BoardService {
         boardMapper.honeyGoodMinus(honeyGoodDTO);
     }
 
+    // 신고
+    public void report(BoardReportDTO reportDTO) {
+        boardMapper.report(reportDTO);
+    }
+
 
 }

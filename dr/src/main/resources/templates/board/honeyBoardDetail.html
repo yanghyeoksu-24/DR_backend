@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="honeyBoardDetail-secondButton">
-                        <a th:href="@{/board/boardReport/{id}(id=${honeyBoardDetail.boardNumber})}">
+                        <a th:href="@{/board/boardReport(boardNumber=${honeyBoardDetail.boardNumber})}">
                             <button class="honeyBoardDetail-buttonTwo">신고</button>
                         </a>
                     </div>
@@ -51,7 +51,8 @@
 
                 <div class="honeyBoardDetail-recommendImg">
                     <input type="hidden" id="boardNumber" name="boardNumber" th:value="${honeyBoardDetail.boardNumber}">
-                    <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="recommend" th:src="@{/image/recommend.png}">
+                    <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="recommend"
+                         th:src="@{/image/recommend.png}">
                     <p id="recommendCount" th:text="'추천수: ' + ${honeyBoardDetail.goodCount}"></p>
                 </div>
             </div>
@@ -77,8 +78,12 @@
                         <div class="honeyBoardDetail-commentContent">
                             <input type="hidden" name="replyNumber" th:value="${honeyBoardComments.replyNumber}">
                             <div class="honeyBoardDetail-commentHeader">
-                                <span class="honeyBoardDetail-commentUsername" th:text="${honeyBoardComments.userNickName}">작성자</span>
-                                <button class="honeyBoardDetail-reportBtn">신고</button>
+                                <span class="honeyBoardDetail-commentUsername"
+                                      th:text="${honeyBoardComments.userNickName}">작성자</span>
+                                <a th:href="@{/board/boardReport(boardNumber=${honeyBoardDetail.boardNumber}, replyNumber=${honeyBoardComments.replyNumber})}">
+                                    <button class="honeyBoardDetail-reportBtn">신고</button>
+                                </a>
+
                             </div>
                             <!-- 수정된 날짜가 있으면 수정된 날짜를 보이고, 없으면 작성 날짜만 보이도록 처리 -->
                             <div class="honeyBoardDetail-commentDate"
@@ -87,14 +92,17 @@
                             </div>
                             <br><br>
                             <div class="honeyBoardDetail-commentText" id="commentText${honeyBoardComments.replyNumber}"
-                                 th:text="${honeyBoardComments.replyText}">댓글 내용</div>
+                                 th:text="${honeyBoardComments.replyText}">댓글 내용
+                            </div>
 
                             <div class="honeyBoardDetail-buttonGroup"
                                  th:if="${userNickName != null and userNickName == honeyBoardComments.userNickName}">
                                 <button type="button" class="honeyBoardDetail-editBtn"
-                                        th:attr="data-reply-number=${honeyBoardComments.replyNumber}">수정</button>
+                                        th:attr="data-reply-number=${honeyBoardComments.replyNumber}">수정
+                                </button>
                                 <button type="button" class="honeyBoardDetail-deleteBtn"
-                                        th:attr="data-reply-number=${honeyBoardComments.replyNumber}">삭제</button>
+                                        th:attr="data-reply-number=${honeyBoardComments.replyNumber}">삭제
+                                </button>
                             </div>
 
                             <div class="honeyBoardDetail-commentInput" style="display:none;"
