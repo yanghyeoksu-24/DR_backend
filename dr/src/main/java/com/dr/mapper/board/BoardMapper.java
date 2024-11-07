@@ -1,7 +1,6 @@
 package com.dr.mapper.board;
 
 import com.dr.dto.board.*;
-import com.dr.dto.recipe.MyRecipeWriteCommentDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

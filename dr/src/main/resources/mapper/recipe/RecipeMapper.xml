@@ -60,7 +60,7 @@
                  R.USER_NUMBER
     </select>
 
-    <!-- 추천 수 증가 -->
+    <!-- 나만의 레시피추천 수 증가 -->
     <insert id="increaseGoodCount" parameterType="MyRecipeGoodDTO">
         <selectKey keyProperty="goodNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_GOOD_NUMBER.NEXTVAL FROM DUAL
@@ -69,7 +69,7 @@
         VALUES (#{goodNumber} , #{recipeNumber}, #{userNumber})
     </insert>
 
-    <!-- 추천 수 감소 -->
+    <!--나만의 레시피 추천 수 감소 -->
     <delete id="decreaseGoodCount" parameterType="MyRecipeGoodDTO">
         DELETE
         FROM DR_GOOD
@@ -78,11 +78,12 @@
 
     <!--    나만의 레시피 상세페이지 댓글조회-->
     <select id="selectMyRecipeComment" parameterType="Long" resultType="MyRecipeCommentDTO">
-        SELECT R.RECIPE_NUMBER     AS recipeNumber,
+        SELECT RP.REPLY_NUMBER     AS replyNumber,
                U.USER_NICKNAME     AS userNickName,
                RP.REPLY_WRITE_DATE AS replyWriteDate,
+               RP.REPLY_MODIFY_DATE AS replyModifyDate,
                RP.REPLY_TEXT       AS replyText,
-               P.PHOTO_ORIGINAL    AS photoOriginal,
+--                P.PHOTO_ORIGINAL    AS photoOriginal,
                P.PHOTO_LOCAL       AS photoLocal
         FROM DR_REPLY RP
                  JOIN
@@ -95,7 +96,7 @@
     </select>
 
     <!--    나만의 레시피 댓글작성-->
-    <insert id="insertReply" parameterType="MyRecipeWriteCommentDTO">
+    <insert id="insertReply" parameterType="MyRecipeCommentDTO">
         <selectKey keyProperty="replyNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_REPLY_NUMBER.nextval FROM DUAL
         </selectKey>
@@ -104,7 +105,7 @@
     </insert>
 
     <!--    나만의 레시피 댓글 수정-->
-    <update id="updateReply" parameterType="MyRecipeCommentDTO">
+    <update id="updateMyReply" parameterType="MyRecipeCommentDTO">
         UPDATE DR_REPLY
         SET REPLY_TEXT = #{replyText},
             REPLY_MODIFY_DATE = SYSDATE

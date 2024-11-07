@@ -1,81 +1,4 @@
-const heartImage = document.getElementById('heartImage');
-
-heartImage.addEventListener('click', function() {
-    if (heartImage.src.includes('heartGray.png')) {
-        heartImage.src = './../../image/heartColor.png'; // 빨간 하트 이미지 경로
-    } else {
-        heartImage.src = './../../image/heartGray.png'; // 검정 하트 이미지 경로
-    }
-});
-
-const heartImage1 = document.getElementById('heartImage1'); // 빨간색 하트
-const heartImage2 = document.getElementById('heartImage2'); // 회색 하트
-
-// 회색 하트 이미지를 클릭했을 때 빨간색으로 전환
-heartImage2.addEventListener('click', function(event) {
-    event.preventDefault(); // 기본 a 태그 동작 막기
-    heartImage1.style.display = 'block'; // 빨간색 하트를 보이게 함
-    heartImage2.style.display = 'none';  // 회색 하트를 숨김
-});
-
-// 빨간 하트 이미지를 클릭했을 때 회색으로 전환
-heartImage1.addEventListener('click', function(event) {
-    event.preventDefault(); // 기본 a 태그 동작 막기
-    heartImage1.style.display = 'none';  // 빨간색 하트를 숨김
-    heartImage2.style.display = 'block'; // 회색 하트를 보이게 함
-});
-
-document.getElementById('deleteButton').addEventListener('click', function () {
-    if (confirm("정말로 삭제하시겠습니까?")) {
-        alert("삭제완료되었습니다.");
-    } else {
-        return;
-    }
-});
-
-// 댓글 등록 버튼 클릭 시
-function submitComment() {
-    const confirmation = confirm("댓글을 등록하시겠습니까?");
-    if (confirmation) {
-        alert("댓글이 등록되었습니다.");
-    } else {
-        return;
-    }
-}
-
-// 댓글 삭제 버튼을 눌렀을 때 실행되는 함수
-document.querySelectorAll('.myDetailPage-deleteBtn').forEach(function (button) {
-    button.addEventListener('click', function () {
-        var replyNumber = button.getAttribute('data-reply-number');
-        deleteComment(replyNumber);
-    });
-});
-
-// 댓글 삭제 함수
-function deleteComment(replyNumber) {
-    if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
-        // AJAX 요청을 통해 서버에 댓글 삭제 요청
-        $.ajax({
-            type: 'POST',
-            url: '/recipe/deleteReply', // 서버의 댓글 삭제 요청 URL
-            data: { replyNumber: replyNumber },
-            success: function () {
-                // 댓글 요소를 제거
-                var commentElement = document.getElementById('comment' + replyNumber);
-                commentElement.remove();
-                alert("댓글이 삭제되었습니다.");
-            },
-            error: function () {
-                alert("댓글 삭제에 실패했습니다.");
-            }
-        });
-    }
-}
-
-
-
-
-// 추천 기능
+// 추천 이미지 클릭 이벤트 추가
 document.addEventListener("DOMContentLoaded", function () {
     const recommendImg = document.getElementById("recommendImg");
     const recipeNumber = document.getElementById("recipeNumber").value;
@@ -97,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ boardNumber: boardNumber })
+            body: JSON.stringify({ recipeNumber: recipeNumber })
         })
             .then(response => {
                 if (!response.ok) {
@@ -118,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("요청 처리 중 오류가 발생했습니다.");
             })
             .finally(() => {
-                // 요청 완료 후 상태 초기화
                 isRequestInProgress = false;
             });
     };
@@ -126,3 +48,93 @@ document.addEventListener("DOMContentLoaded", function () {
     recommendImg.addEventListener("click", handleClick);
 });
 
+// 댓글 등록 버튼 클릭 시
+function submitComment() {
+    const confirmation = confirm("댓글을 등록하시겠습니까?");
+    if (!confirmation) return;
+    alert("댓글이 등록되었습니다.");
+}
+
+// 댓글 수정 버튼을 눌렀을 때 실행되는 함수
+document.querySelectorAll('.myDetailPage-editBtn').forEach(function (button)  {
+    button.addEventListener('click',function ()  {
+        let commentContainer = button.closest('.myDetailPage-comment');
+        let commentText = commentContainer.querySelector('.myDetailPage-commentText');
+        let editInput = commentContainer.querySelector('.myDetailPage-commentInput');
+        let editTextarea = editInput.querySelector('textarea');
+        let buttonGroup = commentContainer.querySelector('.myDetailPage-buttonGroup');
+
+        commentText.setAttribute('data-original-text', commentText.innerText);
+        editTextarea.value = commentText.innerText;
+
+        commentText.style.display = 'none';
+        buttonGroup.style.display = 'none';
+        editInput.style.display = 'block';
+    });
+});
+
+// 댓글 수정 취소 버튼을 눌렀을 때 실행되는 함수
+document.querySelectorAll('.myDetailPage-cancelBtn').forEach(function (button)  {
+    button.addEventListener('click', function ()  {
+        let recipeNumber = document.querySelector('[name="recipeNumber"]').value;
+        window.location.href = '/recipe/myDetailPage?recipeNumber=' + recipeNumber;
+    });
+});
+
+// 댓글 저장 버튼을 눌렀을 때 실행되는 함수
+document.querySelectorAll('.myDetailPage-saveBtn').forEach(function (button) {
+    button.addEventListener('click', function ()  {
+        let commentContainer = button.closest('.myDetailPage-comment');
+        let replyNumber = commentContainer.querySelector('input[name="replyNumber"]').value;
+        let editTextarea = commentContainer.querySelector('textarea').value;
+
+        console.log(commentContainer);
+        console.log(replyNumber);
+        console.log(editTextarea);
+        if (confirm("수정하시겠습니까?")) {
+            $.ajax({
+                type: 'POST',
+                url: '/recipe/updateMyReply',
+                data: {
+                    replyNumber: replyNumber,
+                    replyText: editTextarea
+                },
+
+                success: function ()  {
+                    alert("댓글 수정이 완료되었습니다.");
+                    window.location.reload();
+                },
+                error: function ()  {
+                    alert("댓글 수정에 실패했습니다.");
+                }
+            });
+        }
+    });
+});
+
+// 댓글 삭제 버튼을 눌렀을 때 실행되는 함수
+document.querySelectorAll('.myDetailPage-deleteBtn').forEach(function (button)  {
+    button.addEventListener('click', function ()  {
+        let replyNumber = button.getAttribute('data-reply-number');
+        deleteComment(replyNumber);
+    });
+});
+
+// 댓글 삭제 함수
+function deleteComment(replyNumber) {
+    if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
+        $.ajax({
+            type: 'POST',
+            url: '/recipe/deleteMyReply',
+            data: { replyNumber: replyNumber },
+            success: function ()  {
+                alert("댓글이 삭제되었습니다.");
+                //페이지를 새로고침하여 변경 사항 반영
+                window.location.reload();
+            },
+            error: function ()  {
+                alert("댓글 삭제에 실패했습니다.");
+            }
+        });
+    }
+}

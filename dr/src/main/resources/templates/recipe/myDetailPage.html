@@ -7,36 +7,27 @@
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
     <script defer th:src="@{/js/fragment/header.js}"></script>
-
-    <!-- 네비바 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
-    <!-- 제이쿼리 -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-
-    <!-- 페이지네이션 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
-
     <title>DR - 나만의 레시피 상세페이지</title>
 </head>
 
 <body>
 <header th:replace="~{/fragment/header :: header}"></header>
-<!-- 메인 부분 -->
 <main>
     <div class="myDetailPage-mainContainer">
         <div class="myDetailPage-mainBox">
+            <!-- 상단 사용자 정보 및 버튼들 -->
             <div class="myDetailPage-infobox">
                 <div class="myDetailPage-infoFirst">
                     <div class="myDetailPage-infoInBox1">
                         <img th:src="@{/image/photo/} + ${recipeDetail.photoLocal}" alt="유저 이미지">
                     </div>
                     <div class="myDetailPage-infoInBox2">
-                        <p class="myDetailPage-writeName" th:text="${recipeDetail.userNickName}"></p>
-                        <p class="myDetailPage-foodTitle" th:text="${recipeDetail.recipeTitle}"></p>
-                        <p class="myDetailPage-date" th:text="${recipeDetail.recipeWriteDate}"></p>
+                        <p class="myDetailPage-writeName" th:text="${recipeDetail.userNickName}">작성자</p>
+                        <p class="myDetailPage-foodTitle" th:text="${recipeDetail.recipeTitle}">레시피 제목</p>
+                        <p class="myDetailPage-date" th:text="${recipeDetail.recipeWriteDate}">작성 날짜</p>
                     </div>
                 </div>
 
@@ -48,13 +39,12 @@
                     <div class="myDetailPage-secondButton">
                         <div class="myDetailPage-buttonImg">
                             <a id="heartLink" th:href="@{/recipe/like}">
-                                <img id="heartImage1" th:src="@{/image/heartColor.png}" alt="하트 이미지"
-                                     style="display: none">
+                                <img id="heartImage1" th:src="@{/image/heartColor.png}" alt="좋아요" style="display: none;">
                             </a>
                         </div>
                         <div class="myDetailPage-buttonImg">
                             <a id="heartUnlink" th:href="@{/recipe/unlike}">
-                                <img id="heartImage2" th:src="@{/image/heartGray.png}" alt="하트 이미지">
+                                <img id="heartImage2" th:src="@{/image/heartGray.png}" alt="좋아요">
                             </a>
                         </div>
                         <button class="myDetailPage-buttonTwo">신고</button>
@@ -62,58 +52,65 @@
                 </div>
             </div>
 
-            <!-- 글 내용 -->
+            <!-- 레시피 본문 -->
             <div class="myDetailPage-writetext">
-                <p class="myDetailPage-texts" th:text="${recipeDetail.recipeText}"></p>
+                <p class="myDetailPage-texts" th:text="${recipeDetail.recipeText}">레시피 내용</p>
                 <img th:src="@{/image/photo/} + ${recipeDetail.photoLocal}" alt="레시피 이미지">
                 <div class="myDetailPage-recommendImg">
-                    <input type="hidden" name="recipeNumber" id="recipeNumber" th:value="${recipeDetail.recipeNumber}"/>
-                    <img src="./../../image/recommend.png" id="recommendImg" class="recommend-inactive"
-                         alt="recommend" th:src="@{/image/recommend.png}">
+                    <input type="hidden" name="recipeNumber" id="recipeNumber" th:value="${recipeDetail.recipeNumber}">
+                    <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="추천" th:src="@{/image/recommend.png}">
                     <p id="recommendCount" th:text="'추천수: ' + ${recipeDetail.goodCount}"></p>
                 </div>
             </div>
 
-            <!-- 댓글들 -->
+            <!-- 댓글 입력창 -->
             <div class="myDetailPage-commentSection">
-                <div class="myDetailPage-commentInput" id="commentInput">
+                <div class="myDetailPage-commentInput">
                     <form th:action="@{/recipe/myDetailPage}" method="post">
                         <input type="hidden" name="recipeNumber" th:value="${recipeDetail.recipeNumber}"/>
                         <textarea id="commentTextArea" placeholder="댓글을 입력하세요" rows="3" name="replyText"></textarea>
                         <input type="hidden" name="userNumber" th:value="${session.userNumber}"/>
                         <div class="myDetailPage-commentActions">
-                            <button class="myDetailPage-addBtn" onclick="submitComment()">등록</button>
+                            <button type="submit" class="myDetailPage-addBtn" onclick="submitComment()">등록</button>
                         </div>
                     </form>
                 </div>
 
                 <!-- 댓글 리스트 반복문 시작 -->
                 <div th:each="recipeComments : ${recipeComments}">
-                    <div class="myDetailPage-comment">
+                    <div class="myDetailPage-comment" id="comment${recipeComments.replyNumber}">
                         <div class="myDetailPage-commentUserImg">
                             <img th:src="@{/image/photo/} + ${recipeComments.photoLocal}" alt="User Image">
                         </div>
+
                         <div class="myDetailPage-commentContent">
                             <input type="hidden" name="replyNumber" th:value="${recipeComments.replyNumber}">
                             <div class="myDetailPage-commentHeader">
-                                <span class="myDetailPage-commentUsername"
-                                      th:text="${recipeComments.userNickName}"></span>
+                                <span class="myDetailPage-commentUsername" th:text="${recipeComments.userNickName}">작성자</span>
                                 <button class="myDetailPage-reportBtn">신고</button>
                             </div>
-                            <div class="myDetailPage-commentText" th:text="${recipeComments.replyText}"></div>
-                            <div class="myDetailPage-commentTime" th:text="${recipeComments.replyWriteDate}"></div>
 
-                            <div class="myDetailPage-buttonGroup">
-                                <button class="myDetailPage-editBtn" type="button"
-                                        th:attr="data-reply-number=${recipeComments.replyNumber}">수정
-                                </button>
+                            <div class="myDetailPage-commentDate"
+                                 th:text="${recipeComments.replyModifyDate != null ? recipeComments.replyModifyDate : recipeComments.replyWriteDate}">
+                                작성 날짜
+                            </div>
+                            <br>
+                            <div class="myDetailPage-commentText" id="commentText${recipeComments.replyNumber}"
+                                 th:text="${recipeComments.replyText}">댓글 내용</div>
+
+
+                            <!-- 본인 댓글에 대한 수정/삭제 버튼 -->
+                            <div class="myDetailPage-buttonGroup"
+                                 th:if="${userNickName != null and userNickName == recipeComments.userNickName}">
+                                <button type="button" class="myDetailPage-editBtn"
+                                        th:attr="data-reply-number=${recipeComments.replyNumber}">수정</button>
                                 <button type="button" class="myDetailPage-deleteBtn"
-                                        th:attr="data-reply-number=${recipeComments.replyNumber}">삭제
-                                </button>
+                                        th:attr="data-reply-number=${recipeComments.replyNumber}">삭제</button>
                             </div>
 
                             <!-- 댓글 수정 입력창, 기본적으로 숨김 상태 -->
-                            <div class="myDetailPage-commentInput"id="editInput${recipeComments.replyNumber}" style="display: none;">
+                            <div class="myDetailPage-commentInput" style="display:none;"
+                                 id="editInput${recipeComments.replyNumber}">
                                 <textarea id="editTextarea${recipeComments.replyNumber}" rows="3"></textarea>
                                 <div class="myDetailPage-commentActions">
                                     <button class="myDetailPage-saveBtn">저장</button>
@@ -129,7 +126,6 @@
     </div>
 </main>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
-<script src="./../../js/recipe/myDetailPage.js" defer></script>
-<script src="./../../js/recipe/aaaa.js" defer></script>
+<script th:src="@{/js/recipe/myDetailPage.js}"></script>
 </body>
 </html>

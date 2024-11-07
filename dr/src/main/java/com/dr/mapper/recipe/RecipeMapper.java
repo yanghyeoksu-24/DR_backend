@@ -34,22 +34,22 @@ public interface RecipeMapper {
     List<ChatBotRecipeCommentDTO> selectChatBotRecipeComment(@Param("recipeNumber") Long recipeNumber);
 
     // 나만의 레시피 댓글 작성
-    void insertReply(MyRecipeWriteCommentDTO myRecipeWriteCommentDTO);
+    void insertReply(MyRecipeCommentDTO myRecipeCommentDTO);
 
     //나만의 레시피 댓글 수정
     void updateMyReply(MyRecipeCommentDTO myRecipeCommentDTO);
 
     //    나만의 레시피 댓글 삭제
-    void deleteMyReply(@Param("replyNumber") Long replyNumber);
+    void deleteMyReply(Long replyNumber);
 
 
     //    나만의 레시피 글쓰기
     void insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO);
 
-    // 추천 수 증가
+    // 나만의 레시피 추천 수 증가
     void increaseGoodCount(MyRecipeGoodDTO myRecipeGoodDTO);
 
-    // 추천 수 감소
+    // 나만의 레시피 추천 수 감소
     void decreaseGoodCount(MyRecipeGoodDTO myRecipeGoodDTO);
 
     // 찜 추가 메서드

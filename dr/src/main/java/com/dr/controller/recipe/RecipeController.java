@@ -45,17 +45,19 @@ public class RecipeController {
 
     //    나만의레시피 상세페이지 + 댓글 조회
     @GetMapping("/myDetailPage")
-    public String myDetailPage(@RequestParam("recipeNumber") Long recipeNumber, Model model) {
+    public String myDetailPage(@RequestParam("recipeNumber") Long recipeNumber,  @SessionAttribute(value = "userNickName", required = false) String userNickName ,  Model model) {
         // 특정 레시피의 상세 정보 조회
         MyRecipeDetailDTO recipeDetail = recipeService.findMyRecipeDetail(recipeNumber);
 
         // 특정 레시피의 댓글 목록 조회
         List<MyRecipeCommentDTO> recipeComments = recipeService.selectMyRecipeComment(recipeNumber);
-
+        log.info(recipeDetail.toString());
+        log.info(recipeComments.toString());
 
         // 모델에 레시피 상세 정보 추가
         model.addAttribute("recipeDetail", recipeDetail);
         model.addAttribute("recipeComments", recipeComments);
+        model.addAttribute("userNickName",userNickName);
 
         return "recipe/myDetailPage";  // myDetailPage.html로 데이터 전달
     }
@@ -71,11 +73,12 @@ public class RecipeController {
             throw new IllegalArgumentException("Recipe number is required.");
         }
 
-        MyRecipeWriteCommentDTO commentDTO = new MyRecipeWriteCommentDTO();
+        MyRecipeCommentDTO commentDTO = new MyRecipeCommentDTO();
         commentDTO.setRecipeNumber(recipeNumber);
         commentDTO.setReplyText(replyText);
         commentDTO.setUserNumber(userNumber);
-
+        log.info(commentDTO.getReplyNumber() + "작성 확인====");
+        log.info(commentDTO.getReplyText() + "작성 확인 === ");
         recipeService.insertMyRecipeComment(commentDTO);
 
         redirectAttributes.addAttribute("recipeNumber", recipeNumber);
@@ -83,24 +86,35 @@ public class RecipeController {
     }
 
 //    나만의 레시피 댓글 수정
-    @PostMapping("/updateReply")
-    public ResponseEntity<Void> updateMyreply(@RequestParam("replyNumber") Long replyNumber,
-                                              @RequestParam("replyText") String replyText){
-        if(replyNumber == null || replyText == null || replyText.trim().isEmpty()) {
-            return ResponseEntity.badRequest().build();
+    @PostMapping("/updateMyReply")
+    public ResponseEntity<Void> updateMyRecipeComment(@RequestParam(name="replyNumber", required = false) Long replyNumber, @RequestParam("replyText") String replyText){
+        log.info("컨트롤러 확인============");
+        if (replyNumber == null || replyText == null || replyText.trim().isEmpty()) {
+            log.info(replyNumber +" replyNumber 확인====");
+            log.info(replyText +" replyText 확인====");
+            log.info(replyText.trim().isEmpty() +" replyNumber 확인====");
+            return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
         }
+
+        // 댓글 수정 서비스 호출
         recipeService.updateMyRecipeComment(replyNumber, replyText);
+        // 수정 완료 후 성공 응답 반환
         return ResponseEntity.ok().build();
     }
 
 
     //      나만의 레시피 상세페이지 댓글 삭제
-    @PostMapping("/deleteComment")
-    public ResponseEntity<String> deleteComment(@RequestParam("replyNumber") Long replyNumber) {
-        log.info(replyNumber + "lkenfvf;bv");
+    //      @RequestParam(name = "userId", required = true
+    @PostMapping("/deleteMyReply")
+    public ResponseEntity<Void> deleteMyRecipeComment(@RequestParam("replyNumber") Long replyNumber) {
+        if (replyNumber == null) {
+            return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
+        }
+        // 댓글 삭제 서비스 호출
+        log.info(replyNumber.toString() + "댓글삭제");
         recipeService.deleteMyRecipeComment(replyNumber);
-        log.info("Comment deleted successfully: " + replyNumber);
-        return ResponseEntity.ok("Comment deleted successfully"); // Return success response
+        // 삭제 완료 후 성공 응답 반환
+        return ResponseEntity.ok().build();
     }
 
 //    삭제예정
@@ -176,7 +190,7 @@ public class RecipeController {
 
     // 추천 수 감소
     @PostMapping("/goodMinus")
-    public ResponseEntity<?> removeGood(@RequestBody MyRecipeGoodDTO myRecipeGoodDTO,
+    public ResponseEntity<Void> removeGood(@RequestBody MyRecipeGoodDTO myRecipeGoodDTO,
                                         @SessionAttribute(value = "userNumber",required = false) Long userNumber) {
         myRecipeGoodDTO.setUserNumber(userNumber);
         recipeService.removeGood(myRecipeGoodDTO);

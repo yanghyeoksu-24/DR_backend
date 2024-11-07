@@ -1,7 +1,6 @@
 package com.dr.controller.board;
 
 import com.dr.dto.board.*;
-import com.dr.dto.recipe.MyRecipeWriteCommentDTO;
 import com.dr.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -219,9 +218,9 @@ public class BoardController {
     //꿀팁게시판 상세 페이지 댓글 작성
     @PostMapping("/honeyBoardDetail")
     public String honeyBoardInsertReply(@RequestParam("boardNumber") Long boardNumber,
-                                       @RequestParam("replyText") String replyText,
-                                       @RequestParam("userNumber") Long userNumber,
-                                       RedirectAttributes redirectAttributes) {
+                                        @RequestParam("replyText") String replyText,
+                                        @RequestParam("userNumber") Long userNumber,
+                                        RedirectAttributes redirectAttributes) {
 
         if (boardNumber == null) {
             throw new IllegalArgumentException("Board number is required");
@@ -242,8 +241,8 @@ public class BoardController {
 
     //꿀팁게시판 댓글 수정
     @PostMapping("/honeyUpdateReply")
-    public ResponseEntity<Void> updateHoneyBoardReply(@RequestParam("replyNumber") Long replyNumber,
-                                                     @RequestParam("replyText") String replyText) {
+    public ResponseEntity<Void> honeyUpdateReply(@RequestParam("replyNumber") Long replyNumber,
+                                                 @RequestParam("replyText") String replyText) {
         if (replyNumber == null || replyText == null || replyText.trim().isEmpty()) {
             return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
         }
