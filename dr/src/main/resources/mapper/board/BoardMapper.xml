@@ -44,6 +44,7 @@
     <select id="freeBoardDetail" resultType="FreeBoardDetailDTO">
         SELECT B.BOARD_NUMBER,
                B.BOARD_TITLE,
+               B.BOARD_TYPE,
                B.BOARD_TEXT,
                B.BOARD_WRITE_DATE,
                U.USER_NUMBER,
@@ -57,6 +58,7 @@
         WHERE B.BOARD_NUMBER = #{boardNumber}
         GROUP BY B.BOARD_NUMBER,
                  B.BOARD_TITLE,
+                 B.BOARD_TYPE,
                  B.BOARD_TEXT,
                  B.BOARD_WRITE_DATE,
                  U.USER_NUMBER,
@@ -166,6 +168,7 @@
     <select id="honeyBoardDetail" resultType="HoneyBoardDetailDTO">
         SELECT B.BOARD_NUMBER,
                B.BOARD_TITLE,
+               B.BOARD_TYPE,
                B.BOARD_TEXT,
                B.BOARD_WRITE_DATE,
                U.USER_NUMBER,
@@ -177,7 +180,7 @@
                  LEFT JOIN DR_PHOTO P ON U.USER_NUMBER = P.USER_NUMBER
                  LEFT JOIN DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
         WHERE B.BOARD_NUMBER = #{boardNumber}
-        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, B.BOARD_TEXT, B.BOARD_WRITE_DATE, U.USER_NUMBER, U.USER_NICKNAME,  P.PHOTO_LOCAL
+        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, B.BOARD_TYPE ,  B.BOARD_TEXT, B.BOARD_WRITE_DATE, U.USER_NUMBER, U.USER_NICKNAME,  P.PHOTO_LOCAL
     </select>
 
 
@@ -234,6 +237,15 @@
         FROM DR_GOOD
         WHERE BOARD_NUMBER = #{boardNumber} AND user_number = #{userNumber}
     </delete>
+
+    <!-- 신고 -->
+    <insert id="report" parameterType="BoardReportDTO">
+        <selectKey keyProperty="sirenNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_SIREN_NUMBER.nextval FROM DUAL
+        </selectKey>
+        INSERT INTO DR_SIREN(SIREN_NUMBER, SIREN_REASON,  SIREN_TYPE , BOARD_NUMBER , REPLY_NUMBER , USER_NUMBER)
+        VALUES (#{sirenNumber}, #{sirenReason}, #{sirenType} , #{boardNumber} , #{replyNumber} , #{userNumber})
+    </insert>
 
 
 

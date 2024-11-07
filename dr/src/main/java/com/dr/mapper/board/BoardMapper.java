@@ -69,5 +69,6 @@ public interface BoardMapper {
     // 꿀팁게시판 추천 마이너스
     void honeyGoodMinus(HoneyGoodDTO HoneyGoodDTO);
 
+    void report(BoardReportDTO boardReportDTO);
 
 }
