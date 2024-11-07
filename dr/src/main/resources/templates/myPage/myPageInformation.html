@@ -15,6 +15,7 @@
         <!-- 제이쿼리 -->
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         <script defer th:src="@{/js/fragment/header.js}"></script>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
     </head>
 
     <body>
@@ -43,7 +44,7 @@
                 <div class="myPage-pictureImage">
                     <div class="myPage-profile">
                         <img id="profileImage" th:src="@{/image/photo/{photoName}(photoName=${userInfo.photo})}"
-                             alt="프로필 이미지" width="150" height="150">
+                             alt="프로필 이미지" width="150" height="150" loading="lazy">
                         <input type="file" id="imageUpload" style="display: none;">
                         <!-- 이미지 업로드 버튼 (수레바퀴 이미지) -->
                         <img th:src="@{/image/sawtooth.png}" alt="이미지 변경" id="uploadIcon" style="width: 20px; height: 20px; cursor: pointer; margin-top: 10px;">

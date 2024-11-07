@@ -63,26 +63,30 @@ public class MyPageController {
         }
     }
 
+    // -- 이미지 변경 -- //
     @PostMapping("/updateProfile")
-    public String updateProfile(
-            @SessionAttribute("userNumber") Long userNumber,  // 현재 로그인한 사용자의 번호
-            @RequestParam("nickname") String nickname,        // 변경할 닉네임
-            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage, //MultipartFile 파일 업로드를 처리할 때 사용하는 인터페이스
-            Model model, HttpSession session) throws IOException {
+    public ResponseEntity<Map<String, String>> updateProfile(
+            @SessionAttribute("userNumber") Long userNumber,
+            @RequestParam("nickname") String nickname,
+            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws IOException {
+
+        Map<String, String> response = new HashMap<>();
 
         // 닉네임이 입력되면 닉네임을 업데이트
         if (nickname != null && !nickname.isEmpty()) {
             myPageService.updateNickname(userNumber, nickname);
+            response.put("nickname", nickname);
         }
 
         // 이미지 파일이 있으면 저장하기
         if (profileImage != null && !profileImage.isEmpty()) {
             String photoPath = myPageService.updateProfileImage(userNumber, profileImage);
             String photoPathWithTimestamp = photoPath + "?timestamp=" + System.currentTimeMillis();
-            model.addAttribute("photoPath", photoPathWithTimestamp);
+            response.put("photoPath", photoPathWithTimestamp);
         }
 
-        return "redirect:/myPage/myPageInformation";  // 업데이트 후 마이페이지로 리다이렉트
+        // JSON 형태로 응답 반환
+        return ResponseEntity.ok(response);
     }
 
 

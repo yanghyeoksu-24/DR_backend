@@ -1,18 +1,21 @@
 // --------사진 이미지 업로드 ------- //
-
 // 수레바퀴 이미지를 클릭하면 파일 업로드 창이 열림
 document.getElementById('uploadIcon').addEventListener('click', function() {
     document.getElementById('imageUpload').click();
 });
 
-// 파일이 선택되면 이미지를 변경하는 함수
+// 이미지 선택 후 미리보기 표시
 document.getElementById('imageUpload').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
+
+        // 파일이 로드된 경우에만 미리보기를 설정
         reader.onload = function(e) {
-            document.getElementById('profileImage').src = e.target.result + `?timestamp=${Date.now()}`;
+            console.log('이미지 로드 성공:', e.target.result);
+            document.getElementById('profileImage').src = e.target.result;
         };
+
         reader.readAsDataURL(file);
     }
 });
@@ -40,6 +43,7 @@ document.getElementById('completeWriteBtn').addEventListener('click', function()
         formData.append('profileImage', profileImage);
     }
 
+    // 서버로 비동기 요청 보내기
     fetch('/myPage/updateProfile', {
         method: 'POST',
         body: formData,
@@ -47,10 +51,11 @@ document.getElementById('completeWriteBtn').addEventListener('click', function()
         .then(response => response.json())
         .then(data => {
             if (data.photoPath) {
-                // 서버에서 반환된 photoPath로 이미지 URL을 업데이트
-                document.getElementById('profileImage').src = `/static/image/photo/${data.photoPath}?timestamp=${Date.now()}`;
+                // 서버에서 반환된 이미지 경로를 사용하여 프로필 이미지 업데이트
+                document.getElementById('profileImage').src = data.photoPath + '?' + new Date().getTime();  // 타임스탬프 추가로 캐시 방지
                 alert('수정이 완료되었습니다.\n상단 프로필은 다음 로그인 시 적용됩니다.');
             }
+            location.href = '/myPage/myPageInformation';  // 업데이트 후 마이페이지로 리다이렉트
         })
         .catch(error => {
             console.error('수정 요청 중 오류가 발생했습니다:', error);
@@ -58,7 +63,7 @@ document.getElementById('completeWriteBtn').addEventListener('click', function()
         });
 });
 
-// DOM 요소 가져오기
+// 닉네임 수정 부분
 const nicknameDisplay = document.getElementById('nicknameDisplay');
 const nicknameInput = document.getElementById('nicknameInput');
 const nicknameChangeButton = document.querySelector('.myPage-nickNameChange');
@@ -82,14 +87,11 @@ nicknameChangeButton.addEventListener('click', function() {
     nicknameInput.style.border = '1px solid #317FF0'; // 입력 필드 테두리 색상 변경
 });
 
-
-
-// 닉네임 중복 확인 및 유효성 검사 //
+// 닉네임 유효성 검사 및 중복 확인
 nicknameInput.addEventListener('blur', function() {
     const newNickname = nicknameInput.value.trim(); // 입력 값 가져오기
     const currentNickname = nicknameDisplay.textContent.trim(); // 현재 닉네임 가져오기
 
-    // 닉네임 유효성 검사
     const nicknameRegex = /^[a-zA-Z0-9가-힣]{2,5}$/; // 2자 이상 5자 이내의 한글, 영문, 숫자
     if (!nicknameRegex.test(newNickname)) {
         nicknameError.textContent = "2자 이상 5자 이내의 한글, 영문, 숫자만 허용됩니다.";
@@ -100,7 +102,6 @@ nicknameInput.addEventListener('blur', function() {
         return;
     }
 
-    // 현재 닉네임과 비교
     if (newNickname === currentNickname) {
         nicknameError.textContent = "현재 닉네임과 동일합니다.";
         nicknameError.style.display = 'block';
@@ -110,16 +111,15 @@ nicknameInput.addEventListener('blur', function() {
         return;
     }
 
-    // 닉네임이 비어있지 않은 경우에만 중복 확인 요청
     if (newNickname) {
         fetch('/myPage/checkNickname', {
-            method: 'POST', // POST 메서드로 요청
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ nickname: newNickname })
         })
-            .then(response => response.json()) // boolean 값을 JSON 형태로 받음
+            .then(response => response.json())
             .then(isDuplicate => {
                 if (isDuplicate) {
                     nicknameError.textContent = "이미 사용 중인 닉네임입니다.";
