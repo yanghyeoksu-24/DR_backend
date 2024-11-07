@@ -3,6 +3,7 @@ package com.dr.service.user;
 import com.dr.domain.CustomOAuth2User;
 import com.dr.dto.user.KakaoUsersDTO;
 import com.dr.mapper.user.KakaoUsersMapper;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -14,9 +15,11 @@ import java.util.Map;
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final KakaoUsersMapper kakaoUsersMapperuserMapper;
+    private final HttpSession session;
 
-    public CustomOAuth2UserService(KakaoUsersMapper kakaoUsersMapperuserMapper) {
+    public CustomOAuth2UserService(KakaoUsersMapper kakaoUsersMapperuserMapper, HttpSession session) {
         this.kakaoUsersMapperuserMapper = kakaoUsersMapperuserMapper;
+        this.session = session;
     }
 
     @Override
@@ -39,6 +42,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         // 카카오의 경우 ID는 최상위 attributes 객체의 id 필드에 있음
         String providerId = attributes.get("id").toString();
 
+        System.out.println("제공자 : " + providerId);
         System.out.println("이름 : " + name);
         System.out.println("사진 : " + profilePic);
         System.out.println("이메일 : " + accountEmail);
@@ -57,8 +61,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         // DB에 사용자 정보 저장 또는 업데이트
         KakaoUsersDTO existingUser = kakaoUsersMapperuserMapper.findByProviderId(providerId);
         if (existingUser == null) {
-            // 사용자가 새로운 경우, DB에 저장
-            System.out.println(user);
+            // 새로운 사용자일 경우 리다이렉트 플래그 설정
+            session.setAttribute("isNewUser", true);
+            session.setAttribute("newUser", user);
         } else {
             // 이미 존재하는 사용자인 경우, 필요한 정보 업데이트
             existingUser.setName(name); // 예시: 이름 정보 업데이트

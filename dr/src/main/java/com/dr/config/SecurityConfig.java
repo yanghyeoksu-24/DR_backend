@@ -53,20 +53,22 @@ public class SecurityConfig {
     }
 
 
-
-
     // 로그인 성공 핸들러
     @Bean
     public AuthenticationSuccessHandler successHandler() {
-
         return (request, response, authentication) -> {
-            // 로그인 성공 후 리다이렉션할 경로 지정
             HttpSession session = request.getSession();
-            session.setAttribute("loginId", ((CustomOAuth2User)(authentication.getPrincipal())).getProviderId());
-            response.sendRedirect("/DRmain");
+
+            if (Boolean.TRUE.equals(session.getAttribute("isNewUser"))) {
+                System.out.println();
+                // 새로운 사용자라면 추가 정보 입력 페이지로 리다이렉트
+                response.sendRedirect("/user/drJoin");
+            } else {
+                // 기존 사용자라면 메인 페이지로 이동
+                session.setAttribute("loginId", ((CustomOAuth2User) (authentication.getPrincipal())).getProviderId());
+                response.sendRedirect("/DRmain");
+            }
         };
     }
-
-
 }
 
