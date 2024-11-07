@@ -53,10 +53,10 @@ public interface RecipeMapper {
     void decreaseGoodCount(MyRecipeGoodDTO myRecipeGoodDTO);
 
     // 찜 추가 메서드
-    void addSteam(MyRecipeDetailDTO myRecipeDetailDTO);
+    void addSteam(RecipeSteamDTO recipeSteamDTO);
 
     // 찜 삭제 메서드
-    void removeSteam(MyRecipeDetailDTO myRecipeDetailDTO);
+    void removeSteam(RecipeSteamDTO recipeSteamDTO);
 
 
 }

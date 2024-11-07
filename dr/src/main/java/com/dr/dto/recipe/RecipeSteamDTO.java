@@ -10,5 +10,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class RecipeSteamDTO {
-
+    private Long steamNumber;
+    private Long recipeNumber;
+    private Long userNumber;
 }

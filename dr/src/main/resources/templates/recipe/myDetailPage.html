@@ -37,16 +37,15 @@
                         <button id="deleteButton" class="myDetailPage-buttonOne">삭제</button>
                     </div>
                     <div class="myDetailPage-secondButton">
-                        <div class="myDetailPage-buttonImg">
-                            <a id="heartLink" th:href="@{/recipe/like}">
-                                <img id="heartImage1" th:src="@{/image/heartColor.png}" alt="좋아요" style="display: none;">
-                            </a>
-                        </div>
-                        <div class="myDetailPage-buttonImg">
-                            <a id="heartUnlink" th:href="@{/recipe/unlike}">
-                                <img id="heartImage2" th:src="@{/image/heartGray.png}" alt="좋아요">
-                            </a>
-                        </div>
+
+                            <div class="myDetailPage-buttonImg">
+                                    <img id="heartImage1" th:src="@{/image/heartColor.png}" alt="좋아요" style="display: none;">
+                            </div>
+
+                            <div class="myDetailPage-buttonImg">
+                                    <img id="heartImage2" th:src="@{/image/heartGray.png}" alt="싫어요">
+                            </div>
+
                         <button class="myDetailPage-buttonTwo">신고</button>
                     </div>
                 </div>
@@ -58,7 +57,8 @@
                 <img th:src="@{/image/photo/} + ${recipeDetail.photoLocal}" alt="레시피 이미지">
                 <div class="myDetailPage-recommendImg">
                     <input type="hidden" name="recipeNumber" id="recipeNumber" th:value="${recipeDetail.recipeNumber}">
-                    <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="추천" th:src="@{/image/recommend.png}">
+                    <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="추천"
+                         th:src="@{/image/recommend.png}">
                     <p id="recommendCount" th:text="'추천수: ' + ${recipeDetail.goodCount}"></p>
                 </div>
             </div>
@@ -86,7 +86,8 @@
                         <div class="myDetailPage-commentContent">
                             <input type="hidden" name="replyNumber" th:value="${recipeComments.replyNumber}">
                             <div class="myDetailPage-commentHeader">
-                                <span class="myDetailPage-commentUsername" th:text="${recipeComments.userNickName}">작성자</span>
+                                <span class="myDetailPage-commentUsername"
+                                      th:text="${recipeComments.userNickName}">작성자</span>
                                 <button class="myDetailPage-reportBtn">신고</button>
                             </div>
 
@@ -96,16 +97,19 @@
                             </div>
                             <br>
                             <div class="myDetailPage-commentText" id="commentText${recipeComments.replyNumber}"
-                                 th:text="${recipeComments.replyText}">댓글 내용</div>
+                                 th:text="${recipeComments.replyText}">댓글 내용
+                            </div>
 
 
                             <!-- 본인 댓글에 대한 수정/삭제 버튼 -->
                             <div class="myDetailPage-buttonGroup"
                                  th:if="${userNickName != null and userNickName == recipeComments.userNickName}">
                                 <button type="button" class="myDetailPage-editBtn"
-                                        th:attr="data-reply-number=${recipeComments.replyNumber}">수정</button>
+                                        th:attr="data-reply-number=${recipeComments.replyNumber}">수정
+                                </button>
                                 <button type="button" class="myDetailPage-deleteBtn"
-                                        th:attr="data-reply-number=${recipeComments.replyNumber}">삭제</button>
+                                        th:attr="data-reply-number=${recipeComments.replyNumber}">삭제
+                                </button>
                             </div>
 
                             <!-- 댓글 수정 입력창, 기본적으로 숨김 상태 -->
