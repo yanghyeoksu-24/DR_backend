@@ -13,4 +13,10 @@ public class UserDTO {
     private String userPw;
     private String userNickName;
     private String userPhone;
+    private String provider;
+    private String providerId;
+    private String profilePic;
+    private Long pointNumber;
+    private Long scoreNumber;
+    private Long photoNumber;
 }

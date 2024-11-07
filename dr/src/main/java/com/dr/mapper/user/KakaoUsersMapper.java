@@ -1,6 +1,7 @@
 package com.dr.mapper.user;
 
 import com.dr.dto.user.KakaoUsersDTO;
+import com.dr.dto.user.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

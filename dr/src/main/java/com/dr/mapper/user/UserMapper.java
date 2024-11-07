@@ -34,4 +34,17 @@ public interface UserMapper {
 
     // 닉네임 중복확인
     int checkNickName(String userNickName);
+
+
+    // 신규가입유저 포인트0 row 생성
+    void insertNewUserPoint(UserDTO user);
+
+    // 신규가입유저 점수0 row 생성
+    void insertNewUserScore(UserDTO user);
+
+    // 신규가입유저 점수0 row 생성
+    void insertNewUserPhoto(UserDTO user);
+
+    // 방금 가입유저 pk조회
+    Long findNewUser(UserDTO user);
 }
