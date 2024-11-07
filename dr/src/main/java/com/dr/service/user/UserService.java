@@ -1,6 +1,7 @@
 package com.dr.service.user;
 
 import com.dr.dto.user.*;
+import com.dr.mapper.user.KakaoUsersMapper;
 import com.dr.mapper.user.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService<BCryptPasswordEncoder> {
     private final UserMapper userMapper;
-
+    private final KakaoUsersMapper kakaoUsersMapperuserMapper;
 
     public boolean isEmailExists(String userEmail) {
         return userMapper.checkEmailExists(userEmail);
@@ -55,6 +56,10 @@ public class UserService<BCryptPasswordEncoder> {
         return userMapper.checkNickName(userNickName);
     }
 
+    // api회원 가입 저장
+    public void insertKakaoUser(KakaoUsersDTO user){
+        kakaoUsersMapperuserMapper.insertKakaoUser(user);
+    };
 }
 
 

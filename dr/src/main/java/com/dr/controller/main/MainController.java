@@ -18,7 +18,7 @@ public class MainController {
     //메인페이지
     @GetMapping("/DRmain")
     public String openMain() {
-        return "main";
+        return "DRmain";
     }
 
     //개인정보 처리방침

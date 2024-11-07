@@ -1,7 +1,10 @@
 package com.dr.config;
 
 import com.dr.domain.CustomOAuth2User;
+import com.dr.dto.user.KakaoUsersDTO;
+import com.dr.dto.user.UserSessionDTO;
 import com.dr.service.user.CustomOAuth2UserService;
+import com.dr.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,20 +56,40 @@ public class SecurityConfig {
     }
 
 
-
-
     // 로그인 성공 핸들러
     @Bean
     public AuthenticationSuccessHandler successHandler() {
-
         return (request, response, authentication) -> {
-            // 로그인 성공 후 리다이렉션할 경로 지정
+            // 세션에 추가정보 담기 위해 객체생성
             HttpSession session = request.getSession();
-            session.setAttribute("loginId", ((CustomOAuth2User)(authentication.getPrincipal())).getProviderId());
-            response.sendRedirect("/DRmain");
+
+            CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+
+            // 필요한 사용자 정보 가져오기
+            String name = customOAuth2User.getName();
+            String profilePic = customOAuth2User.getProfilePic();
+            String providerId = customOAuth2User.getProviderId();
+            String provider = customOAuth2User.getProvider();
+            String accountEmail = customOAuth2User.getAccountEmail();
+            Long userNumber = customOAuth2User.getUserNumber();
+
+            // 세션에 사용자 정보 저장
+            session.setAttribute("providerId", providerId);
+            session.setAttribute("provider", provider);
+            session.setAttribute("userNickName", name);
+            session.setAttribute("accountEmail", accountEmail);
+            session.setAttribute("profilePic", profilePic);
+            session.setAttribute("userNumber", userNumber);
+
+            if (Boolean.TRUE.equals(session.getAttribute("isNewUser"))) {
+                // 새로운 사용자라면 추가 정보 입력 페이지로 리다이렉트
+                response.sendRedirect("/user/apiJoin");
+            } else {
+                // 기존 사용자라면 메인 페이지로 이동
+                session.getAttribute("providerId");
+                response.sendRedirect("/DRmain");
+            }
         };
     }
-
-
 }
 
