@@ -1,7 +1,6 @@
 package com.dr.service.board;
 
 import com.dr.dto.board.*;
-import com.dr.dto.recipe.MyRecipeWriteCommentDTO;
 import com.dr.mapper.board.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
