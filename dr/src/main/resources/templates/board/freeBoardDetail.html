@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="freeBoardDetail-secondButton">
-                        <a th:href="@{/freeBoardDetail/boardReport}">
+                        <a th:href="@{/board/boardReport(boardNumber=${freeBoardDetail.boardNumber})}">
                             <button class="freeBoardDetail-buttonTwo">신고</button>
                         </a>
                     </div>
@@ -51,7 +51,8 @@
 
                 <div class="freeBoardDetail-recommendImg">
                     <input type="hidden" id="boardNumber" name="boardNumber" th:value="${freeBoardDetail.boardNumber}">
-                    <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="recommend" th:src="@{/image/recommend.png}">
+                    <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="recommend"
+                         th:src="@{/image/recommend.png}">
                     <p id="recommendCount" th:text="'추천수: ' + ${freeBoardDetail.goodCount}"></p>
                 </div>
             </div>
@@ -79,7 +80,9 @@
                             <div class="freeBoardDetail-commentHeader">
                                 <span class="freeBoardDetail-commentUsername"
                                       th:text="${freeBoardComments.userNickName}">작성자</span>
-                                <button class="freeBoardDetail-reportBtn">신고</button>
+                                <a th:href="@{/board/boardReport(boardNumber=${freeBoardDetail.boardNumber}, replyNumber=${freeBoardComments.replyNumber})}">
+                                    <button class="freeBoardDetail-reportBtn">신고</button>
+                                </a>
                             </div>
 
                             <!-- 수정된 날짜가 있으면 수정된 날짜를 보이고, 없으면 작성 날짜만 보이도록 처리 -->
@@ -107,7 +110,7 @@
 
 
                             <!-- 댓글 수정 입력창, 기본적으로 숨김 상태 -->
-                            <div class="freeBoardDetail-commentInput"  style="display:none;"
+                            <div class="freeBoardDetail-commentInput" style="display:none;"
                                  id="editInput${freeBoardComments.replyNumber}">
                                 <textarea id="editTextarea${freeBoardComments.replyNumber}" rows="3"></textarea>
                                 <div class="freeBoardDetail-commentActions">
