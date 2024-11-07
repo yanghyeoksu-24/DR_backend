@@ -20,6 +20,6 @@ public class FreeBoardDetailDTO {
     private String replyModifyDate;
     private String userNickName;
     private Long userNumber;
-    private int goodCount;
+    private Long goodCount;
     private String photoLocal;
 }

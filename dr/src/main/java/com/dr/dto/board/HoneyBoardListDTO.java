@@ -10,9 +10,10 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class HoneyBoardListDTO {
-    private int boardNumber;
+    private Long boardNumber;
     private String boardTitle;
     private String userNickName;
-    private int goodCount;
+    private Long goodCount;
     private String boardWriteDate;
+
 }

@@ -77,22 +77,7 @@ public class BoardController {
     }
 
 
-    //꿀팁게시판 리스트 보여주기
-    @GetMapping("/honeyBoardList")
-    public String honeyBoardList(Model model) {
-        List<HoneyBoardListDTO> honeyBoardList = boardService.honeyBoardList();
-        model.addAttribute("honeyBoardList", honeyBoardList);
-        System.out.println(honeyBoardList + "여기서 확인해보자");
-        return "/board/honeyBoardList";
-    }
 
-    // 꿀팁게시판 최신순 리스트 보여주기
-    @GetMapping("/honeyBoardListGood")
-    public String honeyBoardListGood(Model model) {
-        List<HoneyBoardListDTO> honeyBoardListGood = boardService.honeyBoardListGood();
-        model.addAttribute("honeyBoardList", honeyBoardListGood);
-        return "/board/honeyBoardList";
-    }
 
     //자유게시판 상세페이지(게시글 상세 + 댓글 조회)
     @GetMapping("/freeBoardDetail")
@@ -114,18 +99,6 @@ public class BoardController {
     }
 
 
-
-    //꿀팁게시판 상세페이지(게시글 상세 + 댓글)
-    @GetMapping("/honeyBoardDetail")
-    public String honeyBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model) {
-        HoneyBoardDetailDTO honeyBoardDetail = boardService.honeyBoardDetail(boardNumber);
-        List<HoneyBoardCommentDTO> honeyBoardComments = boardService.honeyBoardCommentList(boardNumber);
-
-        model.addAttribute("honeyBoardDetail", honeyBoardDetail);
-        model.addAttribute("honeyBoardComments", honeyBoardComments);
-
-        return "/board/honeyBoardDetail";
-    }
 
     //자유게시판 상세 페이지 댓글 작성
     @PostMapping("/freeBoardDetail")
@@ -184,7 +157,119 @@ public class BoardController {
         return ResponseEntity.ok().build();
     }
 
-    // 추천 수 증가 (허니)
+    // 자유게시판 추천 수 증가
+    @PostMapping("/freeGoodPlus")
+    public ResponseEntity<Void> freeGoodPlus(
+            @RequestBody FreeGoodDTO freeGoodDTO,
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber
+    ) {
+        freeGoodDTO.setUserNumber(userNumber);
+        boardService.freeGoodPlus(freeGoodDTO);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 자유게시판 추천 수 감소
+    @PostMapping("/freeGoodMinus")
+    public ResponseEntity<Void> freeGoodMinus(
+            @RequestBody FreeGoodDTO freeGoodDTO,
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber
+    ) {
+        freeGoodDTO.setUserNumber(userNumber);
+        boardService.freeGoodMinus(freeGoodDTO);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //꿀팁게시판 리스트 보여주기
+    @GetMapping("/honeyBoardList")
+    public String honeyBoardList(Model model) {
+        List<HoneyBoardListDTO> honeyBoardList = boardService.honeyBoardList();
+        model.addAttribute("honeyBoardList", honeyBoardList);
+        System.out.println(honeyBoardList + "여기서 확인해보자");
+        return "/board/honeyBoardList";
+    }
+
+    // 꿀팁게시판 최신순 리스트 보여주기
+    @GetMapping("/honeyBoardListGood")
+    public String honeyBoardListGood(Model model) {
+        List<HoneyBoardListDTO> honeyBoardListGood = boardService.honeyBoardListGood();
+        model.addAttribute("honeyBoardList", honeyBoardListGood);
+        return "/board/honeyBoardList";
+    }
+
+    //꿀팁게시판 상세페이지(게시글 상세 + 댓글)
+    @GetMapping("/honeyBoardDetail")
+    public String honeyBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model, @SessionAttribute(value = "userNickName", required = false) String userNickName) {
+        HoneyBoardDetailDTO honeyBoardDetail = boardService.honeyBoardDetail(boardNumber);
+        List<HoneyBoardCommentDTO> honeyBoardComments = boardService.honeyBoardCommentList(boardNumber);
+
+
+        model.addAttribute("honeyBoardDetail", honeyBoardDetail);
+        model.addAttribute("honeyBoardComments", honeyBoardComments);
+        model.addAttribute("userNickName",userNickName);
+
+        log.info(userNickName + "여긴 꿀팁게시판 상세 up");
+        log.info("=======Honey Board 컨트롤러 확인용 : " + honeyBoardComments);
+
+        return "/board/honeyBoardDetail";
+    }
+
+
+    //꿀팁게시판 상세 페이지 댓글 작성
+    @PostMapping("/honeyBoardDetail")
+    public String honeyBoardInsertReply(@RequestParam("boardNumber") Long boardNumber,
+                                       @RequestParam("replyText") String replyText,
+                                       @RequestParam("userNumber") Long userNumber,
+                                       RedirectAttributes redirectAttributes) {
+
+        if (boardNumber == null) {
+            throw new IllegalArgumentException("Board number is required");
+        }
+
+        HoneyBoardCommentDTO honeyBoardCommentDTO = new HoneyBoardCommentDTO();
+        honeyBoardCommentDTO.setBoardNumber(boardNumber);
+        honeyBoardCommentDTO.setReplyText(replyText);
+        honeyBoardCommentDTO.setUserNumber(userNumber);
+
+        boardService.honeyBoardInsertReply(honeyBoardCommentDTO);
+
+        // Redirect 후 댓글을 로드하기 위해 boardNumber를 추가
+        redirectAttributes.addAttribute("boardNumber", boardNumber);
+
+        return "redirect:/board/honeyBoardDetail"; // boardNumber를 쿼리 매개변수로 포함
+    }
+
+    //꿀팁게시판 댓글 수정
+    @PostMapping("/honeyUpdateReply")
+    public ResponseEntity<Void> updateHoneyBoardReply(@RequestParam("replyNumber") Long replyNumber,
+                                                     @RequestParam("replyText") String replyText) {
+        if (replyNumber == null || replyText == null || replyText.trim().isEmpty()) {
+            return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
+        }
+
+        // 댓글 수정 서비스 호출
+        boardService.honeyBoardUpdateReply(replyNumber, replyText);
+
+        // 수정 완료 후 성공 응답 반환
+        return ResponseEntity.ok().build();
+    }
+
+    // 꿀팁게시판 댓글 삭제
+    @PostMapping("/honeyDeleteReply")
+    public ResponseEntity<Void> deleteHoneyBoardReply(@RequestParam("replyNumber") Long replyNumber) {
+        if (replyNumber == null) {
+            return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
+        }
+
+        // 댓글 삭제 서비스 호출
+        boardService.honeyBoardDeleteReply(replyNumber);
+
+        // 삭제 완료 후 성공 응답 반환
+        return ResponseEntity.ok().build();
+    }
+
+    // 꿀팁게시판 추천 수 증가
     @PostMapping("/goodPlus")
     public ResponseEntity<Void> goodPlus(
             @RequestBody HoneyGoodDTO honeyGoodDTO,
@@ -196,7 +281,7 @@ public class BoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // 추천수 감소 (허니)
+    // 꿀팁게시판 추천 수 감소
     @PostMapping("/goodMinus")
     public ResponseEntity<Void> goodMinus(
             @RequestBody HoneyGoodDTO honeyGoodDTO,
@@ -207,10 +292,6 @@ public class BoardController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
-
 
 
 
