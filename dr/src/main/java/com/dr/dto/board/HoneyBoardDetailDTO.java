@@ -12,6 +12,7 @@ import lombok.ToString;
 public class HoneyBoardDetailDTO {
     private Long boardNumber;
     private String boardTitle;
+    private String boardType;
     private String boardText;
     private String boardWriteDate;
     private String replyModifyDate;
