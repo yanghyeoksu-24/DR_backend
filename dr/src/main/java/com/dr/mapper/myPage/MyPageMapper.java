@@ -56,5 +56,4 @@
         // 출석 날짜 리스트 조회
         List<CheckDTO> getAttendanceDates(@Param("userNumber") Long userNumber);
 
-
     }
