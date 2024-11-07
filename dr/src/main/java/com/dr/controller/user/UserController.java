@@ -2,7 +2,6 @@ package com.dr.controller.user;
 
 import com.dr.dto.user.*;
 import com.dr.service.user.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,11 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.dr.service.user.RandomStringGenerator.generateRandomString;
 
 @Controller
 @Slf4j
@@ -37,7 +37,7 @@ public class UserController {
     }
 
     // api회원가입 페이지 이동
-    @GetMapping("/user/apijoin")
+    @GetMapping("/user/apiJoin")
     public String apiJoinPage() {
         return "/user/apiJoin";
     }
@@ -136,6 +136,29 @@ public class UserController {
     public String join(@ModelAttribute UserDTO userDTO) {
         userService.registerUser(userDTO);
         return "redirect:/user/login";
+    }
+
+    //apijoin 회원가입 요청 컨트롤러
+    @PostMapping("/user/apiJoinOK")
+    public String kakaoJoin(@ModelAttribute KakaoUsersDTO kakaoUsersDTO,
+                            HttpSession session) {
+        //api회원은 비밀번호입력 안하므로 랜덤한 비밀번호생성
+        kakaoUsersDTO.setUserPw(generateRandomString(10));
+        userService.insertKakaoUser(kakaoUsersDTO);
+
+        UserSessionDTO userLogin = userService.userLogin(kakaoUsersDTO.getAccountEmail(), kakaoUsersDTO.getUserPw());
+
+        if (userLogin != null) {
+            // 세션에 사용자 정보를 설정
+            session.setAttribute("userNumber", userLogin.getUserNumber());
+            session.setAttribute("userNickName", userLogin.getUserNickName());
+            session.setAttribute("providerId", kakaoUsersDTO.getProviderId());
+            session.setAttribute("profilePic", kakaoUsersDTO.getProfilePic());
+
+            return "redirect:/DRmain";
+        } else {
+            return "user/login";
+        }
     }
 
 

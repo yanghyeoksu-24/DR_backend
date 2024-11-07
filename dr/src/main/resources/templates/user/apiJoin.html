@@ -21,22 +21,24 @@
 <main>
     <div class="apijoin-container">
         <div class="apijoin-title">
-            <span class="apijoin-leftTitle">회원</span>
-            <span class="apijoin-rightTitle">가입</span>
+            <span class="apijoin-leftTitle">추가</span>
+            <span class="apijoin-rightTitle">기입</span>
         </div>
         <br>
-        <form action="" id="apijoinForm" class="apijoin-form">
+        <form th:action="@{/user/apiJoinOK}" method="post" id="apijoinForm" class="apijoin-form">
             <!-- 아이디(이메일) 필드 -->
-            <label for="userId" class="apijoin-label">아이디(이메일)</label>
+            <label for="accountEmail" class="apijoin-label">아이디(이메일)</label>
             <div class="input-withButton">
-                <input type="text" id="userId" name="userId" class="apijoin-input" placeholder="아이디를 입력하세요." required>
-                <button type="button" id="checkDuplicate" class="apijoin-eventButton">중복확인</button>
+                <input type="text" th:value="${session.accountEmail}" id="accountEmail" name="accountEmail" class="apijoin-input" placeholder="아이디를 입력하세요." readonly required>
             </div>
-            <span class="error-message" id="userIdError"></span>
+            <span class="error-message" id="accountEmailError"></span>
             <br>
             <!-- 닉네임 필드 -->
             <label for="name" class="apijoin-label">닉네임</label>
-            <input type="text" id="name" name="name" class="apijoin-input" placeholder="이름을 입력하세요." required>
+            <input type="text" th:value="${session.userNickName}" id="name" name="name" class="apijoin-input" placeholder="이름을 입력하세요." required>
+            <input type="hidden" th:value="${session.profilePic}" id="profilePic" name="profilePic" class="apijoin-input">
+            <input type="hidden" th:value="${session.providerId}" id="providerId" name="providerId" class="apijoin-input">
+            <input type="hidden" th:value="${session.provider}" id="provider" name="provider" class="apijoin-input">
             <span class="error-message" id="nameError"></span>
             <br>
             <!-- 휴대폰 번호 필드 -->

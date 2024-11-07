@@ -19,19 +19,27 @@ public class CustomOAuth2User implements OAuth2User {
     // 사용자의 프로필 사진 URL 또는 경로를 저장할 변수
     private String profilePic;
 
-    // 제공자 ID (예: Google, Facebook 등)를 저장할 변수
+    // 제공자 ID 를 저장할 변수
     private String providerId;
+
+    // 제공자 (kakao를 저장)
+    private String provider;
 
     // 사용자 이메일
     private String accountEmail;
 
+    // 사용자 pk
+    private Long userNumber;
+
     // CustomOAuth2User 생성자: 매개변수로 OAuth2User, 이름, 프로필 사진, 제공자 ID를 받음
-    public CustomOAuth2User(OAuth2User oauth2User, String name, String profilePic, String providerId, String accountEmail) {
+    public CustomOAuth2User(OAuth2User oauth2User, String name, String profilePic, String providerId, String provider, String accountEmail, Long userNumber) {
         this.oauth2User = oauth2User; // 원래의 OAuth2User 인스턴스를 저장
         this.name = name;            // 사용자의 이름을 저장
         this.profilePic = profilePic; // 사용자의 프로필 사진을 저장
+        this.provider = provider;
         this.providerId = providerId; // 제공자 ID를 저장
         this.accountEmail = accountEmail;
+        this.userNumber = userNumber;
     }
 
     // OAuth2User 인터페이스의 getAttributes 메서드를 구현
@@ -54,7 +62,8 @@ public class CustomOAuth2User implements OAuth2User {
         // 저장된 사용자의 이름을 반환
         return this.name;
     }
-
+    // 제공자 반환
+    public String getProvider() { return provider; }
     // 프로필 사진 URL 또는 경로를 반환하는 메서드
     public String getProfilePic() {
         return profilePic;
@@ -65,4 +74,6 @@ public class CustomOAuth2User implements OAuth2User {
     public String getProviderId() {
         return providerId;
     }
+    // pk 반환
+    public Long getUserNumber() { return userNumber; }
 }

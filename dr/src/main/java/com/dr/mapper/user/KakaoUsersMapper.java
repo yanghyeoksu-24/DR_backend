@@ -10,7 +10,7 @@ public interface KakaoUsersMapper {
     KakaoUsersDTO findByProviderId(String providerId);
 
     // 새로운 사용자를 삽입합니다.
-    void insertUser(KakaoUsersDTO user);
+    void insertKakaoUser(KakaoUsersDTO user);
 
     // 기존 사용자 정보를 업데이트합니다.
     void updateUser(KakaoUsersDTO user);
