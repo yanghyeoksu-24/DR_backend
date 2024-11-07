@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="honeyBoardDetail-secondButton">
-                        <a th:href="@{/board/boardReport/{id}(id=${honeyBoardDetail.boardNumber})}">
+                        <a th:href="@{/board/boardReport}">
                             <button class="honeyBoardDetail-buttonTwo">신고</button>
                         </a>
                     </div>
@@ -85,7 +85,7 @@
                             <div class="honeyBoardDetail-commentHeader">
                                 <span class="honeyBoardDetail-commentUsername"
                                       th:text="${comment.userNickName}">홍상철</span>
-                                <a th:href="@{/board/boardReport/{commentId}(commentId=${comment.replyNumber})}">
+                                <a th:href="@{/board/boardReport}">
                                     <button class="honeyBoardDetail-reportBtn">신고</button>
                                 </a>
                             </div>
