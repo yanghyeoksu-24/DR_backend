@@ -53,7 +53,10 @@ public class RecipeService {
     }
 
     //나만의 레시피 댓글 수정
-    public void updateMyRecipeComment(MyRecipeCommentDTO myRecipeCommentDTO) {
+    public void updateMyRecipeComment(Long replyNumber, String replyText) {
+        MyRecipeCommentDTO myRecipeCommentDTO = new MyRecipeCommentDTO();
+        myRecipeCommentDTO.setReplyNumber(replyNumber);
+        myRecipeCommentDTO.setReplyText(replyText);
         recipeMapper.updateMyReply(myRecipeCommentDTO);
     }
 

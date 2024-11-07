@@ -76,47 +76,53 @@ function deleteComment(replyNumber) {
 
 
 // 추천 기능
-$(document).ready(function() {
-    const recommendImg = $('#recommendImg');
-    let isLiked = false;
+document.addEventListener("DOMContentLoaded", function () {
+    const recommendImg = document.getElementById("recommendImg");
+    const recipeNumber = document.getElementById("recipeNumber").value;
 
-    // 숨겨진 input에서 recipeNumber 및 userNumber 가져오기
-    const recipeNumber = $('input[name="recipeNumber"]').val();
-    const userNumber = $('input[name="userNumber"]').val();
+    let isActive = localStorage.getItem(`recommend-active-${recipeNumber}`) === 'true';
+    recommendImg.classList.toggle("recommend-active", isActive);
+    recommendImg.classList.toggle("recommend-inactive", !isActive);
 
-    recommendImg.on('click', function () {
-        // 상태 토글
-        isLiked = !isLiked;
+    let isRequestInProgress = false;
 
-        // 추천 상태에 따라 클래스 변경
-        if (isLiked) {
-            recommendImg.addClass('recommend-active').removeClass('recommend-inactive');
-        } else {
-            recommendImg.addClass('recommend-inactive').removeClass('recommend-active');
-        }
+    const handleClick = function () {
+        if (isRequestInProgress) return;
 
-        // URL 설정
-        const url = isLiked ? `/recipe/goodPlus` : `/recipe/goodMinus`;
+        isRequestInProgress = true;
+        const url = isActive ? "/recipe/goodMinus" : "/recipe/goodPlus";
 
-        // 서버에 보낼 데이터 구성
-        const requestData = JSON.stringify({
-            recipeNumber: recipeNumber,
-            userNumber: userNumber
-        });
-
-        // Ajax 요청
-        $.ajax({
-            url: url,
-            type: 'POST',
-            contentType: 'application/json',
-            data: requestData,
-            success: function (response) {
-                console.log(isLiked ? '추천 등록 완료' : '추천 취소 완료');
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error('추천 상태 변경 오류:', textStatus, errorThrown);
-                alert('추천 상태 변경 중 오류가 발생했습니다.');
-            }
-        });
-    });
+            body: JSON.stringify({ boardNumber: boardNumber })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("요청 실패: " + response.statusText);
+                }
+
+                // 추천 상태 업데이트 및 localStorage 저장
+                isActive = !isActive;
+                recommendImg.classList.toggle("recommend-active", isActive);
+                recommendImg.classList.toggle("recommend-inactive", !isActive);
+                localStorage.setItem(`recommend-active-${recipeNumber}`, isActive);
+
+                // 요청 성공 시 페이지 새로 고침
+                location.reload();
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("요청 처리 중 오류가 발생했습니다.");
+            })
+            .finally(() => {
+                // 요청 완료 후 상태 초기화
+                isRequestInProgress = false;
+            });
+    };
+
+    recommendImg.addEventListener("click", handleClick);
 });
+

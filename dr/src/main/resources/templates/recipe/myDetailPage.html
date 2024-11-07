@@ -67,12 +67,10 @@
                 <p class="myDetailPage-texts" th:text="${recipeDetail.recipeText}"></p>
                 <img th:src="@{/image/photo/} + ${recipeDetail.photoLocal}" alt="레시피 이미지">
                 <div class="myDetailPage-recommendImg">
-                    <input type="hidden" name="recipeNumber" th:value="${recipeDetail.recipeNumber}">
-                    <input type="hidden" name="userNumber" th:value="${recipeDetail.userNumber}">
-                    <img th:src="@{/image/recommend.png}" id="recommendImg"
-                         class="recommend-inactive"
-                         alt="추천 이미지">
-                    <p id="recommendCount" th:text="'추천수: ' + ${recipeDetail.goodCount}">추천수: 0</p>
+                    <input type="hidden" name="recipeNumber" id="recipeNumber" th:value="${recipeDetail.recipeNumber}"/>
+                    <img src="./../../image/recommend.png" id="recommendImg" class="recommend-inactive"
+                         alt="recommend" th:src="@{/image/recommend.png}">
+                    <p id="recommendCount" th:text="'추천수: ' + ${recipeDetail.goodCount}"></p>
                 </div>
             </div>
 
@@ -106,25 +104,20 @@
                             <div class="myDetailPage-commentTime" th:text="${recipeComments.replyWriteDate}"></div>
 
                             <div class="myDetailPage-buttonGroup">
-                                <button class="myDetailPage-editBtn"
-                                        th:attr="onclick='editComment(' + ${recipeComments.replyNumber} + ')'">수정
+                                <button class="myDetailPage-editBtn" type="button"
+                                        th:attr="data-reply-number=${recipeComments.replyNumber}">수정
                                 </button>
                                 <button type="button" class="myDetailPage-deleteBtn"
-                                        th:onclick="'CommentDeleteClick(' + ${recipeComments.replyNumber} + ', ' + ${recipeNumber} + ')'">
-                                    삭제
+                                        th:attr="data-reply-number=${recipeComments.replyNumber}">삭제
                                 </button>
                             </div>
 
                             <!-- 댓글 수정 입력창, 기본적으로 숨김 상태 -->
-                            <div class="myDetailPage-commentInput" th:attr="id='editInput' + ${recipeComments.replyNumber}" style="display:none;">
-                                <textarea th:attr="id='editTextarea' + ${recipeComments.replyNumber}"></textarea>
+                            <div class="myDetailPage-commentInput"id="editInput${recipeComments.replyNumber}" style="display: none;">
+                                <textarea id="editTextarea${recipeComments.replyNumber}" rows="3"></textarea>
                                 <div class="myDetailPage-commentActions">
-                                    <button class="myDetailPage-saveBtn"
-                                            th:data-replynumber="${recipeComments.replyNumber}">저장
-                                    </button>
-                                    <button class="myDetailPage-cancelBtn"
-                                            th:attr="onclick='cancelEdit(' + ${recipeComments.replyNumber} + ')'" >취소
-                                    </button>
+                                    <button class="myDetailPage-saveBtn">저장</button>
+                                    <button class="myDetailPage-cancelBtn">취소</button>
                                 </div>
                             </div>
                         </div>

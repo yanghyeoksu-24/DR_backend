@@ -10,6 +10,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class MyRecipeGoodDTO {
-    private int goodNumber;
+    private Long goodNumber;
     private Long recipeNumber;
+    private Long userNumber;
 }

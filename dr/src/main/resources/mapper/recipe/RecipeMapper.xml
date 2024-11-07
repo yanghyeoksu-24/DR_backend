@@ -62,18 +62,18 @@
 
     <!-- 추천 수 증가 -->
     <insert id="increaseGoodCount" parameterType="MyRecipeGoodDTO">
-        <selectKey keyProperty="goodNumber" resultType="int" order="BEFORE">
+        <selectKey keyProperty="goodNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_GOOD_NUMBER.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO DR_GOOD(GOOD_NUMBER, RECIPE_NUMBER)
-        VALUES (#{goodNumber} , #{recipeNumber})
+        INSERT INTO DR_GOOD(GOOD_NUMBER, RECIPE_NUMBER, USER_NUMBER)
+        VALUES (#{goodNumber} , #{recipeNumber}, #{userNumber})
     </insert>
 
     <!-- 추천 수 감소 -->
     <delete id="decreaseGoodCount" parameterType="MyRecipeGoodDTO">
         DELETE
         FROM DR_GOOD
-        WHERE RECIPE_NUMBER = #{recipeNumber}
+        WHERE RECIPE_NUMBER = #{recipeNumber} AND USER_NUMBER = #{userNumber}
     </delete>
 
     <!--    나만의 레시피 상세페이지 댓글조회-->
@@ -106,10 +106,9 @@
     <!--    나만의 레시피 댓글 수정-->
     <update id="updateReply" parameterType="MyRecipeCommentDTO">
         UPDATE DR_REPLY
-        SET REPLY_TEXT        = #{replyText},
+        SET REPLY_TEXT = #{replyText},
             REPLY_MODIFY_DATE = SYSDATE
         WHERE REPLY_NUMBER = #{replyNumber}
-          AND USER_NUMBER = #{userNumber};
     </update>
 
     <!--    나만의 레시피 댓글 삭제-->
