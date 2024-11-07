@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -81,12 +82,13 @@ public class MyPageController {
         // 이미지 파일이 있으면 저장하기
         if (profileImage != null && !profileImage.isEmpty()) {
             String photoPath = myPageService.updateProfileImage(userNumber, profileImage);
-            String photoPathWithTimestamp = photoPath + "?timestamp=" + System.currentTimeMillis();
-            response.put("photoPath", photoPathWithTimestamp);
+            // 파일 경로 URL 인코딩
+            String encodedPhotoPath = URLEncoder.encode(photoPath, "UTF-8");
+            response.put("photoPath", encodedPhotoPath);
         }
 
         // JSON 형태로 응답 반환
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok().body(response);
     }
 
 
@@ -258,7 +260,8 @@ public class MyPageController {
 
             return "이번 달 개근을 달성하셨습니다! 200 포인트가 적립되었습니다.";
         } else {
-            return "이번 달 개근이 아닙니다.";
+            return "한 달 동안 매일 출석 시, 개근을 달성할 수 있습니다.\n"
+                    + "성실한 출석으로 보상을 받아보세요!";
         }
     }
 }

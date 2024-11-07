@@ -15,7 +15,6 @@
         <!-- 제이쿼리 -->
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         <script defer th:src="@{/js/fragment/header.js}"></script>
-        <link rel="icon" href="/favicon.ico" type="image/x-icon">
     </head>
 
     <body>
@@ -43,8 +42,10 @@
                 <!-- 마이페이지 이미지 사진 -->
                 <div class="myPage-pictureImage">
                     <div class="myPage-profile">
+                        <div id="fuck">
                         <img id="profileImage" th:src="@{/image/photo/{photoName}(photoName=${userInfo.photo})}"
                              alt="프로필 이미지" width="150" height="150" loading="lazy">
+                        </div>
                         <input type="file" id="imageUpload" style="display: none;">
                         <!-- 이미지 업로드 버튼 (수레바퀴 이미지) -->
                         <img th:src="@{/image/sawtooth.png}" alt="이미지 변경" id="uploadIcon" style="width: 20px; height: 20px; cursor: pointer; margin-top: 10px;">
@@ -61,7 +62,7 @@
                         <div id="nicknameError" style="color: red; display: none;">2자 이상 5자 이내의 한글, 영문, 숫자만 허용됩니다.</div>
                     </div>
                     <div class="myPage-informationId">
-                        <div class="mypage-informationIdLeft">아이디</div>
+                        <div class="mypage-informationIdLeft">이메일</div>
                         <div class="myPge-informationEmail" th:text="${userInfo.userEmail}"></div>
                         <div class="myPage-informationPhone">휴대폰번호</div>
                         <div class="myPage-informationNumber" th:text="${userInfo.userPhone}">010-4828-2574</div>

@@ -51,11 +51,15 @@ document.getElementById('completeWriteBtn').addEventListener('click', function()
         .then(response => response.json())
         .then(data => {
             if (data.photoPath) {
+                // URL 디코딩 후 이미지 경로 사용
+                const decodedPath = decodeURIComponent(data.photoPath);
                 // 서버에서 반환된 이미지 경로를 사용하여 프로필 이미지 업데이트
-                document.getElementById('profileImage').src = data.photoPath + '?' + new Date().getTime();  // 타임스탬프 추가로 캐시 방지
+                // $('#fuck').empty();
+                // $('#temporary').append(`<img id="profileImage" src="/image/photo/${decodedPath}"
+                //              alt="프로필 이미지" width="150" height="150" loading="lazy">`);
                 alert('수정이 완료되었습니다.\n상단 프로필은 다음 로그인 시 적용됩니다.');
             }
-            location.href = '/myPage/myPageInformation';  // 업데이트 후 마이페이지로 리다이렉트
+            location.reload();  // 업데이트 후 마이페이지로 리다이렉트
         })
         .catch(error => {
             console.error('수정 요청 중 오류가 발생했습니다:', error);
