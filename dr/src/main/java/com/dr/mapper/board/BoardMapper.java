@@ -16,11 +16,6 @@ public interface BoardMapper {
     //자유게시판 추천순
     List<FreeBoardListDTO> freeBoardListGood();
 
-    //꿀팁 게시판 최신순
-    List<HoneyBoardListDTO> honeyBoardList();
-
-    //꿀팁 게시판 추천순
-    List<HoneyBoardListDTO> honeyBoardListGood();
 
     // 자유게시판 상세페이지 조회 메서드
     FreeBoardDetailDTO freeBoardDetail(@Param("boardNumber") Long boardNumber);
@@ -28,20 +23,9 @@ public interface BoardMapper {
     // 자유게시판 댓글 목록 조회 메서드
     List<FreeBoardCommentDTO> freeBoardCommentList(@Param("boardNumber") Long boardNumber);
 
-    // 꿀팁게시판 상세페이지 조회 메서드
-    HoneyBoardDetailDTO honeyBoardDetail(@Param("boardNumber") Long boardNumber);
-
-    // 꿀팁게시판 댓글 목록 조회 메서드
-    List<HoneyBoardCommentDTO> honeyBoardCommentList(@Param("boardNumber") Long boardNumber);
 
     //  자유게시판 댓글 작성
     void freeBoardInsertReply(FreeBoardCommentDTO freeBoardCommentDTO);
-
-    // 추천 플러스
-    void honeyGoodPlus(HoneyGoodDTO HoneyGoodDTO);
-
-    // 추천 마이너스
-    void honeyGoodMinus(HoneyGoodDTO HoneyGoodDTO);
 
 
     // 자유게시판 댓글 수정
@@ -49,6 +33,42 @@ public interface BoardMapper {
 
     // 자유게시판 댓글 삭제
     void freeBoardDeleteReply(Long replyNumber);
+
+    // 꿀팁게시판 추천 플러스
+    void freeGoodPlus(FreeGoodDTO FreeGoodDTO);
+
+    // 꿀팁게시판 추천 마이너스
+    void freeGoodMinus(FreeGoodDTO FreeGoodDTO);
+
+
+
+    //꿀팁 게시판 최신순
+    List<HoneyBoardListDTO> honeyBoardList();
+
+    //꿀팁 게시판 추천순
+    List<HoneyBoardListDTO> honeyBoardListGood();
+
+    // 꿀팁게시판 상세페이지 조회 메서드
+    HoneyBoardDetailDTO honeyBoardDetail(@Param("boardNumber") Long boardNumber);
+
+    // 꿀팁게시판 댓글 목록 조회 메서드
+    List<HoneyBoardCommentDTO> honeyBoardCommentList(@Param("boardNumber") Long boardNumber);
+
+    //  꿀팁게시판 댓글 작성
+    void honeyBoardInsertReply(HoneyBoardCommentDTO honeyBoardCommentDTO);
+
+
+    // 꿀팁게시판 댓글 수정
+    void honeyBoardUpdateReply(HoneyBoardCommentDTO comment);
+
+    // 꿀팁게시판 댓글 삭제
+    void honeyBoardDeleteReply(Long replyNumber);
+
+    // 꿀팁게시판 추천 플러스
+    void honeyGoodPlus(HoneyGoodDTO HoneyGoodDTO);
+
+    // 꿀팁게시판 추천 마이너스
+    void honeyGoodMinus(HoneyGoodDTO HoneyGoodDTO);
 
 
 }

@@ -35,40 +35,12 @@
     </select>
 
 
-    <!--    꿀팁게시판 최신순 리스트-->
-    <select id="honeyBoardList" resultType="HoneyBoardListDTO">
-        SELECT B.BOARD_NUMBER,
-               B.BOARD_TITLE,
-               U.USER_NICKNAME,
-               COUNT(G.GOOD_NUMBER) AS goodCount,
-               B.BOARD_WRITE_DATE
-        FROM DR_BOARD B
-                 LEFT JOIN
-             DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
-                 LEFT JOIN
-             DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
-        WHERE B.BOARD_TYPE = '꿀팁게시판'
-        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, U.USER_NICKNAME, B.BOARD_WRITE_DATE
-        ORDER BY B.BOARD_WRITE_DATE DESC
-    </select>
 
 
-    <!-- 꿀팁게시판 추천순 리스트 -->
-    <select id="honeyBoardListGood" resultType="HoneyBoardListDTO">
-        SELECT B.BOARD_NUMBER,
-               B.BOARD_TITLE,
-               U.USER_NICKNAME,
-               COUNT(G.GOOD_NUMBER) AS goodCount,
-               B.BOARD_WRITE_DATE
-        FROM DR_BOARD B
-                 LEFT JOIN DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
-                 LEFT JOIN DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
-        WHERE B.BOARD_TYPE = '꿀팁게시판'
-        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, U.USER_NICKNAME, B.BOARD_WRITE_DATE
-        ORDER BY goodCount DESC, B.BOARD_WRITE_DATE DESC
-    </select>
 
-    <!--    자유게시판 상세 페이지 댓글-->
+
+
+    <!--    자유게시판 상세 페이지 -->
     <select id="freeBoardDetail" resultType="FreeBoardDetailDTO">
         SELECT B.BOARD_NUMBER,
                B.BOARD_TITLE,
@@ -109,7 +81,7 @@
     </select>
 
 
-    <!--  자유게시판 댓글작성-->
+    <!--  자유게시판 댓글 등록-->
     <insert id="freeBoardInsertReply" parameterType="FreeBoardCommentDTO">
         <selectKey keyProperty="replyNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_REPLY_NUMBER.nextval FROM DUAL
@@ -134,13 +106,69 @@
 
 
 
+    <!--자유 게시판 추천 -->
+    <insert id="freeGoodPlus" parameterType="FreeGoodDTO">
+        <selectKey keyProperty="goodNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_GOOD_NUMBER.nextval FROM DUAL
+        </selectKey>
+        INSERT INTO DR_GOOD(GOOD_NUMBER, BOARD_NUMBER, USER_NUMBER)
+        VALUES (#{goodNumber}, #{boardNumber}, #{userNumber})
+    </insert>
 
-    <!-- 꿀팁게시판 상세 정보 조회 -->
+    <delete id="freeGoodMinus" parameterType="FreeGoodDTO">
+        DELETE
+        FROM DR_GOOD
+        WHERE BOARD_NUMBER = #{boardNumber} AND user_number = #{userNumber}
+    </delete>
+
+
+
+
+
+    <!--    꿀팁게시판 최신순 리스트-->
+    <select id="honeyBoardList" resultType="HoneyBoardListDTO">
+        SELECT B.BOARD_NUMBER,
+               B.BOARD_TITLE,
+               U.USER_NICKNAME,
+               COUNT(G.GOOD_NUMBER) AS goodCount,
+               B.BOARD_WRITE_DATE
+        FROM DR_BOARD B
+                 LEFT JOIN
+             DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
+                 LEFT JOIN
+             DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
+        WHERE B.BOARD_TYPE = '꿀팁게시판'
+        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, U.USER_NICKNAME, B.BOARD_WRITE_DATE
+        ORDER BY B.BOARD_WRITE_DATE DESC
+    </select>
+
+
+
+    <!-- 꿀팁게시판 추천순 리스트 -->
+    <select id="honeyBoardListGood" resultType="HoneyBoardListDTO">
+        SELECT B.BOARD_NUMBER,
+               B.BOARD_TITLE,
+               U.USER_NICKNAME,
+               COUNT(G.GOOD_NUMBER) AS goodCount,
+               B.BOARD_WRITE_DATE
+        FROM DR_BOARD B
+                 LEFT JOIN DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
+                 LEFT JOIN DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
+        WHERE B.BOARD_TYPE = '꿀팁게시판'
+        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, U.USER_NICKNAME, B.BOARD_WRITE_DATE
+        ORDER BY goodCount DESC, B.BOARD_WRITE_DATE DESC
+    </select>
+
+
+
+
+    <!-- 꿀팁게시판 상세 페이지 -->
     <select id="honeyBoardDetail" resultType="HoneyBoardDetailDTO">
         SELECT B.BOARD_NUMBER,
                B.BOARD_TITLE,
                B.BOARD_TEXT,
                B.BOARD_WRITE_DATE,
+               U.USER_NUMBER,
                U.USER_NICKNAME,
                P.PHOTO_LOCAL,
                COUNT(G.GOOD_NUMBER) AS goodCount
@@ -149,7 +177,7 @@
                  LEFT JOIN DR_PHOTO P ON U.USER_NUMBER = P.USER_NUMBER
                  LEFT JOIN DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
         WHERE B.BOARD_NUMBER = #{boardNumber}
-        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, B.BOARD_TEXT, B.BOARD_WRITE_DATE, U.USER_NICKNAME, P.PHOTO_LOCAL
+        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, B.BOARD_TEXT, B.BOARD_WRITE_DATE, U.USER_NUMBER, U.USER_NICKNAME,  P.PHOTO_LOCAL
     </select>
 
 
@@ -167,7 +195,31 @@
         WHERE R.BOARD_NUMBER = #{boardNumber}
     </select>
 
-    <!-- 추천 -->
+
+    <!--  꿀팁게시판 댓글 등록-->
+    <insert id="honeyBoardInsertReply" parameterType="HoneyBoardCommentDTO">
+        <selectKey keyProperty="replyNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_REPLY_NUMBER.nextval FROM DUAL
+        </selectKey>
+        INSERT INTO DR_REPLY(REPLY_NUMBER, REPLY_TEXT, BOARD_NUMBER, USER_NUMBER)
+        VALUES (#{replyNumber}, #{replyText}, #{boardNumber}, #{userNumber})
+    </insert>
+
+    <!-- 꿀팁게시판 댓글 수정 -->
+    <update id="honeyBoardUpdateReply" parameterType="HoneyBoardCommentDTO">
+        UPDATE DR_REPLY
+        SET REPLY_TEXT = #{replyText},
+        REPLY_MODIFY_DATE = SYSDATE  <!-- 현재 시간을 저장 -->
+        WHERE REPLY_NUMBER = #{replyNumber}
+    </update>
+
+    <!-- 꿀팁게시판 댓글 삭제 -->
+    <delete id="honeyBoardDeleteReply" parameterType="Long">
+        DELETE FROM DR_REPLY
+        WHERE REPLY_NUMBER = #{replyNumber}
+    </delete>
+
+    <!--꿀팁게시판 추천 -->
     <insert id="honeyGoodPlus" parameterType="HoneyGoodDTO">
         <selectKey keyProperty="goodNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_GOOD_NUMBER.nextval FROM DUAL
