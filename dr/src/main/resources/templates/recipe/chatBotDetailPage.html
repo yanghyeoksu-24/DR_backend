@@ -1,95 +1,102 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" th:href="@{/css/recipe/chatBotDetailPage.css}"/>
-  <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
-  <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
-  <script defer th:src="@{/js/fragment/header.js}"></script>
-  <!-- 네비바 폰트 -->
-  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
-  <!-- 제이쿼리 -->
-  <script src="https://code.jquery.com/jquery-3.7.1.js"
-          integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/recipe/chatBotDetailPage.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
+    <script defer th:src="@{/js/fragment/header.js}"></script>
+    <!-- 네비바 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
+    <!-- 제이쿼리 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
-  <!-- 페이지네이션 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <!-- 페이지네이션 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 
-  <title>DR - 나만의 레시피 상세페이지</title>
+    <title>DR - 나만의 레시피 상세페이지</title>
 </head>
 
 <body>
 <header th:replace="~{/fragment/header :: header}"></header>
 <main>
-  <div class="chatBotDetailPage-mainContainer">
-    <div class="chatBotDetailPage-mainBox">
-      <div class="chatBotDetailPage-infobox">
-        <div class="chatBotDetailPage-infoFirst">
-          <div class="chatBotDetailPage-infoInBox1">
-            <img th:src="@{/image/photo/} + ${recipeDetail.photoLocal}" alt="사용자 이미지">
-          </div>
-          <div class="chatBotDetailPage-infoInBox2">
-            <p class="chatBotDetailPage-writeName" th:text="${recipeDetail.userNickName}"></p>
-            <p class="chatBotDetailPage-foodTitle" th:text="${recipeDetail.recipeTitle}"></p>
-            <p class="chatBotDetailPage-date" th:text="${recipeDetail.recipeWriteDate}"></p>
-          </div>
-        </div>
+    <div class="chatBotDetailPage-mainContainer">
+        <div class="chatBotDetailPage-mainBox">
+            <div class="chatBotDetailPage-infobox">
+                <div class="chatBotDetailPage-infoFirst">
+                    <div class="chatBotDetailPage-infoInBox1">
+                        <img th:src="@{/image/photo/} + ${recipeDetail.photoLocal}" alt="사용자 이미지">
+                    </div>
+                    <div class="chatBotDetailPage-infoInBox2">
+                        <p class="chatBotDetailPage-writeName" th:text="${recipeDetail.userNickName}"></p>
+                        <p class="chatBotDetailPage-foodTitle" th:text="${recipeDetail.recipeTitle}"></p>
+                        <p class="chatBotDetailPage-date" th:text="${recipeDetail.recipeWriteDate}"></p>
+                    </div>
+                </div>
 
-        <div class="chatBotDetailPage-infoSecond">
-          <div class="chatBotDetailPage-firstButton">
-              <button class="chatBotDetailPage-buttonOne">수정</button>
-            <button id="deleteButton" class="chatBotDetailPage-buttonOne">삭제</button>
-          </div>
+                <div class="chatBotDetailPage-infoSecond">
+                    <div class="chatBotDetailPage-firstButton">
+                        <button class="chatBotDetailPage-buttonOne">수정</button>
+                        <button id="deleteButton" class="chatBotDetailPage-buttonOne">삭제</button>
+                    </div>
 
-          <div class="chatBotDetailPage-secondButton">
-            <div class="chatBotDetailPage-buttonImg">
-              <img id="heartImage" src="/image/heartGray.png" alt="하트 이미지">
+                    <div class="chatBotDetailPage-secondButton">
+
+                        <div class="myDetailPage-buttonImg">
+                            <img id="heartImage1" th:src="@{/image/heartColor.png}" alt="좋아요" style="display: none;">
+                        </div>
+
+                        <div class="myDetailPage-buttonImg">
+                            <img id="heartImage2" th:src="@{/image/heartGray.png}" alt="싫어요">
+                        </div>
+
+                        <button class="chatBotDetailPage-buttonTwo">신고</button>
+                    </div>
+                </div>
             </div>
-            <button class="chatBotDetailPage-buttonTwo">신고</button>
-          </div>
-        </div>
-      </div>
 
-      <div class="chatBotDetailPage-writetext">
-        <p class="chatBotDetailPage-texts" th:text="${recipeDetail.recipeText}"></p>
-        <img th:src="@{/image/recipe/ + ${recipeDetail.photoLocal}}" alt="레시피 이미지">
-        <div class="chatBotDetailPage-recommendImg">
-          <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="추천 이미지">
-          <p id="recommendCount" th:text="'추천수: ' + ${recipeDetail.goodCount}">추천수: 0</p>
-        </div>
-      </div>
-
-      <div class="chatBotDetailPage-commentSection">
-        <div class="chatBotDetailPage-commentInput" id="commentInput">
-          <textarea placeholder="댓글을 입력하세요" rows="3"></textarea>
-          <div class="chatBotDetailPage-commentActions">
-            <button class="chatBotDetailPage-addBtn" onclick="submitComment()">등록</button>
-          </div>
-        </div>
-
-        <div th:each="recipeComments : ${recipeComments}">
-          <div class="chatBotDetailPage-comment">
-            <div class="chatBotDetailPage-commentUserImg">
-              <img th:src="@{/image/photo/} + ${recipeComments.photoLocal}" alt="사용자 이미지">
+            <div class="chatBotDetailPage-writetext">
+                <p class="chatBotDetailPage-texts" th:text="${recipeDetail.recipeText}"></p>
+                <img th:src="@{/image/recipe/ + ${recipeDetail.photoLocal}}" alt="레시피 이미지">
+                <div class="chatBotDetailPage-recommendImg">
+                    <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="추천 이미지">
+                    <p id="recommendCount" th:text="'추천수: ' + ${recipeDetail.goodCount}">추천수: 0</p>
+                </div>
             </div>
-            <div class="chatBotDetailPage-commentContent">
-              <div class="chatBotDetailPage-commentHeader">
-                <span class="chatBotDetailPage-commentUsername" th:text="${recipeComments.userNickName}"></span>
-                <button class="chatBotDetailPage-reportBtn">신고</button>
-              </div>
-              <div class="chatBotDetailPage-commentText" th:text="${recipeComments.replyText}"></div>
-              <div class="chatBotDetailPage-commentTime" th:text="${recipeComments.replyWriteDate}"></div>
+
+            <div class="chatBotDetailPage-commentSection">
+                <div class="chatBotDetailPage-commentInput" id="commentInput">
+                    <textarea placeholder="댓글을 입력하세요" rows="3"></textarea>
+                    <div class="chatBotDetailPage-commentActions">
+                        <button class="chatBotDetailPage-addBtn" onclick="submitComment()">등록</button>
+                    </div>
+                </div>
+
+                <div th:each="recipeComments : ${recipeComments}">
+                    <div class="chatBotDetailPage-comment">
+                        <div class="chatBotDetailPage-commentUserImg">
+                            <img th:src="@{/image/photo/} + ${recipeComments.photoLocal}" alt="사용자 이미지">
+                        </div>
+                        <div class="chatBotDetailPage-commentContent">
+                            <div class="chatBotDetailPage-commentHeader">
+                                <span class="chatBotDetailPage-commentUsername"
+                                      th:text="${recipeComments.userNickName}"></span>
+                                <button class="chatBotDetailPage-reportBtn">신고</button>
+                            </div>
+                            <div class="chatBotDetailPage-commentText" th:text="${recipeComments.replyText}"></div>
+                            <div class="chatBotDetailPage-commentTime" th:text="${recipeComments.replyWriteDate}"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-  <footer th:replace="~{/fragment/footer :: footer}"></footer>
+    <footer th:replace="~{/fragment/footer :: footer}"></footer>
 </main>
-<script src="./../../js/recipe/myDetailPage.js" defer></script>
+<script src="./../../js/recipe/chatBotDetailPage.js" defer></script>
 </body>
 </html>
