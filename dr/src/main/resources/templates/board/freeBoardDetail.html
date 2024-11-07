@@ -50,8 +50,9 @@
                 <img th:src="@{/image/board/} + ${freeBoardDetail.photoLocal}" alt="Board Image">
 
                 <div class="freeBoardDetail-recommendImg">
-                    <img src="/image/recommend.png" id="recommendImg" alt="Recommend Image">
-                    <p id="recommendCount" th:text="'추천수: ' + ${freeBoardDetail.goodCount}">추천수: 0</p>
+                    <input type="hidden" id="boardNumber" name="boardNumber" th:value="${freeBoardDetail.boardNumber}">
+                    <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="recommend" th:src="@{/image/recommend.png}">
+                    <p id="recommendCount" th:text="'추천수: ' + ${freeBoardDetail.goodCount}"></p>
                 </div>
             </div>
 

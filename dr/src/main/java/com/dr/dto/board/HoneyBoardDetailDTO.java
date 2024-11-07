@@ -14,7 +14,9 @@ public class HoneyBoardDetailDTO {
     private String boardTitle;
     private String boardText;
     private String boardWriteDate;
+    private String replyModifyDate;
+    private Long userNumber;
     private String userNickName;
-    private int goodCount;
+    private Long goodCount;
     private String photoLocal;
 }

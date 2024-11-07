@@ -1,3 +1,54 @@
+// 추천 이미지 클릭 이벤트 추가
+document.addEventListener("DOMContentLoaded", function () {
+    const recommendImg = document.getElementById("recommendImg");
+    const boardNumber = document.getElementById("boardNumber").value;
+
+    let isActive = localStorage.getItem(`recommend-active-${boardNumber}`) === 'true';
+    recommendImg.classList.toggle("recommend-active", isActive);
+    recommendImg.classList.toggle("recommend-inactive", !isActive);
+
+    let isRequestInProgress = false;
+
+    const handleClick = function () {
+        if (isRequestInProgress) return;
+
+        isRequestInProgress = true;
+        const url = isActive ? "/board/goodMinus" : "/board/goodPlus";
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ boardNumber: boardNumber })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("요청 실패: " + response.statusText);
+                }
+
+                // 추천 상태 업데이트 및 localStorage 저장
+                isActive = !isActive;
+                recommendImg.classList.toggle("recommend-active", isActive);
+                recommendImg.classList.toggle("recommend-inactive", !isActive);
+                localStorage.setItem(`recommend-active-${boardNumber}`, isActive);
+
+                // 요청 성공 시 페이지 새로 고침
+                location.reload();
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("요청 처리 중 오류가 발생했습니다.");
+            })
+            .finally(() => {
+                // 요청 완료 후 상태 초기화
+                isRequestInProgress = false;
+            });
+    };
+
+    recommendImg.addEventListener("click", handleClick);
+});
+
 
 // 댓글 수정 버튼을 눌렀을 때 실행되는 함수
 document.querySelectorAll('.freeBoardDetail-editBtn').forEach(function (button) {
