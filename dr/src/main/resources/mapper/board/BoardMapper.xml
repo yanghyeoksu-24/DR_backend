@@ -186,6 +186,7 @@
         SELECT R.REPLY_NUMBER,
                U.USER_NICKNAME,
                R.REPLY_WRITE_DATE,
+               R.REPLY_MODIFY_DATE,
                R.REPLY_TEXT,
                P.PHOTO_LOCAL
         FROM DR_REPLY R
