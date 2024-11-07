@@ -37,7 +37,7 @@ public class BoardController {
         return "/board/boardReport";
     }
 
-
+    // 게시판 신고 컨트롤러
     @PostMapping("/reportOk")
     public String boardReportOk(@RequestParam("boardNumber") Long boardNumber,
                                 @RequestParam(value = "replyNumber", required = false) Long replyNumber,
