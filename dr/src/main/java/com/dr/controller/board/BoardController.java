@@ -1,6 +1,7 @@
 package com.dr.controller.board;
 
 import com.dr.dto.board.*;
+import com.dr.dto.recipe.MyRecipeWriteCommentDTO;
 import com.dr.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +28,57 @@ public class BoardController {
 
     // 게시판 신고 페이지 이동
     @GetMapping("/boardReport")
-    public String boardReportPage() {
+    public String boardReportPage(@RequestParam("boardNumber") Long boardNumber,
+                                  @RequestParam(value = "replyNumber", required = false) Long replyNumber,
+                                  Model model) {
+        // boardNumber, boardType, replyNumber를 사용하여 필요한 로직 처리
+        model.addAttribute("boardNumber", boardNumber);
+        model.addAttribute("replyNumber", replyNumber);
         return "/board/boardReport";
     }
+
+
+    @PostMapping("/reportOk")
+    public String boardReportOk(@RequestParam("boardNumber") Long boardNumber,
+                                @RequestParam(value = "replyNumber", required = false) Long replyNumber,
+                                @SessionAttribute(value = "userNumber", required = false) Long userNumber,
+                                @RequestParam("reason") String reason,
+                                @RequestParam(value = "otherReasonText", required = false) String otherReasonText,
+                                RedirectAttributes redirectAttributes) {
+
+        FreeBoardDetailDTO freeBoardDetailDTO = boardService.freeBoardDetail(boardNumber);
+        BoardReportDTO boardReportDTO = new BoardReportDTO();
+
+        // 1. 사유 지정
+        if (otherReasonText != null && !otherReasonText.trim().isEmpty()) {
+            boardReportDTO.setSirenReason(otherReasonText);
+        } else {
+            boardReportDTO.setSirenReason(reason);
+        }
+
+        // 2. sirenType 지정 및 게시판, 댓글 번호 지정
+        if (replyNumber == null) {
+            boardReportDTO.setSirenType("게시글");
+            boardReportDTO.setBoardNumber(boardNumber);
+        } else {
+            boardReportDTO.setSirenType("댓글");
+            boardReportDTO.setReplyNumber(replyNumber);
+        }
+
+        // 3. 유저넘버 지정
+        boardReportDTO.setUserNumber(userNumber);
+
+        // 신고 처리
+        boardService.report(boardReportDTO);
+
+        // 4. 리디렉션 처리
+        if ("자유게시판".equals(freeBoardDetailDTO.getBoardType())) {
+            return "redirect:/board/freeBoardDetail?boardNumber=" + boardNumber;
+        } else {
+            return "redirect:/board/honeyBoardDetail?boardNumber=" + boardNumber;
+        }
+    }
+
 
 
     // 자유게시판 글 수정 페이지 이동
@@ -43,7 +92,6 @@ public class BoardController {
     public String freeBoardWritePage() {
         return "/board/freeBoardWrite";
     }
-
 
 
     // 꿀팁게시판 글 수정 이동
@@ -76,8 +124,6 @@ public class BoardController {
     }
 
 
-
-
     //자유게시판 상세페이지(게시글 상세 + 댓글 조회)
     @GetMapping("/freeBoardDetail")
     public String freeBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model, @SessionAttribute(value = "userNickName", required = false) String userNickName) {
@@ -89,14 +135,13 @@ public class BoardController {
 
         model.addAttribute("freeBoardDetail", freeBoardDetail);
         model.addAttribute("freeBoardComments", freeBoardComments);
-        model.addAttribute("userNickName",userNickName);
+        model.addAttribute("userNickName", userNickName);
 
         log.info(userNickName + "아아dkfsjgaljsdkgjng");
         log.info("===== BoardController 확인 : " + freeBoardComments);
 
         return "/board/freeBoardDetail";
     }
-
 
 
     //자유게시판 상세 페이지 댓글 작성
@@ -135,11 +180,9 @@ public class BoardController {
         boardService.freeBoardUpdateReply(replyNumber, replyText);
 
 
-
         // 수정 완료 후 성공 응답 반환
         return ResponseEntity.ok().build();
     }
-
 
 
     // 자유게시판 댓글 삭제
@@ -206,7 +249,7 @@ public class BoardController {
 
         model.addAttribute("honeyBoardDetail", honeyBoardDetail);
         model.addAttribute("honeyBoardComments", honeyBoardComments);
-        model.addAttribute("userNickName",userNickName);
+        model.addAttribute("userNickName", userNickName);
 
         log.info(userNickName + "여긴 꿀팁게시판 상세 up");
         log.info("=======Honey Board 컨트롤러 확인용 : " + honeyBoardComments);
@@ -218,9 +261,9 @@ public class BoardController {
     //꿀팁게시판 상세 페이지 댓글 작성
     @PostMapping("/honeyBoardDetail")
     public String honeyBoardInsertReply(@RequestParam("boardNumber") Long boardNumber,
-                                       @RequestParam("replyText") String replyText,
-                                       @RequestParam("userNumber") Long userNumber,
-                                       RedirectAttributes redirectAttributes) {
+                                        @RequestParam("replyText") String replyText,
+                                        @RequestParam("userNumber") Long userNumber,
+                                        RedirectAttributes redirectAttributes) {
 
         if (boardNumber == null) {
             throw new IllegalArgumentException("Board number is required");
@@ -241,8 +284,8 @@ public class BoardController {
 
     //꿀팁게시판 댓글 수정
     @PostMapping("/honeyUpdateReply")
-    public ResponseEntity<Void> honeyUpdateReply(@RequestParam("replyNumber") Long replyNumber,
-                                                     @RequestParam("replyText") String replyText) {
+    public ResponseEntity<Void> updateHoneyBoardReply(@RequestParam("replyNumber") Long replyNumber,
+                                                      @RequestParam("replyText") String replyText) {
         if (replyNumber == null || replyText == null || replyText.trim().isEmpty()) {
             return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
         }
@@ -293,5 +336,5 @@ public class BoardController {
     }
 
 
-
 }
+
