@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="'DR - 자유게시판 글쓰기'">DR - 자유게시판 글쓰기</title>
+    <title>DR - 자유게시판 글쓰기</title>
     <link rel="stylesheet" th:href="@{/css/board/freeBoardWrite.css}">
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
@@ -29,7 +29,8 @@
             <br><br>
 
             <div class="freeboardwrite-inputContainer">
-                <input type="text" class="freeboardwrite-titleInput" placeholder="제목을 입력하세요" th:value="${post.title}">
+<!--                <input type="text" class="freeboardwrite-titleInput" placeholder="제목을 입력하세요" th:value="${post.title}">-->
+                <input type="text" class="freeboardwrite-titleInput" placeholder="제목을 입력하세요">
             </div>
 
             <div id="contsEditor"></div>

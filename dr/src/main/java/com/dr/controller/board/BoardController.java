@@ -242,7 +242,7 @@ public class BoardController {
 
     //꿀팁게시판 댓글 수정
     @PostMapping("/honeyUpdateReply")
-    public ResponseEntity<Void> updateHoneyBoardReply(@RequestParam("replyNumber") Long replyNumber,
+    public ResponseEntity<Void> honeyUpdateReply(@RequestParam("replyNumber") Long replyNumber,
                                                      @RequestParam("replyText") String replyText) {
         if (replyNumber == null || replyText == null || replyText.trim().isEmpty()) {
             return ResponseEntity.badRequest().build(); // 잘못된 요청 처리

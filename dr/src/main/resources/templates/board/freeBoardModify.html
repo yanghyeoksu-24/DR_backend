@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="'DR - ' + ${boardTitle} + ' 글 수정'">DR - 자유게시판 글 수정</title>
+    <title>DR - 자유게시판 글 수정</title>
     <link rel="stylesheet" th:href="@{/css/board/freeBoardModify.css}">
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
@@ -29,7 +29,7 @@
             <br><br>
 
             <div class="freeboardmodify-inputContainer">
-                <input type="text" class="freeboardmodify-titleInput" placeholder="제목을 입력하세요" th:value="${post.title}">
+                <input type="text" class="freeboardmodify-titleInput" placeholder="제목을 입력하세요">
             </div>
 
             <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
@@ -48,7 +48,7 @@
                 <a th:href="@{/board/freeBoardList}">
                     <button class="freeboardmodify-writeButton">취소</button>
                 </a>
-                <form th:action="@{/board/freeBoardModify(id=${post.id})}" method="post">
+                <form th:action="@{/board/freeBoardModify}" method="post">
                     <button type="submit" class="freeboardmodify-writeButton">수정</button>
                 </form>
             </div>
