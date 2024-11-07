@@ -248,3 +248,14 @@ main{
   margin-top: 40px;
 }
 
+
+.honeyBoardDetail-saveBtn, .honeyBoardDetail-cancelBtn{
+  background-color: #f0a500;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  margin-left: 10px; /* 버튼 사이 간격 */
+  cursor: pointer;
+  border-radius: 5px;
+}
+

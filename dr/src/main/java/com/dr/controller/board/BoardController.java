@@ -42,8 +42,8 @@ public class BoardController {
                                 @RequestParam(value = "replyNumber", required = false) Long replyNumber,
                                 @SessionAttribute(value = "userNumber", required = false) Long userNumber,
                                 @RequestParam("reason") String reason,
-                                @RequestParam(value = "otherReasonText", required = false) String otherReasonText,
-                                RedirectAttributes redirectAttributes) {
+                                @RequestParam(value = "otherReasonText", required = false) String otherReasonText
+                               ) {
 
         FreeBoardDetailDTO freeBoardDetailDTO = boardService.freeBoardDetail(boardNumber);
         BoardReportDTO boardReportDTO = new BoardReportDTO();
