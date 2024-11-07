@@ -1,52 +1,121 @@
-const heartImage = document.getElementById('heartImage');
+// 추천 이미지 클릭 이벤트 추가
+document.addEventListener("DOMContentLoaded", function () {
+    const recommendImg = document.getElementById("recommendImg");
+    const recipeNumber = document.getElementById("recipeNumber").value;
 
-heartImage.addEventListener('click', function() {
-    if (heartImage.src.includes('heartGray.png')) {
-        heartImage.src = './../../image/heartColor.png'; // 빨간 하트 이미지 경로
-    } else {
-        heartImage.src = './../../image/heartGray.png'; // 검정 하트 이미지 경로
-    }
-});
+    let isActive = localStorage.getItem(`recommend-active-${recipeNumber}`) === 'true';
+    recommendImg.classList.toggle("recommend-active", isActive);
+    recommendImg.classList.toggle("recommend-inactive", !isActive);
 
-const heartImage1 = document.getElementById('heartImage1'); // 빨간색 하트
-const heartImage2 = document.getElementById('heartImage2'); // 회색 하트
+    let isRequestInProgress = false;
 
-// 회색 하트 이미지를 클릭했을 때 빨간색으로 전환
-heartImage2.addEventListener('click', function(event) {
-    event.preventDefault(); // 기본 a 태그 동작 막기
-    heartImage1.style.display = 'block'; // 빨간색 하트를 보이게 함
-    heartImage2.style.display = 'none';  // 회색 하트를 숨김
-});
+    const handleClick = function () {
+        if (isRequestInProgress) return;
 
-// 빨간 하트 이미지를 클릭했을 때 회색으로 전환
-heartImage1.addEventListener('click', function(event) {
-    event.preventDefault(); // 기본 a 태그 동작 막기
-    heartImage1.style.display = 'none';  // 빨간색 하트를 숨김
-    heartImage2.style.display = 'block'; // 회색 하트를 보이게 함
-});
+        isRequestInProgress = true;
+        const url = isActive ? "/recipe/goodMinus" : "/recipe/goodPlus";
 
-document.getElementById('deleteButton').addEventListener('click', function () {
-    if (confirm("정말로 삭제하시겠습니까?")) {
-        alert("삭제완료되었습니다.");
-    } else {
-        return;
-    }
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ recipeNumber: recipeNumber })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("요청 실패: " + response.statusText);
+                }
+
+                // 추천 상태 업데이트 및 localStorage 저장
+                isActive = !isActive;
+                recommendImg.classList.toggle("recommend-active", isActive);
+                recommendImg.classList.toggle("recommend-inactive", !isActive);
+                localStorage.setItem(`recommend-active-${recipeNumber}`, isActive);
+
+                // 요청 성공 시 페이지 새로 고침
+                location.reload();
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("요청 처리 중 오류가 발생했습니다.");
+            })
+            .finally(() => {
+                isRequestInProgress = false;
+            });
+    };
+
+    recommendImg.addEventListener("click", handleClick);
 });
 
 // 댓글 등록 버튼 클릭 시
 function submitComment() {
     const confirmation = confirm("댓글을 등록하시겠습니까?");
-    if (confirmation) {
-        alert("댓글이 등록되었습니다.");
-    } else {
-        return;
-    }
+    if (!confirmation) return;
+    alert("댓글이 등록되었습니다.");
 }
 
+// 댓글 수정 버튼을 눌렀을 때 실행되는 함수
+document.querySelectorAll('.myDetailPage-editBtn').forEach(function (button)  {
+    button.addEventListener('click',function ()  {
+        let commentContainer = button.closest('.myDetailPage-comment');
+        let commentText = commentContainer.querySelector('.myDetailPage-commentText');
+        let editInput = commentContainer.querySelector('.myDetailPage-commentInput');
+        let editTextarea = editInput.querySelector('textarea');
+        let buttonGroup = commentContainer.querySelector('.myDetailPage-buttonGroup');
+
+        commentText.setAttribute('data-original-text', commentText.innerText);
+        editTextarea.value = commentText.innerText;
+
+        commentText.style.display = 'none';
+        buttonGroup.style.display = 'none';
+        editInput.style.display = 'block';
+    });
+});
+
+// 댓글 수정 취소 버튼을 눌렀을 때 실행되는 함수
+document.querySelectorAll('.myDetailPage-cancelBtn').forEach(function (button)  {
+    button.addEventListener('click', function ()  {
+        let recipeNumber = document.querySelector('[name="recipeNumber"]').value;
+        window.location.href = '/recipe/myDetailPage?recipeNumber=' + recipeNumber;
+    });
+});
+
+// 댓글 저장 버튼을 눌렀을 때 실행되는 함수
+document.querySelectorAll('.myDetailPage-saveBtn').forEach(function (button) {
+    button.addEventListener('click', function ()  {
+        let commentContainer = button.closest('.myDetailPage-comment');
+        let replyNumber = commentContainer.querySelector('input[name="replyNumber"]').value;
+        let editTextarea = commentContainer.querySelector('textarea').value;
+
+        console.log(commentContainer);
+        console.log(replyNumber);
+        console.log(editTextarea);
+        if (confirm("수정하시겠습니까?")) {
+            $.ajax({
+                type: 'POST',
+                url: '/recipe/updateMyReply',
+                data: {
+                    replyNumber: replyNumber,
+                    replyText: editTextarea
+                },
+
+                success: function ()  {
+                    alert("댓글 수정이 완료되었습니다.");
+                    window.location.reload();
+                },
+                error: function ()  {
+                    alert("댓글 수정에 실패했습니다.");
+                }
+            });
+        }
+    });
+});
+
 // 댓글 삭제 버튼을 눌렀을 때 실행되는 함수
-document.querySelectorAll('.myDetailPage-deleteBtn').forEach(function (button) {
-    button.addEventListener('click', function () {
-        var replyNumber = button.getAttribute('data-reply-number');
+document.querySelectorAll('.myDetailPage-deleteBtn').forEach(function (button)  {
+    button.addEventListener('click', function ()  {
+        let replyNumber = button.getAttribute('data-reply-number');
         deleteComment(replyNumber);
     });
 });
@@ -54,69 +123,18 @@ document.querySelectorAll('.myDetailPage-deleteBtn').forEach(function (button) {
 // 댓글 삭제 함수
 function deleteComment(replyNumber) {
     if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
-        // AJAX 요청을 통해 서버에 댓글 삭제 요청
         $.ajax({
             type: 'POST',
-            url: '/recipe/deleteReply', // 서버의 댓글 삭제 요청 URL
+            url: '/recipe/deleteMyReply',
             data: { replyNumber: replyNumber },
-            success: function () {
-                // 댓글 요소를 제거
-                var commentElement = document.getElementById('comment' + replyNumber);
-                commentElement.remove();
+            success: function ()  {
                 alert("댓글이 삭제되었습니다.");
+                //페이지를 새로고침하여 변경 사항 반영
+                window.location.reload();
             },
-            error: function () {
+            error: function ()  {
                 alert("댓글 삭제에 실패했습니다.");
             }
         });
     }
 }
-
-
-
-
-// 추천 기능
-$(document).ready(function() {
-    const recommendImg = $('#recommendImg');
-    let isLiked = false;
-
-    // 숨겨진 input에서 recipeNumber 및 userNumber 가져오기
-    const recipeNumber = $('input[name="recipeNumber"]').val();
-    const userNumber = $('input[name="userNumber"]').val();
-
-    recommendImg.on('click', function () {
-        // 상태 토글
-        isLiked = !isLiked;
-
-        // 추천 상태에 따라 클래스 변경
-        if (isLiked) {
-            recommendImg.addClass('recommend-active').removeClass('recommend-inactive');
-        } else {
-            recommendImg.addClass('recommend-inactive').removeClass('recommend-active');
-        }
-
-        // URL 설정
-        const url = isLiked ? `/recipe/goodPlus` : `/recipe/goodMinus`;
-
-        // 서버에 보낼 데이터 구성
-        const requestData = JSON.stringify({
-            recipeNumber: recipeNumber,
-            userNumber: userNumber
-        });
-
-        // Ajax 요청
-        $.ajax({
-            url: url,
-            type: 'POST',
-            contentType: 'application/json',
-            data: requestData,
-            success: function (response) {
-                console.log(isLiked ? '추천 등록 완료' : '추천 취소 완료');
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error('추천 상태 변경 오류:', textStatus, errorThrown);
-                alert('추천 상태 변경 중 오류가 발생했습니다.');
-            }
-        });
-    });
-});
