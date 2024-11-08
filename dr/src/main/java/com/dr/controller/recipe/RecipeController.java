@@ -303,5 +303,41 @@ public class RecipeController {
             }
         }
 
+    // 찜 추가 메서드 (좋아요)
+    @PostMapping("/like")
+    public ResponseEntity<Void> addLike(
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber, @RequestBody RecipeSteamDTO recipeSteamDTO) {
+
+        log.info(recipeSteamDTO.toString()+" lkansfdlkj rwlkmner");
+        log.info(userNumber + "ewlkjfnl");
+        try {
+            recipeSteamDTO.setUserNumber(userNumber);
+            recipeSteamDTO.setRecipeNumber(recipeSteamDTO.getRecipeNumber());
+
+            // 실제 찜 추가 로직을 호출
+            recipeService.addSteam(recipeSteamDTO);
+            return ResponseEntity.ok().build();  // 성공 시 200 OK 반환
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();  // 서버 오류 반환
+        }
+    }
+
+    // 찜 삭제 메서드 (싫어요)
+    @PostMapping("/unLike")
+    public ResponseEntity<Void> removeLike(
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber, @RequestBody RecipeSteamDTO recipeSteamDTO) {
+
+        try {
+            recipeSteamDTO.setUserNumber(userNumber);
+            recipeSteamDTO.setRecipeNumber(recipeSteamDTO.getRecipeNumber());
+
+            // 실제 찜 삭제 로직을 호출
+            recipeService.removeSteam(recipeSteamDTO);
+            return ResponseEntity.ok().build();  // 성공 시 200 OK 반환
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();  // 서버 오류 반환
+        }
+    }
+
 
 }
