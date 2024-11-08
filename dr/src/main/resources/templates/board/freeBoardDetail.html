@@ -90,8 +90,9 @@
 
                             <!-- 수정된 날짜가 있으면 수정된 날짜를 보이고, 없으면 작성 날짜만 보이도록 처리 -->
                             <div class="freeBoardDetail-commentDate"
-                                 th:text="${freeBoardComments.replyModifyDate != null ? freeBoardComments.replyModifyDate : freeBoardComments.replyWriteDate}">
-                                작성 날짜
+                                 th:text="${freeBoardComments.replyModifyDate != null ? freeBoardComments.replyModifyDate + '(수정됨)' : freeBoardComments.replyWriteDate}">
+
+                                 작성 날짜
                             </div>
                             <br><br>
                             <div class="freeBoardDetail-commentText" id="commentText${freeBoardComments.replyNumber}"
