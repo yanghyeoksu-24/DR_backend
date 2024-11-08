@@ -28,7 +28,7 @@ public class CustomOAuth2User implements OAuth2User {
     // 사용자 이메일
     private String accountEmail;
 
-    // 사용자 pk
+    // PK 반환
     private Long userNumber;
 
     // CustomOAuth2User 생성자: 매개변수로 OAuth2User, 이름, 프로필 사진, 제공자 ID를 받음
@@ -74,6 +74,7 @@ public class CustomOAuth2User implements OAuth2User {
     public String getProviderId() {
         return providerId;
     }
-    // pk 반환
+    // pk반환
     public Long getUserNumber() { return userNumber; }
+
 }

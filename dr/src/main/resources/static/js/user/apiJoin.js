@@ -165,36 +165,36 @@ $(document).ready(function () {
     $('#submitForm').on('click', function (event) {
         event.preventDefault(); // 기본 폼 제출 동작 방지
 
-        // // 필수 체크박스 검사
-        // const isAllRequiredChecked = $('#checkAge').is(':checked') &&
-        //     $('#checkTerms').is(':checked') &&
-        //     $('#checkPrivacy').is(':checked');
-        //
-        // if (!isAllRequiredChecked) {
-        //     alert("필수 항목에 모두 동의해야 회원가입이 가능합니다.");
-        //     return;
-        // }
-        //
-        // // 닉네임과 휴대폰 번호 유효성 검사
-        // const nameValue = $('#name').val().trim();
-        // if (nameValue === "") {
-        //     alert("닉네임을 입력하세요.");
-        //     return;
-        // }
-        //
-        // // 휴대폰 인증 여부 검사
-        // if (!isPhoneVerified) {
-        //     alert("휴대폰 인증을 완료해야 회원가입이 가능합니다.");
-        //     return;
-        // }
-        //
-        // // 핸드폰 번호 검사
-        // const phonePattern = /^[0-9]{10,11}$/;
-        // const phoneValue = $('#phone').val().trim();
-        // if (!phonePattern.test(phoneValue)) {
-        //     alert("올바른 휴대폰 번호를 입력하세요.");
-        //     return;
-        // }
+        // 필수 체크박스 검사
+        const isAllRequiredChecked = $('#checkAge').is(':checked') &&
+            $('#checkTerms').is(':checked') &&
+            $('#checkPrivacy').is(':checked');
+
+        if (!isAllRequiredChecked) {
+            alert("필수 항목에 모두 동의해야 회원가입이 가능합니다.");
+            return;
+        }
+
+        // 닉네임과 휴대폰 번호 유효성 검사
+        const nameValue = $('#name').val().trim();
+        if (nameValue === "") {
+            alert("닉네임을 입력하세요.");
+            return;
+        }
+
+        // 휴대폰 인증 여부 검사
+        if (!isPhoneVerified) {
+            alert("휴대폰 인증을 완료해야 회원가입이 가능합니다.");
+            return;
+        }
+
+        // 핸드폰 번호 검사
+        const phonePattern = /^[0-9]{10,11}$/;
+        const phoneValue = $('#phone').val().trim();
+        if (!phonePattern.test(phoneValue)) {
+            alert("올바른 휴대폰 번호를 입력하세요.");
+            return;
+        }
 
         showAlertAndRedirect();
     });

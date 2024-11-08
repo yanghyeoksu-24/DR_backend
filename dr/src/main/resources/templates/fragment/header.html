@@ -42,7 +42,7 @@
                     <img th:src="@{/image/photo/} + ${session.photoLocal}">
                 </div>
                 <div class="main-welcome" th:text="${session.userNickName + ' 님 환영합니다'}"></div>
-                <form th:action="@{/logout}" method="get">
+                <form th:action="@{/DRlogout}" method="get">
                     <button class="main-logout">로그아웃</button>
                 </form>
             </div>
@@ -53,7 +53,7 @@
                     <img th:src="${session.profilePic}">
                 </div>
                 <div class="main-welcome" th:text="${session.userNickName + ' 님 환영합니다'}"></div>
-                <form th:action="@{/logout}" method="get">
+                <form th:action="@{/DRlogout}" method="get">
                     <button class="main-logout">로그아웃</button>
                 </form>
             </div>

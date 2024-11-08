@@ -134,7 +134,17 @@ public class UserController {
     //drjoin 회원가입 요청 컨트롤러
     @PostMapping("/user/drJoin")
     public String join(@ModelAttribute UserDTO userDTO) {
+        // 가입페이지 입력값 테이블에 저장
         userService.registerUser(userDTO);
+
+        // 방금 가입유저 번호 저장
+        userDTO.setUserNumber(userService.findNewUser(userDTO));
+
+        // 포인트,점수,기본프사 row 생성
+        userService.insertNewUserPoint(userDTO);
+        userService.insertNewUserScore(userDTO);
+        userService.insertNewUserPhoto(userDTO);
+
         return "redirect:/user/login";
     }
 
@@ -146,7 +156,14 @@ public class UserController {
         kakaoUsersDTO.setUserPw(generateRandomString(10));
         userService.insertKakaoUser(kakaoUsersDTO);
 
+        // 유저번호 가져오기 위한 로그인 쿼리 실행
         UserSessionDTO userLogin = userService.userLogin(kakaoUsersDTO.getAccountEmail(), kakaoUsersDTO.getUserPw());
+
+        // 포인트, 점수 row 넣어주기
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserNumber(userLogin.getUserNumber());
+        userService.insertNewUserPoint(userDTO);
+        userService.insertNewUserScore(userDTO);
 
         if (userLogin != null) {
             // 세션에 사용자 정보를 설정
@@ -213,7 +230,7 @@ public class UserController {
 
 
     // 로그아웃 요청 처리
-    @GetMapping("/logout")
+    @GetMapping("/DRlogout")
     public RedirectView logout(HttpSession session) {
         session.invalidate();
         return new RedirectView("/DRmain");

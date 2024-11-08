@@ -60,4 +60,40 @@
         FROM DR_USER
         WHERE USER_NICKNAME = #{userNickName}
     </select>
+
+    <!-- 방금 가입유저 PK 조회 -->
+    <select id="findNewUser" parameterType="UserDTO" resultType="Long">
+        SELECT USER_NUMBER
+        FROM DR_USER
+        WHERE USER_EMAIL = #{userEmail} AND
+              USER_NICKNAME = #{userNickName} AND
+              USER_PHONE = #{userPhone}
+    </select>
+
+    <!-- 신규가입 0포인트 -->
+    <insert id="insertNewUserPoint" parameterType="UserDTO">
+        <selectKey keyProperty="pointNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_POINT_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_POINT (POINT_NUMBER, USER_NUMBER)
+        VALUES (#{pointNumber}, #{userNumber})
+    </insert>
+
+    <!-- 신규가입 0점 -->
+    <insert id="insertNewUserScore" parameterType="UserDTO">
+        <selectKey keyProperty="scoreNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_SCORE_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_SCORE (SCORE_NUMBER, USER_NUMBER)
+        VALUES (#{scoreNumber}, #{userNumber})
+    </insert>
+
+    <!-- 신규가입 기본 프사 -->
+    <insert id="insertNewUserPhoto" parameterType="UserDTO">
+        <selectKey keyProperty="photoNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_photo_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_photo (PHOTO_NUMBER, USER_NUMBER)
+        VALUES (#{photoNumber}, #{userNumber})
+    </insert>
 </mapper>

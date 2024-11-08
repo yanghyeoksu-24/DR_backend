@@ -57,9 +57,33 @@ public class UserService<BCryptPasswordEncoder> {
     }
 
     // api회원 가입 저장
-    public void insertKakaoUser(KakaoUsersDTO user){
+    public void insertKakaoUser(KakaoUsersDTO user) {
         kakaoUsersMapperuserMapper.insertKakaoUser(user);
-    };
+    }
+
+    ;
+
+    // 신규가입유저 포인트 0 row 생성
+    public void insertNewUserPoint(UserDTO user) {
+        userMapper.insertNewUserPoint(user);
+    }
+
+    // 신규가입유저 포인트 0 row 생성
+    public void insertNewUserScore(UserDTO user) {
+        userMapper.insertNewUserScore(user);
+    }
+
+    // 신규가입유저 포인트 0 row 생성
+    public void insertNewUserPhoto(UserDTO user) {
+        userMapper.insertNewUserPhoto(user);
+    }
+
+    // 방금 가입유저 pk조회
+    public Long findNewUser(UserDTO user) {
+        return userMapper.findNewUser(user);
+    }
+
+
 }
 
 
