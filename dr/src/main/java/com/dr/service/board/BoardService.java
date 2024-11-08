@@ -56,12 +56,14 @@ public class BoardService {
         boardMapper.freeBoardDeleteReply(replyNumber);
     }
 
-    // 자유게시판 추천 플러스
-    public void freeGoodPlus(FreeGoodDTO freeGoodDTO) {
+    // 자유게시판 추천 플러스 , 스코어
+
+    public void freeGoodPlus(FreeGoodDTO freeGoodDTO ) {
         boardMapper.freeGoodPlus(freeGoodDTO);
     }
 
-    // 자유게시판 추천 마이너스
+    // 자유게시판 추천 마이너스 , 스코어
+
     public void freeGoodMinus(FreeGoodDTO freeGoodDTO) {
         boardMapper.freeGoodMinus(freeGoodDTO);
     }
@@ -122,6 +124,7 @@ public class BoardService {
     public void report(BoardReportDTO reportDTO) {
         boardMapper.report(reportDTO);
     }
+
 
 
 }

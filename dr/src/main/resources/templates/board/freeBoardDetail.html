@@ -27,7 +27,7 @@
                         <p class="freeBoardDetail-writeName" th:text="${freeBoardDetail.userNickName}">작성자</p>
                         <p class="freeBoardDetail-foodTitle" th:text="${freeBoardDetail.boardTitle}">제목</p>
                         <p class="freeBoardDetail-date" th:text="${freeBoardDetail.boardWriteDate}">날짜</p>
-
+                        <input type="hidden" name="userNumber2" th:value="${freeBoardDetail.userNumber}"/>
 
                     </div>
                 </div>

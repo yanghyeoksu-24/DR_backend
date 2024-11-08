@@ -71,4 +71,5 @@ public interface BoardMapper {
 
     void report(BoardReportDTO boardReportDTO);
 
+
 }

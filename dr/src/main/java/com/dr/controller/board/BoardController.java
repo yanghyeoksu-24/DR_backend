@@ -217,6 +217,7 @@ public class BoardController {
             @SessionAttribute(value = "userNumber", required = false) Long userNumber
     ) {
         freeGoodDTO.setUserNumber(userNumber);
+
         boardService.freeGoodMinus(freeGoodDTO);
 
         return new ResponseEntity<>(HttpStatus.OK);
