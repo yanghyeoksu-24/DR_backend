@@ -140,3 +140,49 @@ function deleteComment(replyNumber) {
   }
 }
 
+// 찜
+$(document).ready(function() {
+  const recipeNumber = $('#recipeNumber').val();
+
+  $('#heartImage2').on('click', function() {
+    $(this).hide(); // "싫어요" 이미지 숨기기
+    $('#heartImage1').show(); // "좋아요" 이미지 보이기
+
+    // AJAX 요청
+    $.ajax({
+      url: '/recipe/like', // URL 확인
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({ recipeNumber: recipeNumber }),
+      success: function(response) {
+        console.log('좋아요 처리 성공:', response);
+
+      },
+      error: function(xhr, status, error) {
+        console.error('좋아요 처리 실패:', error);
+
+      }
+    });
+  });
+
+  $('#heartImage1').on('click', function() {
+    $(this).hide(); // "좋아요" 이미지 숨기기
+    $('#heartImage2').show(); // "싫어요" 이미지 보이기
+
+    // AJAX 요청
+    $.ajax({
+      url: '/recipe/unLike', // URL 확인
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({ recipeNumber: recipeNumber }),
+      success: function(response) {
+        console.log('싫어요 처리 성공:', response);
+      },
+      error: function(xhr, status, error) {
+        console.error('싫어요 처리 실패:', error);
+      }
+    });
+  });
+});
+
+
