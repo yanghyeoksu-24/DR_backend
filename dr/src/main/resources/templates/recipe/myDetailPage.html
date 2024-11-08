@@ -32,10 +32,10 @@
                 </div>
 
                 <div class="myDetailPage-infoSecond">
-                    <div class="myDetailPage-firstButton">
-                        <button class="myDetailPage-buttonOne">수정</button>
-                        <button id="deleteButton" class="myDetailPage-buttonOne">삭제</button>
-                    </div>
+<!--                    <div class="myDetailPage-firstButton" th:if="${userNickName != null and userNickName == recipeDetail.userNickName}">-->
+<!--                        <button class="myDetailPage-buttonOne">수정</button>-->
+<!--                        <button id="deleteButton" class="myDetailPage-buttonOne">삭제</button>-->
+<!--                    </div>-->
                     <div class="myDetailPage-secondButton">
                         <div class="myDetailPage-buttonImg">
                             <a id="heartLink" th:href="@{/recipe/like}">
@@ -47,7 +47,13 @@
                                 <img id="heartImage2" th:src="@{/image/heartGray.png}" alt="좋아요">
                             </a>
                         </div>
-                        <button class="myDetailPage-buttonTwo">신고</button>
+                        <a th:href="@{/recipe/report(recipeNumber=${recipeDetail.recipeNumber})}">
+                            <button class="myDetailPage-buttonTwo">신고</button>
+                        </a>
+                        <div class="myDetailPage-firstButton" th:if="${userNickName != null and userNickName == recipeDetail.userNickName}">
+                            <button class="myDetailPage-buttonOne">수정</button>
+                            <button id="deleteButton" class="myDetailPage-buttonOne">삭제</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,7 +93,9 @@
                             <input type="hidden" name="replyNumber" th:value="${recipeComments.replyNumber}">
                             <div class="myDetailPage-commentHeader">
                                 <span class="myDetailPage-commentUsername" th:text="${recipeComments.userNickName}">작성자</span>
-                                <button class="myDetailPage-reportBtn">신고</button>
+                                <a th:href="@{/recipe/report(recipeNumber=${recipeDetail.recipeNumber}, replyNumber=${recipeComments.replyNumber})}">
+                                    <button class="myDetailPage-reportBtn">신고</button>
+                                </a>
                             </div>
 
                             <div class="myDetailPage-commentDate"
