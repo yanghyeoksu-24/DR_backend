@@ -69,16 +69,20 @@
                 </li>
 
                 <li th:if="${recipe != null}">
-                    <input type="checkbox" class="con-check" th:value="${recipe.recipeNumber}">
-                    <span class="con-num" th:text="${recipe.recipeNumber}"></span>
-                    <span class="con-con" th:text="${recipe.recipeTitle}"></span>
-                    <span class="con-name" th:text="${recipe.userNickName}"></span>
-                    <span class="con-good" th:text="${recipe.goodCount}"></span>
-                    <span class="con-date" th:text="${recipe.recipeWriteDate}"></span>
-                    <span class="con-type" th:text="${recipe.recipeType}"></span>
+                    <a th:href="${recipe.recipeType == '나만의레시피' ?
+                       '/recipe/myDetailPage?recipeNumber=' + recipe.recipeNumber :
+                       '/recipe/chatBotDetailPage?recipeNumber=' + recipe.recipeNumber}">
+                        <input type="checkbox" class="con-check" th:value="${recipe.recipeNumber}">
+                        <span class="con-num" th:text="${recipe.recipeNumber}"></span>
+                        <span class="con-con" th:text="${recipe.recipeTitle}"></span>
+                        <span class="con-name" th:text="${recipe.userNickName}"></span>
+                        <span class="con-good" th:text="${recipe.goodCount}"></span>
+                        <span class="con-date" th:text="${recipe.recipeWriteDate}"></span>
+                        <span class="con-type" th:text="${recipe.recipeType}"></span>
+                    </a>
                 </li>
 
-                <li th:each="recipeList : ${recipeList}" th:if="${recipeList != null}">
+                <li th:each="recipeList : ${recipeList}" th:if="${recipe == null}">
                     <a th:href="${recipeList.recipeType == '나만의레시피' ?
                        '/recipe/myDetailPage?recipeNumber=' + recipeList.recipeNumber :
                        '/recipe/chatBotDetailPage?recipeNumber=' + recipeList.recipeNumber}">

@@ -68,15 +68,25 @@
                 </li>
 
                 <li th:if="${reply != null}">
-                    <input type="checkbox" class="con-check" th:value="${reply.replyNumber}">
-                    <span class="con-num" th:text="${reply.replyNumber}"></span>
-                    <span class="con-title" th:text="${reply.replyText}"></span>
-                    <span class="con-name" th:text="${reply.userNickName}"></span>
-                    <span class="con-phone" th:text="${reply.userPhone}"></span>
-                    <span class="con-date" th:text="${reply.replyWriteDate}"></span>
+                    <a th:href="${reply.boardNumber == null ?
+        (reply.recipeType == '나만의레시피' ?
+            '/recipe/myDetailPage?recipeNumber=' + reply.recipeNumber :
+            '/recipe/chatBotDetailPage?recipeNumber=' + reply.recipeNumber)
+        :
+        (reply.boardType == '자유게시판' ?
+            '/board/freeBoardDetail?boardNumber=' + reply.boardNumber :
+            '/board/honeyBoardDetail?boardNumber=' + reply.boardNumber)
+    }">
+                        <input type="checkbox" class="con-check" th:value="${reply.replyNumber}">
+                        <span class="con-num" th:text="${reply.replyNumber}"></span>
+                        <span class="con-title" th:text="${reply.replyText}"></span>
+                        <span class="con-name" th:text="${reply.userNickName}"></span>
+                        <span class="con-phone" th:text="${reply.userPhone}"></span>
+                        <span class="con-date" th:text="${reply.replyWriteDate}"></span>
+                    </a>
                 </li>
 
-                <li th:each="item : ${replyList}" th:if="${item != null}">
+                <li th:each="item : ${replyList}" th:if="${reply == null}">
                     <a th:href="${item.boardNumber == null ?
         (item.recipeType == '나만의레시피' ?
             '/recipe/myDetailPage?recipeNumber=' + item.recipeNumber :
