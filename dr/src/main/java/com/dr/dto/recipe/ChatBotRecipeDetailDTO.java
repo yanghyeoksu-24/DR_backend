@@ -19,4 +19,5 @@ public class ChatBotRecipeDetailDTO {
     private String userNickName;         // 작성자
     private String recipeWriteDate;      // 작성일
     private int goodCount;               // 추천수
+    private String recipeType;
 }
