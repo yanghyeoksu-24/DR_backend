@@ -63,7 +63,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         System.out.println("제공자 : " + user.getProvider());
         // DB에 사용자 정보 저장 또는 업데이트
         KakaoUsersDTO existingUser = kakaoUsersMapperuserMapper.findByProviderId(providerId);
-        Long userNumber = existingUser.getUserNumber();
+        Long userNumber = 0L;
         if (existingUser == null) {
             // 새로운 사용자일 경우 리다이렉트 플래그 설정
             session.setAttribute("isNewUser", true);
@@ -74,7 +74,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             existingUser.setName(name); // 예시: 이름 정보 업데이트
             existingUser.setProfilePic(profilePic); // 예시: 프로필 사진 정보 업데이트
             kakaoUsersMapperuserMapper.updateUser(existingUser);
+            userNumber = existingUser.getUserNumber();
         }
+
 
 //        return oAuth2User;
         return new CustomOAuth2User(oAuth2User, name, profilePic, providerId, provider, accountEmail, userNumber);
