@@ -70,10 +70,10 @@ public interface RecipeMapper {
     void ChatBotdecreaseGoodCount(ChatBotRecipeGoodDTO chatBotRecipeGoodDTO);
 
     // 찜 추가 메서드
-    void addSteam(MyRecipeDetailDTO myRecipeDetailDTO);
+    void addSteam(RecipeSteamDTO recipeSteamDTO);
 
     // 찜 삭제 메서드
-    void removeSteam(MyRecipeDetailDTO myRecipeDetailDTO);
+    void removeSteam(RecipeSteamDTO recipeSteamDTO);
 
     void report(RecipeReportDTO recipeReportDTO);
 
