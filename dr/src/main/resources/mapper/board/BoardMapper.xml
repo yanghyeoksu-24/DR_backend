@@ -80,6 +80,7 @@
                  JOIN DR_BOARD B ON R.BOARD_NUMBER = B.BOARD_NUMBER
                  JOIN DR_PHOTO P ON U.USER_NUMBER = P.PHOTO_NUMBER
         WHERE R.BOARD_NUMBER = #{boardNumber}
+        ORDER BY R.REPLY_WRITE_DATE DESC
     </select>
 
 
@@ -197,6 +198,7 @@
                  JOIN DR_BOARD B ON R.BOARD_NUMBER = B.BOARD_NUMBER
                  JOIN DR_PHOTO P ON U.USER_NUMBER = P.PHOTO_NUMBER
         WHERE R.BOARD_NUMBER = #{boardNumber}
+        ORDER BY R.REPLY_WRITE_DATE DESC
     </select>
 
 

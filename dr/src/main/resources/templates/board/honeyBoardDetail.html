@@ -32,15 +32,18 @@
                 </div>
 
                 <div class="honeyBoardDetail-infoSecond">
-                    <div class="honeyBoardDetail-firstButton">
-                        <button class="honeyBoardDetail-buttonOne">수정</button>
-                        <button id="deleteButton" class="honeyBoardDetail-buttonOne">삭제</button>
-                    </div>
-
+                    <!-- 신고 버튼: 모든 사용자에게 표시 -->
                     <div class="honeyBoardDetail-secondButton">
                         <a th:href="@{/board/boardReport(boardNumber=${honeyBoardDetail.boardNumber})}">
                             <button class="honeyBoardDetail-buttonTwo">신고</button>
                         </a>
+                    </div>
+                    <br><br>
+                    <!-- 수정 및 삭제 버튼: 작성자에게만 표시 -->
+                    <div class="honeyBoardDetail-firstButton"
+                         th:if="${userNickName != null and userNickName == honeyBoardDetail.userNickName}">
+                        <button class="honeyBoardDetail-buttonOne">수정</button>
+                        <button id="deleteButton" class="honeyBoardDetail-buttonOne">삭제</button>
                     </div>
                 </div>
             </div>
@@ -87,7 +90,7 @@
                             </div>
                             <!-- 수정된 날짜가 있으면 수정된 날짜를 보이고, 없으면 작성 날짜만 보이도록 처리 -->
                             <div class="honeyBoardDetail-commentDate"
-                                 th:text="${honeyBoardComments.replyModifyDate != null ? honeyBoardComments.replyModifyDate : honeyBoardComments.replyWriteDate}">
+                                 th:text="${honeyBoardComments.replyModifyDate != null ? honeyBoardComments.replyModifyDate + '(수정됨)' : honeyBoardComments.replyWriteDate}">
                                 작성 날짜
                             </div>
                             <br><br>

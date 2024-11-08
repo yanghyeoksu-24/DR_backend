@@ -36,14 +36,14 @@ public class BoardController {
         return "/board/boardReport";
     }
 
-
+    // 게시판 신고 컨트롤러
     @PostMapping("/reportOk")
     public String boardReportOk(@RequestParam("boardNumber") Long boardNumber,
                                 @RequestParam(value = "replyNumber", required = false) Long replyNumber,
                                 @SessionAttribute(value = "userNumber", required = false) Long userNumber,
                                 @RequestParam("reason") String reason,
-                                @RequestParam(value = "otherReasonText", required = false) String otherReasonText,
-                                RedirectAttributes redirectAttributes) {
+                                @RequestParam(value = "otherReasonText", required = false) String otherReasonText
+                               ) {
 
         FreeBoardDetailDTO freeBoardDetailDTO = boardService.freeBoardDetail(boardNumber);
         BoardReportDTO boardReportDTO = new BoardReportDTO();
