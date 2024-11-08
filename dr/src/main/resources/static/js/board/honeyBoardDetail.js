@@ -108,6 +108,13 @@ document.querySelectorAll('.honeyBoardDetail-saveBtn').forEach(function (button)
     });
 });
 
+// 댓글 등록 버튼 클릭 시
+function submitComment() {
+    const confirmation = confirm("댓글을 등록하시겠습니까?");
+    if (!confirmation) return;
+    alert("댓글이 등록되었습니다.");
+}
+
 // 댓글 삭제 버튼을 눌렀을 때 실행되는 함수
 document.querySelectorAll('.honeyBoardDetail-deleteBtn').forEach(function (button) {
     button.addEventListener('click', function () {
