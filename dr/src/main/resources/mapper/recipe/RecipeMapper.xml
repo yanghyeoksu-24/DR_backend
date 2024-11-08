@@ -269,19 +269,18 @@
     </insert>
 
     <!-- 찜 추가 -->
-    <insert id="addSteam" parameterType="MyRecipeDetailDTO">
+    <insert id="addSteam" parameterType="RecipeSteamDTO">
         <selectKey keyProperty="steamNumber" resultType="Long" order="BEFORE">
-            SELECT SEQ_DR_STEAM.NEXTVAL FROM DUAL
+            SELECT SEQ_STEAM_NUMBER.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO DR_STEAM (STEAM_NUMBER, RECIPE_NUMBER, USER_NUMBER)
         VALUES (#{steamNumber}, #{recipeNumber}, #{userNumber})
     </insert>
 
     <!-- 찜 삭제 -->
-    <delete id="removeSteam" parameterType="MyRecipeDetailDTO">
+    <delete id="removeSteam" parameterType="RecipeSteamDTO">
         DELETE FROM DR_STEAM
-        WHERE RECIPE_NUMBER = #{recipeNumber}
-          AND USER_NUMBER = #{userNumber}
+        WHERE RECIPE_NUMBER = #{recipeNumber} AND USER_NUMBER = #{userNumber}
     </delete>
 
     <insert id="report" parameterType="RecipeReportDTO">
@@ -291,6 +290,8 @@
         INSERT INTO DR_SIREN(SIREN_NUMBER, SIREN_REASON,  SIREN_TYPE , RECIPE_NUMBER , REPLY_NUMBER , USER_NUMBER)
         VALUES (#{sirenNumber}, #{sirenReason}, #{sirenType} , #{recipeNumber} , #{replyNumber} , #{userNumber})
     </insert>
+
+
 
 
 
