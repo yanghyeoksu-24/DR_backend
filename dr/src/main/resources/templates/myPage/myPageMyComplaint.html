@@ -66,16 +66,24 @@
                         <li>
                             <span class="myPage-myComplaintTitleNumberZero" th:text="${start.index + 1}"></span>
                             <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentOne" th:text="${siren.TitleAndContent}"></span>
+
+                            <!-- 제목에 링크 추가 -->
+                            <a th:href="${siren.sirenType == '레시피' ? '/recipe/chatBotDetailPage?recipeNumber=' + siren.recipeNumber :
+                        siren.sirenType == '게시글' ? '/board/freeBoardDetail?boardNumber=' + siren.boardNumber :
+                        siren.sirenType == '댓글' ? '/board/freeBoardDetail?boardNumber=' + siren.boardNumber :
+                        ''}"
+                               class="myPage-myComplaintTitleContentOne" th:text="${siren.titleAndContent}"></a>
+
                             <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleContentTypeTwo" th:text="${siren.SirenType}"></span>
+                            <span class="myPage-myComplaintTitleContentTypeTwo" th:text="${siren.sirenType}"></span>
                             <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleCauseThree" th:text="${siren.SirenReason}"></span>
+                            <span class="myPage-myComplaintTitleCauseThree" th:text="${siren.sirenReason}"></span>
                             <div class="vertical-barSecond"></div>
-                            <span class="myPage-myComplaintTitleDateFour" th:text="${siren.SirenDate}"></span>
+                            <span class="myPage-myComplaintTitleDateFour" th:text="${siren.sirenDate}"></span>
                         </li>
                     </ul>
                 </div>
+
             </div>
         </div>
         <!-- 페이지 네이션 -->
