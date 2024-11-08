@@ -1,6 +1,7 @@
 package com.dr.controller.recipe;
 
-import com.dr.dto.board.HoneyGoodDTO;
+import com.dr.dto.board.BoardReportDTO;
+import com.dr.dto.board.FreeBoardDetailDTO;
 import com.dr.dto.recipe.*;
 import com.dr.service.recipe.RecipeService;
 import jakarta.servlet.http.HttpSession;
@@ -43,9 +44,10 @@ public class RecipeController {
     }
 
 
+
     //    나만의레시피 상세페이지 + 댓글 조회
     @GetMapping("/myDetailPage")
-    public String myDetailPage(@RequestParam("recipeNumber") Long recipeNumber, @SessionAttribute(value = "userNickName", required = false) String userNickName, Model model) {
+    public String myDetailPage(@RequestParam("recipeNumber") Long recipeNumber,  @SessionAttribute(value = "userNickName", required = false) String userNickName ,  Model model) {
         // 특정 레시피의 상세 정보 조회
         MyRecipeDetailDTO recipeDetail = recipeService.findMyRecipeDetail(recipeNumber);
 
@@ -57,7 +59,7 @@ public class RecipeController {
         // 모델에 레시피 상세 정보 추가
         model.addAttribute("recipeDetail", recipeDetail);
         model.addAttribute("recipeComments", recipeComments);
-        model.addAttribute("userNickName", userNickName);
+        model.addAttribute("userNickName",userNickName);
 
         return "recipe/myDetailPage";  // myDetailPage.html로 데이터 전달
     }
@@ -85,14 +87,14 @@ public class RecipeController {
         return "redirect:/recipe/myDetailPage";
     }
 
-    //    나만의 레시피 댓글 수정
+//    나만의 레시피 댓글 수정
     @PostMapping("/updateMyReply")
-    public ResponseEntity<Void> updateMyRecipeComment(@RequestParam(name = "replyNumber", required = false) Long replyNumber, @RequestParam("replyText") String replyText) {
+    public ResponseEntity<Void> updateMyRecipeComment(@RequestParam(name="replyNumber", required = false) Long replyNumber, @RequestParam("replyText") String replyText){
         log.info("컨트롤러 확인============");
         if (replyNumber == null || replyText == null || replyText.trim().isEmpty()) {
-            log.info(replyNumber + " replyNumber 확인====");
-            log.info(replyText + " replyText 확인====");
-            log.info(replyText.trim().isEmpty() + " replyNumber 확인====");
+            log.info(replyNumber +" replyNumber 확인====");
+            log.info(replyText +" replyText 확인====");
+            log.info(replyText.trim().isEmpty() +" replyNumber 확인====");
             return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
         }
 
@@ -117,13 +119,6 @@ public class RecipeController {
         return ResponseEntity.ok().build();
     }
 
-//    삭제예정
-//    @DeleteMapping("/recipe/{replyNumber}")
-//    public void deleteComment(@PathVariable("replyNumber") Long replyNumber){
-//        recipeService.deleteMyRecipeComment(replyNumber);
-//
-//    }
-
     //    챗봇 레시피 최신순
     @GetMapping("/chatBotRecipeList")
     public String chatBotRecipeList(Model model) {
@@ -144,17 +139,60 @@ public class RecipeController {
 
     //    챗봇레시피 상세페이지 + 댓글조회
     @GetMapping("/chatBotDetailPage")
-    public String ChatBotDetailPage(@RequestParam("recipeNumber") Long recipeNumber, Model model) {
+    public String ChatBotDetailPage(@RequestParam("recipeNumber") Long recipeNumber,  @SessionAttribute(value = "userNickName", required = false) String userNickName ,  Model model) {
         // 특정 레시피의 상세 정보 조회
         ChatBotRecipeDetailDTO recipeDetail = recipeService.findChatBotRecipeDetail(recipeNumber);
         List<ChatBotRecipeCommentDTO> recipeComments = recipeService.selectChatBotRecipeComment(recipeNumber);
-        log.info(recipeDetail + "ekwnlfgml;frmekrfgbn.");
         // 모델에 레시피 상세 정보 추가
         model.addAttribute("recipeDetail", recipeDetail);
         model.addAttribute("recipeComments", recipeComments);
+        model.addAttribute("userNickName",userNickName);
         return "recipe/chatBotDetailPage";  // ChatBotDetailPage.html로 데이터 전달
     }
 
+    // 챗봇 레시피 댓글 작성
+    @PostMapping("/chatBotDetailPage")
+    public String ChatBotinsertComment(@RequestParam("recipeNumber") Long recipeNumber,
+                                @RequestParam("replyText") String replyText,
+                                @RequestParam("userNumber") Long userNumber,
+                                RedirectAttributes redirectAttributes) {
+        if (recipeNumber == null) {
+            throw new IllegalArgumentException("Recipe number is required.");
+        }
+
+        ChatBotRecipeCommentDTO commentDTO = new ChatBotRecipeCommentDTO();
+        commentDTO.setRecipeNumber(recipeNumber);
+        commentDTO.setReplyText(replyText);
+        commentDTO.setUserNumber(userNumber);
+        recipeService.insertChatBotRecipeComment(commentDTO);
+
+        redirectAttributes.addAttribute("recipeNumber", recipeNumber);
+        return "redirect:/recipe/chatBotDetailPage";
+    }
+
+    //    챗봇 레시피 댓글 수정
+    @PostMapping("/updateChatBotReply")
+    public ResponseEntity<Void> updateChatBotRecipeComment(@RequestParam(name="replyNumber", required = false) Long replyNumber, @RequestParam("replyText") String replyText){
+        if (replyNumber == null || replyText == null || replyText.trim().isEmpty()) {
+            return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
+        }
+        // 댓글 수정 서비스 호출
+        recipeService.updateChatBotRecipeComment(replyNumber, replyText);
+        // 수정 완료 후 성공 응답 반환
+        return ResponseEntity.ok().build();
+    }
+
+    // 챗봇 레시피 상세페이지 댓글 삭제
+    @PostMapping("/deleteChatBotReply")
+    public ResponseEntity<Void> deleteChatBotRecipeComment(@RequestParam("replyNumber") Long replyNumber) {
+        if (replyNumber == null) {
+            return ResponseEntity.badRequest().build(); // 잘못된 요청 처리
+        }
+        // 댓글 삭제 서비스 호출
+        recipeService.deleteChatBotRecipeComment(replyNumber);
+        // 삭제 완료 후 성공 응답 반환
+        return ResponseEntity.ok().build();
+    }
 
     //    나만의레시피 글쓰기 페이지로 이동
     @GetMapping("/myRecipeWriter")  // 레시피 작성 페이지로 이동
@@ -179,31 +217,99 @@ public class RecipeController {
         }
     }
 
-    // 추천 수 증가
+    // 나만의 레시피 추천 수 증가
     @PostMapping("/goodPlus")
     public ResponseEntity<Void> addGood(@RequestBody MyRecipeGoodDTO myRecipeGoodDTO,
-                                        @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
+                                     @SessionAttribute(value = "userNumber",required = false) Long userNumber) {
         myRecipeGoodDTO.setUserNumber(userNumber);
         recipeService.addGood(myRecipeGoodDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // 추천 수 감소
+    // 나만의 레시피추천 수 감소
     @PostMapping("/goodMinus")
     public ResponseEntity<Void> removeGood(@RequestBody MyRecipeGoodDTO myRecipeGoodDTO,
-                                           @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
+                                        @SessionAttribute(value = "userNumber",required = false) Long userNumber) {
         myRecipeGoodDTO.setUserNumber(userNumber);
         recipeService.removeGood(myRecipeGoodDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    // 챗봇 레시피 추천 수 증가
+    @PostMapping("/ChatBotGoodPlus")
+    public ResponseEntity<Void> ChatBotAddGood(@RequestBody ChatBotRecipeGoodDTO chatBotRecipeGoodDTO,
+                                        @SessionAttribute(value = "userNumber",required = false) Long userNumber) {
+        chatBotRecipeGoodDTO.setUserNumber(userNumber);
+        recipeService.ChatBotAddGood(chatBotRecipeGoodDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 챗봇 레시피 추천 수 감소
+    @PostMapping("/ChatBotgoodMinus")
+    public ResponseEntity<Void> ChatBotRemoveGood(@RequestBody ChatBotRecipeGoodDTO chatBotRecipeGoodDTO,
+                                           @SessionAttribute(value = "userNumber",required = false) Long userNumber) {
+        chatBotRecipeGoodDTO.setUserNumber(userNumber);
+        recipeService.ChatBotRemoveGood(chatBotRecipeGoodDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+        @GetMapping("/report")
+        public String recipeReportPage(@RequestParam("recipeNumber") Long recipeNumber,
+                                      @RequestParam(value = "replyNumber", required = false) Long replyNumber,
+                                      Model model) {
+            model.addAttribute("recipeNumber", recipeNumber);
+            model.addAttribute("replyNumber", replyNumber);
+            return "/recipe/report";
+        }
+
+
+        @PostMapping("/reportOk")
+        public String recipeReportOk(@RequestParam("recipeNumber") Long recipeNumber,
+                                    @RequestParam(value = "replyNumber", required = false) Long replyNumber,
+                                    @SessionAttribute(value = "userNumber", required = false) Long userNumber,
+                                    @RequestParam("reason") String reason,
+                                    @RequestParam(value = "otherReasonText", required = false) String otherReasonText,
+                                    RedirectAttributes redirectAttributes) {
+            MyRecipeDetailDTO myRecipeDetailDTO = recipeService.findMyRecipeDetail(recipeNumber);
+            RecipeReportDTO recipeReportDTO = new RecipeReportDTO();
+
+            // 1. 사유 지정
+            if (otherReasonText != null && !otherReasonText.trim().isEmpty()) {
+                recipeReportDTO.setSirenReason(otherReasonText);
+            } else {
+                recipeReportDTO.setSirenReason(reason);
+            }
+
+            // 2. sirenType 지정 및 게시판, 댓글 번호 지정
+            if (replyNumber == null) {
+                recipeReportDTO.setSirenType("레시피");
+                recipeReportDTO.setRecipeNumber(recipeNumber);
+            } else {
+                recipeReportDTO.setSirenType("댓글");
+                recipeReportDTO.setReplyNumber(replyNumber);
+            }
+
+            // 3. 유저넘버 지정
+            recipeReportDTO.setUserNumber(userNumber);
+
+            // 신고 처리
+            recipeService.report(recipeReportDTO);
+
+            // 4. 리디렉션 처리
+            if ("나만의레시피".equals(myRecipeDetailDTO.getRecipeType())) {
+                return "redirect:/recipe/myDetailPage?recipeNumber=" + recipeNumber;
+            } else {
+                return "redirect:/recipe/myDetailPage?recipeNumber=" + recipeNumber;
+            }
+        }
 
     // 찜 추가 메서드 (좋아요)
     @PostMapping("/like")
     public ResponseEntity<Void> addLike(
             @SessionAttribute(value = "userNumber", required = false) Long userNumber, @RequestBody RecipeSteamDTO recipeSteamDTO) {
 
-            log.info(recipeSteamDTO.toString()+" lkansfdlkj rwlkmner");
-            log.info(userNumber + "ewlkjfnl");
+        log.info(recipeSteamDTO.toString()+" lkansfdlkj rwlkmner");
+        log.info(userNumber + "ewlkjfnl");
         try {
             recipeSteamDTO.setUserNumber(userNumber);
             recipeSteamDTO.setRecipeNumber(recipeSteamDTO.getRecipeNumber());
@@ -232,4 +338,6 @@ public class RecipeController {
             return ResponseEntity.status(500).build();  // 서버 오류 반환
         }
     }
+
+
 }

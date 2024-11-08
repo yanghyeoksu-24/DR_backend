@@ -141,7 +141,6 @@ function deleteComment(replyNumber) {
 
 
 // 찜
-$(document).ready(function() {
     const recipeNumber = $('#recipeNumber').val();
 
     $('#heartImage2').on('click', function() {
@@ -183,4 +182,4 @@ $(document).ready(function() {
             }
         });
     });
-});
+

@@ -17,8 +17,9 @@ public class MyRecipeDetailDTO {
     private String photoOriginal;
     private String userNickName;         // 작성자
     private String recipeWriteDate;      // 작성일
-    private String recipeModifyDate;
+    private String recipeModifyDate;     // 수정일
     private Long goodCount;               // 추천수
     private Long userNumber;
+    private String recipeType;
     private boolean liked;
 }

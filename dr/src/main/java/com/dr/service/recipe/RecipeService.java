@@ -1,5 +1,6 @@
 package com.dr.service.recipe;
 
+import com.dr.dto.board.BoardReportDTO;
 import com.dr.dto.recipe.*;
 import com.dr.mapper.recipe.RecipeMapper;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class RecipeService {
 
     //챗봇의 레시피 추천순
     public List<ChatBotRecipeListDTO> findAllRecipes1Good() {
-        return recipeMapper.selectRecipesGood1();
+        return recipeMapper.selectAllPagesGood1();
     }
 
     //나만의레시피상세페이지
@@ -52,6 +53,11 @@ public class RecipeService {
         recipeMapper.insertReply(myRecipeCommentDTO);
     }
 
+    //챗봇 레시피 댓글 작성
+    public void insertChatBotRecipeComment(ChatBotRecipeCommentDTO chatBotRecipeCommentDTO) {
+        recipeMapper.insertChatBotReply(chatBotRecipeCommentDTO);
+    }
+
     //나만의 레시피 댓글 수정
     public void updateMyRecipeComment(Long replyNumber, String replyText) {
         log.info("=========서비스 수정 확인======");
@@ -64,9 +70,25 @@ public class RecipeService {
         recipeMapper.updateMyReply(myRecipeCommentDTO);
     }
 
+    // 챗봇 레시피 댓글 수정
+    public void updateChatBotRecipeComment(Long replyNumber, String replyText) {
+        log.info("=========서비스 수정 확인======");
+        ChatBotRecipeCommentDTO chatBotRecipeCommentDTO = new ChatBotRecipeCommentDTO();
+        chatBotRecipeCommentDTO.setReplyNumber(replyNumber);
+        chatBotRecipeCommentDTO.setReplyText(replyText);
+        log.info("==== replyNumber 확인 service ===");
+        log.info(chatBotRecipeCommentDTO.getReplyNumber() + "확인");
+        log.info(chatBotRecipeCommentDTO.getReplyText() + "확인");
+        recipeMapper.updateChatBotReply(chatBotRecipeCommentDTO);
+    }
+
     //나만의 레시피 댓글 삭제
     public void deleteMyRecipeComment(Long replyNumber) {
         recipeMapper.deleteMyReply(replyNumber);
+    }
+    // 챗봇레시피 댓글 삭제
+    public void deleteChatBotRecipeComment(Long replyNumber) {
+        recipeMapper.deleteChatBotReply(replyNumber);
     }
 
     //나만의 레시피 댓글조회
@@ -91,9 +113,19 @@ public class RecipeService {
         recipeMapper.increaseGoodCount(myRecipeGoodDTO);
     }
 
+    // 챗봇 레시피 추천 수 증가
+    public void ChatBotAddGood(ChatBotRecipeGoodDTO chatBotRecipeGoodDTO) {
+        recipeMapper.ChatBotincreaseGoodCount(chatBotRecipeGoodDTO);
+    }
+
     // 나만의 레시피 추천 수 감소
     public void removeGood(MyRecipeGoodDTO myRecipeGoodDTO) {
         recipeMapper.decreaseGoodCount(myRecipeGoodDTO);
+    }
+
+    // 나만의 레시피 추천 수 감소
+    public void ChatBotRemoveGood(ChatBotRecipeGoodDTO chatBotRecipeGoodDTO) {
+        recipeMapper.ChatBotdecreaseGoodCount(chatBotRecipeGoodDTO);
     }
 
     // 찜 추가 메서드
@@ -104,6 +136,11 @@ public class RecipeService {
     // 찜 삭제 메서드
     public void removeSteam(RecipeSteamDTO recipeSteamDTO) {
         recipeMapper.removeSteam(recipeSteamDTO);
+    }
+
+    // 신고
+    public void report(RecipeReportDTO reportDTO) {
+        recipeMapper.report(reportDTO);
     }
 
 
