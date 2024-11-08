@@ -79,7 +79,7 @@ class MyPageMapperTest {
         // given
         Long userNumber = 1L; // 업데이트할 유저 번호
         String existingNickname = "아성이에요"; // 기존 닉네임
-        String newNickname = "아성이에요"; // 업데이트할 새로운 닉네임
+        String newNickname = "어이쿠야"; // 업데이트할 새로운 닉네임
 
         // 기존 닉네임 확인
         UserInfoDTO userInfoDTOBefore = myPageMapper.getUserInfo(userNumber); // 유저 정보 가져오기
@@ -125,6 +125,8 @@ class MyPageMapperTest {
         log.info("회원 탈퇴 처리 후, 유저 정보: {}", userInfoDTOAfter);
 
     }
+
+
 
 
 
