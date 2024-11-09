@@ -104,8 +104,11 @@ public class RecipeService {
 
 
     //나만으레시피 글쓰기
-    public void insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO) {
-        recipeMapper.insertMyRecipe(myRecipeWriteDTO);  // Toast API로 전달된 레시피 데이터를 DB에 삽입
+    public void insertRecipeWithPhoto(MyRecipeWriteDTO myRecipeWriteDTO) {
+        // 레시피 정보 저장
+        recipeMapper.insertMyRecipe(myRecipeWriteDTO);
+        // 레시피 번호를 이용해 사진 정보 저장
+//        recipeMapper.insertMyPhoto(myRecipeWriteDTO);
     }
 
     // 나만의 레시피 추천 수 증가

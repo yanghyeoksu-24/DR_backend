@@ -53,7 +53,7 @@ main{
 }
 
 .myDetailPage-secondButton{
-    display: flex;
+    /*display: flex;*/
     align-items: center;
     gap: 10px;
 }
@@ -71,6 +71,8 @@ main{
     cursor: pointer;
     background-color: white;
 }
+
+
 .myDetailPage-writetext {
     display: flex;
     flex-direction: column; /* 요소들을 세로로 정렬 */
@@ -245,3 +247,8 @@ main{
 }
 
 
+.myDetailPage-heartbox{
+    display: flex;
+    margin-bottom: 10px;
+    margin-left: 55px;
+}

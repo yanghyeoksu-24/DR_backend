@@ -38,7 +38,8 @@
     <!--    나만의 레시피 상세페이지-->
     <select id="selectMyRecipeDetail" resultType="MyRecipeDetailDTO">
         SELECT R.RECIPE_NUMBER,                                               -- 레시피 번호
-               R.RECIPE_TITLE,                                                -- 레시피 제목
+               R.RECIPE_TITLE,
+               R.RECIPE_TYPE,-- 레시피 제목
                R.RECIPE_TEXT,                                                 -- 레시피 내용
                TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate, -- 작성일
                U.USER_NICKNAME,                                               -- 작성자
@@ -54,6 +55,7 @@
         GROUP BY R.RECIPE_NUMBER,
                  R.RECIPE_TITLE,
                  R.RECIPE_TEXT,
+                 R.RECIPE_TYPE,
                  R.RECIPE_WRITE_DATE,
                  U.USER_NICKNAME,
                  P.PHOTO_LOCAL,
@@ -93,6 +95,7 @@
                  JOIN
              DR_RECIPE R ON RP.RECIPE_NUMBER = R.RECIPE_NUMBER
         WHERE RP.RECIPE_NUMBER = #{recipeNumber}
+        ORDER BY RP.REPLY_WRITE_DATE DESC
     </select>
 
     <!--    나만의 레시피 댓글작성-->
@@ -158,12 +161,14 @@
     <!--    챗봇레시피 상세페이지-->
     <select id="selectChatBotRecipeDetail" resultType="ChatBotRecipeDetailDTO">
         SELECT R.RECIPE_NUMBER,                                               -- 레시피 번호
-               R.RECIPE_TITLE,                                                -- 레시피 제목
+               R.RECIPE_TITLE,
+               R.RECIPE_TYPE,                                -- 레시피 제목
                R.RECIPE_TEXT,                                                 -- 레시피 내용
                TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate, -- 작성일
                U.USER_NICKNAME,                                               -- 작성자
                P.PHOTO_LOCAL,                                                 -- 작성자 프로필 사진
-               COUNT(G.GOOD_NUMBER)                       AS goodCount        -- 좋아요 수
+               COUNT(G.GOOD_NUMBER)                       AS goodCount,       -- 좋아요 수
+               R.USER_NUMBER
         FROM DR_RECIPE R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
                  LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
@@ -172,13 +177,15 @@
           AND R.RECIPE_TYPE = '챗봇레시피'
         GROUP BY R.RECIPE_NUMBER,
                  R.RECIPE_TITLE,
+                 R.RECIPE_TYPE,
                  R.RECIPE_TEXT,
                  R.RECIPE_WRITE_DATE,
                  U.USER_NICKNAME,
-                 P.PHOTO_LOCAL
+                 P.PHOTO_LOCAL,
+                 R.USER_NUMBER
     </select>
 
-<!--   챗봇 레시피 상세페이지 추천 수 증가-->
+    <!--   챗봇 레시피 상세페이지 추천 수 증가-->
     <insert id="ChatBotincreaseGoodCount" parameterType="ChatBotRecipeCommentDTO">
         <selectKey keyProperty="goodNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_GOOD_NUMBER.NEXTVAL FROM DUAL
@@ -187,7 +194,7 @@
         VALUES (#{goodNumber} , #{recipeNumber}, #{userNumber})
     </insert>
 
-<!--    챗봇 레시피 상세페이지 추천 수 감소-->
+    <!--    챗봇 레시피 상세페이지 추천 수 감소-->
     <delete id="ChatBotdecreaseGoodCount" parameterType="ChatBotRecipeCommentDTO">
         DELETE
         FROM DR_GOOD
@@ -211,9 +218,10 @@
                  JOIN
              DR_RECIPE R ON RP.RECIPE_NUMBER = R.RECIPE_NUMBER
         WHERE RP.RECIPE_NUMBER = #{recipeNumber}
+        ORDER BY RP.REPLY_WRITE_DATE DESC
     </select>
 
-<!--    챗봇 레시피 댓글 작성-->
+    <!--    챗봇 레시피 댓글 작성-->
     <insert id="insertChatBotReply" parameterType="ChatBotRecipeCommentDTO">
         <selectKey keyProperty="replyNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_REPLY_NUMBER.nextval FROM DUAL
@@ -222,7 +230,7 @@
         VALUES (#{replyNumber}, #{replyText}, #{recipeNumber}, #{userNumber})
     </insert>
 
-<!--    챗봇 레시피 댓글 수정-->
+    <!--    챗봇 레시피 댓글 수정-->
     <update id="updateChatBotReply" parameterType="ChatBotRecipeCommentDTO">
         UPDATE DR_REPLY
         SET REPLY_TEXT = #{replyText},
@@ -230,7 +238,7 @@
         WHERE REPLY_NUMBER = #{replyNumber}
     </update>
 
-<!--    챗봇 레시피 댓글 삭제-->
+    <!--    챗봇 레시피 댓글 삭제-->
     <delete id="deleteChatBotReply" parameterType="Long">
         DELETE
         FROM DR_REPLY
@@ -239,34 +247,33 @@
 
 
     <!--    나만의레시피 글쓰기-->
+    <!-- 레시피 데이터 삽입 -->
     <insert id="insertMyRecipe" parameterType="MyRecipeWriteDTO">
-        <!-- 레시피 번호 자동 생성 -->
         <selectKey keyProperty="recipeNumber" resultType="Long" order="BEFORE">
-            SELECT SEQ_DR_RECIPE.NEXTVAL FROM DUAL
+            SELECT SEQ_RECIPE_NUMBER.NEXTVAL FROM DUAL
         </selectKey>
-
-        <!-- DR_RECIPE 테이블에 데이터 삽입 -->
         INSERT INTO DR_RECIPE (
-        RECIPE_NUMBER,
-        USER_NUMBER,
-        RECIPE_TITLE,
-        RECIPE_TEXT,
-        RECIPE_ORIGINAL,
-        USER_NICKNAME,
-        RECIPE_TYPE,
-        RECIPE_WRITE_DATE
-        )
-        VALUES (
-        #{recipeNumber},
-        #{userNumber},
-        #{recipeTitle},
-        #{recipeText},
-        #{recipeOriginal},
-        #{userNickName},
-        #{recipeType},
-        SYSDATE
+        RECIPE_NUMBER, USER_NUMBER, RECIPE_TITLE, RECIPE_TEXT, RECIPE_TYPE, RECIPE_WRITE_DATE
+        ) VALUES (
+        #{recipeNumber}, #{userNumber}, #{recipeTitle}, #{recipeText}, #{recipeType}, SYSDATE
         )
     </insert>
+
+
+    <!--    사진 테이블 추가-->
+    <!--    <insert id="insertMyPhoto" parameterType="MyRecipeWriteDTO">-->
+    <!--        <selectKey keyProperty="photoNumber" resultType="Long" order="BEFORE">-->
+    <!--            SELECT SEQ_PHOTO_NUMBER.NEXTVAL FROM DUAL-->
+    <!--        </selectKey>-->
+    <!--        INSERT INTO DR_PHOTO (-->
+    <!--        PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_UPLOAD, RECIPE_NUMBER-->
+    <!--        ) VALUES (-->
+    <!--        #{photoNumber}, #{photoOriginal}, #{photoLocal}, SYSDATE, #{recipeNumber}-->
+    <!--        )-->
+    <!--    </insert>-->
+
+
+
 
     <!-- 찜 추가 -->
     <insert id="addSteam" parameterType="RecipeSteamDTO">
