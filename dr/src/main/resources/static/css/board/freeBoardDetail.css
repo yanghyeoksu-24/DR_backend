@@ -1,3 +1,13 @@
+/* 공통 스타일 */
+* {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+
+
 body{
   font-family: 'Cute Font', cursive;
   margin: 0;
@@ -92,13 +102,15 @@ main{
   height: 150px;
   border-radius: 5px;
   margin: 0 auto;
+
 }
 
 .freeBoardDetail-texts {
-  flex: 1; /* 텍스트가 남은 공간을 차지하도록 */
+  /* 텍스트가 남은 공간을 차지하도록 */
   text-align: left; /* 텍스트는 왼쪽 정렬 */
   margin-top: 30px;
   margin-bottom: 30px;
+  height: 100px;
 }
 
 .freeBoardDetail-recommendImg {
@@ -133,6 +145,7 @@ main{
   width: 50px;
   height: 50px;
   margin-right: 10px;
+  overflow-x: hidden;
 }
 
 .freeBoardDetail-commentUserImg img, .freeBoardDetail-replyUserImg img {
@@ -258,4 +271,18 @@ main{
   color: #333;
   margin-top: 40px;
 }
+
+
+
+
+
+#pagination {
+  margin-top: 30px;
+  position: relative;
+  left: 43%;
+}
+
+
+
+
 

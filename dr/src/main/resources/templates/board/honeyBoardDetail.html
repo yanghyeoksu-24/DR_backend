@@ -9,8 +9,11 @@
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
     <script defer th:src="@{/js/fragment/header.js}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
     <title>DR - 꿀팁게시판 상세페이지</title>
 </head>
 
@@ -122,6 +125,7 @@
                 <!-- 댓글 리스트 반복문 끝 -->
             </div>
         </div>
+        <div id="pagination"></div>
     </div>
 </main>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>

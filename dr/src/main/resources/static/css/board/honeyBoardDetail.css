@@ -1,3 +1,12 @@
+/* 공통 스타일 */
+* {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+
 body{
   font-family: 'Cute Font', cursive;
   margin: 0;
@@ -95,7 +104,6 @@ main{
 }
 
 .honeyBoardDetail-texts {
-  flex: 1; /* 텍스트가 남은 공간을 차지하도록 */
   text-align: left; /* 텍스트는 왼쪽 정렬 */
   margin-top: 30px;
   margin-bottom: 30px;
@@ -133,6 +141,7 @@ main{
   width: 50px;
   height: 50px;
   margin-right: 10px;
+  overflow-x: hidden;
 }
 
 .honeyBoardDetail-commentUserImg img, .honeyBoardDetail-replyUserImg img {
@@ -257,5 +266,14 @@ main{
   margin-left: 10px; /* 버튼 사이 간격 */
   cursor: pointer;
   border-radius: 5px;
+}
+
+
+
+/* 페이지네이션 */
+#pagination {
+  margin-top: 30px;
+  left: 43%;
+  position: relative;
 }
 
