@@ -63,8 +63,7 @@
 
             <!-- 레시피 본문 -->
             <div class="myDetailPage-writetext">
-                <p class="myDetailPage-texts" th:utext="${recipeDetail.recipeText}">레시피 내용</p>
-                <img th:src="@{/image/photo/} + ${recipeDetail.photoLocal}" alt="레시피 이미지">
+                <p class="myDetailPage-texts" th:utext="${recipeDetail.recipeText}"></p>
                 <div class="myDetailPage-recommendImg">
                     <input type="hidden" name="recipeNumber" id="recipeNumber" th:value="${recipeDetail.recipeNumber}">
                     <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="추천"

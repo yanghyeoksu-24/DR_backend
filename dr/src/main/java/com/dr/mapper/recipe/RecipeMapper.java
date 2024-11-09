@@ -54,9 +54,10 @@ public interface RecipeMapper {
 
     //    나만의 레시피 글쓰기
     // 레시피 데이터 삽입 메서드
-    int insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO);
-    // 사진 데이터 삽입 메서드
-//    int insertMyPhoto(MyRecipeWriteDTO myRecipeWriteDTO);
+    void insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO);
+
+//     사진 데이터 삽입 메서드
+    void insertMyPhoto(RecipePhotoDTO recipePhotoDTO);
 
     //챗봇 레시피 글쓰기
     void insertChatBotRecipe(ChatBotRecipeWriteDTO chatBotRecipeWriteDTO);

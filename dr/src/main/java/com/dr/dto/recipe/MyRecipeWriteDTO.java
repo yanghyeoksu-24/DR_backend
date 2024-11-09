@@ -11,13 +11,12 @@ import lombok.ToString;
 @NoArgsConstructor
 public class MyRecipeWriteDTO {
     private Long recipeNumber;
-    private Long photoNumber;
     private Long userNumber;
     private String recipeTitle;
     private String recipeText;
-    private String photoOriginal;
     private String userNickName;
     private String recipeWriteDate;
     private String recipeModifyDate;
     private String recipeType;
 }
+

@@ -15,7 +15,7 @@
         LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '나만의레시피' -- 나만의 레시피 필터링
         GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
-        ORDER BY R.RECIPE_WRITE_DATE -- 최신순 정렬
+        ORDER BY R.RECIPE_WRITE_DATE DESC -- 최신순 정렬
     </select>
 
     <!--    나만의 레시피 추천순-->
@@ -39,17 +39,21 @@
     <select id="selectMyRecipeDetail" resultType="MyRecipeDetailDTO">
         SELECT R.RECIPE_NUMBER,                                               -- 레시피 번호
                R.RECIPE_TITLE,
-               R.RECIPE_TYPE,-- 레시피 제목
-               R.RECIPE_TEXT,                                                 -- 레시피 내용
+               R.RECIPE_TYPE,                                               -- 레시피 제목
+               R.RECIPE_TEXT,                                                -- 레시피 내용
                TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate, -- 작성일
-               U.USER_NICKNAME,                                               -- 작성자
-               P.PHOTO_LOCAL,                                                 -- 작성자 프로필 사진
-               COUNT(G.GOOD_NUMBER)                       AS goodCount,       -- 좋아요 수
+               U.USER_NICKNAME,                                              -- 작성자
+               P.PHOTO_LOCAL,                                                -- 작성자 프로필 사진
+               COUNT(G.GOOD_NUMBER) AS goodCount,                            -- 좋아요 수
                R.USER_NUMBER
         FROM DR_RECIPE R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
                  LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
-                 LEFT JOIN DR_PHOTO P ON U.USER_NUMBER = P.USER_NUMBER AND ROWNUM = 1 -- 작성자 프로필 사진 (첫 번째 사진만)
+                 LEFT JOIN (
+            SELECT USER_NUMBER, PHOTO_LOCAL
+            FROM DR_PHOTO
+            WHERE ROWNUM = 1
+        ) P ON U.USER_NUMBER = P.USER_NUMBER
         WHERE R.RECIPE_NUMBER = #{recipeNumber}
           AND R.RECIPE_TYPE = '나만의레시피'
         GROUP BY R.RECIPE_NUMBER,
@@ -61,6 +65,7 @@
                  P.PHOTO_LOCAL,
                  R.USER_NUMBER
     </select>
+
 
     <!-- 나만의 레시피추천 수 증가 -->
     <insert id="increaseGoodCount" parameterType="MyRecipeGoodDTO">
@@ -75,18 +80,19 @@
     <delete id="decreaseGoodCount" parameterType="MyRecipeGoodDTO">
         DELETE
         FROM DR_GOOD
-        WHERE RECIPE_NUMBER = #{recipeNumber} AND USER_NUMBER = #{userNumber}
+        WHERE RECIPE_NUMBER = #{recipeNumber}
+          AND USER_NUMBER = #{userNumber}
     </delete>
 
     <!--    나만의 레시피 상세페이지 댓글조회-->
     <select id="selectMyRecipeComment" parameterType="Long" resultType="MyRecipeCommentDTO">
-        SELECT RP.REPLY_NUMBER     AS replyNumber,
-               U.USER_NICKNAME     AS userNickName,
-               RP.REPLY_WRITE_DATE AS replyWriteDate,
+        SELECT RP.REPLY_NUMBER      AS replyNumber,
+               U.USER_NICKNAME      AS userNickName,
+               RP.REPLY_WRITE_DATE  AS replyWriteDate,
                RP.REPLY_MODIFY_DATE AS replyModifyDate,
-               RP.REPLY_TEXT       AS replyText,
+               RP.REPLY_TEXT        AS replyText,
 --                P.PHOTO_ORIGINAL    AS photoOriginal,
-               P.PHOTO_LOCAL       AS photoLocal
+               P.PHOTO_LOCAL        AS photoLocal
         FROM DR_REPLY RP
                  JOIN
              DR_USER U ON RP.USER_NUMBER = U.USER_NUMBER
@@ -110,7 +116,7 @@
     <!--    나만의 레시피 댓글 수정-->
     <update id="updateMyReply" parameterType="MyRecipeCommentDTO">
         UPDATE DR_REPLY
-        SET REPLY_TEXT = #{replyText},
+        SET REPLY_TEXT        = #{replyText},
             REPLY_MODIFY_DATE = SYSDATE
         WHERE REPLY_NUMBER = #{replyNumber}
     </update>
@@ -121,7 +127,6 @@
         FROM DR_REPLY
         WHERE REPLY_NUMBER = #{replyNumber}
     </delete>
-
 
 
     <!--    챗봇레시피 최신순-->
@@ -138,7 +143,7 @@
         LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '챗봇레시피' -- 나만의 레시피 필터링
         GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
-        ORDER BY R.RECIPE_WRITE_DATE -- 최신순 정렬
+        ORDER BY R.RECIPE_WRITE_DATE DESC-- 최신순 정렬
     </select>
 
     <!--    챗봇레시피 추천순-->
@@ -162,7 +167,7 @@
     <select id="selectChatBotRecipeDetail" resultType="ChatBotRecipeDetailDTO">
         SELECT R.RECIPE_NUMBER,                                               -- 레시피 번호
                R.RECIPE_TITLE,
-               R.RECIPE_TYPE,                                -- 레시피 제목
+               R.RECIPE_TYPE,                                                 -- 레시피 제목
                R.RECIPE_TEXT,                                                 -- 레시피 내용
                TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate, -- 작성일
                U.USER_NICKNAME,                                               -- 작성자
@@ -198,18 +203,19 @@
     <delete id="ChatBotdecreaseGoodCount" parameterType="ChatBotRecipeCommentDTO">
         DELETE
         FROM DR_GOOD
-        WHERE RECIPE_NUMBER = #{recipeNumber} AND USER_NUMBER = #{userNumber}
+        WHERE RECIPE_NUMBER = #{recipeNumber}
+          AND USER_NUMBER = #{userNumber}
     </delete>
 
     <!--    챗봇레시피상세페이지 댓글조회-->
     <select id="selectChatBotRecipeComment" parameterType="Long" resultType="ChatBotRecipeCommentDTO">
-        SELECT RP.REPLY_NUMBER     AS replyNumber,
-               U.USER_NICKNAME     AS userNickName,
-               RP.REPLY_WRITE_DATE AS replyWriteDate,
+        SELECT RP.REPLY_NUMBER      AS replyNumber,
+               U.USER_NICKNAME      AS userNickName,
+               RP.REPLY_WRITE_DATE  AS replyWriteDate,
                RP.REPLY_MODIFY_DATE AS replyModifyDate,
-               RP.REPLY_TEXT       AS replyText,
+               RP.REPLY_TEXT        AS replyText,
 --                P.PHOTO_ORIGINAL    AS photoOriginal,
-               P.PHOTO_LOCAL       AS photoLocal
+               P.PHOTO_LOCAL        AS photoLocal
         FROM DR_REPLY RP
                  JOIN
              DR_USER U ON RP.USER_NUMBER = U.USER_NUMBER
@@ -233,7 +239,7 @@
     <!--    챗봇 레시피 댓글 수정-->
     <update id="updateChatBotReply" parameterType="ChatBotRecipeCommentDTO">
         UPDATE DR_REPLY
-        SET REPLY_TEXT = #{replyText},
+        SET REPLY_TEXT        = #{replyText},
             REPLY_MODIFY_DATE = SYSDATE
         WHERE REPLY_NUMBER = #{replyNumber}
     </update>
@@ -247,6 +253,7 @@
 
 
     <!--    나만의레시피 글쓰기-->
+
     <!-- 레시피 데이터 삽입 -->
     <insert id="insertMyRecipe" parameterType="MyRecipeWriteDTO">
         <selectKey keyProperty="recipeNumber" resultType="Long" order="BEFORE">
@@ -260,19 +267,17 @@
     </insert>
 
 
-    <!--    사진 테이블 추가-->
-    <!--    <insert id="insertMyPhoto" parameterType="MyRecipeWriteDTO">-->
-    <!--        <selectKey keyProperty="photoNumber" resultType="Long" order="BEFORE">-->
-    <!--            SELECT SEQ_PHOTO_NUMBER.NEXTVAL FROM DUAL-->
-    <!--        </selectKey>-->
-    <!--        INSERT INTO DR_PHOTO (-->
-    <!--        PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_UPLOAD, RECIPE_NUMBER-->
-    <!--        ) VALUES (-->
-    <!--        #{photoNumber}, #{photoOriginal}, #{photoLocal}, SYSDATE, #{recipeNumber}-->
-    <!--        )-->
-    <!--    </insert>-->
-
-
+    <!-- 사진 테이블 추가-->
+    <insert id="insertMyPhoto" parameterType="RecipePhotoDTO">
+        <selectKey keyProperty="photoNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_PHOTO_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_PHOTO (
+        PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_SIZE , RECIPE_NUMBER , USER_NUMBER
+        ) VALUES (
+        #{photoNumber}, #{photoOriginal}, #{photoLocal}, #{photoSize} ,  #{recipeNumber} , #{userNumber}
+        )
+    </insert>
 
 
     <!-- 찜 추가 -->
@@ -286,21 +291,19 @@
 
     <!-- 찜 삭제 -->
     <delete id="removeSteam" parameterType="RecipeSteamDTO">
-        DELETE FROM DR_STEAM
-        WHERE RECIPE_NUMBER = #{recipeNumber} AND USER_NUMBER = #{userNumber}
+        DELETE
+        FROM DR_STEAM
+        WHERE RECIPE_NUMBER = #{recipeNumber}
+          AND USER_NUMBER = #{userNumber}
     </delete>
 
     <insert id="report" parameterType="RecipeReportDTO">
         <selectKey keyProperty="sirenNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_SIREN_NUMBER.nextval FROM DUAL
         </selectKey>
-        INSERT INTO DR_SIREN(SIREN_NUMBER, SIREN_REASON,  SIREN_TYPE , RECIPE_NUMBER , REPLY_NUMBER , USER_NUMBER)
+        INSERT INTO DR_SIREN(SIREN_NUMBER, SIREN_REASON, SIREN_TYPE , RECIPE_NUMBER , REPLY_NUMBER , USER_NUMBER)
         VALUES (#{sirenNumber}, #{sirenReason}, #{sirenType} , #{recipeNumber} , #{replyNumber} , #{userNumber})
     </insert>
-
-
-
-
 
 
 </mapper>
