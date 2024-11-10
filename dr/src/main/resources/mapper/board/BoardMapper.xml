@@ -259,14 +259,14 @@
 
 
     <!-- 자유게시판 사진 데이터 삽입 -->
-    <insert id="freeBoardInsertPhoto" parameterType="FreeBoardWriteDTO">
+    <insert id="freeBoardInsertPhoto" parameterType="FreeBoardPhotoDTO">
         <selectKey keyProperty="photoNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_PHOTO_NUMBER.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO DR_PHOTO (
-        PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_UPLOAD, BOARD_NUMBER
+        PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_SIZE, BOARD_NUMBER
         ) VALUES (
-        #{photoNumber}, #{photoOriginal}, #{photoLocal}, SYSDATE, #{boardNumber}
+        #{photoNumber}, #{photoOriginal}, #{photoLocal}, #{photoSize}, #{boardNumber}
         )
     </insert>
 
