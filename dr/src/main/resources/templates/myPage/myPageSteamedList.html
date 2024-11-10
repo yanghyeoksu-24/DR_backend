@@ -58,14 +58,12 @@
                                 <a th:href="${steam.recipeType == '챗봇레시피' ? '/recipe/chatBotDetailPage?recipeNumber=' + steam.recipeNumber : '/recipe/myDetailPage?recipeNumber=' + steam.recipeNumber}"
                                    th:text="${steam.recipeTitle}">레시피 제목</a>
                             </div>
-                            <div class="myPage-pictureName" th:text="${steam.userNickname}">작성자 닉네임</div>
                         </div>
                         <div class="myPage-pictureSideRight">
-                            <form th:action="@{/myPage/steamedDelete}" method="post" style="display: inline;" onsubmit="confirmDelete(event);">
-                                <input type="hidden" name="recipeNumber" th:value="${steam.recipeNumber}" />
-                                <input type="hidden" name="userNumber" th:value="${steam.userNumber}" />
-                                <button type="submit" class="myPage-pictureListDelete">찜 삭제</button>
-                            </form>
+                            <button type="button" class="myPage-pictureListDelete"
+                                    th:attr="data-recipe-number=${steam.recipeNumber}, data-user-number=${steam.userNumber}">
+                                찜 삭제
+                            </button>
                         </div>
                     </div>
                 </div>

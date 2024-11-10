@@ -18,4 +18,5 @@ public class UserInfoDTO {
     private int totalPoints;
     private String photo;
     private Long userNumber;
+    private String profilePic; // 카카오 로그인 사용자의 프로필 사진
 }
