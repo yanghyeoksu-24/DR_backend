@@ -5,6 +5,7 @@ import com.dr.mapper.board.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -118,10 +119,24 @@ public class BoardService {
         boardMapper.honeyGoodMinus(honeyGoodDTO);
     }
 
-    // 신고
+    // 게시판 신고
     public void report(BoardReportDTO reportDTO) {
         boardMapper.report(reportDTO);
     }
 
+    @Transactional
+    public void insertFreeBoardPost(FreeBoardWriteDTO freeBoardWriteDTO) {
+        // 게시글 내용 저장 (boardText에 이미지 URL이 포함됨)
+        boardMapper.freeBoardInsertWrite(freeBoardWriteDTO);  // 게시글 본문 저장
 
+        // 이미지가 있는 경우 이미지 저장
+        if (freeBoardWriteDTO.getPhotoNumber() != null) {
+            // 이미지 URL을 포함하여 데이터베이스에 저장
+            boardMapper.freeBoardInsertPhoto(freeBoardWriteDTO);
+        }
+    }
 }
+
+
+
+
