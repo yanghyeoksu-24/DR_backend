@@ -69,16 +69,20 @@
                 </li>
 
                 <li th:if="${board != null}">
-                    <input type="checkbox" class="con-check" th:value="${board.boardNumber}">
-                    <span class="con-num" th:text="${board.boardNumber}"></span>
-                    <span class="con-con" th:text="${board.boardTitle}"></span>
-                    <span class="con-name" th:text="${board.userNickName}"></span>
-                    <span class="con-good" th:text="${board.goodCount}"></span>
-                    <span class="con-date" th:text="${board.boardWriteDate}"></span>
-                    <span class="con-type" th:text="${board.boardType}"></span>
+                    <a th:href="${board.boardType == '자유게시판' ?
+                       '/board/freeBoardDetail?boardNumber=' + board.boardNumber :
+                       '/board/honeyBoardDetail?boardNumber=' + board.boardNumber}">
+                        <input type="checkbox" class="con-check" th:value="${board.boardNumber}">
+                        <span class="con-num" th:text="${board.boardNumber}"></span>
+                        <span class="con-con" th:text="${board.boardTitle}"></span>
+                        <span class="con-name" th:text="${board.userNickName}"></span>
+                        <span class="con-good" th:text="${board.goodCount}"></span>
+                        <span class="con-date" th:text="${board.boardWriteDate}"></span>
+                        <span class="con-type" th:text="${board.boardType}"></span>
+                    </a>
                 </li>
 
-                <li th:each="boardList : ${boardList}" th:if="${boardList != null}">
+                <li th:each="boardList : ${boardList}" th:if="${board == null}">
                     <a th:href="${boardList.boardType == '자유게시판' ?
                        '/board/freeBoardDetail?boardNumber=' + boardList.boardNumber :
                        '/board/honeyBoardDetail?boardNumber=' + boardList.boardNumber}">

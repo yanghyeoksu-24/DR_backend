@@ -14,8 +14,9 @@ public class MyRecipeWriteDTO {
     private Long userNumber;
     private String recipeTitle;
     private String recipeText;
-    private String recipeOriginal;
     private String userNickName;
     private String recipeWriteDate;
+    private String recipeModifyDate;
     private String recipeType;
 }
+

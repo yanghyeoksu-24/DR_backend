@@ -7,8 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -103,9 +106,20 @@ public class RecipeService {
     }
 
 
-    //나만으레시피 글쓰기
-    public void insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO) {
-        recipeMapper.insertMyRecipe(myRecipeWriteDTO);  // Toast API로 전달된 레시피 데이터를 DB에 삽입
+    @Transactional  // 트랜잭션 관리
+    public void saveRecipe(MyRecipeWriteDTO myRecipeWriteDTO, RecipePhotoDTO recipePhotoDTO) {
+        // 1. 레시피 정보 먼저 저장 (RECIPE 테이블)
+        recipeMapper.insertMyRecipe(myRecipeWriteDTO);
+
+        // 2. RECIPE_NUMBER와 USER_NUMBER를 설정하여 RecipePhotoDTO에 추가
+        Long recipeNumber = myRecipeWriteDTO.getRecipeNumber();
+        Long userNumber = myRecipeWriteDTO.getUserNumber();
+
+        recipePhotoDTO.setRecipeNumber(recipeNumber);  // RECIPE_NUMBER 설정
+        recipePhotoDTO.setUserNumber(userNumber);      // USER_NUMBER 설정
+
+        // 3. 사진 정보 저장 (PHOTO 테이블)
+        recipeMapper.insertMyPhoto(recipePhotoDTO);
     }
 
     // 나만의 레시피 추천 수 증가

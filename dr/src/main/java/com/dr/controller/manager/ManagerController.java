@@ -351,22 +351,24 @@ public class ManagerController {
 
     //9-2. 상품 삭제
     @PostMapping("/deleteProduct")
-    public ResponseEntity<?> deleteProduct(@RequestBody Map<String, List<String>> request) {
+    public ResponseEntity<String> deleteProduct(@RequestBody Map<String, List<String>> request) {
         List<String> productLists = request.get("productName");
         boolean allUpdated = true;
 
         for (String productList : productLists) {
             if (!managerService.productDelete(productList)) {
-                allUpdated = false; // 하나라도 실패하면 false
+                allUpdated = false;
             }
         }
 
         if (allUpdated) {
             return ResponseEntity.ok("선택된 상품이 삭제 되었습니다.");
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("일부 사용자 삭제에 실패했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("일부 상품 삭제에 실패했습니다.");
         }
     }
+
 
 
 

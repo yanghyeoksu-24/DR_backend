@@ -196,9 +196,11 @@
 
     <!-- 6-3. 댓글 검색-->
     <select id="replySearch" parameterType="int" resultType="ManagerCommentDTO">
-        select R.REPLY_NUMBER , R.REPLY_TEXT , U.USER_NICKNAME , U.USER_PHONE , R.REPLY_WRITE_DATE
+        select R.REPLY_NUMBER , R.REPLY_TEXT , U.USER_NICKNAME , U.USER_PHONE , R.REPLY_WRITE_DATE ,  B.BOARD_NUMBER , RR.RECIPE_NUMBER , B.BOARD_TYPE , RR.RECIPE_TYPE
         from DR_REPLY R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
+                 LEFT JOIN DR_BOARD B ON R.BOARD_NUMBER = B.BOARD_NUMBER
+                 LEFT JOIN DR_RECIPE RR ON R.RECIPE_NUMBER = RR.RECIPE_NUMBER
         WHERE
             R.REPLY_NUMBER = #{replyNumber}
     </select>

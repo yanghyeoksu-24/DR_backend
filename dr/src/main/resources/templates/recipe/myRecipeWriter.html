@@ -1,79 +1,123 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" th:href="@{/css/recipe/myRecipeWriter.css}"/>
-  <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
-  <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
-  <script defer th:src="@{/js/fragment/header.js}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/recipe/myRecipeWriter.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
+    <script defer th:src="@{/js/fragment/header.js}"></script>
 
-  <!-- 네비바 폰트 -->
-  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
+    <!-- 네비바 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
 
-  <!-- Toast UI Editor CSS -->
-  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css">
+    <!-- Toast UI Editor CSS -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css">
 
-  <!-- 제이쿼리 -->
-  <script src="https://code.jquery.com/jquery-3.7.1.js"
-          integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-          crossorigin="anonymous"></script>
+    <!-- 제이쿼리 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
 
-  <!-- 페이지네이션 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <!-- 페이지네이션 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 
-  <title>DR - 나만의 레시피 작성</title>
+    <title>DR - 나만의 레시피 작성</title>
 </head>
 
 <body>
 <header th:replace="~{/fragment/header :: header}"></header>
 <main>
-  <div class="myRecipeWriter-mainContainer">
-    <div class="myRecipeWriter-mainBox">
-      <div class="myRecipeWriter-title">
-        <span class="myRecipeWriter-text1">나만의 레시피</span>
-        <span class="myRecipeWriter-text2">글쓰기</span>
-      </div>
+    <div class="myRecipeWriter-mainContainer">
+        <div class="myRecipeWriter-mainBox">
+            <div class="myRecipeWriter-title">
+                <span class="myRecipeWriter-text1">나만의 레시피</span>
+                <span class="myRecipeWriter-text2">글쓰기</span>
+            </div>
 
-      <!-- Updated form -->
-      <form action="/recipe/myDetailPage" method="get" id="recipeForm">
-        <div class="myRecipeWriter-inputContainer">
-          <input type="text" class="myRecipeWriter-titleInput" name="recipeTitle" placeholder="제목을 입력하세요" required>
+            <!-- Updated form -->
+            <form action="/recipe/myRecipeWriterOk" method="post" id="recipeForm">
+                <div class="myRecipeWriter-inputContainer">
+                    <input type="text" class="myRecipeWriter-titleInput" name="recipeTitle" placeholder="제목을 입력하세요"
+                           required>
+                </div>
+
+                <!-- Toast UI Editor Section -->
+                <div id="contsEditor"></div>
+                <!-- Hidden input to store editor content -->
+                <input type="hidden" name="recipeText" id="recipeText">
+
+                <input type="hidden" name="photoOriginal" th:value="${photoOriginal}" />
+                <input type="hidden" name="photoLocal" th:value="${photoLocal}" />
+                <input type="hidden" name="photoSize" th:value="${photoSize}" />
+
+                <div class="myRecipeWriter-write">
+                    <button type="submit" class="myRecipeWriter-writeButton" id="registerButton">등록</button>
+                </div>
+            </form>
         </div>
-
-        <!-- Toast UI Editor Section -->
-        <div id="contsEditor"></div>
-        <!-- Hidden input to store editor content -->
-        <input type="hidden" name="recipeText" id="recipeText">
-
-        <div class="myRecipeWriter-write">
-          <button type="submit" class="myRecipeWriter-writeButton" id="registerButton">등록</button>
-        </div>
-      </form>
     </div>
-  </div>
 </main>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 
 <!-- Toast UI Editor JavaScript -->
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
-  const editor = new toastui.Editor({
-    el: document.querySelector('#contsEditor'),
-    previewStyle: 'vertical',
-    initialEditType: 'wysiwyg',
-    height: '500px',
-    placeholder: '내용을 입력해 주세요.',
-  });
 
-  document.getElementById('registerButton').addEventListener('click', function (event) {
-    event.preventDefault();
-    document.getElementById('recipeText').value = editor.getHTML();  // Get HTML content from editor
-    document.getElementById('recipeForm').submit();
-  });
+    const editor = new toastui.Editor({
+        el: document.querySelector('#contsEditor'),
+        previewStyle: 'vertical',
+        initialEditType: 'wysiwyg',
+        height: '500px',
+        placeholder: '내용을 입력해 주세요.',
+        hooks: {
+            addImageBlobHook: async (blob, callback) => {
+                console.log('이미지가 업로드되었습니다.');
+
+                const formData = new FormData();
+                formData.append('image', blob);
+
+                try {
+                    const response = await fetch('/tui-editor/image-upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    // JSON 응답 처리
+                    const data = await response.json();
+                    console.log('Response:', data);
+
+                    if (!response.ok) {
+                        throw new Error('이미지 업로드 실패: ' + data.error);
+                    }
+
+                    // 클라이언트에서 받은 파일 정보로 콜백 호출
+                    callback(URL.createObjectURL(blob), '이미지'); // 이미지를 에디터에 추가
+
+                    // 서버로부터 받은 값을 hidden 필드에 추가
+                    document.querySelector('input[name="photoOriginal"]').value = data.photoOriginal;
+                    document.querySelector('input[name="photoLocal"]').value = data.photoLocal;
+                    document.querySelector('input[name="photoSize"]').value = data.photoSize;
+
+                } catch (error) {
+                    console.error('이미지 업로드 실패:', error);
+                }
+            }
+        }
+    });
+
+    document.getElementById('registerButton').addEventListener('click', function (event) {
+        event.preventDefault();
+        // 에디터에서 HTML 내용 가져오기
+        document.getElementById('recipeText').value = editor.getHTML();
+        // 폼 제출
+        document.getElementById('recipeForm').submit();
+    });
 </script>
+
+
 
 </body>
 </html>

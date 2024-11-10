@@ -1,23 +1,19 @@
-
 $(function () {
   const items = $('#manage-memberUl li:not(#manage-memberTitle)'); // 제목을 제외한 모든 li 요소 선택
+  items.hide().slice(0, 10).show(); // 처음 10개 항목만 보이게 하고 나머지는 숨김
 
-  // 처음 10개 항목만 보이게 하고 나머지는 숨김
-  items.hide().slice(0, 10).show();
+  // 전체 선택 체크박스 및 개별 체크박스 선택자 설정
+  const masterCheckbox = $('#title-check');
+  const checkboxes = $('#manage-memberUl li input[type="checkbox"]:not(#title-check)');
 
-  // 전체 선택 체크박스
-  const masterCheckbox = $('#title-check'); // 전체 선택 체크박스
-  const checkboxes = $('#manage-memberUl li input[type="checkbox"]:not(#title-check)'); // 전체선택 체크박스를 제외한 모든 체크박스 선택
-
-  // 전체 선택 체크박스 클릭 시
+  // 전체 선택 체크박스 클릭 시 모든 개별 체크박스 체크/해제
   function selectAll() {
-    // 전체 선택 체크박스가 체크되면 모든 개별 체크박스를 체크, 해제되면 모든 개별 체크박스를 해제
-    checkboxes.prop('checked', masterCheckbox.prop('checked'));
+    const isChecked = masterCheckbox.prop('checked');
+    checkboxes.prop('checked', isChecked);
   }
 
-  // 개별 체크박스 상태에 따라 전체 선택 체크박스 상태 업데이트
+  // 페이지 전환 시 개별 체크박스의 선택 상태에 따라 전체 선택 체크박스 상태 업데이트
   function updateMasterCheckbox() {
-    // 모든 개별 체크박스가 체크되어 있는지 확인
     const allChecked = checkboxes.length === checkboxes.filter(':checked').length;
     masterCheckbox.prop('checked', allChecked);
   }
@@ -25,32 +21,28 @@ $(function () {
   // 페이지네이션 설정
   const container = $('#pagination');
   container.pagination({
-    dataSource: items.toArray(), // li 요소를 배열로 변환
-    pageSize: 10, // 한 페이지에 보여줄 항목 수
+    dataSource: items.toArray(),
+    pageSize: 10,
     callback: function (data) {
-      $('#manage-memberUl').children('li:not(#manage-memberTitle)').hide(); // 기존 항목 숨김
+      $('#manage-memberUl').children('li:not(#manage-memberTitle)').hide();
       $.each(data, function (index, item) {
-        $(item).show(); // 현재 페이지의 항목 표시
+        $(item).show();
       });
-      // 페이지가 변경될 때 전체 선택 체크박스 상태 업데이트
-      updateMasterCheckbox();
+      updateMasterCheckbox(); // 페이지 변경 시 전체 선택 체크박스 상태 업데이트
     }
   });
 
-  // 전체 선택 체크박스 클릭 시 selectAll() 함수 실행
-  masterCheckbox.on('click', selectAll);
+  masterCheckbox.on('click', selectAll); // 전체 선택 클릭 시 이벤트
+  checkboxes.on('change', updateMasterCheckbox); // 개별 체크박스 클릭 시 이벤트
 
-  // 각 개별 체크박스 클릭 시 updateMasterCheckbox 함수 실행
-  checkboxes.on('change', updateMasterCheckbox);
-
-  // 처음 로드 시 첫 번째 페이지의 항목만 보여주기
-  container.pagination('goToPage', 1);
+  container.pagination('goToPage', 1); // 처음 로드 시 첫 페이지로 이동
 });
 
 
+// 삭제 기능 - 전체 선택 체크박스 제외한 값 전송
 document.getElementById('memberOut').addEventListener('click', function() {
-  // 체크된 체크박스들의 value 값 수집
   const selectedUserNumbers = Array.from(document.querySelectorAll('#manage-memberUl input[type="checkbox"]:checked'))
+      .filter(checkbox => checkbox.value !== "전체선택") // "전체선택" 필터링
       .map(checkbox => checkbox.value);
 
   if (selectedUserNumbers.length === 0) {
@@ -58,15 +50,14 @@ document.getElementById('memberOut').addEventListener('click', function() {
     return;
   }
 
-  // AJAX 요청을 통해 체크된 userNumber 값들을 서버에 전송
   $.ajax({
     type: "POST",
     url: "/manager/deleteProduct",
     contentType: "application/json",
-    data: JSON.stringify({ productName: selectedUserNumbers }), // 배열을 JSON으로 변환
+    data: JSON.stringify({ productName: selectedUserNumbers }),
     success: function(response) {
-      alert("선택된 상품이 삭제 처리되었습니다.");
-      window.location.href = "/manager/manageProduct"; // 리다이렉션
+      alert(response);
+      window.location.href = "/manager/manageProduct";
     },
     error: function() {
       alert("삭제 처리에 실패했습니다.");
@@ -74,26 +65,23 @@ document.getElementById('memberOut').addEventListener('click', function() {
   });
 });
 
-// "수정" 버튼 선택 및 클릭 이벤트 설정
+
+// 수정 기능 - 전체 선택 체크박스 제외하고 하나의 선택만 허용
 const updateButton = document.getElementById("memberUpdate");
 if (updateButton) {
   updateButton.addEventListener("click", redirectToUpdate);
 }
 
-
-// "수정" 버튼 클릭 시 체크된 상품의 이름을 URL 쿼리 스트링으로 전달하는 함수
 function redirectToUpdate() {
-  // 체크된 상품 체크박스 선택
-  const checkedProduct = document.querySelector('input[type="checkbox"]:checked');
+  const checkedProducts = document.querySelectorAll('input[type="checkbox"]:checked');
+  const selectedItems = Array.from(checkedProducts).filter(item => item.value !== "전체선택");
 
-  if (checkedProduct && checkedProduct.value !== "전체선택") {
-    const productName = checkedProduct.value;
-
-    // URL에 productName을 쿼리 스트링으로 포함해 이동
+  if (selectedItems.length === 1) {
+    const productName = selectedItems[0].value;
     window.location.href = `/manager/showProduct?productName=${encodeURIComponent(productName)}`;
+  } else if (selectedItems.length > 1) {
+    alert("하나의 상품만 선택해주세요.");
   } else {
     alert("수정할 상품을 선택해주세요.");
   }
 }
-
-
