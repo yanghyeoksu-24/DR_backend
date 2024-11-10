@@ -125,15 +125,19 @@ public class BoardService {
     }
 
     @Transactional
-    public void insertFreeBoardPost(FreeBoardWriteDTO freeBoardWriteDTO) {
-        // 게시글 내용 저장 (boardText에 이미지 URL이 포함됨)
+    public void saveFreeBoard(FreeBoardWriteDTO freeBoardWriteDTO, FreeBoardPhotoDTO freeBoardPhotoDTO) {
+        //1. 게시글 내용 저장 (boardText에 이미지 URL이 포함됨)
         boardMapper.freeBoardInsertWrite(freeBoardWriteDTO);  // 게시글 본문 저장
 
-        // 이미지가 있는 경우 이미지 저장
-        if (freeBoardWriteDTO.getPhotoNumber() != null) {
-            // 이미지 URL을 포함하여 데이터베이스에 저장
-            boardMapper.freeBoardInsertPhoto(freeBoardWriteDTO);
-        }
+        // 2. BOARD_NUMBER와 USER_NUMBER를 설정하여 FreeBoardPhotoDTO에 추가
+        Long boardNumber = freeBoardWriteDTO.getBoardNumber();
+        Long userNumber = freeBoardWriteDTO.getUserNumber();
+
+        freeBoardPhotoDTO.setBoardNumber(boardNumber);   //BOARD_NUMBER 설정
+        freeBoardPhotoDTO.setUserNumber(userNumber);    //USER_ NUMBER 설정
+
+        //3. 사진 정보 저장(PHOTO 테이블)
+        boardMapper.freeBoardInsertPhoto(freeBoardPhotoDTO);
     }
 }
 

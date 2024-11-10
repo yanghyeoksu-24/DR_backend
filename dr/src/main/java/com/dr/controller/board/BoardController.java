@@ -89,7 +89,8 @@ public class BoardController {
 
     // 자유게시판 글 쓰기 페이지 이동
     @GetMapping("/freeBoardWrite")
-    public String freeBoardWritePage() {
+    public String freeBoardWritePage(Model model) {
+        model.addAttribute("freeBoardWriteDTO",new FreeBoardWriteDTO());
         return "/board/freeBoardWrite";
     }
 
@@ -338,20 +339,37 @@ public class BoardController {
 
 
     // 자유게시판 게시글 작성
-    @PostMapping("/freeBoardWrite")
-    public String freeBoardWrite(@RequestBody FreeBoardWriteDTO freeBoardWriteDTO, HttpSession session) {
-        // 세션에서 유저 번호 가져오기
-        Long userNumber = (Long) session.getAttribute("userNumber");
-        if (userNumber == null) {
-            // 로그인되지 않은 경우 처리
-            return "redirect:/login";
-        }
-        freeBoardWriteDTO.setUserNumber(userNumber);
-        freeBoardWriteDTO.setBoardType("자유게시판");  // 자유게시판으로 설정
+    @PostMapping("/freeBoardWriteOk")
+    public String freeBoardWrite(
+            @RequestParam("boardTitle") String boardTitle,
+            @RequestParam("boardText") String boardText,
+            @RequestParam("photoOriginal") String photoOriginal,
+            @RequestParam("photoLocal") String photoLocal,
+            @RequestParam("photoSize") String photoSize,
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
+        // 1. FreeBoardWriteDTO 생성 (게시판정보)
+       FreeBoardWriteDTO freeBoardWriteDTO = new FreeBoardWriteDTO();
+       freeBoardWriteDTO.setBoardTitle(boardTitle);
+       freeBoardWriteDTO.setBoardText(boardText);
+       freeBoardWriteDTO.setUserNumber(userNumber);
+       freeBoardWriteDTO.setBoardType("자유게시판");
 
-        // 게시글 삽입 처리
-        boardService.insertFreeBoardPost(freeBoardWriteDTO);
-        return "redirect:/board/freeBoardList";
+       log.info(freeBoardWriteDTO.toString() + "잘 왔나나나ㅏ나나아아아아아");
+
+       //2. FreeBoardPhotoDTO 생성(사진 정보)
+        FreeBoardPhotoDTO freeBoardPhotoDTO = new FreeBoardPhotoDTO();
+        freeBoardPhotoDTO.setPhotoOriginal(photoOriginal);
+        freeBoardPhotoDTO.setPhotoLocal(photoLocal);
+        freeBoardPhotoDTO.setPhotoSize(photoSize);
+
+        log.info(freeBoardPhotoDTO.toString() + "sldfjldsakfjldakfjlskd");
+
+        //3. BoardService 호출하여 게시판과 사진 저장
+        boardService.saveFreeBoard(freeBoardWriteDTO, freeBoardPhotoDTO);
+
+        //4. 성공 메시지 전달 후 , 리다이렉션
+        return "redirect:/board/freeBoardList"; // 리다이렉트 URL은 필요에 맞게 수정
+
     }
 
 }

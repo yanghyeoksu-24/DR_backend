@@ -49,9 +49,9 @@
                 <!-- Hidden input to store editor content -->
                 <input type="hidden" name="recipeText" id="recipeText">
 
-                <input type="hidden" name="photoOriginal" th:value="${photoOriginal}" />
-                <input type="hidden" name="photoLocal" th:value="${photoLocal}" />
-                <input type="hidden" name="photoSize" th:value="${photoSize}" />
+                <input type="hidden" name="photoOriginal" th:value="${photoOriginal}"/>
+                <input type="hidden" name="photoLocal" th:value="${photoLocal}"/>
+                <input type="hidden" name="photoSize" th:value="${photoSize}"/>
 
                 <div class="myRecipeWriter-write">
                     <button type="submit" class="myRecipeWriter-writeButton" id="registerButton">등록</button>
@@ -116,7 +116,6 @@
         document.getElementById('recipeForm').submit();
     });
 </script>
-
 
 
 </body>
