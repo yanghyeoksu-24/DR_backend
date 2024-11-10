@@ -69,9 +69,15 @@ public class MyPageController {
     public ResponseEntity<Map<String, String>> updateProfile(
             @SessionAttribute("userNumber") Long userNumber,
             @RequestParam("nickname") String nickname,
-            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws IOException {
+            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage, Model model) throws IOException {
 
         Map<String, String> response = new HashMap<>();
+
+        // 사용자 정보를 가져오기
+        UserInfoDTO userInfo = myPageService.getUserInfo(userNumber);
+        // 업데이트된 userInfo를 Model에 추가
+        model.addAttribute("userInfo", userInfo); // HTML에서 userInfo로 접근 가능
+
 
         // 닉네임이 입력되면 닉네임을 업데이트
         if (nickname != null && !nickname.isEmpty()) {
@@ -89,6 +95,7 @@ public class MyPageController {
 
         // JSON 형태로 응답 반환
         return ResponseEntity.ok().body(response);
+
     }
 
 
@@ -156,19 +163,17 @@ public class MyPageController {
         return "myPage/myPageSteamedList";
     }
 
-    // -- 찜 삭제 -- //
-    @PostMapping("/steamedDelete")
-    public RedirectView deleteSteam(@SessionAttribute(value = "userNumber", required = false) Long userNumber,
-                                    @RequestParam(name = "recipeNumber") Long recipeNumber) {
-
-        UserSteamDTO userSteamDTO = new UserSteamDTO();
-        userSteamDTO.setUserNumber(userNumber);
-        userSteamDTO.setRecipeNumber(recipeNumber);
-
-        myPageService.deleteUserSteam(userSteamDTO);
-
-        return new RedirectView("/myPage/myPageSteamedList");// 목록 페이지로 리다이렉트
-    }
+//    // -- 찜삭제 DeleteMapping -- //
+//    @DeleteMapping("/steamedDelete")
+//    public ResponseEntity<Void> deleteSteam(
+//            @SessionAttribute(value = "userNumber", required = false) Long userNumber,
+//            @RequestBody UserSteamDTO userSteamDTO) {
+//
+//        userSteamDTO.setUserNumber(userNumber);
+//        myPageService.deleteUserSteam(userSteamDTO);
+//
+//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 성공적으로 삭제한 경우
+//    }
 
     // -- 신고 내역 목록 -- //
     @GetMapping("/myPageMyComplaint")
