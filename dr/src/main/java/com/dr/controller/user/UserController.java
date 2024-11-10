@@ -173,6 +173,7 @@ public class UserController {
             session.setAttribute("profilePic", kakaoUsersDTO.getProfilePic());
 
             return "redirect:/DRmain";
+
         } else {
             return "user/login";
         }

@@ -186,6 +186,17 @@ $(document).ready(function () {
     $('#submitForm').on('click', function (event) {
         let isValid = true;
 
+        // 필수 체크박스 검사
+        const isAllRequiredChecked = $('#checkAge').is(':checked') &&
+            $('#checkTerms').is(':checked') &&
+            $('#checkPrivacy').is(':checked');
+
+        if (!isAllRequiredChecked) {
+            alert("필수 항목에 모두 동의해야 회원가입이 가능합니다.");
+            return;
+        }
+
+
         // 유효성 검사
         const userIdValue = $('#userEmail').val().trim();
         if (!userIdRegex.test(userIdValue)) {
