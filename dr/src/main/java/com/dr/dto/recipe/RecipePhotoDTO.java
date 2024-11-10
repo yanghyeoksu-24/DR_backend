@@ -18,4 +18,3 @@ public class RecipePhotoDTO {
     private Long userNumber;
     private Long recipeNumber;
 }
-

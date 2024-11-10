@@ -39,25 +39,24 @@
                 </div>
 
                 <div class="chatBotDetailPage-infoSecond">
-                    <div class="chatBotDetailPage-firstButton">
-                        <button class="chatBotDetailPage-buttonOne">수정</button>
-                        <button id="deleteButton" class="chatBotDetailPage-buttonOne">삭제</button>
-                    </div>
-
                     <div class="chatBotDetailPage-secondButton">
+                        <div class="chatBotDetailPage-heartbox">
+                            <div class="chatBotDetailPage-buttonImg">
+                                <img id="heartImage1" th:src="@{/image/heartColor.png}" alt="좋아요" style="display: none;">
+                            </div>
 
-                        <div class="myDetailPage-buttonImg">
-                            <img id="heartImage1" th:src="@{/image/heartColor.png}" alt="좋아요" style="display: none;">
+                            <div class="chatBotDetailPage-buttonImg">
+                                <img id="heartImage2" th:src="@{/image/heartGray.png}" alt="싫어요">
+                            </div>
+                            <a th:href="@{/recipe/report(recipeNumber=${recipeDetail.recipeNumber})}">
+                                <button class="chatBotDetailPage-buttonTwo">신고</button>
+                            </a>
                         </div>
-
-                        <div class="myDetailPage-buttonImg">
-                            <img id="heartImage2" th:src="@{/image/heartGray.png}" alt="싫어요">
+                        <div class="chatBotDetailPage-firstButton" th:if="${userNickName != null and userNickName == recipeDetail.userNickName}">
+                            <button class="chatBotDetailPage-buttonOne">수정</button>
+                            <button id="deleteButton" class="chatBotDetailPage-buttonOne">삭제</button>
                         </div>
-
-                        <button class="chatBotDetailPage-buttonTwo">신고</button>
                     </div>
-
-
                 </div>
             </div>
 
@@ -99,11 +98,10 @@
                                     <button class="chatBotDetailPage-reportBtn">신고</button>
                                 </a>
                             </div>
-
+                          <div class="chatBotDetailPage-commentText" id="commentText${recipeComments.replyNumber}"
+                               th:text="${recipeComments.replyText}"></div>
                             <div class="chatBotDetailPage-commentTime"
-                                 th:text="${recipeComments.replyModifyDate != null ? recipeComments.replyModifyDate : recipeComments.replyWriteDate}"></div>
-                            <div class="chatBotDetailPage-commentText" id="commentText${recipeComments.replyNumber}"
-                                 th:text="${recipeComments.replyText}"></div>
+                                 th:text="${recipeComments.replyModifyDate != null ? recipeComments.replyModifyDate + '(수정됨)' : recipeComments.replyWriteDate}"></div>
                             <!-- 본인 댓글에 대한 수정/삭제 버튼 -->
                             <div class="chatBotDetailPage-buttonGroup"
                                  th:if="${userNickName != null and userNickName == recipeComments.userNickName}">
@@ -128,6 +126,7 @@
                     </div>
                 </div>
                 <!--        댓글 리스트 반복문 끝-->
+                <div id="pagination"></div>
             </div>
         </div>
     </div>
