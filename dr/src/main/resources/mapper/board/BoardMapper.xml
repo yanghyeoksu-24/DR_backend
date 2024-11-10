@@ -35,11 +35,6 @@
     </select>
 
 
-
-
-
-
-
     <!--    자유게시판 상세 페이지 -->
     <select id="freeBoardDetail" resultType="FreeBoardDetailDTO">
         SELECT B.BOARD_NUMBER,
@@ -103,10 +98,10 @@
 
     <!-- 자유게시판 댓글 삭제 -->
     <delete id="freeBoardDeleteReply" parameterType="Long">
-        DELETE FROM DR_REPLY
+        DELETE
+        FROM DR_REPLY
         WHERE REPLY_NUMBER = #{replyNumber}
     </delete>
-
 
 
     <!--자유 게시판 추천 -->
@@ -121,11 +116,9 @@
     <delete id="freeGoodMinus" parameterType="FreeGoodDTO">
         DELETE
         FROM DR_GOOD
-        WHERE BOARD_NUMBER = #{boardNumber} AND user_number = #{userNumber}
+        WHERE BOARD_NUMBER = #{boardNumber}
+          AND user_number = #{userNumber}
     </delete>
-
-
-
 
 
     <!--    꿀팁게시판 최신순 리스트-->
@@ -146,7 +139,6 @@
     </select>
 
 
-
     <!-- 꿀팁게시판 추천순 리스트 -->
     <select id="honeyBoardListGood" resultType="HoneyBoardListDTO">
         SELECT B.BOARD_NUMBER,
@@ -161,8 +153,6 @@
         GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, U.USER_NICKNAME, B.BOARD_WRITE_DATE
         ORDER BY goodCount DESC, B.BOARD_WRITE_DATE DESC
     </select>
-
-
 
 
     <!-- 꿀팁게시판 상세 페이지 -->
@@ -181,7 +171,8 @@
                  LEFT JOIN DR_PHOTO P ON U.USER_NUMBER = P.USER_NUMBER
                  LEFT JOIN DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
         WHERE B.BOARD_NUMBER = #{boardNumber}
-        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, B.BOARD_TYPE ,  B.BOARD_TEXT, B.BOARD_WRITE_DATE, U.USER_NUMBER, U.USER_NICKNAME,  P.PHOTO_LOCAL
+        GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, B.BOARD_TYPE, B.BOARD_TEXT, B.BOARD_WRITE_DATE, U.USER_NUMBER,
+                 U.USER_NICKNAME, P.PHOTO_LOCAL
     </select>
 
 
@@ -221,7 +212,8 @@
 
     <!-- 꿀팁게시판 댓글 삭제 -->
     <delete id="honeyBoardDeleteReply" parameterType="Long">
-        DELETE FROM DR_REPLY
+        DELETE
+        FROM DR_REPLY
         WHERE REPLY_NUMBER = #{replyNumber}
     </delete>
 
@@ -237,18 +229,46 @@
     <delete id="honeyGoodMinus" parameterType="HoneyGoodDTO">
         DELETE
         FROM DR_GOOD
-        WHERE BOARD_NUMBER = #{boardNumber} AND user_number = #{userNumber}
+        WHERE BOARD_NUMBER = #{boardNumber}
+          AND user_number = #{userNumber}
     </delete>
 
-    <!-- 신고 -->
+    <!-- 게시판 신고 -->
     <insert id="report" parameterType="BoardReportDTO">
         <selectKey keyProperty="sirenNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_SIREN_NUMBER.nextval FROM DUAL
         </selectKey>
-        INSERT INTO DR_SIREN(SIREN_NUMBER, SIREN_REASON,  SIREN_TYPE , BOARD_NUMBER , REPLY_NUMBER , USER_NUMBER)
+        INSERT INTO DR_SIREN(SIREN_NUMBER, SIREN_REASON, SIREN_TYPE , BOARD_NUMBER , REPLY_NUMBER , USER_NUMBER)
         VALUES (#{sirenNumber}, #{sirenReason}, #{sirenType} , #{boardNumber} , #{replyNumber} , #{userNumber})
     </insert>
 
+
+    <!--    자유게시판 게시글 작성-->
+    <insert id="freeBoardInsertWrite" parameterType="FreeBoardWriteDTO">
+        <selectKey keyProperty="boardNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_BOARD_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_BOARD (
+        BOARD_NUMBER, USER_NUMBER, BOARD_TITLE, BOARD_TEXT,
+        BOARD_TYPE, BOARD_WRITE_DATE
+        ) VALUES (
+        #{boardNumber}, #{userNumber}, #{boardTitle}, #{boardText},
+        #{boardType}, SYSDATE
+        )
+    </insert>
+
+
+    <!-- 자유게시판 사진 데이터 삽입 -->
+    <insert id="freeBoardInsertPhoto" parameterType="FreeBoardWriteDTO">
+        <selectKey keyProperty="photoNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_PHOTO_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_PHOTO (
+        PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_UPLOAD, BOARD_NUMBER
+        ) VALUES (
+        #{photoNumber}, #{photoOriginal}, #{photoLocal}, SYSDATE, #{boardNumber}
+        )
+    </insert>
 
 
 </mapper>
