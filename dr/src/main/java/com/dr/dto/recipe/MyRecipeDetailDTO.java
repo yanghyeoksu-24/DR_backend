@@ -21,5 +21,4 @@ public class MyRecipeDetailDTO {
     private Long goodCount;               // 추천수
     private Long userNumber;
     private String recipeType;
-    private boolean liked;
 }
