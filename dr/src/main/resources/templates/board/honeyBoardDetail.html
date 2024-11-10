@@ -53,7 +53,7 @@
 
             <div class="honeyBoardDetail-writetext">
                 <p class="honeyBoardDetail-texts" th:text="${honeyBoardDetail.boardText}">글 내용</p>
-                <img th:src="@{/image/board/} + ${honeyBoardDetail.photoLocal}" alt="Board Image">
+                <img th:src="@{/image/photo/} + ${honeyBoardDetail.photoLocal}" alt="Board Image">
 
                 <div class="honeyBoardDetail-recommendImg">
                     <input type="hidden" id="boardNumber" name="boardNumber" th:value="${honeyBoardDetail.boardNumber}">

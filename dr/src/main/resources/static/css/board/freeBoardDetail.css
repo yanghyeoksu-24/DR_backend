@@ -142,15 +142,16 @@ main{
 }
 
 .freeBoardDetail-commentUserImg, .freeBoardDetail-replyUserImg {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   margin-right: 10px;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .freeBoardDetail-commentUserImg img, .freeBoardDetail-replyUserImg img {
-  width: 100%;
-  height: 100%;
+  width: 100%; /* 이미지가 컨테이너의 크기에 맞도록 설정 */
+  height: 100%; /* 이미지가 컨테이너의 크기에 맞도록 설정 */
+  object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너를 꽉 채우도록 설정 */
 }
 
 .freeBoardDetail-commentContent, .freeBoardDetail-replyContent {

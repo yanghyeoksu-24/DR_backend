@@ -54,7 +54,7 @@
             </div>
             <div class="freeBoardDetail-writetext">
                 <p class="freeBoardDetail-texts" th:text="${freeBoardDetail.boardText}">글 내용</p>
-                <img th:src="@{/image/board/} + ${freeBoardDetail.photoLocal}" alt="Board Image">
+                <img th:src="@{/image/photo/} + ${freeBoardDetail.photoLocal}" alt="Board Image">
 
                 <div class="freeBoardDetail-recommendImg">
                     <input type="hidden" id="boardNumber" name="boardNumber" th:value="${freeBoardDetail.boardNumber}">
