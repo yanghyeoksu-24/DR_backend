@@ -51,6 +51,7 @@ public class PointShopController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
         }
 
+
         try {
             // 구매 로직
             // 상품코드 가져오기
@@ -80,7 +81,7 @@ public class PointShopController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("구매 처리 중 오류 발생");
         }
 
-        return ResponseEntity.ok("구매가 완료되었습니다.");
+        return ResponseEntity.ok().build();
     }
 
 

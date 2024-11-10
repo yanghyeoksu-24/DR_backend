@@ -62,7 +62,7 @@
                 <span class="nangjangbot-lastChatTitle" th:text="${chat.sessionTitle}"> </span>
                 <span class="nangjangbot-lastChatDate" th:text="${chat.createDate}"></span>
                 <input type="hidden" class="lastChatSession" th:value="${chat.sessionNumber}"/>
-                <button class="nangjangbot-imgFrame">
+                <button type="button" class="nangjangbot-imgFrame">
                     <img th:src="@{/image/nangjangbot/delete.png}">
                 </button>
             </div>

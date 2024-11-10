@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 public class KakaoUsersDTO {
     private Long userNumber;
     private String name; // 사용자 이름
+    private String userNickName;
+    private String userEmail;
+    private String userPhone;
     private String profilePic; // 프로필 사진 URL
     private String provider; // 인증 제공자 (예: google)
     private String providerId; // 제공자의 사용자 고유 ID
