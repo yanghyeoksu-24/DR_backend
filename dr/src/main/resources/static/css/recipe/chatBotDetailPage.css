@@ -1,3 +1,8 @@
+*{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
 body{
     font-family: 'Cute Font', cursive;
     margin: 0;
@@ -33,15 +38,19 @@ main{
     margin-right: 10px;
     border-radius: 5px;
 }
+.chatBotDetailPage-heartbox{
+    display: flex;
+    margin-bottom: 10px;
+    margin-left: 55px;
+}
 
 .chatBotDetailPage-writeName, .chatBotDetailPage-foodTitle{
     margin-bottom: 10px;
 }
 .chatBotDetailPage-firstButton{
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin-bottom: 10px;
+    gap: 10px; /* 수정/삭제 버튼 간격 */
 }
 
 .chatBotDetailPage-buttonOne{
@@ -50,19 +59,14 @@ main{
     height: 40px;
     color: white;
     background-color: #EBAA39;
-    margin-right: 10px;
     border: none;
     cursor: pointer;
 }
-/* .chatBotDetailPage-buttonOne:last-child{
-    margin-right: 0;
-} */
+
 .chatBotDetailPage-secondButton{
-    display: flex;
+    /*display: flex;*/
     align-items: center;
-}
-.chatBotDetailPage-buttonTwo{
-    background-color: white;
+    gap: 10px;
 }
 .chatBotDetailPage-secondButton img{
     width: 40px;
@@ -75,6 +79,7 @@ main{
     width: 60px;
     height: 30px;
     cursor: pointer;
+    background-color: white;
 }
 .chatBotDetailPage-writetext {
     display: flex;
@@ -132,6 +137,7 @@ main{
     width: 50px;
     height: 50px;
     margin-right: 10px;
+    overflow: hidden;
 }
 
 .chatBotDetailPage-commentUserImg img, .chatBotDetailPage-replyUserImg img {
@@ -247,7 +253,40 @@ main{
     margin-top: 40px;
   }
 
+.chatBotDetailPage-saveBtn, .chatBotDetailPage-cancelBtn{
+    background-color: #f0a500;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    margin-left: 10px; /* 버튼 사이 간격 */
+    cursor: pointer;
+    border-radius: 5px;
+}
+#manage-pages {
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
 
+.manage-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#pagination {
+    margin-top: 30px;
+    position: relative;
+    left: 43%;
+}
 
 
 
