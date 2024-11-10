@@ -53,6 +53,8 @@ public class RecipeController {
 
         // 특정 레시피의 댓글 목록 조회
         List<MyRecipeCommentDTO> recipeComments = recipeService.selectMyRecipeComment(recipeNumber);
+        log.info(recipeDetail.toString());
+        log.info(recipeComments.toString());
 
         // 모델에 레시피 상세 정보 추가
         model.addAttribute("recipeDetail", recipeDetail);
@@ -201,27 +203,39 @@ public class RecipeController {
         return "recipe/myRecipeWriter";  // myRecipeWriter.html로 데이터 전달
     }
 
-        //나만의 레시피 글쓰기 db에 저장
-        @PostMapping("/myRecipeWriterOk")  // 레시피 작성 폼에서 제출된 데이터를 처리
-        public String submitRecipe(@ModelAttribute MyRecipeWriteDTO myRecipeWriteDTO, HttpSession session) {
-            // 세션에서 유저 번호 가져오기
-            Long userNumber = (Long) session.getAttribute("userNumber");
-            myRecipeWriteDTO.setUserNumber(userNumber); // 세션에서 가져온 userNumber 설정
-            myRecipeWriteDTO.setRecipeType("나만의레시피"); // 레시피 타입 설정
-            log.info(userNumber + "eirhnqeowrn;qwernwelqrqqqqqqqqqq");
-            try {
-                // 레시피 정보와 사진을 DB에 삽입
-                recipeService.insertRecipeWithPhoto(myRecipeWriteDTO);
-                log.info("Recipe inserted successfully: " + myRecipeWriteDTO);
-                // 레시피 상세 페이지로 리다이렉트, recipeNumber를 URL에 포함시켜 해당 레시피 상세 페이지로 이동
-                return "redirect:/recipe/myDetailPage?recipeNumber=" + myRecipeWriteDTO.getRecipeNumber();
-            } catch (Exception e) {
-                log.error("Error inserting recipe: " + e.getMessage());
-                // 오류 발생 시 작성 페이지로 다시 이동
-                return "recipe/myRecipeWriter";
-            }
-        }
+    // 나만의레시피 글쓰기
+    @PostMapping("/myRecipeWriterOk")
+    public String submitRecipe(
+            @RequestParam("recipeTitle") String recipeTitle,
+            @RequestParam("recipeText") String recipeText,
+            @RequestParam("photoOriginal") String photoOriginal,
+            @RequestParam("photoLocal") String photoLocal,
+            @RequestParam("photoSize") String photoSize,
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
 
+        // 1. MyRecipeWriteDTO 생성 (레시피 정보)
+        MyRecipeWriteDTO myRecipeWriteDTO = new MyRecipeWriteDTO();
+        myRecipeWriteDTO.setRecipeTitle(recipeTitle);
+        myRecipeWriteDTO.setRecipeText(recipeText);
+        myRecipeWriteDTO.setUserNumber(userNumber);
+        myRecipeWriteDTO.setRecipeType("나만의레시피");
+
+        log.info(myRecipeWriteDTO.toString()+"aslknlksdnfvklsdnklgnkldgsnkl;bsd");
+
+        // 2. RecipePhotoDTO 생성 (사진 정보)
+        RecipePhotoDTO recipePhotoDTO = new RecipePhotoDTO();
+        recipePhotoDTO.setPhotoOriginal(photoOriginal);
+        recipePhotoDTO.setPhotoLocal(photoLocal);
+        recipePhotoDTO.setPhotoSize(photoSize);
+
+        log.info(recipePhotoDTO.toString()+"asdlknldabndfklnlkldbba");
+
+        // 3. RecipeService 호출하여 레시피와 사진 저장
+        recipeService.saveRecipe(myRecipeWriteDTO, recipePhotoDTO);
+
+        // 4. 성공 메시지 전달 후, 리디렉션
+        return "redirect:/recipe/myRecipeList"; // 리디렉션 URL은 필요에 맞게 수정
+    }
 
     // 나만의 레시피 추천 수 증가
     @PostMapping("/goodPlus")
@@ -276,10 +290,11 @@ public class RecipeController {
                                  @SessionAttribute(value = "userNumber", required = false) Long userNumber,
                                  @RequestParam("reason") String reason,
                                  @RequestParam(value = "otherReasonText", required = false) String otherReasonText
-                                ) {
-        ChatBotRecipeDetailDTO chatBotRecipeDetailDTO = recipeService.findChatBotRecipeDetail(recipeNumber);
+    ) {
+
+        ChatBotRecipeDetailDTO chatBotRecipeDetail = recipeService.findChatBotRecipeDetail(recipeNumber);
         RecipeReportDTO recipeReportDTO = new RecipeReportDTO();
-        log.info(chatBotRecipeDetailDTO + "-----------------------qwqewretfygjhkjlkhgftrdseawEASWRETDFG");
+        log.info(chatBotRecipeDetail + "-----------------------qwqewretfygjhkjlkhgftrdseawEASWRETDFG");
 
         // 1. 사유 지정
         if (otherReasonText != null && !otherReasonText.trim().isEmpty()) {
@@ -305,7 +320,7 @@ public class RecipeController {
         recipeService.report(recipeReportDTO);
 
         // 4. 리디렉션 처리
-        if ("챗봇레시피".equals(chatBotRecipeDetailDTO.getRecipeType())) {
+        if ("챗봇레시피".equals(chatBotRecipeDetail.getRecipeType())) {
             return "redirect:/recipe/chatBotDetailPage?recipeNumber=" + recipeNumber;
         } else {
             return "redirect:/recipe/myDetailPage?recipeNumber=" + recipeNumber;
