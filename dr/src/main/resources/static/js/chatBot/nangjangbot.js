@@ -189,7 +189,7 @@ $(document).on('click', '.nangjangbot-imgFrame', function (e) {
         if (confirm("현재 채팅중인 채팅방 입니다.\n계속 진행 하시겠습니까?\n삭제된 채팅은 복구가 불가능합니다.")) {
             $.ajax({
                 // ****GET요청에서는 JSON 형식의 데이터를 본문에 포함할 수 없고 쿼리 매개변수로 전달할 수 없음
-                type: "POST",
+                type: "DELETE",
                 url: "/api/chatbot/delete",
                 contentType: "application/json",
                 data: JSON.stringify({sessionNumber: sessionNumber}),
