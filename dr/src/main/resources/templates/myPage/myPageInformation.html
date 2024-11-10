@@ -42,13 +42,19 @@
                 <!-- 마이페이지 이미지 사진 -->
                 <div class="myPage-pictureImage">
                     <div class="myPage-profile">
-                        <div id="fuck">
-                        <img id="profileImage" th:src="@{/image/photo/{photoName}(photoName=${userInfo.photo})}"
-                             alt="프로필 이미지" width="150" height="150" loading="lazy">
-                        </div>
+
+                        <img th:src="@{/image/photo/{photoName}(photoName=${userInfo.photo})}" class="profileImage" th:if="${session.userNumber != null && session.profilePic == null}"
+                             alt="프로필 이미지" width="150" height="150">
+
+                        <img th:src="${userInfo.profilePic}" class="profileImage" th:if="${session.userNumber != null && session.profilePic != null}"
+                             alt="프로필 이미지" width="150" height="150" >
+
                         <input type="file" id="imageUpload" style="display: none;">
                         <!-- 이미지 업로드 버튼 (수레바퀴 이미지) -->
-                        <img th:src="@{/image/sawtooth.png}" alt="이미지 변경" id="uploadIcon" style="width: 20px; height: 20px; cursor: pointer; margin-top: 10px;">
+                        <div th:classappend="${session.profilePic == null} ? 'visible' : 'hidden'">
+                            <!-- 프로필 이미지가 없을 때만 업로드 아이콘을 표시 -->
+                            <img th:src="@{/image/sawtooth.png}" alt="이미지 변경" id="uploadIcon" style="width: 20px; height: 20px; cursor: pointer; margin-top: 10px;">
+                        </div>
                     </div>
                 </div>
                 <!-- 마이페이지 내 정보 -->
