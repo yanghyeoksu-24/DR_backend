@@ -2,6 +2,7 @@ package com.dr.controller.board;
 
 import com.dr.dto.board.*;
 import com.dr.service.board.BoardService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -43,7 +45,7 @@ public class BoardController {
                                 @SessionAttribute(value = "userNumber", required = false) Long userNumber,
                                 @RequestParam("reason") String reason,
                                 @RequestParam(value = "otherReasonText", required = false) String otherReasonText
-                               ) {
+    ) {
 
         FreeBoardDetailDTO freeBoardDetailDTO = boardService.freeBoardDetail(boardNumber);
         BoardReportDTO boardReportDTO = new BoardReportDTO();
@@ -77,7 +79,6 @@ public class BoardController {
             return "redirect:/board/honeyBoardDetail?boardNumber=" + boardNumber;
         }
     }
-
 
 
     // 자유게시판 글 수정 페이지 이동
@@ -336,5 +337,25 @@ public class BoardController {
     }
 
 
+    // 자유게시판 게시글 작성
+    @PostMapping("/freeBoardWrite")
+    public String freeBoardWrite(@RequestBody FreeBoardWriteDTO freeBoardWriteDTO, HttpSession session) {
+        // 세션에서 유저 번호 가져오기
+        Long userNumber = (Long) session.getAttribute("userNumber");
+        if (userNumber == null) {
+            // 로그인되지 않은 경우 처리
+            return "redirect:/login";
+        }
+        freeBoardWriteDTO.setUserNumber(userNumber);
+        freeBoardWriteDTO.setBoardType("자유게시판");  // 자유게시판으로 설정
+
+        // 게시글 삽입 처리
+        boardService.insertFreeBoardPost(freeBoardWriteDTO);
+        return "redirect:/board/freeBoardList";
+    }
+
 }
+
+
+
 

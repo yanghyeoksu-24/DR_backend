@@ -10,6 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <!-- 페이지네이션 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
     <title>DR - 자유게시판 상세페이지</title>
 </head>
 
@@ -50,7 +54,7 @@
             </div>
             <div class="freeBoardDetail-writetext">
                 <p class="freeBoardDetail-texts" th:text="${freeBoardDetail.boardText}">글 내용</p>
-                <img th:src="@{/image/board/} + ${freeBoardDetail.photoLocal}" alt="Board Image">
+                <img th:src="@{/image/photo/} + ${freeBoardDetail.photoLocal}" alt="Board Image">
 
                 <div class="freeBoardDetail-recommendImg">
                     <input type="hidden" id="boardNumber" name="boardNumber" th:value="${freeBoardDetail.boardNumber}">
@@ -92,7 +96,7 @@
                             <div class="freeBoardDetail-commentDate"
                                  th:text="${freeBoardComments.replyModifyDate != null ? freeBoardComments.replyModifyDate + '(수정됨)' : freeBoardComments.replyWriteDate}">
 
-                                 작성 날짜
+                                작성 날짜
                             </div>
                             <br><br>
                             <div class="freeBoardDetail-commentText" id="commentText${freeBoardComments.replyNumber}"
@@ -128,6 +132,7 @@
                 <!-- 댓글 리스트 반복문 끝 -->
             </div>
         </div>
+        <div id="pagination"></div>
     </div>
 </main>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
