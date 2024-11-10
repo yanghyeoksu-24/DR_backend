@@ -71,12 +71,19 @@ public interface BoardMapper {
     // 게시판 신고
     void report(BoardReportDTO boardReportDTO);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     // 자유게시판 게시글 작성
     void freeBoardInsertWrite(FreeBoardWriteDTO freeBoardWriteDTO);
 
     // 자유게시판 게시글 사진 등록
+<<<<<<< HEAD
     void freeBoardInsertPhoto(FreeBoardPhotoDTO freeBoardPhotoDTO);
 
+=======
+    void freeBoardInsertPhoto(FreeBoardWriteDTO freeBoardWriteDTO);
+>>>>>>> main
 
 }
