@@ -7,6 +7,7 @@
             U.USER_NICKNAME AS USER_NICKNAME,
             U.USER_EMAIL AS USER_EMAIL,
             U.USER_PHONE AS USER_PHONE,
+            U.PROFILE_PIC AS PROFILE_PIC,
             NVL(S.ENVIRONMENT_SCORE, 0) AS ENVIRONMENT_SCORE,
             NVL(R.ENVIRONMENT_RANK, 0) AS ENVIRONMENT_RANK,
             NVL(P.TOTAL_POINTS, 0) AS TOTAL_POINTS,
@@ -44,7 +45,7 @@
                  PHOTO_LOCAL IS NOT NULL
             ) PH ON U.USER_NUMBER = PH.USER_NUMBER
         WHERE
-            U.USER_NUMBER = #{userNumber}
+            U.USER_NUMBER = ${userNumber}
     </select>
 
     <!-- 닉네임 업데이트 -->
