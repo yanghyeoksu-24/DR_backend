@@ -157,5 +157,17 @@ public class RecipeService {
         recipeMapper.report(reportDTO);
     }
 
+    // 레시피 삭제
+    @Transactional
+    public void deleteRecipeAndPhoto(Long recipeNumber) {
+        recipeMapper.deleteRecipe(recipeNumber);
+        recipeMapper.deletePhoto(recipeNumber);
+    }
 
+    //레시피 수정
+    @Transactional
+    public void updateRecipeAndPhoto(MyRecipeUpdateDTO myRecipeUpdateDTO) {
+        recipeMapper.updateRecipe(myRecipeUpdateDTO);
+        recipeMapper.updatePhoto(myRecipeUpdateDTO);
+    }
 }
