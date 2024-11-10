@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DR - 자유게시판 글쓰기</title>
-    <link rel="stylesheet" th:href="@{/css/board/freeBoardWrite.css}">
+
+    <link rel="stylesheet" th:href="@{/css/board/freeBoardWrite.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
+    <script defer th:src="@{/js/fragment/header.js}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+
+    <!-- Toast UI Editor CSS -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css">
+
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 </head>
 
 <body>
@@ -22,78 +27,86 @@
                 <span class="freeboardwrite-text1">자유게시판</span>
                 <span class="freeboardwrite-text2">글쓰기</span>
             </div>
-            <br><br>
-            <div class="freeboardwrite-inputContainer">
-                <input type="text" class="freeboardwrite-titleInput" placeholder="제목을 입력하세요">
-            </div>
 
-            <div id="contsEditor"></div>
+            <form action="/board/freeBoardWriteOk" method="post" id="freeBoardForm">
+                <div class="freeboardwrite-inputContainer">
+                    <input type="text" class="freeboardwrite-titleInput" name="boardTitle" placeholder="제목을 입력하세요" required>
+                </div>
 
-            <div class="freeboardwrite-write">
-                <button id="submitButton" class="freeboardwrite-writeButton">등록</button>
-                &nbsp;<a th:href="@{/board/freeBoardList}">
-                    <button class="freeboardwrite-writeButton">취소</button>
+                <!-- Toast UI Editor Section -->
+                <div id="contsEditor"></div>
+                <input type="hidden" name="boardText" id="boardText">
+
+                <!-- Hidden inputs for photo details -->
+                <input type="hidden" name="photoOriginal" th:value="${photoOriginal}"/>
+                <input type="hidden" name="photoLocal" th:value="${photoLocal}"/>
+                <input type="hidden" name="photoSize" th:value="${photoSize}"/>
+
+
+                <div class="freeboardwrite-write">
+                    <button type="submit" class="freeboardwrite-writeButton" id="submitButton">등록</button>
+                    &nbsp;<a th:href="@{/board/freeBoardList}">
+                    <button type="button" class="freeboardwrite-writeButton">취소</button>
                 </a>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </main>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 
+<!-- Toast UI Editor JavaScript -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
     const editor = new toastui.Editor({
         el: document.querySelector('#contsEditor'),
         previewStyle: 'vertical',
-        initialEditType: 'markdown',
+        initialEditType: 'wysiwyg',
         height: '500px',
         placeholder: '내용을 입력해 주세요.',
         hooks: {
             addImageBlobHook: async (blob, callback) => {
+                console.log("이미지가 업로드 되었습니다.");
+
                 const formData = new FormData();
-                formData.append('file', blob);
+                formData.append('image', blob);
 
-                const response = await fetch('/image/upload', {  // 이미지 업로드 엔드포인트 수정 필요
-                    method: 'POST',
-                    body: formData
-                });
+                try {
+                    const response = await fetch('/board/tui-editor/image-upload', {  // 서버 엔드포인트 수정
+                        method: 'POST',
+                        body: formData
+                    });
 
-                const imageUrl = await response.text();  // 서버에서 이미지 URL을 반환하도록 설정
-                callback(imageUrl, 'alt text');  // 이미지 추가
+                    const data = await response.json();
+                    console.log('Response:', data);
+
+                    if (!response.ok) {
+                        throw new Error('이미지 업로드 실패: ' + data.error);
+                    }
+
+                    // 클라이언트에서 받은 파일 정보로 콜백 호출
+                    callback(URL.createObjectURL(blob), '이미지'); // 이미지를 에디터에 추가
+
+                    // 서버로부터 받은 값으로 hidden 필드 업데이트
+                    document.querySelector('input[name="photoOriginal"]').value = data.photoOriginal;
+                    document.querySelector('input[name="photoLocal"]').value = data.photoLocal;
+                    document.querySelector('input[name="photoSize"]').value = data.photoSize;
+
+                } catch (error) {
+                    console.error('이미지 업로드 실패:', error);
+                    alert('이미지 업로드에 실패했습니다.');
+                }
             }
         }
     });
 
-    $(document).ready(function() {
-        $('#submitButton').on('click', function(e) {
-            e.preventDefault();
+    document.getElementById('submitButton').addEventListener('click', function (event) {
+        event.preventDefault();
+        document.getElementById('boardText').value = editor.getHTML();
 
-            const title = $('.freeboardwrite-titleInput').val().trim();
-            const content = editor.getMarkdown().trim();
-
-            if (title === '' || content === '') {
-                alert("등록할 제목과 내용을 작성하세요.");
-                return false;
-            }
-
-            if (confirm("등록하시겠습니까?")) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/board/freeBoardWrite',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        boardTitle: title,
-                        boardText: content
-                    }),
-                    success: function(response) {
-                        alert("글이 성공적으로 등록되었습니다.");
-                        window.location.href = '/board/freeBoardList';
-                    },
-                    error: function(error) {
-                        alert("글 등록에 실패했습니다. 다시 시도해 주세요.");
-                    }
-                });
-            }
-        });
+        if (confirm("등록하시겠습니까?")) {
+            document.getElementById('freeBoardForm').submit();
+        }
     });
 </script>
 </body>
