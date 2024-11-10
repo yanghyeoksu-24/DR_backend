@@ -71,10 +71,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         } else {
             session.setAttribute("isNewUser", false);
             // 이미 존재하는 사용자인 경우, 필요한 정보 업데이트
-            existingUser.setName(name); // 예시: 이름 정보 업데이트
-            existingUser.setProfilePic(profilePic); // 예시: 프로필 사진 정보 업데이트
+            existingUser.setProfilePic(profilePic); //프로필 사진 정보 업데이트
             kakaoUsersMapperuserMapper.updateUser(existingUser);
+            System.out.println(existingUser + " : 12312312313");
             userNumber = existingUser.getUserNumber();
+            name = existingUser.getUserNickName();
         }
 
 
