@@ -15,9 +15,10 @@ public class ChatBotRecipeDetailDTO {
     private String recipeTitle;          // 레시피 제목
     private String recipeText;           // 레시피 내용
     private String photoLocal;           // 이미지 경로
-    private String photoOriginal;
     private String userNickName;         // 작성자
     private String recipeWriteDate;      // 작성일
-    private int goodCount;               // 추천수
+    private String recipeModifyDate;     // 수정일
+    private Long goodCount;               // 추천수
+    private Long userNumber;
     private String recipeType;
 }
