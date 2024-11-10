@@ -78,13 +78,10 @@
 ### 4. 실행 화면
   <details>
     <summary>회원 관련</summary>
-  
-  회원가입 시 유효성 검사 및 중복확인을 진행하며 완료시 회원 정보를 저장하고 로그인 화면으로 이동한다.   
      
   **1. 회원가입 화면** 
-  ![drJoin]([https://user-images.githubusercontent.com/59757689/156976413-78b9e0e9-2ab1-47e0-a0cd-699ebacddb79.png](https://github.com/user-attachments/assets/0d6a4829-2760-4d79-aed3-37aa285e23a4)) 
-  https://github.com/user-attachments/assets/0d6a4829-2760-4d79-aed3-37aa285e23a4
-     
+       회원가입 시 유효성 검사 및 중복확인을 진행하며 완료시 회원 정보를 저장하고 로그인 화면으로 이동한다.   
+       
   **2. 로그인 화면** 
 
   **2-1. OAuth 2.0 소셜 로그인 화면**   
