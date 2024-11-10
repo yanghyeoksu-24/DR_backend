@@ -76,6 +76,6 @@ public interface BoardMapper {
     void freeBoardInsertWrite(FreeBoardWriteDTO freeBoardWriteDTO);
 
     // 자유게시판 게시글 사진 등록
-    void freeBoardInsertPhoto(FreeBoardWriteDTO freeBoardWriteDTO);
+    void freeBoardInsertPhoto(FreeBoardPhotoDTO freeBoardPhotoDTO);
 
 }
