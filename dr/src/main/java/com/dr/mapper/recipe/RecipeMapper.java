@@ -59,6 +59,12 @@ public interface RecipeMapper {
     //     사진 데이터 삽입 메서드
     void insertMyPhoto(RecipePhotoDTO recipePhotoDTO);
 
+    // 나만의 레시피 수정
+    void updateMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO);
+
+    // 사진 데이터 수정
+    void updateMyPhoto(RecipePhotoDTO recipePhotoDTO);
+
     //챗봇 레시피 글쓰기
     void insertChatBotRecipe(ChatBotRecipeWriteDTO chatBotRecipeWriteDTO);
 
@@ -82,6 +88,6 @@ public interface RecipeMapper {
 
     void report(RecipeReportDTO recipeReportDTO);
 
-
+    void insertScoreRecord(ScoreCheckDTO scoreCheckDTO);
 }
 

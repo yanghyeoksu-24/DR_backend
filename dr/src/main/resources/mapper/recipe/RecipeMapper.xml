@@ -253,7 +253,6 @@
 
 
     <!--    나만의레시피 글쓰기-->
-
     <!-- 레시피 데이터 삽입 -->
     <insert id="insertMyRecipe" parameterType="MyRecipeWriteDTO">
         <selectKey keyProperty="recipeNumber" resultType="Long" order="BEFORE">
@@ -273,11 +272,35 @@
             SELECT SEQ_PHOTO_NUMBER.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO DR_PHOTO (
-        PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_SIZE , RECIPE_NUMBER , USER_NUMBER
+        PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_SIZE , RECIPE_NUMBER
         ) VALUES (
-        #{photoNumber}, #{photoOriginal}, #{photoLocal}, #{photoSize} ,  #{recipeNumber} , #{userNumber}
+        #{photoNumber}, #{photoOriginal}, #{photoLocal}, #{photoSize} ,  #{recipeNumber}
         )
     </insert>
+
+<!--    나만의 레시피 글 수정-->
+    <!-- 레시피 데이터 수정 -->
+    <update id="updateMyRecipe" parameterType="MyRecipeWriteDTO">
+        UPDATE DR_RECIPE
+        SET RECIPE_TITLE       = #{recipeTitle},
+            RECIPE_TEXT        = #{recipeText},
+            RECIPE_TYPE        = #{recipeType},
+            RECIPE_MODIFY_DATE = SYSDATE
+        WHERE RECIPE_NUMBER = #{recipeNumber}
+          AND USER_NUMBER = #{userNumber}
+    </update>
+
+    <!-- 사진 데이터 수정 -->
+    <update id="updateMyPhoto" parameterType="RecipePhotoDTO">
+        UPDATE DR_PHOTO
+        SET PHOTO_LOCAL = #{photoLocal},
+            PHOTO_SIZE  = #{photoSize}
+        WHERE PHOTO_NUMBER = #{photoNumber}
+          AND RECIPE_NUMBER = #{recipeNumber}
+          AND USER_NUMBER = #{userNumber}
+    </update>
+
+
 
 
     <!-- 찜 추가 -->
@@ -303,6 +326,15 @@
         </selectKey>
         INSERT INTO DR_SIREN(SIREN_NUMBER, SIREN_REASON, SIREN_TYPE , RECIPE_NUMBER , REPLY_NUMBER , USER_NUMBER)
         VALUES (#{sirenNumber}, #{sirenReason}, #{sirenType} , #{recipeNumber} , #{replyNumber} , #{userNumber})
+    </insert>
+
+    <!-- 챗봇 레시피 작성 시  환경기여 점수 적립 -->
+    <insert id="insertScoreRecord" parameterType="ScoreCheckDTO">
+        <selectKey keyProperty="scoreNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_SCORE_NUMBER.nextval FROM DUAL
+        </selectKey>
+        INSERT INTO DR_SCORE (SCORE_NUMBER, SCORE_GET, USER_NUMBER)
+        VALUES (#{scoreNumber},#{socreGet},#{userNumber})
     </insert>
 
 

@@ -106,7 +106,6 @@ public class RecipeController {
 
 
     //      나만의 레시피 상세페이지 댓글 삭제
-    //      @RequestParam(name = "userId", required = true
     @PostMapping("/deleteMyReply")
     public ResponseEntity<Void> deleteMyRecipeComment(@RequestParam("replyNumber") Long replyNumber) {
         if (replyNumber == null) {
@@ -236,6 +235,10 @@ public class RecipeController {
         // 4. 성공 메시지 전달 후, 리디렉션
         return "redirect:/recipe/myRecipeList"; // 리디렉션 URL은 필요에 맞게 수정
     }
+
+    //나만의 레시피 글 수정
+
+
 
     // 나만의 레시피 추천 수 증가
     @PostMapping("/goodPlus")
