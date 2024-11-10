@@ -1,55 +1,91 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./../../css/recipe/myRecipeModify.css">
-    <link rel="stylesheet" href="../../css/main/header.css">
-    <link rel="stylesheet" href="../../css/main/footer.css">
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
+    <script defer th:src="@{/js/fragment/header.js}"></script>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-    <!-- 네비바 폰트 -->
-    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
-    <!-- 제이쿼리 -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script defer src="../../js/main/header.js"></script>
-
-    <title>DR - 챗봇 레시피 수정</title>
+    <title>DR - 나만의 레시피 수정</title>
 </head>
 <body>
-    <main>
-        <div class="myRecipeModify-mainContainer">
-            <div class="myRecipeModify-mainBox">
-                <div class="myRecipeModify-title">
-                    <span class="myRecipeModify-text1">나만의 레시피</span>
-                    <span class="myRecipeModify-text2">수정</span>
-                </div>
+<header th:replace="~{/fragment/header :: header}"></header>
+<main>
+    <div class="myRecipeModify-mainContainer">
+        <div class="myRecipeModify-mainBox">
+            <div class="myRecipeModify-title">
+                <span class="myRecipeModify-text1">나만의 레시피</span>
+                <span class="myRecipeModify-text2">수정</span>
+            </div>
 
-                <div class="myRecipeModify-inputContainer">
-                    <input type="text" class="myRecipeModify-titleInput" placeholder="제목을 입력하세요">
-                </div>
+            <div class="myRecipeModify-inputContainer">
+                <input type="hidden" id="recipeNumberHidden" th:value="${recipeNumber}">
+                <input type="text" class="myRecipeModify-titleInput" id="recipeTitle"
+                       th:value="${recipeTitle}" placeholder="제목을 입력하세요">
+            </div>
 
-                <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-                <div id="contsEditor"></div>
-                <script>
-                    const editor = new toastui.Editor({
-                        el: document.querySelector('#contsEditor'),
-                        previewStyle: 'vertical',
-                        initialEditType: 'wysiwyg',
-                        height: '500px',
-                        placeholder: '내용을 입력해 주세요.',
-                    });
-                </script>
+            <input type="hidden" id="recipeTextHidden" th:value="${recipeText}">
 
-                <div class="myRecipeModify-write">
-                    <a href="./myDetailPage.html"><button class="myRecipeModify-cancelButton">취소</button></a>
-                    <a href="./myDetailPage.html"><button class="myRecipeModify-writeButton">수정</button></a>
-                </div>
+            <div id="contsEditor"></div>
+
+            <div class="myRecipeModify-write">
+                <a href="./myDetailPage.html">
+                    <button class="myRecipeModify-cancelButton">취소</button>
+                </a>
+                <button id="updateButton" class="myRecipeModify-writeButton">수정</button>
             </div>
         </div>
-    </main>
-    <script src="./../../js/recipe/myRecipeModify.js" defer></script>
-</body>
+    </div>
+</main>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+    const editor = new toastui.Editor({
+        el: document.querySelector('#contsEditor'),
+        previewStyle: 'vertical',
+        initialEditType: 'markdown',
+        height: '500px',
+        placeholder: '내용을 입력해 주세요.',
+        hooks: {
+            addImageBlobHook: async (blob, callback) => {
+                const formData = new FormData();
+                formData.append('image', blob);
 
+                try {
+                    const response = await fetch('/tui-editor/image-upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error('이미지 업로드 실패: ' + data.error);
+                    }
+
+                    // 클라이언트에서 받은 파일 정보로 콜백 호출
+                    callback(URL.createObjectURL(blob), '이미지'); // 이미지를 에디터에 추가
+
+                } catch (error) {
+                    alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+                    console.error('이미지 업로드 실패:', error);
+                }
+            }
+        }
+    });
+
+    // 페이지 로드 시 데이터 설정
+    window.onload = function() {
+        const title = document.getElementById('recipeTitle').value;
+        const content = document.getElementById('recipeTextHidden').value;
+
+        // 입력 필드와 에디터에 값 설정
+        document.getElementById('recipeTitle').value = title;
+        editor.setHTML(content);
+    };
+
+</script>
+</body>
 </html>

@@ -37,33 +37,42 @@
 
     <!--    나만의 레시피 상세페이지-->
     <select id="selectMyRecipeDetail" resultType="MyRecipeDetailDTO">
-        SELECT R.RECIPE_NUMBER,                                               -- 레시피 번호
-               R.RECIPE_TITLE,
-               R.RECIPE_TYPE,                                               -- 레시피 제목
-               R.RECIPE_TEXT,                                                -- 레시피 내용
-               TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate, -- 작성일
-               U.USER_NICKNAME,                                              -- 작성자
-               P.PHOTO_LOCAL,                                                -- 작성자 프로필 사진
-               COUNT(G.GOOD_NUMBER) AS goodCount,                            -- 좋아요 수
-               R.USER_NUMBER
-        FROM DR_RECIPE R
-                 JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
-                 LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
-                 LEFT JOIN (
-            SELECT USER_NUMBER, PHOTO_LOCAL
-            FROM DR_PHOTO
-            WHERE ROWNUM = 1
-        ) P ON U.USER_NUMBER = P.USER_NUMBER
-        WHERE R.RECIPE_NUMBER = #{recipeNumber}
+        SELECT
+            R.RECIPE_NUMBER,                                           -- 레시피 번호
+            R.RECIPE_TITLE,                                            -- 레시피 제목
+            R.RECIPE_TYPE,                                             -- 레시피 종류
+            R.RECIPE_TEXT,                                             -- 레시피 내용
+            TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate, -- 작성일
+            U.USER_NICKNAME,                                           -- 작성자
+            P.PHOTO_LOCAL,                                             -- 작성자 프로필 사진 경로
+            COUNT(G.GOOD_NUMBER) AS goodCount,                         -- 좋아요 수
+            R.USER_NUMBER                                              -- 작성자 번호
+        FROM
+            DR_RECIPE R
+                JOIN
+            DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
+                LEFT JOIN
+            DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
+                LEFT JOIN (
+                SELECT
+                    USER_NUMBER,
+                    PHOTO_LOCAL,
+                    ROW_NUMBER() OVER (PARTITION BY USER_NUMBER ORDER BY PHOTO_UPLOAD DESC) AS RN
+                FROM
+                    DR_PHOTO
+            ) P ON U.USER_NUMBER = P.USER_NUMBER AND P.RN = 1  -- 각 사용자별 최신 사진 한 개만 선택
+        WHERE
+            R.RECIPE_NUMBER = #{recipeNumber}
           AND R.RECIPE_TYPE = '나만의레시피'
-        GROUP BY R.RECIPE_NUMBER,
-                 R.RECIPE_TITLE,
-                 R.RECIPE_TEXT,
-                 R.RECIPE_TYPE,
-                 R.RECIPE_WRITE_DATE,
-                 U.USER_NICKNAME,
-                 P.PHOTO_LOCAL,
-                 R.USER_NUMBER
+        GROUP BY
+            R.RECIPE_NUMBER,
+            R.RECIPE_TITLE,
+            R.RECIPE_TEXT,
+            R.RECIPE_TYPE,
+            R.RECIPE_WRITE_DATE,
+            U.USER_NICKNAME,
+            P.PHOTO_LOCAL,
+            R.USER_NUMBER
     </select>
 
 
@@ -253,6 +262,7 @@
 
 
     <!--    나만의레시피 글쓰기-->
+
     <!-- 레시피 데이터 삽입 -->
     <insert id="insertMyRecipe" parameterType="MyRecipeWriteDTO">
         <selectKey keyProperty="recipeNumber" resultType="Long" order="BEFORE">
@@ -277,30 +287,6 @@
         #{photoNumber}, #{photoOriginal}, #{photoLocal}, #{photoSize} ,  #{recipeNumber}
         )
     </insert>
-
-<!--    나만의 레시피 글 수정-->
-    <!-- 레시피 데이터 수정 -->
-    <update id="updateMyRecipe" parameterType="MyRecipeWriteDTO">
-        UPDATE DR_RECIPE
-        SET RECIPE_TITLE       = #{recipeTitle},
-            RECIPE_TEXT        = #{recipeText},
-            RECIPE_TYPE        = #{recipeType},
-            RECIPE_MODIFY_DATE = SYSDATE
-        WHERE RECIPE_NUMBER = #{recipeNumber}
-          AND USER_NUMBER = #{userNumber}
-    </update>
-
-    <!-- 사진 데이터 수정 -->
-    <update id="updateMyPhoto" parameterType="RecipePhotoDTO">
-        UPDATE DR_PHOTO
-        SET PHOTO_LOCAL = #{photoLocal},
-            PHOTO_SIZE  = #{photoSize}
-        WHERE PHOTO_NUMBER = #{photoNumber}
-          AND RECIPE_NUMBER = #{recipeNumber}
-          AND USER_NUMBER = #{userNumber}
-    </update>
-
-
 
 
     <!-- 찜 추가 -->
@@ -328,14 +314,29 @@
         VALUES (#{sirenNumber}, #{sirenReason}, #{sirenType} , #{recipeNumber} , #{replyNumber} , #{userNumber})
     </insert>
 
-    <!-- 챗봇 레시피 작성 시  환경기여 점수 적립 -->
-    <insert id="insertScoreRecord" parameterType="ScoreCheckDTO">
-        <selectKey keyProperty="scoreNumber" resultType="Long" order="BEFORE">
-            SELECT SEQ_SCORE_NUMBER.nextval FROM DUAL
-        </selectKey>
-        INSERT INTO DR_SCORE (SCORE_NUMBER, SCORE_GET, USER_NUMBER)
-        VALUES (#{scoreNumber},#{socreGet},#{userNumber})
-    </insert>
+
+    <!-- 삭제 레시피 -->
+    <delete id="deleteRecipe" parameterType="Long">
+        DELETE FROM DR_RECIPE WHERE RECIPE_NUMBER = #{recipeNumber}
+    </delete>
+
+    <delete id="deletePhoto" parameterType="Long">
+        DELETE FROM DR_PHOTO WHERE RECIPE_NUMBER = #{recipeNumber}
+    </delete>
+
+    <!-- 업데이트 레시피 -->
+    <update id="updateRecipe" parameterType="MyRecipeUpdateDTO">
+        UPDATE DR_RECIPE
+        SET RECIPE_TITLE = #{recipeTitle} AND RECIPE_TEXT = #{recipeText}
+        WHERE RECIPE_NUMBER = #{recipeNumber}
+    </update>
+
+    <update id="updatePhoto" parameterType="MyRecipeUpdateDTO">
+        UPDATE DR_PHOTO
+        SET PHOTO_ORIGIANL = #{photoOriginal} AND PHOTO_LOCAL = #{photoLocal} AND PHOTO_SIZE = #{photoSize}
+        WHERE RECIPE_NUMBER = #{recipeNumber}
+    </update>
+
 
 
 </mapper>

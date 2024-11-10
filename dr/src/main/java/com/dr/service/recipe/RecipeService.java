@@ -106,7 +106,6 @@ public class RecipeService {
     }
 
 
-    //나만의 레시피 글쓰기
     @Transactional  // 트랜잭션 관리
     public void saveRecipe(MyRecipeWriteDTO myRecipeWriteDTO, RecipePhotoDTO recipePhotoDTO) {
         // 1. 레시피 정보 먼저 저장 (RECIPE 테이블)
@@ -121,18 +120,6 @@ public class RecipeService {
 
         // 3. 사진 정보 저장 (PHOTO 테이블)
         recipeMapper.insertMyPhoto(recipePhotoDTO);
-    }
-
-    // 레시피 및 사진 수정 메서드
-    @Transactional
-    public void updateRecipe(MyRecipeWriteDTO myRecipeWriteDTO, RecipePhotoDTO recipePhotoDTO) {
-        // 1. 레시피 정보 수정
-        recipeMapper.updateMyRecipe(myRecipeWriteDTO);
-
-        // 2. 사진 정보 수정
-        recipePhotoDTO.setRecipeNumber(myRecipeWriteDTO.getRecipeNumber());
-        recipePhotoDTO.setUserNumber(myRecipeWriteDTO.getUserNumber());
-        recipeMapper.updateMyPhoto(recipePhotoDTO);
     }
 
     // 나만의 레시피 추천 수 증가
@@ -170,9 +157,17 @@ public class RecipeService {
         recipeMapper.report(reportDTO);
     }
 
-    //환경기여점수 삽입
-    public void insertScoreRecord(ScoreCheckDTO scoreCheckDTO){recipeMapper.insertScoreRecord(scoreCheckDTO);}
+    // 레시피 삭제
+    @Transactional
+    public void deleteRecipeAndPhoto(Long recipeNumber) {
+        recipeMapper.deleteRecipe(recipeNumber);
+        recipeMapper.deletePhoto(recipeNumber);
+    }
 
-
-
+    //레시피 수정
+    @Transactional
+    public void updateRecipeAndPhoto(MyRecipeUpdateDTO myRecipeUpdateDTO) {
+        recipeMapper.updateRecipe(myRecipeUpdateDTO);
+        recipeMapper.updatePhoto(myRecipeUpdateDTO);
+    }
 }
