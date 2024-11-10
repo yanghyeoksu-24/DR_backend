@@ -83,5 +83,15 @@ public interface RecipeMapper {
     void report(RecipeReportDTO recipeReportDTO);
 
 
+    // 레시피 삭제
+    void deleteRecipe(Long recipeNumber);
+
+    void deletePhoto(Long recipeNumber);
+
+    // 레시피 수정
+    void updateRecipe(MyRecipeUpdateDTO myRecipeUpdateDTO);
+
+    void updatePhoto(MyRecipeUpdateDTO myRecipeUpdateDTO);
+
 }
 
