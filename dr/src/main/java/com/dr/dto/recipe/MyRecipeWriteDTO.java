@@ -19,4 +19,3 @@ public class MyRecipeWriteDTO {
     private String recipeModifyDate;
     private String recipeType;
 }
-
