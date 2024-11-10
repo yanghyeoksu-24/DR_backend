@@ -78,11 +78,16 @@ li {
     /* 수직 정렬 */
 }
 
-.myPage-profile img#profileImage {
+.myPage-profile {
+    border-radius: 50%;
+    object-fit: cover;
+    /* 테두리 색상 변경 */
+}
+
+.profileImage {
     border-radius: 50%;
     object-fit: cover;
     border: 1px solid lightgray;
-    /* 테두리 색상 변경 */
 }
 
 #uploadIcon {
@@ -307,4 +312,12 @@ li {
     border-radius: 5px;
     width: 85px;
     margin-left: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
 }

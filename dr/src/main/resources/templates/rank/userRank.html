@@ -62,11 +62,19 @@
                     <span th:text="${rank.rank}"></span>
                 </div>
             </div>
-            <div class="userRankImageOne">
+
+
+            <div class="userRankImageOne" th:if="${rank.userNumber != null && rank.profilePic == null}">
                 <img class="userRankOneImgSet" th:src="@{/image/photo/} + ${rank.photoLocal}" alt="User Image">
             </div>
+
+            <div class="userRankImageOne" th:if="${rank.userNumber != null && rank.profilePic != null}">
+                <img class="userRankOneImgSet" th:src="${rank.profilePic}" alt="User Image">
+            </div>
+
             <div class="userRankNameOne" th:text="${rank.userNickname}">이강철</div>
             <div class="userRankNameContributingScoreOne" th:text="${rank.scoreGet} + '점'">5000점</div>
+
         </div>
         <!-- 페이지 네이션 -->
         <div id="pagination"></div>
