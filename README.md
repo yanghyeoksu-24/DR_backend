@@ -105,96 +105,390 @@
 📦src
  ┣ 📂main
  ┃ ┣ 📂java
- ┃ ┃ ┗ 📂com
- ┃ ┃ ┃ ┗ 📂coco
- ┃ ┃ ┃ ┃ ┗ 📂board
- ┃ ┃ ┃ ┃ ┃ ┣ 📂application
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommentDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostsDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂security
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂auth
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomAuthFailureHandler.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomUserDetails.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomUserDetailsService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginUser.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LoginUserArgumentResolver.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂oauth
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomOAuth2UserService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜OAuthAttributes.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂validator
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜AbstractValidator.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CustomValidators.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommentService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostsService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserService.java
- ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜BaseTimeEntity.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Comment.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Posts.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Role.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜User.java
- ┃ ┃ ┃ ┃ ┃ ┣ 📂infrastructure
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂config
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SecurityConfig.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜WebConfig.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂persistence
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommentRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostsRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepository.java
- ┃ ┃ ┃ ┃ ┃ ┣ 📂presentation
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommentApiController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostsApiController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostsIndexController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserApiController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserController.java
- ┃ ┃ ┃ ┃ ┃ ┗ 📜BoardApplication.java
- ┃ ┗ 📂resources
+ ┃ ┃ ┗ 📂com.dr
+ ┃ ┃ ┃ ┗ 📂api
+ ┃ ┃ ┃ ┃ ┗ 📜MyPageApi.java
+ ┃ ┃ ┃ ┣ 📂config
+ ┃ ┃ ┃ ┃ ┗ 📜SecurityConfig.java
+ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┣ 📂board
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜BoardController.java
+ ┃ ┃ ┃ ┃ ┣ 📂chatBot.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ChatBotController.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜NangjangbotController.java
+ ┃ ┃ ┃ ┃ ┣ 📂error
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜ErrorContorller.java(아직미구현)
+ ┃ ┃ ┃ ┃ ┣ 📂main
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MainController.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜PublicDataApiController.java
+ ┃ ┃ ┃ ┃ ┣ 📂manager
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜ManagerController.java
+ ┃ ┃ ┃ ┃ ┣ 📂myPage
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜MyPageController.java
+ ┃ ┃ ┃ ┃ ┣ 📂rnak
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜RankController.java
+ ┃ ┃ ┃ ┃ ┣ 📂recipe
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜FileApiController.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜RecipeController.java
+ ┃ ┃ ┃ ┃ ┣ 📂shop
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜PointShopController.java
+ ┃ ┃ ┃ ┃ ┣ 📂user
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜SmsController.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserController.java
+ ┃ ┃ ┃ ┣ 📂domain
+ ┃ ┃ ┃ ┃ ┣ 📜CustomOAuth2User.java
+ ┃ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┃ ┣ 📂board
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜BoardReportDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜BoardScoreDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜FreeBoardCommentDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜FreeBoardDetailDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜FreeBoardListDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜FreeBoardWriteDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜FreeGoodDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜HoneyBoardCommentDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜HoneyBoardDetailDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜HoneyBoardListDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜HoneyGoodDTO.java
+ ┃ ┃ ┃ ┃ ┣ 📂chatBot
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ChatRequest.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ChatResponse.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜NangjangbotDTO.java
+ ┃ ┃ ┃ ┃ ┣ 📂main
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ApiDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ItemDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜SearchDTO.java
+ ┃ ┃ ┃ ┃ ┣ 📂manager
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜DashBoardDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ManagerBoardDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ManagerCommentDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ManagerDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ManagerLoginDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ManagerPhotoDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ManagerPointDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ManagerProductDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ManagerRecipeDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ManagerRegisterDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ManagerReportDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ManagerSessionDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜ManagerUserDTO.java
+ ┃ ┃ ┃ ┃ ┣ 📂myPage
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CheckDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜PointCheckDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜PointDetailDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜PointRecordDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜SirenListDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserCheckDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserInfoDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserPosttDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserRecipeDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserSteamDTO.java
+ ┃ ┃ ┃ ┃ ┣ 📂rank
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜RankDTO.java
+ ┃ ┃ ┃ ┃ ┣ 📂recipe
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ChatBotRecipeCommentDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ChatBotRecipeDetailDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ChatBotRecipeGoodDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ChatBotRecipeListDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ChatBotRecipeWriteCommentDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ChatBotRecipeWriteDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MyRecipeCommentDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ManagerProductDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MyRecipeDetailDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MyRecipeGoodDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MyRecipeListDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MyRecipeWriteDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜RecipePhotoDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜RecipeReportDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜RecipeSteamDTO.java
+ ┃ ┃ ┃ ┃ ┣ 📂shop
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜PointShopDTO.java
+ ┃ ┃ ┃ ┃ ┣ 📂user
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜EmailFindDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜KakaoUsersDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜PwFindDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜PwResetDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserDTO.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserSessionDTO.java
+ ┃ ┃ ┃ ┣ 📂mapper
+ ┃ ┃ ┃ ┃ ┣ 📂board
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜BoardMapper.java
+ ┃ ┃ ┃ ┃ ┣ 📂chatBot
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜NangjangbotMapper.java
+ ┃ ┃ ┃ ┃ ┣ 📂main
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜SearchMapper.java
+ ┃ ┃ ┃ ┃ ┣ 📂manager
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜ManagerMapper.java
+ ┃ ┃ ┃ ┃ ┣ 📂myPage
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜MyPageMapper.java
+ ┃ ┃ ┃ ┃ ┣ 📂rank
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜RecipeMapper.java
+ ┃ ┃ ┃ ┃ ┣ 📂shop
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜PointShopMapper.java
+ ┃ ┃ ┃ ┃ ┣ 📂user
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜KakaoUsers.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserMapper.java
+ ┃ ┃ ┃ ┣ 📂mybatis
+ ┃ ┃ ┃ ┃ ┗ 📜MyBatisConfig.java
+ ┃ ┃ ┃ ┣ 📂service
+ ┃ ┃ ┃ ┃ ┣ 📂board
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜BoardService.java
+ ┃ ┃ ┃ ┃ ┣ 📂chatBot
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜ChatBotService.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜NangjangbotService.java
+ ┃ ┃ ┃ ┃ ┣ 📂main
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜PublicDataService.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜SearchService.java
+ ┃ ┃ ┃ ┃ ┣ 📂manager
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜ManagerService.java
+ ┃ ┃ ┃ ┃ ┣ 📂myPage
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜MyPageService.java
+ ┃ ┃ ┃ ┃ ┣ 📂rank
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜RankService.java
+ ┃ ┃ ┃ ┃ ┣ 📂recipe
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜RecipeService.java
+ ┃ ┃ ┃ ┃ ┣ 📂shop
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜PointShopService.java
+ ┃ ┃ ┃ ┃ ┣ 📂user
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CoolSmsService.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomOAuth2UserService.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜RandomStringGeneratorService.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserService.java
+ ┃ ┃ ┃ ┗ 📜DrApplication.java
+ ┃ ┣ 📂resources
+ ┃ ┃ ┣ 📂config
+ ┃ ┃ ┃ ┗ 📜config.xml
+ ┃ ┃ ┣ 📂mapper
+ ┃ ┃ ┃ ┣ 📂board
+ ┃ ┃ ┃ ┃ ┗📜BoardMapper.xml
+ ┃ ┃ ┃ ┣ 📂chatBot
+ ┃ ┃ ┃ ┃ ┗📜NangjangbotMapper.xml
+ ┃ ┃ ┃ ┣ 📂main
+ ┃ ┃ ┃ ┃ ┗📜SearchMapper.xml
+ ┃ ┃ ┃ ┣ 📂manager
+ ┃ ┃ ┃ ┃ ┗📜ManagerMapper.xml
+ ┃ ┃ ┃ ┣ 📂myPage
+ ┃ ┃ ┃ ┃ ┗📜MyPageMapper.xml
+ ┃ ┃ ┃ ┣ 📂rank
+ ┃ ┃ ┃ ┃ ┗📜RankMapper.xml
+ ┃ ┃ ┃ ┣ 📂recipe
+ ┃ ┃ ┃ ┃ ┗📜RecipeMapper.xml
+ ┃ ┃ ┃ ┣ 📂shop
+ ┃ ┃ ┃ ┃ ┗📜PointShopMapper.xml
+ ┃ ┃ ┃ ┣ 📂user
+ ┃ ┃ ┃ ┃ ┣📜KakaoUsersMapper.xml
+ ┃ ┃ ┃ ┃ ┗📜UserMapper.xml
  ┃ ┃ ┣ 📂static
  ┃ ┃ ┃ ┣ 📂css
- ┃ ┃ ┃ ┃ ┗ 📜app.css
- ┃ ┃ ┃ ┣ 📂img
- ┃ ┃ ┃ ┃ ┗ 📜naver.ico
- ┃ ┃ ┃ ┗ 📂js
- ┃ ┃ ┃ ┃ ┗ 📜app.js
+ ┃ ┃ ┃ ┃ ┣ 📂board
+ ┃ ┃ ┃ ┃ ┃ ┣📜boardReport.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜freeBoardDetail.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜freeBoardList.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜freeBoardModify.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜freeBoardWirte.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜honeyBoardDetail.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜honeyBoardList.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜honeyBoardModify.css
+ ┃ ┃ ┃ ┃ ┃ ┗📜honeyBoardWirte.css
+ ┃ ┃ ┃ ┃ ┣ 📂chatBot
+ ┃ ┃ ┃ ┃ ┃ ┗📜nangjangbot.css
+ ┃ ┃ ┃ ┃ ┣ 📂fragment
+ ┃ ┃ ┃ ┃ ┃ ┣📜header.css
+ ┃ ┃ ┃ ┃ ┃ ┗📜footer.css
+ ┃ ┃ ┃ ┃ ┣ 📂main
+ ┃ ┃ ┃ ┃ ┃ ┣📜boardSearchList.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜main.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜privacyPoilcy.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜recipeSearchList.css
+ ┃ ┃ ┃ ┃ ┃ ┗📜terms.css
+ ┃ ┃ ┃ ┃ ┣ 📂manager
+ ┃ ┃ ┃ ┃ ┃ ┣📜dashBoard.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageBoard.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageComment.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜managePoint.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageProduct.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageRecipe.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageReport.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜managerLogin.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageUpdate.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageUser.css
+ ┃ ┃ ┃ ┃ ┃ ┗📜RegisterProduct.css
+ ┃ ┃ ┃ ┃ ┣ 📂myPage
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageCaution.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageCheck.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageDelete.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageInformation.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageMyComplaint.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageMyPoint.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageMyPost.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageMyRecipe.css
+ ┃ ┃ ┃ ┃ ┃ ┗📜myPageSteamedList.css
+ ┃ ┃ ┃ ┃ ┣ 📂rank
+ ┃ ┃ ┃ ┃ ┃ ┗📜userRank.css
+ ┃ ┃ ┃ ┃ ┣ 📂recipe
+ ┃ ┃ ┃ ┃ ┃ ┣📜chatBotDetailPage.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜chatBotDetailPageNone.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜chatBotRecipeList.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜chatBotRecipeModify.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜chatBotRecipeWriter.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜myDetailPage.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜myDetailPageNone.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜myRecipeList.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜myRecipeModify.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜myRecipeWriter.css
+ ┃ ┃ ┃ ┃ ┃ ┗📜report.css
+ ┃ ┃ ┃ ┃ ┣ 📂shop
+ ┃ ┃ ┃ ┃ ┃ ┗📜pointShop.css
+ ┃ ┃ ┃ ┃ ┣ 📂user
+ ┃ ┃ ┃ ┃ ┃ ┣📜apiJoin.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜drJoin.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜emailFind.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜emailFindFinish.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜join.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜login.css
+ ┃ ┃ ┃ ┃ ┃ ┣📜PwFind.css
+ ┃ ┃ ┃ ┃ ┃ ┗📜PwReset.css
+ ┃ ┃ ┃ ┣ 📂image
+ ┃ ┃ ┃ ┃ ┣ 📂myPage
+ ┃ ┃ ┃ ┃ ┃ ┗```이미지들
+ ┃ ┃ ┃ ┃ ┣ 📂nangjangbot
+ ┃ ┃ ┃ ┃ ┃ ┗```이미지들
+ ┃ ┃ ┃ ┃ ┣ 📂photo
+ ┃ ┃ ┃ ┃ ┃ ┗```이미지들
+ ┃ ┃ ┃ ┃ ┣ 📂product
+ ┃ ┃ ┃ ┃ ┃ ┗```이미지들
+ ┃ ┃ ┃ ┃ ┣ 📂recipe
+ ┃ ┃ ┃ ┃ ┃ ┗```이미지들
+ ┃ ┃ ┃ ┃ ┣ 📂shop
+ ┃ ┃ ┃ ┃ ┃ ┗```이미지들
+ ┃ ┃ ┃ ┃ ┣ ```이미지들
+ ┃ ┃ ┃ ┣ 📂js
+ ┃ ┃ ┃ ┃ ┣ 📂board
+ ┃ ┃ ┃ ┃ ┃ ┣📜boardReport.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜freeBoardDetail.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜freeBoardList.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜freeBoardModify.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜freeBoardWirte.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜honeyBoardDetail.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜honeyBoardList.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜honeyBoardModify.js
+ ┃ ┃ ┃ ┃ ┃ ┗📜honeyBoardWirte.js
+ ┃ ┃ ┃ ┃ ┣ 📂chatBot
+ ┃ ┃ ┃ ┃ ┃ ┗📜nangjangbot.js
+ ┃ ┃ ┃ ┃ ┣ 📂fragment
+ ┃ ┃ ┃ ┃ ┃ ┗📜header.js
+ ┃ ┃ ┃ ┃ ┣ 📂main
+ ┃ ┃ ┃ ┃ ┃ ┗📜main.js
+ ┃ ┃ ┃ ┃ ┣ 📂manager
+ ┃ ┃ ┃ ┃ ┃ ┣📜dashBoard.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageBoard.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageComment.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜managePoint.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageProduct.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageRecipe.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageReport.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜managerLogin.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageUpdate.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜manageUser.js
+ ┃ ┃ ┃ ┃ ┃ ┗📜RegisterProduct.js
+ ┃ ┃ ┃ ┃ ┣ 📂module
+ ┃ ┃ ┃ ┃ ┃ ┗📜module.js
+ ┃ ┃ ┃ ┃ ┣ 📂myPage
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageCaution.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageCheck.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageDelete.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageInformation.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageMyComplaint.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageMyPoint.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageMyPost.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜myPageMyRecipe.js
+ ┃ ┃ ┃ ┃ ┃ ┗📜myPageSteamedList.js
+ ┃ ┃ ┃ ┃ ┣ 📂rank
+ ┃ ┃ ┃ ┃ ┃ ┗📜userRank.js
+ ┃ ┃ ┃ ┃ ┣ 📂recipe
+ ┃ ┃ ┃ ┃ ┃ ┣📜chatBotDetailPage.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜chatBotDetailPageNone.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜chatBotRecipeList.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜chatBotRecipeModify.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜chatBotRecipeWriter.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜myDetailPage.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜myDetailPageNone.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜myRecipeList.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜myRecipeModify.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜myRecipeWriter.js
+ ┃ ┃ ┃ ┃ ┃ ┗📜report.js
+ ┃ ┃ ┃ ┃ ┣ 📂shop
+ ┃ ┃ ┃ ┃ ┃ ┗📜pointShop.js
+ ┃ ┃ ┃ ┃ ┣ 📂user
+ ┃ ┃ ┃ ┃ ┃ ┣📜apiJoin.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜drJoin.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜emailFind.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜emailFindFinish.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜join.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜login.js
+ ┃ ┃ ┃ ┃ ┃ ┣📜PwFind.js
+ ┃ ┃ ┃ ┃ ┃ ┗📜PwReset.js
  ┃ ┃ ┣ 📂templates
- ┃ ┃ ┃ ┣ 📂comment
- ┃ ┃ ┃ ┃ ┣ 📜form.mustache
- ┃ ┃ ┃ ┃ ┗ 📜list.mustache
- ┃ ┃ ┃ ┣ 📂layout
- ┃ ┃ ┃ ┃ ┣ 📜footer.mustache
- ┃ ┃ ┃ ┃ ┗ 📜header.mustache
- ┃ ┃ ┃ ┣ 📂posts
- ┃ ┃ ┃ ┃ ┣ 📜posts-page.mustache
- ┃ ┃ ┃ ┃ ┣ 📜posts-read.mustache
- ┃ ┃ ┃ ┃ ┣ 📜posts-search.mustache
- ┃ ┃ ┃ ┃ ┣ 📜posts-update.mustache
- ┃ ┃ ┃ ┃ ┗ 📜posts-write.mustache
+ ┃ ┃ ┃ ┣ 📂board
+ ┃ ┃ ┃ ┃ ┣📜boardReport.html
+ ┃ ┃ ┃ ┃ ┣📜freeBoardDetail.html
+ ┃ ┃ ┃ ┃ ┣📜freeBoardList.html
+ ┃ ┃ ┃ ┃ ┣📜freeBoardModify.html
+ ┃ ┃ ┃ ┃ ┣📜freeBoardWirte.html
+ ┃ ┃ ┃ ┃ ┣📜honeyBoardDetail.html
+ ┃ ┃ ┃ ┃ ┣📜honeyBoardList.html
+ ┃ ┃ ┃ ┃ ┣📜honeyBoardModify.html
+ ┃ ┃ ┃ ┃ ┗📜honeyBoardWirte.html
+ ┃ ┃ ┃ ┣ 📂chatBot
+ ┃ ┃ ┃ ┃ ┗📜nangjangbot.html
+ ┃ ┃ ┃ ┣ 📂error
+ ┃ ┃ ┃ ┃ ┗📜미구현
+ ┃ ┃ ┃ ┣ 📂fragment
+ ┃ ┃ ┃ ┃ ┣📜footer.html
+ ┃ ┃ ┃ ┃ ┗📜header.html
+ ┃ ┃ ┃ ┣ 📂board
+ ┃ ┃ ┃ ┃ ┣📜boardSearchList.html
+ ┃ ┃ ┃ ┃ ┣📜privacyPolicy.html
+ ┃ ┃ ┃ ┃ ┣📜recipeSearchList.html
+ ┃ ┃ ┃ ┃ ┗📜terms.html
+ ┃ ┃ ┃ ┣ 📂manager
+ ┃ ┃ ┃ ┃ ┣📜dashBoard.html
+ ┃ ┃ ┃ ┃ ┣📜manageBoard.html
+ ┃ ┃ ┃ ┃ ┣📜manageComment.html
+ ┃ ┃ ┃ ┃ ┣📜managePoint.html
+ ┃ ┃ ┃ ┃ ┣📜manageProduct.html
+ ┃ ┃ ┃ ┃ ┣📜manageRecipe.html
+ ┃ ┃ ┃ ┃ ┣📜manageReport.html
+ ┃ ┃ ┃ ┃ ┣📜managerLogin.html
+ ┃ ┃ ┃ ┃ ┣📜manageUpdate.html
+ ┃ ┃ ┃ ┃ ┣📜manageUser.html
+ ┃ ┃ ┃ ┃ ┗📜registerProduct.html
+ ┃ ┃ ┃ ┣ 📂rank
+ ┃ ┃ ┃ ┃ ┗📜userRank.html
+ ┃ ┃ ┃ ┣ 📂manager
+ ┃ ┃ ┃ ┃ ┣📜chatBotDetailPage.html
+ ┃ ┃ ┃ ┃ ┣📜chatBotDetailPageNone.html
+ ┃ ┃ ┃ ┃ ┣📜chatBotRecipeList.html
+ ┃ ┃ ┃ ┃ ┣📜chatBotRecipeModify.html
+ ┃ ┃ ┃ ┃ ┣📜chatBotRecipeWirte.html
+ ┃ ┃ ┃ ┃ ┣📜myDetailPage.html
+ ┃ ┃ ┃ ┃ ┣📜myDetailPageNone.html
+ ┃ ┃ ┃ ┃ ┣📜myRecipeList.html
+ ┃ ┃ ┃ ┃ ┣📜myRecipeModify.html
+ ┃ ┃ ┃ ┃ ┣📜myRecipeWirter.html
+ ┃ ┃ ┃ ┃ ┗📜report.html
+ ┃ ┃ ┃ ┣ 📂shop
+ ┃ ┃ ┃ ┃ ┗📜pointShop.html
  ┃ ┃ ┃ ┣ 📂user
- ┃ ┃ ┃ ┃ ┣ 📜user-join.mustache
- ┃ ┃ ┃ ┃ ┣ 📜user-login.mustache
- ┃ ┃ ┃ ┃ ┗ 📜user-modify.mustache
- ┃ ┃ ┃ ┗ 📜index.mustache
- ┃ ┃ ┣ 📜application-oauth.properties
+ ┃ ┃ ┃ ┃ ┣📜apiJoin.html
+ ┃ ┃ ┃ ┃ ┣📜drJoin.html
+ ┃ ┃ ┃ ┃ ┣📜emailFind.html
+ ┃ ┃ ┃ ┃ ┣📜emailFindFinish.html
+ ┃ ┃ ┃ ┃ ┣📜join.html
+ ┃ ┃ ┃ ┃ ┣📜login.html
+ ┃ ┃ ┃ ┃ ┣📜PwFind.html
+ ┃ ┃ ┃ ┃ ┗📜PwReset.html
  ┃ ┃ ┗ 📜application.properties
- ┗ 📂test
- ┃ ┗ 📂java
- ┃ ┃ ┗ 📂com
- ┃ ┃ ┃ ┗ 📂coco
- ┃ ┃ ┃ ┃ ┗ 📂board
- ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostsApiControllerTest.java
- ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommentRepositoryTest.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PostsRepositoryTest.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepositoryTest.java
- ┃ ┃ ┃ ┃ ┃ ┣ 📂infrastructure
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂config
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SecurityConfigTest.java
- ┃ ┃ ┃ ┃ ┃ ┣ 📂service
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜PostsServiceTest.java
- ┃ ┃ ┃ ┃ ┃ ┗ 📜BoardApplicationTests.java
  ```
   
  </details>   
