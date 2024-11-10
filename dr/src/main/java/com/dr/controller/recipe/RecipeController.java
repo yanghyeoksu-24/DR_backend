@@ -363,5 +363,30 @@ public class RecipeController {
         }
     }
 
+    // 레시피 삭제
+    @PostMapping("/deleteRecipe")
+    public String deleteRecipe(@RequestParam("recipeNumber2") Long recipeNumber) {
+        recipeService.deleteRecipeAndPhoto(recipeNumber);
+
+        return "redirect:/recipe/myRecipeList";
+    }
+
+    //레시피 수정 이동
+    @PostMapping("/updateRecipe")
+    public String updateRecipe(@RequestParam("recipeNumber3") Long recipeNumber,
+                               @RequestParam("recipeTitle") String recipeTitle,
+                               @RequestParam("recipeText") String recipeText,
+                               Model model) {
+        // 필요한 로직 처리 (예: 데이터베이스 업데이트)
+
+        // 수정 페이지로 이동하면서 데이터 전달
+        model.addAttribute("recipeNumber", recipeNumber);
+        model.addAttribute("recipeTitle", recipeTitle);
+        model.addAttribute("recipeText", recipeText);
+
+        return "recipe/myRecipeModify"; // 수정 페이지의 템플릿 이름
+    }
+
+
 
 }
