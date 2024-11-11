@@ -159,10 +159,6 @@
   입력창에 무게를 입력하면 소비된 에너지 및 비용등이 실시간 계산된다
   <br><br><br>
 
-  **3. 헤더 검색 화면**
-  <br>
-  추가 필요
-
   </details>
   <br>
 
@@ -204,7 +200,30 @@
 
   </details>
   <br>
-   
+
+  <details>
+    <summary>포인트샵 관련</summary>
+
+  **1. 포인트샵 화면**
+  ![포인트샵1](https://github.com/user-attachments/assets/83af5648-410f-41e0-89f1-cc8584b74bdb)
+
+  ![포인트샵2](https://github.com/user-attachments/assets/f6c37531-6d7f-4440-bed4-5d8419761cdd)
+  좌측과 우측 버튼으로 슬라이드배너 형식의 포인트샵 상품을 볼 수 있다
+
+  **2. 포인트샵 구매 화면**
+
+  </details>
+  <br>
+
+  <details>
+    <summary>헤더 검색 관련</summary>
+
+  **1. 검색 화면**
+
+
+  </details>
+  <br>
+  
 ## 구조 및 설계   
    
 ### 1. 패키지 구조
