@@ -68,9 +68,6 @@
 - Jquery
 - ThymeLeaf
 
--------------------------------------------------------------------------------------------------------------
-새로 작성, 수정필요
-
 ### 4. 실행 화면
   <details>
     <summary>회원 관련</summary>
@@ -115,10 +112,12 @@
 
   ![로그인6](https://github.com/user-attachments/assets/416284e5-f8d2-4b1a-8541-bff353873be9)
 
-  ![로그인7](https://github.com/user-attachments/assets/99170653-da15-4d42-952b-f56e1aa3b8a9)<br>
-  로그인 성공시 안내창이 나오고 메인 화면으로 redirect 한다
+  ![로그인7](https://github.com/user-attachments/assets/f8745e55-d7eb-48f7-9b8e-0ed62cf55815)<br>
+  로그인 성공시 안내창이 나오고 세션처리로 헤더가 변경되며 메인 화면으로 redirect 한다
+  <br><br><br>
 
   **2-1. OAuth 2.0 소셜 로그인 화면**   
+  
      
   **3. 회원정보 수정 화면**       
            
