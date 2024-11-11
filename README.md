@@ -253,6 +253,17 @@
 
   **1. 검색 화면**
   ![검색1](https://github.com/user-attachments/assets/fef1da74-a414-475f-a36a-40291a81c3a0)
+  검색 카테고리를 선택할 수 있다
+
+  ![검색2](https://github.com/user-attachments/assets/511f07a3-f379-4600-9a26-187fb98343b7)<br>
+  아무값도 입력하지 않으면 안내메세지가 뜬다
+
+  ![검색결과1](https://github.com/user-attachments/assets/f1d0dc3a-81c9-4f2c-b2db-3a87df078a0e)<br>
+  ![검색결과2](https://github.com/user-attachments/assets/e11bd922-5b4a-4f97-a67e-4731ec9e943d)
+  검색결과가 존재하지 않을경우 안내페이지로 이동
+
+  
+
 
 
   </details>
