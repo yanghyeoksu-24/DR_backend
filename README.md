@@ -169,6 +169,7 @@
   ![냉장봇1](https://github.com/user-attachments/assets/34cf3dca-73c9-404b-9621-8f3662a6bf70)
   사이드바는 x버튼으로 닫을 수 있고 입력창 좌측 버튼으로 열고 닫을 수 있다<br>
   이전채팅 목록을 10개까지 나타낸다
+  <br><br><br>
 
   **2. 대화 화면**
   ![냉장봇2](https://github.com/user-attachments/assets/a2623a30-e908-4ea6-abe4-799884a991f6)
@@ -176,13 +177,15 @@
 
   ![냉장봇3](https://github.com/user-attachments/assets/c78afb47-5792-444e-96b7-a4ebe3c27b4d)
   채팅 응답이 온 뒤 사이드 바에 채팅방이 추가된다
+  <br><br><br>
 
   **3. 이전채팅 화면**<br>
   ![냉장봇 이전채팅1](https://github.com/user-attachments/assets/2ef65b70-22a8-4217-a798-008ae6dee09e)
   
   ![냉장봇 이전채팅2](https://github.com/user-attachments/assets/079b0bb2-d3d5-4805-b64b-35fd891332d3)
   이전 채팅이 있다면 이전 채팅을 불러올 수 있다<br>
-  이전채팅에 이어서 채팅이 가능하다<br>
+  이전채팅에 이어서 채팅이 가능하다
+  <br><br><br>
 
   **4. 채팅삭제 화면**<br>
   ![냉장봇 삭제1](https://github.com/user-attachments/assets/3103553e-ad58-4b7c-801d-ea397932136e)<br>
@@ -196,7 +199,8 @@
   ![냉장봇 삭제3](https://github.com/user-attachments/assets/e14121b4-e784-4b9c-aa15-20ee4d1a8c59)<br>
 
   ![냉장봇 삭제4](https://github.com/user-attachments/assets/343e9883-545d-4f21-9689-d7dc9ded3b72)<br>
-  삭제가 완료되면 채팅목록에서 사라진다<br><br><br>
+  삭제가 완료되면 채팅목록에서 사라진다
+  <br><br><br>
 
   </details>
   <br>
@@ -209,8 +213,9 @@
 
   ![포인트샵2](https://github.com/user-attachments/assets/f6c37531-6d7f-4440-bed4-5d8419761cdd)
   좌측과 우측 버튼으로 슬라이드배너 형식의 포인트샵 상품을 볼 수 있다
+  <br><br><br>
 
-  **2. 포인트샵 구매 화면**
+  **2. 포인트샵 구매 화면**<br>
   ![포인트샵구매1](https://github.com/user-attachments/assets/42eb31ec-f496-49af-979d-f6dd6b974cfc)<br>
 
   ![포인트샵구매1-2](https://github.com/user-attachments/assets/0146289e-7111-48e6-892b-71d98732b01f)<br>
