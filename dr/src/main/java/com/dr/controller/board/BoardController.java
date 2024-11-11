@@ -91,15 +91,12 @@ public class BoardController {
     }
 
 
-    // 꿀팁게시판 글 수정 이동
-    @GetMapping("/honeyBoardModify")
-    public String honeyBoardModifyPage() {
-        return "/board/honeyBoardModify";
-    }
+
 
     // 꿀팁게시판 글 쓰기 페이지 이동
     @GetMapping("/honeyBoardWrite")
-    public String honeyBoardWritePage() {
+    public String honeyBoardWritePage(Model model) {
+        model.addAttribute("honeyBoardWriteDTO", new HoneyBoardWriteDTO());
         return "/board/honeyBoardWrite";
     }
 
@@ -379,16 +376,99 @@ public class BoardController {
 
 
 
-    // 자유게시판 글 수정 페이지 이동
     @GetMapping("/freeBoardModify")
-    public String freeBoardModifyPage() {
-        return "/board/freeBoardModify"; //
+    public String freeBoardModify(@RequestParam("boardNumber3") Long boardNumber,
+                                  @RequestParam("boardTitle") String boardTitle,
+                                  @RequestParam("boardText") String boardText,
+                                  @RequestParam(value = "photoLocal", required = false) String photoLocal, // 사진 파일 경로 추가
+                                  @RequestParam(value = "photoOriginal", required = false) String photoOriginal, // 사진 파일 경로 추가
+                                  Model model) {
+        // 필요한 로직 처리 (예: 데이터베이스에서 게시글 정보 조회 등)
+
+        model.addAttribute("boardNumber", boardNumber);
+        model.addAttribute("boardTitle", boardTitle);
+        model.addAttribute("boardText", boardText);
+        model.addAttribute("photoLocal", photoLocal); // photoLocal 추가
+        model.addAttribute("photoOriginal", photoOriginal); // photoOriginal 추가
+
+        return "/board/freeBoardModify"; // 수정 페이지의 템플릿 이름
     }
 
 
-    //자유게시판 게시글 수정
+
     @PostMapping("/updateFreeBoard")
-    public String updateFreeBoard(@RequestParam("boardNumber3") Long boardNumber,
+    public String updateFreeBoard(@ModelAttribute FreeBoardUpdateDTO freeBoardUpdateDTO, RedirectAttributes redirectAttributes) {
+        try {
+            System.out.println("photoLocal: " + freeBoardUpdateDTO.getPhotoLocal());
+            System.out.println("photoOriginal: " + freeBoardUpdateDTO.getPhotoOriginal());
+
+            boardService.freeBoardUpdateWriteAndPhoto(freeBoardUpdateDTO);
+            redirectAttributes.addAttribute("boardNumber", freeBoardUpdateDTO.getBoardNumber());
+            return "redirect:/board/freeBoardDetail";  // 수정된 글 상세 페이지로 이동
+        } catch (Exception e) {
+            // 에러 처리 (예: 에러 메시지 저장 후 수정 페이지로 이동)
+            redirectAttributes.addFlashAttribute("errorMessage", "게시글 수정에 실패했습니다.");
+            return "redirect:/board/freeBoardModify"; // 실패 시 다시 수정 페이지로 이동
+        }
+    }
+
+
+
+    // 꿀팁게시판 게시글 작성
+    @PostMapping("/honeyBoardWriteOk")
+    public String honeyBoardWrite(
+            @RequestParam("boardTitle") String boardTitle,
+            @RequestParam("boardText") String boardText,
+            @RequestParam("photoOriginal") String photoOriginal,
+            @RequestParam("photoLocal") String photoLocal,
+            @RequestParam("photoSize") String photoSize,
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
+        // 1. HoneyBoardWriteDTO 생성 (게시판정보)
+        HoneyBoardWriteDTO honeyBoardWriteDTO = new HoneyBoardWriteDTO();
+        honeyBoardWriteDTO.setBoardTitle(boardTitle);
+        honeyBoardWriteDTO.setBoardText(boardText);
+        honeyBoardWriteDTO.setUserNumber(userNumber);
+        honeyBoardWriteDTO.setBoardType("꿀팁게시판");
+
+        log.info(honeyBoardWriteDTO.toString() + "잘 왔나나나ㅏ나나아아아아아");
+
+        //2. FreeBoardPhotoDTO 생성(사진 정보)
+        HoneyBoardPhotoDTO honeyBoardPhotoDTO = new HoneyBoardPhotoDTO();
+        honeyBoardPhotoDTO.setPhotoOriginal(photoOriginal);
+        honeyBoardPhotoDTO.setPhotoLocal(photoLocal);
+        honeyBoardPhotoDTO.setPhotoSize(photoSize);
+
+        log.info(honeyBoardPhotoDTO.toString() + "sldfjldsakfjldakfjlskd");
+
+        //3. BoardService 호출하여 게시판과 사진 저장
+        boardService.saveHoneyBoard(honeyBoardWriteDTO, honeyBoardPhotoDTO);
+
+        //4. 성공 메시지 전달 후 , 리다이렉션
+        return "redirect:/board/honeyBoardList"; // 리다이렉트 URL은 필요에 맞게 수정
+
+    }
+
+    //꿀팁게시판 게시글 삭제
+    @PostMapping("/deleteHoneyBoard")
+    public String deleteHoneyBoard(@RequestParam("boardNumber2") Long boardNumber) {
+        boardService.honeyBoardDeleteWriteAndPhoto(boardNumber);
+
+        return "redirect:/board/honeyBoardList";
+    }
+
+
+
+
+    // 꿀팁게시판 글 수정 이동
+    @GetMapping("/honeyBoardModify")
+    public String honeyBoardModifyPage() {
+        return "/board/honeyBoardModify";
+    }
+
+
+    //꿀팁게시판 게시글 수정
+    @PostMapping("/updateHoneyBoard")
+    public String updateHoneyBoard(@RequestParam("boardNumber3") Long boardNumber,
                                   @RequestParam("boardTitle") String boardTitle,
                                   @RequestParam("boardText") String boardText,
                                   Model model){
@@ -400,7 +480,8 @@ public class BoardController {
         model.addAttribute("boardTitle", boardTitle);
         model.addAttribute("boardText", boardText);
 
-        return "/board/freeBoardModify";//수정 페이지의 템플릿 이름
+
+        return "/board/honeyBoardModify";//수정 페이지의 템플릿 이름
     }
 
 }
