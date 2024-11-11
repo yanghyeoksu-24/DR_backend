@@ -87,17 +87,20 @@
   ![회원가입4-2](https://github.com/user-attachments/assets/a4ee50b6-ebd7-4f3e-9b9f-48b98dc4ec2a)
 
   ![회원가입5](https://github.com/user-attachments/assets/63b835cc-4a90-42ba-ac9d-03539ec622e3)
+  <br><br>중복확인 버튼을 통해 중복검사를 실시 한다
 
   ![회원가입5-2](https://github.com/user-attachments/assets/210b5b4b-0cef-4e34-9968-84941ce7cb8d)
-
+  <br><br>인증요청 버튼을 통해 인증번호를 받아 입력한다
+  
   ![회원가입5-3](https://github.com/user-attachments/assets/9ec7b5bb-724e-45c2-9e90-28064b153ccc)
 
-  ![회원가입6](https://github.com/user-attachments/assets/1d65f333-bcbc-46df-bd8b-8d85e4a972a9)
+  ![회원가입6](https://github.com/user-attachments/assets/f5add0f5-2aed-4c28-8a27-89bf2d2ff437)
 
   ![회원가입7](https://github.com/user-attachments/assets/9e09b2a5-d8af-4920-9abf-9859ea8884dd)
   <br><br>회원가입 시 유효성 검사 및 중복확인을 진행하며 완료시 회원 정보를 저장하고 로그인 화면으로 이동한다.   
        
   **2. 로그인 화면** 
+  
 
   **2-1. OAuth 2.0 소셜 로그인 화면**   
      
