@@ -98,7 +98,7 @@
   <br><br><br>
        
   **2. 로그인 화면** 
-  ![로그인1](https://github.com/user-attachments/assets/9793715a-ca5a-4169-a3bf-4c97c61ee3d1)
+  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
 
   ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
   입력 여부를 확인 후 안내창이 나온다
