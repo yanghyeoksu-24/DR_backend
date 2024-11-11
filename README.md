@@ -186,6 +186,7 @@
   
   ![냉장봇 이전채팅2](https://github.com/user-attachments/assets/079b0bb2-d3d5-4805-b64b-35fd891332d3)
   이전 채팅이 있다면 이전 채팅을 불러올 수 있다<br>
+  이전채팅에 이어서 채팅이 가능하다<br>
 
   **4. 채팅삭제 화면**<br>
   ![냉장봇 삭제1](https://github.com/user-attachments/assets/3103553e-ad58-4b7c-801d-ea397932136e)<br>
@@ -199,7 +200,7 @@
   ![냉장봇 삭제3](https://github.com/user-attachments/assets/e14121b4-e784-4b9c-aa15-20ee4d1a8c59)<br>
 
   ![냉장봇 삭제4](https://github.com/user-attachments/assets/343e9883-545d-4f21-9689-d7dc9ded3b72)<br>
-  삭제가 완료되면 채팅목록에서 사라진다
+  삭제가 완료되면 채팅목록에서 사라진다<br><br><br>
 
   </details>
   <br>
