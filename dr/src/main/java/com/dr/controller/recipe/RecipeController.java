@@ -236,7 +236,48 @@ public class RecipeController {
         return "redirect:/recipe/myRecipeList"; // 리디렉션 URL은 필요에 맞게 수정
     }
 
-    //나만의 레시피 글 수정
+    //챗봇 글쓰기 페이지 이동
+    @GetMapping("/chatBotRecipeWriter")  // 레시피 작성 페이지로 이동
+    public String recipeChatBotWriteForm(Model model) {
+        model.addAttribute("chatBotRecipeWriteDTO", new ChatBotRecipeWriteDTO());
+        // 빈 DTO 객체 생성 및 전달
+        log.info("여기는 GetMapping@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        return "recipe/chatBotRecipeWriter";  // myRecipeWriter.html로 데이터 전달
+    }
+
+    // 챗봇레시피 글쓰기
+    @PostMapping("/chatBotRecipeWriterOk")
+    public String submitChatBotRecipe(
+            @RequestParam("recipeTitle") String recipeTitle,
+            @RequestParam("recipeText") String recipeText,
+            @RequestParam("photoOriginal") String photoOriginal,
+            @RequestParam("photoLocal") String photoLocal,
+            @RequestParam("photoSize") String photoSize,
+            @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
+
+        // 1. MyRecipeWriteDTO 생성 (레시피 정보)
+        ChatBotRecipeWriteDTO chatBotRecipeWriteDTO = new ChatBotRecipeWriteDTO();
+        chatBotRecipeWriteDTO.setRecipeTitle(recipeTitle);
+        chatBotRecipeWriteDTO.setRecipeText(recipeText);
+        chatBotRecipeWriteDTO.setUserNumber(userNumber);
+        chatBotRecipeWriteDTO.setRecipeType("나만의레시피");
+
+        log.info(chatBotRecipeWriteDTO.toString()+"aslknlksdnfvklsdnklgnkldgsnkl;bsd");
+
+        // 2. RecipePhotoDTO 생성 (사진 정보)
+        RecipePhotoDTO recipePhotoDTO = new RecipePhotoDTO();
+        recipePhotoDTO.setPhotoOriginal(photoOriginal);
+        recipePhotoDTO.setPhotoLocal(photoLocal);
+        recipePhotoDTO.setPhotoSize(photoSize);
+
+        log.info(recipePhotoDTO.toString()+"asdlknldabndfklnlkldbba");
+
+        // 3. RecipeService 호출하여 레시피와 사진 저장
+        recipeService.saveChatBotRecipe(chatBotRecipeWriteDTO, recipePhotoDTO);
+
+        // 4. 성공 메시지 전달 후, 리디렉션
+        return "redirect:/recipe/chatBotRecipeList"; // 리디렉션 URL은 필요에 맞게 수정
+    }
 
 
 
@@ -366,7 +407,7 @@ public class RecipeController {
         }
     }
 
-    // 레시피 삭제
+    // 나만의 레시피 삭제
     @PostMapping("/deleteRecipe")
     public String deleteRecipe(@RequestParam("recipeNumber2") Long recipeNumber) {
         recipeService.deleteRecipeAndPhoto(recipeNumber);
@@ -374,7 +415,15 @@ public class RecipeController {
         return "redirect:/recipe/myRecipeList";
     }
 
-    //레시피 수정 이동
+    // 챗봇 레시피 삭제
+    @PostMapping("/deleteChatBotRecipe")
+    public String updateChatBotRecipe(@RequestParam("recipeNumber5") Long recipeNumber) {
+        recipeService.deleteChatBot(recipeNumber);
+
+        return "redirect:/recipe/chatBotRecipeList";
+    }
+
+    //나만의 레시피 수정 이동
     @PostMapping("/updateRecipe")
     public String updateRecipe(@RequestParam("recipeNumber3") Long recipeNumber,
                                @RequestParam("recipeTitle") String recipeTitle,
@@ -389,6 +438,23 @@ public class RecipeController {
 
         return "recipe/myRecipeModify"; // 수정 페이지의 템플릿 이름
     }
+
+    //챗봇의 레시피 수정 이동
+    @PostMapping("/updateChatBotRecipe")
+    public String updateChatBot(@RequestParam("recipeNumber4") Long recipeNumber,
+                               @RequestParam("recipeTitle") String recipeTitle,
+                               @RequestParam("recipeText") String recipeText,
+                               Model model) {
+        // 필요한 로직 처리 (예: 데이터베이스 업데이트)
+
+        // 수정 페이지로 이동하면서 데이터 전달
+        model.addAttribute("recipeNumber", recipeNumber);
+        model.addAttribute("recipeTitle", recipeTitle);
+        model.addAttribute("recipeText", recipeText);
+
+        return "recipe/chatBotRecipeModify"; // 수정 페이지의 템플릿 이름
+    }
+
 
 
 
