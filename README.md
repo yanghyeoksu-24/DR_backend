@@ -98,7 +98,7 @@
 
   ![회원가입7](https://github.com/user-attachments/assets/9e09b2a5-d8af-4920-9abf-9859ea8884dd)<br>
   회원가입 시 유효성 검사 및 중복확인을 진행하며 완료시 회원 정보를 저장하고 로그인 화면으로 이동한다
-  <br><br>
+  <br><br><br>
        
   **2. 로그인 화면** 
   ![로그인1](https://github.com/user-attachments/assets/9793715a-ca5a-4169-a3bf-4c97c61ee3d1)
