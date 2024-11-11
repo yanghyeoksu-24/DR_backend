@@ -1,4 +1,4 @@
-# Spring Boot 프로젝트 맛있는재활용
+![image](https://github.com/user-attachments/assets/d27213f2-302f-4024-8f9e-65129773620c)# Spring Boot 프로젝트 맛있는재활용
 <br>
 
 > 음식물 쓰레기 감소를 위한 챗봇 레시피 추천 웹서비스 입니다
@@ -164,6 +164,34 @@
   추가 필요
 
   </details>
+  <br>
+
+  <details>
+    <summary>챗봇 관련</summary>
+
+  **1. 챗봇 접속시 화면**
+  ![냉장봇1](https://github.com/user-attachments/assets/5779082c-cfe8-4ecf-b1f9-6e88c080c50f)
+  사이드바의 x버튼으로 닫을 수 있고 입력창 좌측 버튼으로 열 수 있다<br>
+
+  **2. 대화 화면**
+  ![냉장봇2](https://github.com/user-attachments/assets/a2623a30-e908-4ea6-abe4-799884a991f6)
+  채팅 입력 후 챗봇의 응답을 기다린다<br>
+
+  ![냉장봇3](https://github.com/user-attachments/assets/c78afb47-5792-444e-96b7-a4ebe3c27b4d)
+  채팅 응답이 온 뒤 사이드 바에 채팅방이 추가된다
+
+  **3. 이전채팅 화면**
+  ![냉장봇 이전채팅1](https://github.com/user-attachments/assets/2ef65b70-22a8-4217-a798-008ae6dee09e)
+  
+  ![냉장봇 이전채팅2](https://github.com/user-attachments/assets/079b0bb2-d3d5-4805-b64b-35fd891332d3)
+  이전 채팅이 있다면 이전 채팅을 불러올 수 있다<br>
+
+  **4. 이전채팅 화면**
+  필요 없는 채팅은 삭제할 수 있다
+
+
+  </details>
+  <br>
    
 ## 구조 및 설계   
    
