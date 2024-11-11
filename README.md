@@ -262,7 +262,7 @@
   ![검색결과3](https://github.com/user-attachments/assets/e7382f08-587a-40a6-87a5-01ef62bbf418)<br>
   ![검색결과4](https://github.com/user-attachments/assets/3a611c1f-c61c-4ba7-8a27-52e5a6f14a1a)
   ![검색결과5](https://github.com/user-attachments/assets/057e4b7a-e2f2-4d1e-85cb-a1d4cc6a7078)
-  검색결과가 존재할 경우 페이지 이동<br>
+  검색결과가 존재할 경우 검색결과 페이지 이동<br>
   게시글 클릭시 상세페이지로 이동
   <br><br><br>
   
