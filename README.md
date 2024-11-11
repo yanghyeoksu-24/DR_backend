@@ -170,8 +170,9 @@
     <summary>챗봇 관련</summary>
 
   **1. 챗봇 접속시 화면**
-  ![냉장봇1](https://github.com/user-attachments/assets/5779082c-cfe8-4ecf-b1f9-6e88c080c50f)
-  사이드바의 x버튼으로 닫을 수 있고 입력창 좌측 버튼으로 열 수 있다<br>
+  ![냉장봇1](https://github.com/user-attachments/assets/34cf3dca-73c9-404b-9621-8f3662a6bf70)
+  사이드바는 x버튼으로 닫을 수 있고 입력창 좌측 버튼으로 열고 닫을 수 있다<br>
+  이전채팅 목록을 10개까지 나타낸다
 
   **2. 대화 화면**
   ![냉장봇2](https://github.com/user-attachments/assets/a2623a30-e908-4ea6-abe4-799884a991f6)
