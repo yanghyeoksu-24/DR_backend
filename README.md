@@ -211,7 +211,34 @@
   좌측과 우측 버튼으로 슬라이드배너 형식의 포인트샵 상품을 볼 수 있다
 
   **2. 포인트샵 구매 화면**
+  ![포인트샵구매1](https://github.com/user-attachments/assets/42eb31ec-f496-49af-979d-f6dd6b974cfc)<br>
 
+  ![포인트샵구매1-2](https://github.com/user-attachments/assets/0146289e-7111-48e6-892b-71d98732b01f)<br>
+  0 이하는 구매할 수 없다<br>
+
+  ![포인트샵구매2](https://github.com/user-attachments/assets/3f9aae4e-0b61-447b-aeaa-9a003320accd)<br>
+
+  ![포인트샵구매2-2](https://github.com/user-attachments/assets/287346c2-993c-4e67-8fbc-f3715aa9e285)<br>
+  보유한 포인트보다 많은 포인트를 사용할 수 없다<br>
+
+  ![포인트샵구매3](https://github.com/user-attachments/assets/d779b969-58c2-4bef-8c0a-357ba042b35f)<br>
+
+  ![포인트샵구매3-2](https://github.com/user-attachments/assets/17c041b5-6688-4341-b8a4-7591ad433cb7)<br>
+  입력값이 없어도 구매할 수 없다<br>
+
+  ![포인트샵구매4](https://github.com/user-attachments/assets/8be1bb58-cdf7-42c7-a575-e036121d6ae1)<br>
+
+  ![포인트샵구매4-2](https://github.com/user-attachments/assets/2c343dfb-a53e-41e8-be10-1ab189176ce2)<br>
+
+  ![포인트샵구매4-3](https://github.com/user-attachments/assets/90d0c666-31bc-49b7-b75f-00dbd6e4b6d1)<br>
+
+  ![포인트샵구매4-4](https://github.com/user-attachments/assets/64537766-47ff-4eeb-8698-43446746947e)<br>
+
+  ![포인트샵구매4-5](https://github.com/user-attachments/assets/ff8c75f1-eaed-4cfb-9fb1-ec31ad8ff86d)<br>
+  구매 완료시 사용한 포인트가 차감되며 redirect 된다<br>
+  문자로 구매한 상품의 코드를 받는다
+  <br><br><br>  
+  
   </details>
   <br>
 
