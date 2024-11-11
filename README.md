@@ -238,7 +238,7 @@
   ![포인트샵구매4-3](https://github.com/user-attachments/assets/90d0c666-31bc-49b7-b75f-00dbd6e4b6d1)<br>
 
   ![포인트샵구매4-4](https://github.com/user-attachments/assets/64537766-47ff-4eeb-8698-43446746947e)<br>
-  ![포인트샵구매4-6](https://github.com/user-attachments/assets/c397f71f-8493-4dd7-a897-0a57a00aec88)<br>
+  ![포인트샵구매4-6](https://github.com/user-attachments/assets/5f141156-4401-41e6-a503-4e3018b5ee1e)<br>
 
   ![포인트샵구매4-5](https://github.com/user-attachments/assets/ff8c75f1-eaed-4cfb-9fb1-ec31ad8ff86d)<br>
   구매 완료시 사용한 포인트와 재고가 차감되며 redirect 된다<br>
