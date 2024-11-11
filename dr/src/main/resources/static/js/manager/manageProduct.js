@@ -51,7 +51,7 @@ document.getElementById('memberOut').addEventListener('click', function() {
   }
 
   $.ajax({
-    type: "POST",
+    type: "DELETE",
     url: "/manager/deleteProduct",
     contentType: "application/json",
     data: JSON.stringify({ productName: selectedUserNumbers }),
