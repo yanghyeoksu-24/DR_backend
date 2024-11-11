@@ -122,8 +122,8 @@
   ![소셜로그인2](https://github.com/user-attachments/assets/023b3ccc-0965-40b0-be83-e3bf14d8ea2f)
 
   ![소셜로그인3](https://github.com/user-attachments/assets/2c1a89d5-12a2-49c7-b90c-99fe6460a23a)
-
-  ![소셜로그인4](https://github.com/user-attachments/assets/70e52b64-2735-4ae1-8638-75e339383caa)<br>
+  
+  ![소셜로그인4](https://github.com/user-attachments/assets/e3d93f58-8076-4f14-a8ef-e333222ee84f)<br>
   메일과 이름은 OAuth2에서 자동으로 받아오고 추가정보(핸드폰인증) 만 간단하게 기입 후 가입한다
 
   ![소셜로그인5](https://github.com/user-attachments/assets/cf65eeef-4889-44b9-87aa-dceaecfee857)<br>
