@@ -122,6 +122,22 @@ public class RecipeService {
         recipeMapper.insertMyPhoto(recipePhotoDTO);
     }
 
+    @Transactional  // 트랜잭션 관리
+    public void saveChatBotRecipe(ChatBotRecipeWriteDTO chatBotRecipeWriteDTO, RecipePhotoDTO recipePhotoDTO) {
+        // 1. 레시피 정보 먼저 저장 (RECIPE 테이블)
+        recipeMapper.insertChatBotRecipe(chatBotRecipeWriteDTO);
+
+        // 2. RECIPE_NUMBER와 USER_NUMBER를 설정하여 RecipePhotoDTO에 추가
+        Long recipeNumber = chatBotRecipeWriteDTO.getRecipeNumber();
+        Long userNumber = chatBotRecipeWriteDTO.getUserNumber();
+
+        recipePhotoDTO.setRecipeNumber(recipeNumber);  // RECIPE_NUMBER 설정
+        recipePhotoDTO.setUserNumber(userNumber);      // USER_NUMBER 설정
+
+        // 3. 사진 정보 저장 (PHOTO 테이블)
+        recipeMapper.insertChatBotPhoto(recipePhotoDTO);
+    }
+
     // 나만의 레시피 추천 수 증가
     public void addGood(MyRecipeGoodDTO myRecipeGoodDTO) {
         recipeMapper.increaseGoodCount(myRecipeGoodDTO);
@@ -157,17 +173,31 @@ public class RecipeService {
         recipeMapper.report(reportDTO);
     }
 
-    // 레시피 삭제
+    // 나만의 레시피 삭제
     @Transactional
     public void deleteRecipeAndPhoto(Long recipeNumber) {
         recipeMapper.deleteRecipe(recipeNumber);
         recipeMapper.deletePhoto(recipeNumber);
     }
 
-    //레시피 수정
+    //챗봇 레시피 삭제
+    @Transactional
+    public void deleteChatBot(Long recipeNumber) {
+        recipeMapper.deleteChatBotRecipe(recipeNumber);
+        recipeMapper.deleteChatBotPhoto(recipeNumber);
+    }
+
+    //나만의 레시피 수정
     @Transactional
     public void updateRecipeAndPhoto(MyRecipeUpdateDTO myRecipeUpdateDTO) {
         recipeMapper.updateRecipe(myRecipeUpdateDTO);
         recipeMapper.updatePhoto(myRecipeUpdateDTO);
+    }
+
+    // 챗봇 레시피 삭제
+    @Transactional
+    public void updateChatBot(ChatBotRecipeUpdateDTO chatBotRecipeUpdateDTO) {
+        recipeMapper.updateChatBotRecipe(chatBotRecipeUpdateDTO);
+        recipeMapper.updateChatBotPhoto(chatBotRecipeUpdateDTO);
     }
 }

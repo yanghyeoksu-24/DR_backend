@@ -53,14 +53,17 @@ public interface RecipeMapper {
     void deleteChatBotReply(Long replyNumber);
 
     //    나만의 레시피 글쓰기
-    // 레시피 데이터 삽입 메서드
+    // 나만의 레시피 데이터 삽입 메서드
     void insertMyRecipe(MyRecipeWriteDTO myRecipeWriteDTO);
 
-    //     사진 데이터 삽입 메서드
+    //   나만의 레시피  사진 데이터 삽입 메서드
     void insertMyPhoto(RecipePhotoDTO recipePhotoDTO);
 
     //챗봇 레시피 글쓰기
     void insertChatBotRecipe(ChatBotRecipeWriteDTO chatBotRecipeWriteDTO);
+
+    // 챗봇 사진 데이터 삽입
+    void insertChatBotPhoto(RecipePhotoDTO recipePhotoDTO);
 
     // 나만의 레시피 추천 수 증가
     void increaseGoodCount(MyRecipeGoodDTO myRecipeGoodDTO);
@@ -83,15 +86,25 @@ public interface RecipeMapper {
     void report(RecipeReportDTO recipeReportDTO);
 
 
-    // 레시피 삭제
+    // 나만의 레시피 삭제
     void deleteRecipe(Long recipeNumber);
 
     void deletePhoto(Long recipeNumber);
 
-    // 레시피 수정
+    // 챗봇 레시피 삭제
+    void deleteChatBotRecipe(Long recipeNumber);
+
+    void deleteChatBotPhoto(Long recipeNumber);
+
+    // 나만의 레시피 수정
     void updateRecipe(MyRecipeUpdateDTO myRecipeUpdateDTO);
 
     void updatePhoto(MyRecipeUpdateDTO myRecipeUpdateDTO);
+
+    // 챗봇 레시피 수정
+    void updateChatBotRecipe(ChatBotRecipeUpdateDTO chatBotRecipeUpdateDTO);
+
+    void updateChatBotPhoto(ChatBotRecipeUpdateDTO chatBotRecipeUpdateDTO);
 
 }
 

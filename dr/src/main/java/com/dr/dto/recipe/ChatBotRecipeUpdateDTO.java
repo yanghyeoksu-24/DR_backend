@@ -1,5 +1,6 @@
 package com.dr.dto.recipe;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,13 +10,13 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class ChatBotRecipeWriteDTO {
+public class ChatBotRecipeUpdateDTO {
     private Long recipeNumber;
-    private Long userNumber;
     private String recipeTitle;
     private String recipeText;
-    private String userNickName;
-    private String recipeWriteDate;
     private String recipeModifyDate;
-    private String recipeType;
+    private String photoOriginal;
+    private String photoLocal;
+    private String photoSize;
+    private String photoUpload;
 }
