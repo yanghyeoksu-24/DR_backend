@@ -140,11 +140,14 @@
     <summary>메인 관련</summary>     
   **1. 메인페이지 공공데이터 섹션 화면**
     
-  ![메인공공데이터1](https://github.com/user-attachments/assets/80a652d0-5103-4d34-9ea0-3b2167322ded)
+  ![메인공공데이터1](https://github.com/user-attachments/assets/80a652d0-5103-4d34-9ea0-3b2167322ded)<br>
+  기본값은 현재의 전달 공공데이터가 나오게 된다
 
-  ![메인공공데이터2](https://github.com/user-attachments/assets/ea21360d-6452-45fb-ab21-b79f115ea3c4)
+  ![메인공공데이터2](https://github.com/user-attachments/assets/ea21360d-6452-45fb-ab21-b79f115ea3c4)<br>
+  그래프 아래의 월 선택 버튼으로 다른 시기의 공공데이터를 선택할 수 있다
 
-  ![메인공공데이터3](https://github.com/user-attachments/assets/54afcea9-a4b1-42fb-a361-3c0573c5a776)
+  ![메인공공데이터3](https://github.com/user-attachments/assets/54afcea9-a4b1-42fb-a361-3c0573c5a776)<br>
+  선택한 월에 대한 데이터로 변경되면서 관련 타이틀과 그래프가 변경된다
 
   </details>
    
