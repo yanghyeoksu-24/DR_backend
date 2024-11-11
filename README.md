@@ -180,7 +180,7 @@
   ![냉장봇3](https://github.com/user-attachments/assets/c78afb47-5792-444e-96b7-a4ebe3c27b4d)
   채팅 응답이 온 뒤 사이드 바에 채팅방이 추가된다
 
-  **3. 이전채팅 화면**
+  **3. 이전채팅 화면**<br>
   ![냉장봇 이전채팅1](https://github.com/user-attachments/assets/2ef65b70-22a8-4217-a798-008ae6dee09e)
   
   ![냉장봇 이전채팅2](https://github.com/user-attachments/assets/079b0bb2-d3d5-4805-b64b-35fd891332d3)
