@@ -117,9 +117,18 @@
   <br><br><br>
 
   **2-1. OAuth 2.0 소셜 로그인 화면**
+  ![소셜로그인1](https://github.com/user-attachments/assets/f99456bd-e0b0-4e59-8343-e8f0b832ac01)
+  
+  ![소셜로그인2](https://github.com/user-attachments/assets/023b3ccc-0965-40b0-be83-e3bf14d8ea2f)
+
   
   
-     
+  ![소셜로그인4](https://github.com/user-attachments/assets/70e52b64-2735-4ae1-8638-75e339383caa)<br>
+  메일과 이름은 OAuth2에서 자동으로 받아오고 추가정보(핸드폰인증) 만 간단하게 기입 후 가입한다
+
+  ![소셜로그인5](https://github.com/user-attachments/assets/cf65eeef-4889-44b9-87aa-dceaecfee857)<br>
+  가입시 바로 로그인 되며 이후 카카오 로그인으로 간편하게 로그인 가능하다 또한 카카오 프로필사진과 이름이 세션에 자동으로 들어가게 설정하였다
+
   **3. 회원정보 수정 화면**       
            
   </details>
