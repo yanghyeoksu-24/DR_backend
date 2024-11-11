@@ -3,11 +3,7 @@
 
 > 음식물 쓰레기 감소를 위한 챗봇 레시피 추천 웹서비스 입니다
 
-
-
 ![메인 페이지](https://github.com/user-attachments/assets/d48cbb34-572c-4d88-856d-2941d4dbb4c7)
-
-
 
 ## 목차
 - [들어가며](#들어가며)
@@ -72,20 +68,69 @@
 - Jquery
 - ThymeLeaf
 
--------------------------------------------------------------------------------------------------------------
-새로 작성, 수정필요
-
 ### 4. 실행 화면
   <details>
     <summary>회원 관련</summary>
      
-  **1. 회원가입 화면** 
-       회원가입 시 유효성 검사 및 중복확인을 진행하며 완료시 회원 정보를 저장하고 로그인 화면으로 이동한다.   
+  **1. 회원가입 화면**
+  ![회원가입1](https://github.com/user-attachments/assets/495baa80-0da6-49ea-88e9-561f58661155)
+  
+  ![회원가입2](https://github.com/user-attachments/assets/9106347d-24a5-4c2c-b7cb-4e4f21a688ac)
+
+  ![회원가입3](https://github.com/user-attachments/assets/6f0684bd-f97d-4a83-985a-815097a978bc)
+
+  ![회원가입4](https://github.com/user-attachments/assets/3592e07c-1ea8-4b6b-a86b-eb2445572dea)
+
+  ![회원가입4-2](https://github.com/user-attachments/assets/a4ee50b6-ebd7-4f3e-9b9f-48b98dc4ec2a)<br>
+  중복확인 버튼을 통해 중복검사를 실시 한다
+  
+  ![회원가입5](https://github.com/user-attachments/assets/352f10a6-b3ee-4ced-9fb3-de885099fca4)<br>
+  인증요청 버튼을 통해 인증번호를 받아 입력한다
+
+  ![회원가입5-2](https://github.com/user-attachments/assets/210b5b4b-0cef-4e34-9968-84941ce7cb8d)
+  
+  ![회원가입5-3](https://github.com/user-attachments/assets/9ec7b5bb-724e-45c2-9e90-28064b153ccc)
+
+  ![회원가입6](https://github.com/user-attachments/assets/5cecb39e-bb19-4176-bc51-5d63c3b84168)
+
+  ![회원가입7](https://github.com/user-attachments/assets/9e09b2a5-d8af-4920-9abf-9859ea8884dd)<br>
+  회원가입 시 유효성 검사 및 중복확인을 진행하며 완료시 회원 정보를 저장하고 로그인 화면으로 이동한다
+  <br><br><br>
        
   **2. 로그인 화면** 
+  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
 
-  **2-1. OAuth 2.0 소셜 로그인 화면**   
-     
+  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
+  입력 여부를 확인 후 안내창이 나온다
+
+  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+
+  ![로그인4](https://github.com/user-attachments/assets/9d2e6fef-fd91-4311-b695-c9d1699ab772)<br>
+  잘못된 로그인 정보 입력시 안내창이 나온다
+
+  ![로그인5](https://github.com/user-attachments/assets/05797b3f-b51c-49ce-a4d7-10004c1ec2dd)
+
+  ![로그인6](https://github.com/user-attachments/assets/416284e5-f8d2-4b1a-8541-bff353873be9)
+
+  ![로그인7](https://github.com/user-attachments/assets/f8745e55-d7eb-48f7-9b8e-0ed62cf55815)<br>
+  로그인 성공시 안내창이 나오고 세션처리로 헤더가 변경되며 메인 화면으로 redirect 한다
+  <br><br><br>
+
+  **2-1. OAuth 2.0 소셜 로그인 화면**<br>
+  ![소셜로그인1](https://github.com/user-attachments/assets/f99456bd-e0b0-4e59-8343-e8f0b832ac01)
+  
+  ![소셜로그인2](https://github.com/user-attachments/assets/023b3ccc-0965-40b0-be83-e3bf14d8ea2f)
+
+  ![소셜로그인3](https://github.com/user-attachments/assets/2c1a89d5-12a2-49c7-b90c-99fe6460a23a)
+
+  ![소셜로그인4](https://github.com/user-attachments/assets/70e52b64-2735-4ae1-8638-75e339383caa)<br>
+  메일과 이름은 OAuth2에서 자동으로 받아오고 추가정보(핸드폰인증) 만 간단하게 기입 후 가입한다
+
+  ![소셜로그인5](https://github.com/user-attachments/assets/cf65eeef-4889-44b9-87aa-dceaecfee857)<br>
+  가입시 바로 로그인 되며 이후 카카오 로그인으로 간편 로그인이 가능하다<br>
+  또한 카카오에 등록된 프로필사진과 이름이 세션에 자동으로 들어가게 설정하였다
+  <br><br><br>
+
   **3. 회원정보 수정 화면**       
            
   </details>
