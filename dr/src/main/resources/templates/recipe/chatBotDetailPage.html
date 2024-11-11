@@ -53,16 +53,26 @@
                             </a>
                         </div>
                         <div class="chatBotDetailPage-firstButton" th:if="${userNickName != null and userNickName == recipeDetail.userNickName}">
-                            <button class="chatBotDetailPage-buttonOne">수정</button>
-                            <button id="deleteButton" class="chatBotDetailPage-buttonOne">삭제</button>
+                            <form th:action="@{/recipe/updateChatBotRecipe}" method="post">
+                                <input type="hidden" name="recipeNumber4" id="recipeNumber4"
+                                       th:value="${recipeDetail.recipeNumber}">
+                                <input type="hidden" name="recipeTitle" th:value="${recipeDetail.recipeTitle}">
+                                <input type="hidden" name="recipeText" th:value="${recipeDetail.recipeText}">
+                                <button id="updateButton" class="chatBotDetailPage-buttonOne">수정</button>
+                            </form>
+
+                            <form th:action="@{/recipe/deleteChatBotRecipe}" method="post">
+                                <input type="hidden" name="recipeNumber5" id="recipeNumber5"
+                                       th:value="${recipeDetail.recipeNumber}">
+                                <button id="deleteButton" class="chatBotDetailPage-buttonOne">삭제</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="chatBotDetailPage-writetext">
-                <p class="chatBotDetailPage-texts" th:text="${recipeDetail.recipeText}"></p>
-                <img th:src="@{/image/recipe/ + ${recipeDetail.photoLocal}}" alt="레시피 이미지">
+                <p class="chatBotDetailPage-texts" th:utext="${recipeDetail.recipeText}"></p>
                 <div class="chatBotDetailPage-recommendImg">
                     <input type="hidden" name="recipeNumber" id="recipeNumber" th:value="${recipeDetail.recipeNumber}">
                     <img src="/image/recommend.png" id="recommendImg" class="recommend-inactive" alt="추천"

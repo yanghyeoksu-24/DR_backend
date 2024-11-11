@@ -1,3 +1,8 @@
+*{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
 body{
     font-family: 'Cute Font', cursive;
     margin: 0;
@@ -247,6 +252,16 @@ main{
     display: flex;
     margin-bottom: 10px;
     margin-left: 55px;
+}
+
+.myDetailPage-saveBtn, .myDetailPage-cancelBtn{
+    background-color: #f0a500;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    margin-left: 10px; /* 버튼 사이 간격 */
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 #pagination {
