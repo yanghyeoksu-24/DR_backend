@@ -85,12 +85,12 @@
   ![회원가입4](https://github.com/user-attachments/assets/3592e07c-1ea8-4b6b-a86b-eb2445572dea)
 
   ![회원가입4-2](https://github.com/user-attachments/assets/a4ee50b6-ebd7-4f3e-9b9f-48b98dc4ec2a)
-
-  ![회원가입5](https://github.com/user-attachments/assets/63b835cc-4a90-42ba-ac9d-03539ec622e3)
   <br><br>중복확인 버튼을 통해 중복검사를 실시 한다
+  
+  ![회원가입5](https://github.com/user-attachments/assets/63b835cc-4a90-42ba-ac9d-03539ec622e3)
+  <br><br>인증요청 버튼을 통해 인증번호를 받아 입력한다
 
   ![회원가입5-2](https://github.com/user-attachments/assets/210b5b4b-0cef-4e34-9968-84941ce7cb8d)
-  <br><br>인증요청 버튼을 통해 인증번호를 받아 입력한다
   
   ![회원가입5-3](https://github.com/user-attachments/assets/9ec7b5bb-724e-45c2-9e90-28064b153ccc)
 
