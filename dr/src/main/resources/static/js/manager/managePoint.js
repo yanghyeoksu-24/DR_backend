@@ -72,7 +72,7 @@ document.getElementById('memberOut').addEventListener('click', function() {
 
   // AJAX 요청을 통해 체크된 userNumber 값들을 서버에 전송
   $.ajax({
-    type: "POST",
+    type: "DELETE",
     url: "/manager/pointDelete",
     contentType: "application/json",
     data: JSON.stringify({ pointNumber: selectedUserNumbers }), // 배열을 JSON으로 변환
@@ -98,7 +98,7 @@ document.getElementById('memberPause').addEventListener('click', function() {
 
   // AJAX 요청을 통해 체크된 userNumber 값들을 서버에 전송
   $.ajax({
-    type: "POST",
+    type: "PUT",
     url: "/manager/takePoint",
     contentType: "application/json",
     data: JSON.stringify({ pointNumber: selectedUserNumbers }), // 배열을 JSON으로 변환
