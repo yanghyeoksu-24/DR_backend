@@ -75,7 +75,7 @@
   **1. 회원가입 화면**
   ![회원가입1](https://github.com/user-attachments/assets/495baa80-0da6-49ea-88e9-561f58661155)
   
-  ![회원가입2](https://github.com/user-attachments/assets/c9e280ca-477c-4f1a-a2f3-60bdebd090ac)
+  ![회원가입2](https://github.com/user-attachments/assets/9106347d-24a5-4c2c-b7cb-4e4f21a688ac)
 
   ![회원가입3](https://github.com/user-attachments/assets/6f0684bd-f97d-4a83-985a-815097a978bc)
 
