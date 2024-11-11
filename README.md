@@ -138,8 +138,8 @@
 
   <details>
     <summary>메인 관련</summary>     
-  **1. 메인페이지 공공데이터 섹션 화면**
-    
+  
+  **1. 메인페이지 공공데이터 섹션 화면**  
   ![메인공공데이터1](https://github.com/user-attachments/assets/80a652d0-5103-4d34-9ea0-3b2167322ded)<br>
   기본값은 현재의 전달 공공데이터가 나오게 된다
 
@@ -148,6 +148,14 @@
 
   ![메인공공데이터3](https://github.com/user-attachments/assets/54afcea9-a4b1-42fb-a361-3c0573c5a776)<br>
   선택한 월에 대한 데이터로 변경되면서 관련 타이틀과 그래프가 변경된다
+  <br><br><br>
+
+  **2. 메인페이지 음식물쓰레기 계산기 화면**
+  ![메인음쓰계산기1](https://github.com/user-attachments/assets/30d7798e-b499-4027-a269-c6c6ed37b6ab)<br>
+
+  ![메인음쓰계산기2](https://github.com/user-attachments/assets/9535c112-7b6f-4960-9f63-781c070e4731)<br>
+  입력창에 무게를 입력하면 소비된 에너지 및 비용등이 실시간 계산된다
+
 
   </details>
    
