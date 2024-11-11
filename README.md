@@ -97,10 +97,25 @@
   ![회원가입6](https://github.com/user-attachments/assets/5cecb39e-bb19-4176-bc51-5d63c3b84168)
 
   ![회원가입7](https://github.com/user-attachments/assets/9e09b2a5-d8af-4920-9abf-9859ea8884dd)<br>
-  회원가입 시 유효성 검사 및 중복확인을 진행하며 완료시 회원 정보를 저장하고 로그인 화면으로 이동한다.   
+  회원가입 시 유효성 검사 및 중복확인을 진행하며 완료시 회원 정보를 저장하고 로그인 화면으로 이동한다
        
   **2. 로그인 화면** 
-  
+  ![로그인1](https://github.com/user-attachments/assets/9793715a-ca5a-4169-a3bf-4c97c61ee3d1)
+
+  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
+  입력 여부를 확인 후 안내창이 나온다
+
+  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+
+  ![로그인4](https://github.com/user-attachments/assets/9d2e6fef-fd91-4311-b695-c9d1699ab772)<br>
+  잘못된 로그인 정보 입력시 안내창이 나온다
+
+  ![로그인5](https://github.com/user-attachments/assets/05797b3f-b51c-49ce-a4d7-10004c1ec2dd)
+
+  ![로그인6](https://github.com/user-attachments/assets/416284e5-f8d2-4b1a-8541-bff353873be9)
+
+  ![로그인7](https://github.com/user-attachments/assets/99170653-da15-4d42-952b-f56e1aa3b8a9)<br>
+  로그인 성공시 안내창이 나오고 메인 화면으로 redirect 한다
 
   **2-1. OAuth 2.0 소셜 로그인 화면**   
      
