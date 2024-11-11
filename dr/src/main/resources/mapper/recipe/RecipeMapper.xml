@@ -262,7 +262,6 @@
 
 
     <!--    나만의레시피 글쓰기-->
-
     <!-- 레시피 데이터 삽입 -->
     <insert id="insertMyRecipe" parameterType="MyRecipeWriteDTO">
         <selectKey keyProperty="recipeNumber" resultType="Long" order="BEFORE">
@@ -287,6 +286,31 @@
         #{photoNumber}, #{photoOriginal}, #{photoLocal}, #{photoSize} ,  #{recipeNumber}
         )
     </insert>
+
+<!--    챗봇 레시피 데이터 삽입-->
+    <insert id="insertChatBotRecipe" parameterType="ChatBotRecipeWriteDTO">
+        <selectKey keyProperty="recipeNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_RECIPE_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_RECIPE (
+        RECIPE_NUMBER, USER_NUMBER, RECIPE_TITLE, RECIPE_TEXT, RECIPE_TYPE, RECIPE_WRITE_DATE
+        ) VALUES (
+        #{recipeNumber}, #{userNumber}, #{recipeTitle}, #{recipeText}, #{recipeType}, SYSDATE
+        )
+    </insert>
+
+<!--    챗봇 레시피 사진 삽입-->
+    <insert id="insertChatBotPhoto" parameterType="RecipePhotoDTO">
+        <selectKey keyProperty="photoNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_PHOTO_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_PHOTO (
+        PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_SIZE , RECIPE_NUMBER
+        ) VALUES (
+        #{photoNumber}, #{photoOriginal}, #{photoLocal}, #{photoSize} ,  #{recipeNumber}
+        )
+    </insert>
+
 
 
     <!-- 찜 추가 -->
@@ -315,7 +339,7 @@
     </insert>
 
 
-    <!-- 삭제 레시피 -->
+    <!-- 나만의 레시피 삭제 레시피 -->
     <delete id="deleteRecipe" parameterType="Long">
         DELETE FROM DR_RECIPE WHERE RECIPE_NUMBER = #{recipeNumber}
     </delete>
@@ -324,7 +348,16 @@
         DELETE FROM DR_PHOTO WHERE RECIPE_NUMBER = #{recipeNumber}
     </delete>
 
-    <!-- 업데이트 레시피 -->
+<!--    챗봇 레시피 삭제-->
+    <delete id="deleteChatBotRecipe" parameterType="Long">
+        DELETE FROM DR_RECIPE WHERE RECIPE_NUMBER = #{recipeNumber}
+    </delete>
+
+    <delete id="deleteChatBotPhoto" parameterType="Long">
+        DELETE FROM DR_PHOTO WHERE RECIPE_NUMBER = #{recipeNumber}
+    </delete>
+
+    <!-- 나만의 레시피 업데이트 -->
     <update id="updateRecipe" parameterType="MyRecipeUpdateDTO">
         UPDATE DR_RECIPE
         SET RECIPE_TITLE = #{recipeTitle} AND RECIPE_TEXT = #{recipeText}
