@@ -116,7 +116,7 @@
   로그인 성공시 안내창이 나오고 세션처리로 헤더가 변경되며 메인 화면으로 redirect 한다
   <br><br><br>
 
-  **2-1. OAuth 2.0 소셜 로그인 화면**
+  **2-1. OAuth 2.0 소셜 로그인 화면**<br>
   ![소셜로그인1](https://github.com/user-attachments/assets/f99456bd-e0b0-4e59-8343-e8f0b832ac01)
   
   ![소셜로그인2](https://github.com/user-attachments/assets/023b3ccc-0965-40b0-be83-e3bf14d8ea2f)
