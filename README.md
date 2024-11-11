@@ -3,11 +3,7 @@
 
 > 음식물 쓰레기 감소를 위한 챗봇 레시피 추천 웹서비스 입니다
 
-
-
 ![메인 페이지](https://github.com/user-attachments/assets/d48cbb34-572c-4d88-856d-2941d4dbb4c7)
-
-
 
 ## 목차
 - [들어가며](#들어가며)
@@ -79,8 +75,25 @@
   <details>
     <summary>회원 관련</summary>
      
-  **1. 회원가입 화면** 
-       회원가입 시 유효성 검사 및 중복확인을 진행하며 완료시 회원 정보를 저장하고 로그인 화면으로 이동한다.   
+  **1. 회원가입 화면**
+  ![회원가입1](https://github.com/user-attachments/assets/495baa80-0da6-49ea-88e9-561f58661155)
+  
+  ![회원가입2](https://github.com/user-attachments/assets/c9e280ca-477c-4f1a-a2f3-60bdebd090ac)
+
+  ![회원가입3](https://github.com/user-attachments/assets/6f0684bd-f97d-4a83-985a-815097a978bc)
+
+  ![회원가입4](https://github.com/user-attachments/assets/3592e07c-1ea8-4b6b-a86b-eb2445572dea)
+
+  ![회원가입4-2](https://github.com/user-attachments/assets/a4ee50b6-ebd7-4f3e-9b9f-48b98dc4ec2a)
+
+  ![회원가입5](https://github.com/user-attachments/assets/63b835cc-4a90-42ba-ac9d-03539ec622e3)
+
+  ![회원가입5-2](https://github.com/user-attachments/assets/210b5b4b-0cef-4e34-9968-84941ce7cb8d)
+
+  ![회원가입6](https://github.com/user-attachments/assets/1d65f333-bcbc-46df-bd8b-8d85e4a972a9)
+
+  ![회원가입7](https://github.com/user-attachments/assets/9e09b2a5-d8af-4920-9abf-9859ea8884dd)
+     회원가입 시 유효성 검사 및 중복확인을 진행하며 완료시 회원 정보를 저장하고 로그인 화면으로 이동한다.   
        
   **2. 로그인 화면** 
 
