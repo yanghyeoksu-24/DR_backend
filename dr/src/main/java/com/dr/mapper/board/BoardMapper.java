@@ -78,4 +78,16 @@ public interface BoardMapper {
     // 자유게시판 게시글 사진 등록
     void freeBoardInsertPhoto(FreeBoardPhotoDTO freeBoardPhotoDTO);
 
+    //자유게시판 게시글 삭제
+    void freeBoardDeleteWrite(Long boardNumber);
+
+    //자유게시판 게시글 사진 삭제
+    void freeBoardDeletePhoto(Long boardNumber);
+
+    //자유게시판 게시글 수정
+    void freeBoardUpdateWrite(FreeBoardUpdateDTO freeBoardUpdateDTO);
+
+    //자유게시판 게시글 사진 수정
+    void freeBoardUpdatePhoto(FreeBoardUpdateDTO freeBoardUpdateDTO);
+
 }

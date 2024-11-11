@@ -124,6 +124,7 @@ public class BoardService {
         boardMapper.report(reportDTO);
     }
 
+    //자유게시판 게시글 작성
     @Transactional
     public void saveFreeBoard(FreeBoardWriteDTO freeBoardWriteDTO, FreeBoardPhotoDTO freeBoardPhotoDTO) {
         //1. 게시글 내용 저장 (boardText에 이미지 URL이 포함됨)
@@ -139,6 +140,21 @@ public class BoardService {
         //3. 사진 정보 저장(PHOTO 테이블)
         boardMapper.freeBoardInsertPhoto(freeBoardPhotoDTO);
     }
+
+    //자유게시판 게시글 삭제
+    @Transactional
+    public void freeBoardDeleteWriteAndPhoto(Long boardNumber) {
+        boardMapper.freeBoardDeleteWrite(boardNumber);
+        boardMapper.freeBoardDeletePhoto(boardNumber);
+    }
+
+    //자유게시판 게시글 수정
+    @Transactional
+    public void freeBoardUpdateWriteAndPhoto(FreeBoardUpdateDTO freeBoardUpdateDTO) {
+        boardMapper.freeBoardUpdateWrite(freeBoardUpdateDTO);
+        boardMapper.freeBoardUpdatePhoto(freeBoardUpdateDTO);
+    }
+
 }
 
 

@@ -81,11 +81,7 @@ public class BoardController {
     }
 
 
-    // 자유게시판 글 수정 페이지 이동
-    @GetMapping("/freeBoardModify")
-    public String freeBoardModifyPage() {
-        return "/board/freeBoardModify";
-    }
+
 
     // 자유게시판 글 쓰기 페이지 이동
     @GetMapping("/freeBoardWrite")
@@ -370,6 +366,41 @@ public class BoardController {
         //4. 성공 메시지 전달 후 , 리다이렉션
         return "redirect:/board/freeBoardList"; // 리다이렉트 URL은 필요에 맞게 수정
 
+    }
+
+    //자유게시판 게시글 삭제
+    @PostMapping("/deleteFreeBoard")
+    public String deleteFreeBoard(@RequestParam("boardNumber2") Long boardNumber) {
+        boardService.freeBoardDeleteWriteAndPhoto(boardNumber);
+
+        return "redirect:/board/freeBoardList";
+    }
+
+
+
+
+    // 자유게시판 글 수정 페이지 이동
+    @GetMapping("/freeBoardModify")
+    public String freeBoardModifyPage() {
+        return "/board/freeBoardModify"; //
+    }
+
+
+    //자유게시판 게시글 수정
+    @PostMapping("/updateFreeBoard")
+    public String updateFreeBoard(@RequestParam("boardNumber3") Long boardNumber,
+                                  @RequestParam("boardTitle") String boardTitle,
+                                  @RequestParam("boardText") String boardText,
+                                  Model model){
+        //필요한 로직 처리 ( 예 : 데이터베이스 업데이트)
+
+        // 수정 페이지로 이동하면서 데이터 전달
+
+        model.addAttribute("boardNumber", boardNumber);
+        model.addAttribute("boardTitle", boardTitle);
+        model.addAttribute("boardText", boardText);
+
+        return "/board/freeBoardModify";//수정 페이지의 템플릿 이름
     }
 
 }
