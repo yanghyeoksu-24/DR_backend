@@ -62,7 +62,7 @@ document.getElementById('memberOut').addEventListener('click', function() {
 
   // AJAX 요청을 통해 체크된 userNumber 값들을 서버에 전송
   $.ajax({
-    type: "POST",
+    type: "DELETE",
     url: "/manager/boardDelete",
     contentType: "application/json",
     data: JSON.stringify({ boardNumber: selectedBoardNumbers }), // 배열을 JSON으로 변환

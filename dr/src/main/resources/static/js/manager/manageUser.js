@@ -62,7 +62,7 @@
 
     // AJAX 요청을 사용해 선택된 사용자 번호 리스트를 JSON 형태로 서버에 전송
     $.ajax({
-      type: "POST",
+      type: "DELETE",
       url: "/manager/userOut", // 서버의 userOut API 엔드포인트 URL
       contentType: "application/json", // 전송 데이터 형식을 JSON으로 설정
       data: JSON.stringify({ userNumber: selectedUserNumbers }), // 선택된 사용자 번호 배열을 JSON으로 변환하여 전송
@@ -92,7 +92,7 @@
 
     // AJAX 요청을 통해 체크된 userNumber 값들을 서버에 전송
     $.ajax({
-      type: "POST",
+      type: "PUT",
       url: "/manager/userPause",
       contentType: "application/json",
       data: JSON.stringify({ userNumber: selectedUserNumbers }), // 배열을 JSON으로 변환
