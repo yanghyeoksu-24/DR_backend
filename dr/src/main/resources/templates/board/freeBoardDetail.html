@@ -25,7 +25,7 @@
             <div class="freeBoardDetail-infobox">
                 <div class="freeBoardDetail-infoFirst">
                     <div class="freeBoardDetail-infoInBox1">
-                        <img th:src="@{/image/photo/} + ${freeBoardDetail.photoLocal}" alt="User Photo">
+                        <img th:src="${freeBoardDetail.photoLocal}" alt="User Photo">
                     </div>
                     <div class="freeBoardDetail-infoInBox2">
                         <p class="freeBoardDetail-writeName" th:text="${freeBoardDetail.userNickName}">작성자</p>
@@ -43,18 +43,29 @@
                             <button class="freeBoardDetail-buttonTwo">신고</button>
                         </a>
                     </div>
-                    <br><br>
-                    <!-- 수정 및 삭제 버튼: 작성자에게만 표시 -->
                     <div class="freeBoardDetail-firstButton"
                          th:if="${userNickName != null and userNickName == freeBoardDetail.userNickName}">
-                        <button class="freeBoardDetail-buttonOne">수정</button>
-                        <button id="deleteButton" class="freeBoardDetail-buttonOne">삭제</button>
+                        <br><br>
+                        <!-- 수정 및 삭제 버튼: 작성자에게만 표시 -->
+                        <form th:action="@{/board/updateFreeBoard}" method="post">
+                            <input type="hidden" name="boardNumber3" id="boardNumber3"
+                                   th:value="${freeBoardDetail.boardNumber}">
+                            <input type="hidden" name="boardTitle" th:value="${freeBoardDetail.boardTitle}">
+                            <input type="hidden" name="boardText" th:value="${freeBoardDetail.boardText}">
+                            <button id="updateButton" class="freeBoardDetail-buttonOne">수정</button>
+                        </form>
+
+                        <form th:action="@{/board/deleteFreeBoard}" method="post">
+                            <input type="hidden" name="boardNumber2" id="boardNumber2"
+                                   th:value="${freeBoardDetail.boardNumber}">
+                            <button id="deleteButton" class="freeBoardDetail-buttonOne">삭제</button>
+                        </form>
+
                     </div>
                 </div>
             </div>
             <div class="freeBoardDetail-writetext">
-                <p class="freeBoardDetail-texts" th:text="${freeBoardDetail.boardText}">글 내용</p>
-                <img th:src="@{/image/photo/} + ${freeBoardDetail.photoLocal}" alt="Board Image">
+                <p class="freeBoardDetail-texts" th:utext="${freeBoardDetail.boardText}">글 내용</p>
 
                 <div class="freeBoardDetail-recommendImg">
                     <input type="hidden" id="boardNumber" name="boardNumber" th:value="${freeBoardDetail.boardNumber}">
@@ -103,9 +114,6 @@
                                  th:text="${freeBoardComments.replyText}">댓글 내용
                             </div>
 
-                            <!--                            <p>userNumber: <span th:if="${userNumber}==null">userNumber = null</span></p>-->
-                            <!--                            <p>freeBoardComments.userNumber: <span th:if="${freeBoardComments.userNickName} == null">freeBoardComments.userNumber = null</span></p>-->
-                            <!--                            <p>freeBoardComments.userNumber: <span th:if="${userNumber != null && userNickName == freeBoardComments.userNickName} == false">값</span></p>-->
                             <div class="freeBoardDetail-buttonGroup"
                                  th:if="${userNickName != null and userNickName == freeBoardComments.userNickName}">
                                 <button type="button" class="freeBoardDetail-editBtn"

@@ -51,6 +51,7 @@
                  LEFT JOIN DR_PHOTO P ON U.USER_NUMBER = P.USER_NUMBER
                  LEFT JOIN DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
         WHERE B.BOARD_NUMBER = #{boardNumber}
+        AND B.BOARD_TYPE = '자유게시판'
         GROUP BY B.BOARD_NUMBER,
                  B.BOARD_TITLE,
                  B.BOARD_TYPE,
@@ -171,6 +172,7 @@
                  LEFT JOIN DR_PHOTO P ON U.USER_NUMBER = P.USER_NUMBER
                  LEFT JOIN DR_GOOD G ON B.BOARD_NUMBER = G.BOARD_NUMBER
         WHERE B.BOARD_NUMBER = #{boardNumber}
+        AND B.BOARD_TYPE = '꿀팁게시판'
         GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, B.BOARD_TYPE, B.BOARD_TEXT, B.BOARD_WRITE_DATE, U.USER_NUMBER,
                  U.USER_NICKNAME, P.PHOTO_LOCAL
     </select>
@@ -269,6 +271,28 @@
         #{photoNumber}, #{photoOriginal}, #{photoLocal}, #{photoSize}, #{boardNumber}
         )
     </insert>
+
+<!--    자유게시판 게시글 삭제-->
+    <delete id="freeBoardDeleteWrite" parameterType="Long">
+        DELETE FROM DR_BOARD WHERE BOARD_NUMBER = #{boardNumber}
+    </delete>
+
+    <delete id="freeBoardDeletePhoto" parameterType="Long">
+        DELETE FROM DR_PHOTO WHERE BOARD_NUMBER = #{boardNumber}
+    </delete>
+
+<!--    자유게시판 게시글 수정-->
+    <update id="freeBoardUpdateWrite" parameterType="FreeBoardUpdateDTO">
+        UPDATE DR_BOARD
+        SET BOARD_TITLE = #{boardTitle} AND BOARD_TEXT = #{boardText}
+        WHERE BOARD_NUMBER = #{boardNumber}
+    </update>
+
+    <update id="freeBoardUpdatePhoto" parameterType="FreeBoardUpdateDTO">
+        UPDATE DR_PHOTO
+        SET PHOTO_ORIGINAL = #{photoOriginal} AND PHOTO_LOCAL = #{photoLocal} AND PHOTO_SIZE = #{photoSize}
+        WHERE BOARD_NUMBER = #{boardNumber}
+    </update>
 
 
 </mapper>

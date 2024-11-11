@@ -1,62 +1,121 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DR - 자유게시판 글 수정</title>
-    <link rel="stylesheet" th:href="@{/css/board/freeBoardModify.css}">
+
+    <link rel="stylesheet" th:href="@{/css/board/freeBoardModify.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}"/>
     <script defer th:src="@{/js/fragment/header.js}"></script>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-            crossorigin="anonymous"></script>
+    <!-- Toast UI Editor CSS -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css"/>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 
 <body>
 <header th:replace="~{/fragment/header :: header}"></header>
 <main>
-    <div class="freeboardmodify-mainContainer">
-        <div class="freeboardmodify-mainBox">
-            <div class="freeboardmodify-title">
-                <span class="freeboardmodify-text1">자유게시판</span>
-                <span class="freeboardmodify-text2">글수정</span>
-            </div>
-            <br><br>
-
-            <div class="freeboardmodify-inputContainer">
-                <input type="text" class="freeboardmodify-titleInput" placeholder="제목을 입력하세요">
+    <div class="freeboardwrite-mainContainer">
+        <div class="freeboardwrite-mainBox">
+            <div class="freeboardwrite-title">
+                <span class="freeboardwrite-text1">자유게시판</span>
+                <span class="freeboardwrite-text2">글 수정</span>
             </div>
 
-            <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+            <div class="freeboardwrite-inputContainer">
+                <!-- 글 번호와 기존 값을 hidden으로 전달 -->
+                <input type="hidden" id="boardNumberHidden" th:value="${freeBoardDetail.boardNumber}">
+                <input type="text" class="freeboardwrite-titleInput" id="boardTitle"
+                       th:value="${freeBoardDetail.title}" placeholder="제목을 입력하세요" required>
+            </div>
+
+            <!-- Toast UI Editor Section -->
             <div id="contsEditor"></div>
-            <script>
-                const editor = new toastui.Editor({
-                    el: document.querySelector('#contsEditor'),
-                    previewStyle: 'vertical',
-                    initialEditType: 'markdown',
-                    height: '500px',
-                    placeholder: '내용을 입력해 주세요.',
-                    initialValue: /*[[${post.content}]]*/ '',  // 서버에서 가져온 내용으로 초기화
-                });
-            </script>
-            <div class="freeboardmodify-write">
-                <a th:href="@{/board/freeBoardList}">
-                    <button class="freeboardmodify-writeButton">취소</button>
-                </a>
-                <form th:action="@{/board/freeBoardModify}" method="post">
-                    <button type="submit" class="freeboardmodify-writeButton">수정</button>
-                </form>
+            <input type="hidden" id="boardTextHidden" th:value="${freeBoardDetail.content}">
+
+            <!-- Hidden inputs for photo details (if any) -->
+            <input type="hidden" name="photoOriginal" th:value="${photoOriginal}"/>
+            <input type="hidden" name="photoLocal" th:value="${photoLocal}"/>
+            <input type="hidden" name="photoSize" th:value="${photoSize}"/>
+
+            <div class="freeboardwrite-write">
+                <button type="submit" class="freeboardwrite-writeButton" id="submitButton">수정</button>
+                &nbsp;<a th:href="@{/board/freeBoardList}">
+                <button type="button" class="freeboardwrite-writeButton">취소</button>
+            </a>
             </div>
         </div>
     </div>
 </main>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
-<script th:src="@{/js/board/freeBoardModify.js}"></script>
-</body>
 
+<!-- Toast UI Editor JavaScript -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+    const editor = new toastui.Editor({
+        el: document.querySelector('#contsEditor'),
+        previewStyle: 'vertical',
+        initialEditType: 'wysiwyg',
+        height: '500px',
+        placeholder: '내용을 입력해 주세요.',
+        initialValue: '[[${freeBoardDetail.content}]]', // 서버에서 전달받은 내용으로 초기화
+        hooks: {
+            addImageBlobHook: async (blob, callback) => {
+                console.log("이미지가 업로드 되었습니다.");
+
+                const formData = new FormData();
+                formData.append('image', blob);
+
+                try {
+                    const response = await fetch('/board/tui-editor/image-upload', {  // 서버 엔드포인트 수정
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+                    console.log('Response:', data);
+
+                    if (!response.ok) {
+                        throw new Error('이미지 업로드 실패: ' + data.error);
+                    }
+
+                    // 클라이언트에서 받은 파일 정보로 콜백 호출
+                    callback(URL.createObjectURL(blob), '이미지'); // 이미지를 에디터에 추가
+
+                    // 서버로부터 받은 값으로 hidden 필드 업데이트
+                    document.querySelector('input[name="photoOriginal"]').value = data.photoOriginal;
+                    document.querySelector('input[name="photoLocal"]').value = data.photoLocal;
+                    document.querySelector('input[name="photoSize"]').value = data.photoSize;
+
+                } catch (error) {
+                    console.error('이미지 업로드 실패:', error);
+                    alert('이미지 업로드에 실패했습니다.');
+                }
+            }
+        }
+    });
+
+    // 페이지 로드 시 데이터 설정
+    window.onload = function() {
+        const title = document.getElementById('boardTitle').value;
+        const content = document.getElementById('boardText').value;
+
+        // 입력 필드와 에디터에 값 설정
+        document.getElementById('boardTitle').value = title;
+        editor.setHTML(content);
+    };
+
+    document.getElementById('submitButton').addEventListener('click', function (event) {
+        event.preventDefault();
+        document.getElementById('boardText').value = editor.getHTML();
+        document.getElementById('freeBoardModifyForm').submit();
+    });
+</script>
+</body>
 </html>
