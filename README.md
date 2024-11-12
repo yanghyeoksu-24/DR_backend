@@ -1,8 +1,9 @@
 # Spring Boot 프로젝트 맛있는재활용
-<br>
+=
+
 >작업기간: 2024.09.27 ~ 2023.11.15 <br>
 >📑Backend Repository: https://github.com/jhcode33/react-spring-blog-backend <br>
->📑Frontend Repository: https://github.com/jhcode33/react-spring-blog-frontend
+>📑Frontend Repository: https://github.com/jhcode33/react-spring-blog-frontend <br>
 > 음식물 쓰레기 감소를 위한 챗봇 레시피 추천 웹서비스 입니다
 
 ![메인 페이지](https://github.com/user-attachments/assets/d48cbb34-572c-4d88-856d-2941d4dbb4c7)
