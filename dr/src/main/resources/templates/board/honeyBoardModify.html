@@ -44,10 +44,6 @@
                 <input type="hidden" name="boardText" id="hiddenBoardText">
                 <input type="hidden" name="photoLocal" th:value="${photoLocal}">
                 <input type="hidden" name="photoOriginal" th:value="${photoOriginal}">
-<<<<<<< HEAD
-
-=======
->>>>>>> main
                 <div class="honeyboardModify-write">
                     <button type="button" class="honeyboardModify-writeButton" id="updateButton">수정</button>
                 </div>
@@ -93,7 +89,6 @@
                     }
 
                     callback(URL.createObjectURL(blob), '이미지');
-
                     document.querySelector('input[name="photoLocal"]').value = data.photoLocal;
                     document.querySelector('input[name="photoOriginal"]').value = data.photoOriginal;
 
@@ -119,7 +114,6 @@
 
         document.getElementById('honeyBoardModifyForm').submit();
     });
-
 </script>
 </body>
 </html>
