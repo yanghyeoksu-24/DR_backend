@@ -196,34 +196,52 @@
   <br><br><br>
 
    **6.포인트 관리** <br>
-  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+ ![포인트 관리-1](https://github.com/user-attachments/assets/edfad7f8-68e1-42ea-bf80-e19ede9ab886)<br>
+ 닉네임 , 이메일 , 포인트 내용 , 포인트 , 일시 , 포인트 합을 보여준다.<br><br>
+ 
+![포인트 관리-2](https://github.com/user-attachments/assets/55e47c05-a8e7-4e8c-894b-7201d6fbb876)<br>
+11월에 해당하는 포인트만 보여진다.<br><br>
 
-  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
-  입력 여부를 확인 후 안내창이 나온다
+![포인트 관리-3](https://github.com/user-attachments/assets/869eea5e-b592-4ebb-a5c1-bdf46a8c6aa6)<br>
+닉네임 10을 검색한 모습  , 포인트내역을 쭉 부여준다.<br><br>
 
-  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
-  <br><br><br>
+![포인트 관리-4](https://github.com/user-attachments/assets/0e7aea38-8419-431a-a733-d118b7c8a37e)<br>
+50포인트를 회수 했을때의 모습 , 총 포인트 감소<br><br>
+
+![포인트 관리05](https://github.com/user-attachments/assets/00dbf392-a028-4fc1-aae3-325d104f004d)<br>
+3번 닉네임의 포인트가 사라진 모습
+
+<br><br><br>
 
  **7.신고 관리** <br>
-  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+ ![신고관리-1](https://github.com/user-attachments/assets/e31bfa34-afd6-4d3f-ab0e-aa9969277d83)<br>
+ 게시글 , 댓글 포함한 신고내역이 보여진다. (신고 내역의 번호를 보고 게시글과 , 댓글 관리로 가서 삭제하는 원리)<br><br>
 
-  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
-  입력 여부를 확인 후 안내창이 나온다
+ ![신고관리-2](https://github.com/user-attachments/assets/da1bca4b-dde3-45c4-a88c-ae8baeb7569b)<br>
+  49번 번호 삭제
 
-  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
   <br><br><br>
 
    **8.상품 관리** <br>
-  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+   
+![상품관리-3](https://github.com/user-attachments/assets/cd4feb1d-b394-4a20-884c-c1b66ca4c5b1)<br>
+ 상품이름 , 사진 , 가격 , 코드를 입력하고 등록하는 모습<br><br>
+ 
+![상품관리-1](https://github.com/user-attachments/assets/2dadfc4f-fc59-4046-a7aa-ba811a38d1c8)<br>
+  현재 등록된 상품을 보여준다.<br><br> 
 
-  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
-  입력 여부를 확인 후 안내창이 나온다
+   ![상품관리-2](https://github.com/user-attachments/assets/e6ab9b98-d660-4946-a28d-a14282acfe22)<br>
+  팬케이크가 삭제된 모습<br><br> 
 
-  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+   ![상품관리-4](https://github.com/user-attachments/assets/04d9920e-3d2f-44dd-a0c7-edfedf257693)<br>
+   상품 추가를 위해 코드를 더 입력하는 모습<br><br>
+
+   ![상품관리-5](https://github.com/user-attachments/assets/ddac0c86-6bfc-4a69-9c1d-151ffb4adc7b)<br>
+ 추가된 상품의 개수를 보여준다.
+
+  
   <br><br><br>
     
-
-          
   </details>
      
   
