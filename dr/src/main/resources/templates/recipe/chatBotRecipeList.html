@@ -46,14 +46,14 @@
 
             <!-- 챗봇 레시피 목록 -->
             <div class="chatBotRecipeList-outbox">
-                <div class="chatBotRecipeList-listbox" th:each="recipeList : ${recipeList}">
-                    <a th:href="@{/recipe/chatBotDetailPage(recipeNumber=${recipeList.recipeNumber})}">
-                        <img th:src="@{'/image/recipe/' + ${recipeList.photoLocal}}" alt="레시피 이미지">
+                <div class="chatBotRecipeList-listbox" th:each="chatBotRecipeList : ${chatBotRecipeList}">
+                    <a th:href="@{/recipe/chatBotDetailPage(recipeNumber=${chatBotRecipeList.recipeNumber})}">
+                        <img th:src="@{'/image/recipe/' + ${chatBotRecipeList.photoLocal}}" alt="레시피 이미지">
                     </a>
-                    <p class="chatBotRecipeList-foodTitle" th:text="${recipeList.recipeTitle}"></p>
-                    <span class="chatBotRecipeList-writer" th:text="${recipeList.userNickName}"></span>
-                    <span class="chatBotRecipeList-date" th:text="${recipeList.recipeWriteDate}"></span>
-                    <p class="chatBotRecipeList-select" th:text="'추천수 ' + ${recipeList.goodCount}"></p>
+                    <p class="chatBotRecipeList-foodTitle" th:text="${chatBotRecipeList.recipeTitle}"></p>
+                    <span class="chatBotRecipeList-writer" th:text="${chatBotRecipeList.userNickName}"></span>
+                    <span class="chatBotRecipeList-date" th:text="${chatBotRecipeList.recipeWriteDate}"></span>
+                    <p class="chatBotRecipeList-select" th:text="'추천수 ' + ${chatBotRecipeList.goodCount}"></p>
                 </div>
             </div>
             <div id="pagination"></div>

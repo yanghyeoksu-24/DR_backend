@@ -18,5 +18,4 @@ public class RecipeReportDTO {
     private Long recipeNumber;
     private Long replyNumber;
     private Long userNumber;
-    private Long recipeType;
 }

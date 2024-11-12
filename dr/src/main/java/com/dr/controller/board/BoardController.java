@@ -341,15 +341,15 @@ public class BoardController {
             @RequestParam("photoSize") String photoSize,
             @SessionAttribute(value = "userNumber", required = false) Long userNumber) {
         // 1. FreeBoardWriteDTO 생성 (게시판정보)
-       FreeBoardWriteDTO freeBoardWriteDTO = new FreeBoardWriteDTO();
-       freeBoardWriteDTO.setBoardTitle(boardTitle);
-       freeBoardWriteDTO.setBoardText(boardText);
-       freeBoardWriteDTO.setUserNumber(userNumber);
-       freeBoardWriteDTO.setBoardType("자유게시판");
+        FreeBoardWriteDTO freeBoardWriteDTO = new FreeBoardWriteDTO();
+        freeBoardWriteDTO.setBoardTitle(boardTitle);
+        freeBoardWriteDTO.setBoardText(boardText);
+        freeBoardWriteDTO.setUserNumber(userNumber);
+        freeBoardWriteDTO.setBoardType("자유게시판");
 
-       log.info(freeBoardWriteDTO.toString() + "잘 왔나나나ㅏ나나아아아아아");
+        log.info(freeBoardWriteDTO.toString() + "잘 왔나나나ㅏ나나아아아아아");
 
-       //2. FreeBoardPhotoDTO 생성(사진 정보)
+        //2. FreeBoardPhotoDTO 생성(사진 정보)
         FreeBoardPhotoDTO freeBoardPhotoDTO = new FreeBoardPhotoDTO();
         freeBoardPhotoDTO.setPhotoOriginal(photoOriginal);
         freeBoardPhotoDTO.setPhotoLocal(photoLocal);
@@ -464,13 +464,17 @@ public class BoardController {
     //꿀팁게시판 수정
     @GetMapping("/honeyBoardModify")
     public String honeyBoardModify(@RequestParam("boardNumber3") Long boardNumber,
-                                  @RequestParam("boardTitle") String boardTitle,
-                                  @RequestParam("boardText") String boardText,
-                                  @RequestParam(value = "photoLocal", required = false) String photoLocal, // 사진 파일 경로 추가
-                                  @RequestParam(value = "photoOriginal", required = false) String photoOriginal,
-                                  @RequestParam(value = "photoSize", required = false) String photoSize,// 사진 파일 경로 추가
-                                  Model model) {
+                                   @RequestParam("boardTitle") String boardTitle,
+                                   @RequestParam("boardText") String boardText,
+                                   @RequestParam(value = "photoLocal", required = false) String photoLocal, // 사진 파일 경로 추가
+                                   @RequestParam(value = "photoOriginal", required = false) String photoOriginal,
+                                   @RequestParam(value = "photoSize", required = false) String photoSize,// 사진 파일 경로 추가
+                                   Model model) {
         // 필요한 로직 처리 (예: 데이터베이스에서 게시글 정보 조회 등)
+
+        System.out.println("Received boardNumber: " + boardNumber);
+        System.out.println("Received boardTitle: " + boardTitle);
+        System.out.println("Received boardText: " + boardText);
 
         model.addAttribute("boardNumber", boardNumber);
         model.addAttribute("boardTitle", boardTitle);
