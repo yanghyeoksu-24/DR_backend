@@ -98,12 +98,37 @@
         }
     });
 
+    // 등록 버튼 클릭 이벤트 수정
+    // 등록 버튼 클릭 이벤트 수정
     document.getElementById('registerButton').addEventListener('click', function (event) {
         event.preventDefault();
-        // 에디터에서 HTML 내용 가져오기
-        document.getElementById('recipeText').value = editor.getHTML();
-        // 폼 제출
-        document.getElementById('recipeForm').submit();
+
+        // 제목과 글 내용 가져오기
+        const title = document.querySelector('input[name="recipeTitle"]').value.trim();
+        const content = editor.getHTML().trim();
+
+        // 제목과 내용이 비어 있는지 확인
+        if (!title || !content) {
+            alert('제목과 글 내용을 작성해주세요.');
+            return;
+        }
+
+        // 확인 메시지 띄우기
+        const confirmRegister = confirm('나만의 레시피를 등록하시겠습니까?');
+
+        if (confirmRegister) {
+            // 에디터에서 HTML 내용 가져오기
+            document.getElementById('recipeText').value = content;
+
+            // 폼 제출
+            document.getElementById('recipeForm').submit();
+
+            // 성공 메시지
+            alert('나만의 레시피가 등록되었습니다.');
+        } else {
+            // 취소 시 메시지
+            alert('나만의 레시피 등록이 취소되었습니다.');
+        }
     });
 </script>
 </body>
