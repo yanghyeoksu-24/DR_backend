@@ -434,6 +434,9 @@ public class RecipeController {
     public String updateRecipe(@RequestParam("recipeNumber3") Long recipeNumber,
                                @RequestParam("recipeTitle") String recipeTitle,
                                @RequestParam("recipeText") String recipeText,
+                               @RequestParam(value = "photoLocal", required = false) String photoLocal, // 사진 파일 경로 추가
+                               @RequestParam(value = "photoOriginal", required = false) String photoOriginal,
+                               @RequestParam(value = "photoSize", required = false) String photoSize,// 사진 파일 경로 추가
                                Model model) {
         // 필요한 로직 처리 (예: 데이터베이스 업데이트)
 
@@ -441,8 +444,26 @@ public class RecipeController {
         model.addAttribute("recipeNumber", recipeNumber);
         model.addAttribute("recipeTitle", recipeTitle);
         model.addAttribute("recipeText", recipeText);
+        model.addAttribute("photoLocal", photoLocal); // photoLocal 추가
+        model.addAttribute("photoOriginal", photoOriginal); // photoOriginal 추가
+        model.addAttribute("photoSize", photoSize);
 
         return "recipe/myRecipeModify"; // 수정 페이지의 템플릿 이름
+    }
+
+    // 나만의 레시피 수정 후 목록 페이지로 이동
+    @PostMapping("/saveMyRecipeUpdate")
+    public String saveMyRecipeUpdate(@ModelAttribute MyRecipeUpdateDTO myRecipeUpdateDTO,RedirectAttributes redirectAttributes) {
+        try {
+            // 챗봇 레시피와 사진을 업데이트하는 서비스 메서드 호출
+            recipeService.updateRecipeAndPhoto(myRecipeUpdateDTO);
+            redirectAttributes.addAttribute("recipeNumber", myRecipeUpdateDTO.getRecipeNumber());
+            // 수정이 완료되면 상세 페이지로 리다이렉트
+            return "redirect:/recipe/myDetailPage";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "게시글 수정에 실패했습니다.");
+            return "redirect:/recipe/myRecipeModify";
+        }
     }
 
     //챗봇의 레시피 수정 이동
@@ -450,13 +471,20 @@ public class RecipeController {
     public String updateChatBot(@RequestParam("recipeNumber4") Long recipeNumber,
                                @RequestParam("recipeTitle") String recipeTitle,
                                @RequestParam("recipeText") String recipeText,
-                               Model model) {
+                                @RequestParam(value = "photoLocal", required = false) String photoLocal, // 사진 파일 경로 추가
+                                @RequestParam(value = "photoOriginal", required = false) String photoOriginal,
+                                @RequestParam(value = "photoSize", required = false) String photoSize,// 사진 파일 경로 추가
+                                Model model) {
         // 필요한 로직 처리 (예: 데이터베이스 업데이트)
 
         // 수정 페이지로 이동하면서 데이터 전달
         model.addAttribute("recipeNumber", recipeNumber);
         model.addAttribute("recipeTitle", recipeTitle);
         model.addAttribute("recipeText", recipeText);
+        model.addAttribute("photoLocal", photoLocal); // photoLocal 추가
+        model.addAttribute("photoOriginal", photoOriginal); // photoOriginal 추가
+        model.addAttribute("photoSize", photoSize);
+
 
         return "recipe/chatBotRecipeModify"; // 수정 페이지의 템플릿 이름
     }
@@ -467,8 +495,9 @@ public class RecipeController {
         try {
             // 챗봇 레시피와 사진을 업데이트하는 서비스 메서드 호출
             recipeService.updateChatBot(chatBotRecipeUpdateDTO);
+            redirectAttributes.addAttribute("recipeNumber", chatBotRecipeUpdateDTO.getRecipeNumber());
             // 수정이 완료되면 상세 페이지로 리다이렉트
-            return "redirect:/recipe/myDetailPage";
+            return "redirect:/recipe/chatBotDetailPage";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "게시글 수정에 실패했습니다.");
             return "redirect:/recipe/chatBotRecipeModify";
