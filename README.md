@@ -134,6 +134,86 @@
   **3. 회원정보 수정 화면**       
            
   </details>
+
+  <details>
+    <summary>관리자 관련</summary>
+     
+  **1. 관리자 대시보드**<br>
+  ![대시보드](https://github.com/user-attachments/assets/5c5f987d-1bca-4a49-85f0-1fce051ad778)<br>
+  로그인한 관리자의 이름이 왼쪽 상단에 뜨고 , 회원 수 , 신고 수 , 오늘 날짜 , 권리자 신원정보를 제공한다.
+  <br><br><br>
+       
+  **2. 회원 관리**<br>
+  ![회원관리-1](https://github.com/user-attachments/assets/9cd79e20-15f9-4651-b7cd-0aa352ee7bf3)<br>
+  회원의 기본 정보와 현재 상태를 보여준다.<br><br>
+
+  ![회원관리-3](https://github.com/user-attachments/assets/c7834b8e-98bf-4fe1-8df8-1b781de204b5)<br>
+ 닉네임 4번 회원이 7일 정지된 모습<br><br>
+
+ ![회원관리-4](https://github.com/user-attachments/assets/8f87fafb-9190-4636-8091-9e3ef5bcc317)<br>
+ 닉네임 2번 회원이 탈퇴된 모습<br><br> 
+
+![회원관리-2](https://github.com/user-attachments/assets/64484cea-16d6-432f-b383-af32845a5a59)<br>
+ 닉네임 12번 회원을 검색한 모습
+<br><br><br>
+
+  **3. 게시글 관리** <br>
+  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+
+  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
+  입력 여부를 확인 후 안내창이 나온다
+
+  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+  <br><br><br>
+
+  **4.레시피 관리** <br> 
+  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+
+  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
+  입력 여부를 확인 후 안내창이 나온다
+
+  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+  <br><br><br>
+
+  **5.댓글 관리** <br>
+  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+
+  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
+  입력 여부를 확인 후 안내창이 나온다
+
+  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+  <br><br><br>
+
+   **6.포인트 관리** <br>
+  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+
+  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
+  입력 여부를 확인 후 안내창이 나온다
+
+  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+  <br><br><br>
+
+ **7.신고 관리** <br>
+  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+
+  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
+  입력 여부를 확인 후 안내창이 나온다
+
+  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+  <br><br><br>
+
+   **8.상품 관리** <br>
+  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+
+  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
+  입력 여부를 확인 후 안내창이 나온다
+
+  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+  <br><br><br>
+    
+
+          
+  </details>
      
   
  
