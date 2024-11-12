@@ -65,6 +65,10 @@ public interface RecipeMapper {
     // 챗봇 사진 데이터 삽입
     void insertChatBotPhoto(RecipePhotoDTO recipePhotoDTO);
 
+    // 챗봇 레시피 글 작성시, 환경기여 점수 10점
+    void insertScoreByRecipe(ScoreCheckDTO scoreCheckDTO);
+
+
     // 나만의 레시피 추천 수 증가
     void increaseGoodCount(MyRecipeGoodDTO myRecipeGoodDTO);
 

@@ -53,7 +53,7 @@
                             </a>
                         </div>
                         <div class="chatBotDetailPage-firstButton" th:if="${userNickName != null and userNickName == recipeDetail.userNickName}">
-                            <form th:action="@{/recipe/updateChatBotRecipe}" method="post">
+                            <form th:action="@{/recipe/updateChatBotRecipe}" method="get">
                                 <input type="hidden" name="recipeNumber4" id="recipeNumber4"
                                        th:value="${recipeDetail.recipeNumber}">
                                 <input type="hidden" name="recipeTitle" th:value="${recipeDetail.recipeTitle}">
