@@ -344,9 +344,8 @@ public class RecipeController {
                                  @RequestParam(value = "otherReasonText", required = false) String otherReasonText
     ) {
 
-        ChatBotRecipeDetailDTO chatBotRecipeDetail = recipeService.findChatBotRecipeDetail(recipeNumber);
         RecipeReportDTO recipeReportDTO = new RecipeReportDTO();
-        log.info(chatBotRecipeDetail + "-----------------------qwqewretfygjhkjlkhgftrdseawEASWRETDFG");
+        ChatBotRecipeDetailDTO chatBotRecipeDetail = recipeService.findChatBotRecipeDetail(recipeNumber);
 
         // 1. 사유 지정
         if (otherReasonText != null && !otherReasonText.trim().isEmpty()) {
