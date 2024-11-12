@@ -184,12 +184,15 @@
   <br><br><br>
 
   **5.댓글 관리** <br>
-  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+ ![댓글 관리-1](https://github.com/user-attachments/assets/a300f3ef-a05a-436e-a63e-cc765f6fef12)<br>
+  댓글내 , 작성자 ,전화번호 , 작성일을 보여준다.<br><br>
 
-  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
-  입력 여부를 확인 후 안내창이 나온다
+ ![댓글 관리-2](https://github.com/user-attachments/assets/87239637-efc0-4cd5-acdb-714d2bdb8663)<br>
+  540번 글의 모습<br><br>
 
-  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+![댓글 관리-3](https://github.com/user-attachments/assets/76bdf724-70a9-4f3a-8f51-af924c5f66fc)<br>
+  546번 댓글 삭제된 모습
+
   <br><br><br>
 
    **6.포인트 관리** <br>
