@@ -39,12 +39,12 @@
 
             <!-- 수정 및 취소 버튼을 각각 폼 안에 넣기 -->
             <form id="honeyBoardModifyForm" th:action="@{/board/updateHoneyBoard}" method="post">
-                <input type="hidden" name="boardNumber3" th:value="${boardNumber}">
+                <input type="hidden" name="boardNumber" th:value="${boardNumber}">
                 <input type="hidden" name="boardTitle" id="hiddenBoardTitle">
                 <input type="hidden" name="boardText" id="hiddenBoardText">
                 <input type="hidden" name="photoLocal" th:value="${photoLocal}">
                 <input type="hidden" name="photoOriginal" th:value="${photoOriginal}">
-                <!--                <input type="hidden" name="photoOriginal" th:value="${photoSize}">-->
+
                 <div class="honeyboardModify-write">
                     <button type="button" class="honeyboardModify-writeButton" id="updateButton">수정</button>
                 </div>
@@ -90,6 +90,7 @@
                     }
 
                     callback(URL.createObjectURL(blob), '이미지');
+
                     document.querySelector('input[name="photoLocal"]').value = data.photoLocal;
                     document.querySelector('input[name="photoOriginal"]').value = data.photoOriginal;
 
@@ -115,6 +116,7 @@
 
         document.getElementById('honeyBoardModifyForm').submit();
     });
+
 </script>
 </body>
 </html>
