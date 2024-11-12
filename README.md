@@ -703,7 +703,10 @@
 
 ## 개발 내용
 
-- <a href="https://dev-coco.tistory.com/111" target="_blank">게시판 프로젝트 명세서 정리</a>
+- <a href="naver.com" target="_blank">추후 내 기술 블로그로...</a>
+- <a href="naver.com" target="_blank">추후 내 기술 블로그로...</a>
+- <a href="naver.com" target="_blank">추후 내 기술 블로그로...</a>
+
 <br>,,,
 
 ## 마치며   
