@@ -668,9 +668,12 @@
 
 ### 7️⃣ API 설계
 
-![게시글 관련 API 설계](https://user-images.githubusercontent.com/59757689/156749365-5e4cee67-1431-4e3a-9140-7b58b6e1fd53.PNG)
-![회원 관련 API 설계 (2)](https://user-images.githubusercontent.com/59757689/148911411-0cfb65ee-5782-4f04-a7c9-7dcc84abfed8.PNG)   
-![댓글 관련 API 설계v2](https://github.com/hojunnnnn/board/assets/59757689/fa9032f0-3ce1-4ec4-9dbd-f420fb4e6152)  
+![API_OAuth2](https://github.com/user-attachments/assets/9a815517-21fd-49da-b18b-efc2d9e1deb4)<br>
+![API_main](https://github.com/user-attachments/assets/d36f32d5-fa89-4a79-bd57-dd4b398e2f72)<br>
+![API_publicData](https://github.com/user-attachments/assets/2d283c9d-39dd-4fa1-89a1-2bf31405cbe2)<br>
+![API_chatBot](https://github.com/user-attachments/assets/e52fb1c9-e513-4378-afa3-fb782227fd95)<br>
+![API_pointShop](https://github.com/user-attachments/assets/0a47721b-89a9-424f-9be5-9fb464579622)<br>
+![API_search](https://github.com/user-attachments/assets/2eefaaa5-02d8-4cab-b824-bc5080929449)<br>
 
 ## 개발 내용
 
