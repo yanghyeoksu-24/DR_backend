@@ -79,18 +79,18 @@
     <select id="pointHistory" parameterType="Long" resultType="PointDetailDTO">
         <![CDATA[
         SELECT DP.POINT_NUMBER, DP.POINT_NOTE,
-        CASE WHEN DP.POINT_NOTE IN ('관리자회수', '상품구매') THEN -DP.POINT_USE
-        ELSE DP.POINT_GET END AS pointGet,
-        DP.POINT_DATE AS pointDate,
-        COALESCE((SELECT SUM(
-        CASE
-        WHEN DP2.POINT_NOTE IN ('신규가입', '출석체크', '랭킹', '개근') THEN DP2.POINT_GET
-        WHEN DP2.POINT_NOTE IN ('관리자회수', '상품구매') THEN -DP2.POINT_USE
-        ELSE 0
-        END)
-        FROM DR_POINT DP2
-        WHERE DP2.USER_NUMBER = DP.USER_NUMBER
-        AND DP2.POINT_DATE <= DP.POINT_DATE), 0) AS totalPoints
+               CASE WHEN DP.POINT_NOTE IN ('관리자회수', '상품구매') THEN -DP.POINT_USE
+                    ELSE DP.POINT_GET END AS pointGet,
+               TO_CHAR(DP.POINT_DATE, 'YYYY-MM-DD HH24:MI:SS') AS pointDate,
+               COALESCE((SELECT SUM(
+                                        CASE
+                                            WHEN DP2.POINT_NOTE IN ('신규가입', '출석체크', '랭킹', '개근') THEN DP2.POINT_GET
+                                            WHEN DP2.POINT_NOTE IN ('관리자회수', '상품구매') THEN -DP2.POINT_USE
+                                            ELSE 0
+                                            END)
+                         FROM DR_POINT DP2
+                         WHERE DP2.USER_NUMBER = DP.USER_NUMBER
+                           AND DP2.POINT_DATE <= DP.POINT_DATE), 0) AS totalPoints
         FROM DR_POINT DP
         WHERE DP.USER_NUMBER = #{userNumber}
         ORDER BY DP.POINT_DATE DESC
@@ -123,18 +123,18 @@
     <select id="getUserPost" parameterType="Long" resultType="UserPostDTO">
         SELECT
             ROW_NUMBER() OVER (ORDER BY B.BOARD_WRITE_DATE DESC) AS MY_POST_SEQ,
-            B.BOARD_TITLE AS MY_POST_TITLE,
+                B.BOARD_TITLE AS MY_POST_TITLE,
             B.BOARD_TYPE AS MY_POST_TYPE,
             NVL(GOOD_COUNT.LIKES, 0) AS MY_POSTGOOD_COUNT,
             TO_CHAR(B.BOARD_WRITE_DATE, 'YYYY-MM-DD') AS MY_POST_WRITE_DATE,
             B.BOARD_NUMBER AS BOARD_NUMBER,  -- 게시글 번호 추가
             B.USER_NUMBER AS USER_NUMBER
         FROM DR_BOARD B
-        LEFT JOIN (
+                 LEFT JOIN (
             SELECT
-                 BOARD_NUMBER, COUNT(*) AS LIKES
-        FROM DR_GOOD
-        GROUP BY BOARD_NUMBER
+                BOARD_NUMBER, COUNT(*) AS LIKES
+            FROM DR_GOOD
+            GROUP BY BOARD_NUMBER
         ) GOOD_COUNT ON B.BOARD_NUMBER = GOOD_COUNT.BOARD_NUMBER
         WHERE B.USER_NUMBER = #{userNumber}
         ORDER BY B.BOARD_WRITE_DATE DESC
@@ -170,9 +170,9 @@
 
     <!-- 내정보 찜 목록 삭제 -->
     <delete id="deleteUserSteam" parameterType="UserSteamDTO">
-    DELETE FROM DR_STEAM
-    WHERE USER_NUMBER = #{userNumber}
-    AND RECIPE_NUMBER = #{recipeNumber}
+        DELETE FROM DR_STEAM
+        WHERE USER_NUMBER = #{userNumber}
+          AND RECIPE_NUMBER = #{recipeNumber}
     </delete>
 
     <!-- 내정보 신고 내역  -->
@@ -206,7 +206,7 @@
     <!-- 2. 출석 기록 삽입 -->
     <insert id="insertCheck" parameterType="CheckDTO">
         INSERT INTO DR_DAILY (DAILY_NUMBER, USER_NUMBER, DAILY_DATE)
-        VALUES (SEQ_DAILY_NUMBER.NEXTVAL, #{userNumber}, TO_CHAR(SYSDATE, 'YYYY-MM-DD'))
+        VALUES (SEQ_DAILY_NUMBER.NEXTVAL, #{userNumber}, SYSDATE)
     </insert>
 
     <!-- 3. 개근 여부 확인 (한 달간 개근 시 개근 인정) -->
@@ -236,7 +236,7 @@
     <!-- 4. 출석체크 시 포인트 적립 -->
     <insert id="insertPointRecord" parameterType="PointCheckDTO">
         INSERT INTO DR_POINT (POINT_NUMBER, POINT_GET, POINT_NOTE, USER_NUMBER, POINT_DATE)
-        VALUES (SEQ_POINT_NUMBER.NEXTVAL, #{pointGet}, #{pointNote}, #{userNumber}, TO_DATE(#{pointDate}, 'YYYY-MM-DD'))
+        VALUES (SEQ_POINT_NUMBER.NEXTVAL, #{pointGet}, #{pointNote}, #{userNumber}, SYSDATE)
     </insert>
 
     <!-- 5. 출석 체크 날짜 리스트 조회 -->
