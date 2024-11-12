@@ -45,11 +45,11 @@ public class PublicDataApiService {
                 break;
             case "10월": baseUrl = baseUrl + "uddi:6ed6b06b-631a-459c-a9c8-f533c7fe116a";
                 break;
-            case "11월": baseUrl = baseUrl + "uddi:6ed6b06b-631a-459c-a9c8-f533c7fe116a"; // 아직 업데이트 되지 않은 공공데이터 1월로 대체
+            case "11월": baseUrl = baseUrl + "uddi:6ed6b06b-631a-459c-a9c8-f533c7fe116a"; // 아직 업데이트 되지 않은 공공데이터 마지막 데이터로 대체
                 break;
-            case "12월": baseUrl = baseUrl + "uddi:6ed6b06b-631a-459c-a9c8-f533c7fe116a"; // 아직 업데이트 되지 않은 공공데이터 1월로 대체
+            case "12월": baseUrl = baseUrl + "uddi:6ed6b06b-631a-459c-a9c8-f533c7fe116a"; // 아직 업데이트 되지 않은 공공데이터 마지막 데이터로 대체
                 break;
-            default : baseUrl = baseUrl + "uddi:6ed6b06b-631a-459c-a9c8-f533c7fe116a"; // 기본
+            default : baseUrl = baseUrl + "uddi:6ed6b06b-631a-459c-a9c8-f533c7fe116a"; // 기본 마지막 데이터
                 break;
         }
 

@@ -71,11 +71,11 @@
             </div>
             <div class="apijoin-checkbox">
                 <input type="checkbox" id="checkTerms" name="checkTerms" class="apijoin-checkboxInput" required>
-                <label for="checkTerms" class="signup-checkboxLabel">[필수] 이용약관 확인</label>
+                <label for="checkTerms" class="signup-checkboxLabel">[필수] <a th:href="@{/terms}">이용약관 확인</a></label>
             </div>
             <div class="apijoin-checkbox">
                 <input type="checkbox" id="checkPrivacy" name="checkPrivacy" class="apijoin-checkboxInput" required>
-                <label for="checkPrivacy" class="signup-checkboxLabel">[필수] 개인정보처리방침 확인</label>
+                <label for="checkPrivacy" class="signup-checkboxLabel">[필수] <a th:href="@{/privacyPolicy}">개인정보처리방침 확인</a></label>
             </div>
             <div class="apijoin-checkbox">
                 <input type="checkbox" id="checkAds" name="checkAds" class="apijoin-checkboxInput">
