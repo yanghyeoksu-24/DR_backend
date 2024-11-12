@@ -1,6 +1,5 @@
 package com.dr.service.recipe;
 
-import com.dr.dto.board.BoardReportDTO;
 import com.dr.dto.recipe.*;
 import com.dr.mapper.recipe.RecipeMapper;
 import lombok.RequiredArgsConstructor;

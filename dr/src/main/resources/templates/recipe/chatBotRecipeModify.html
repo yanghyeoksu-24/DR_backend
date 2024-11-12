@@ -40,16 +40,27 @@
                        th:value="${recipeTitle}" placeholder="제목을 입력하세요">
             </div>
 
-            <input type="hidden" id="recipeTextHidden" th:value="${recipeText}">
 
-            <div id="contsEditor"></div>
 
-            <div class="chatBotRecipeModify-write">
-                <a th:href="@{/recipe/chatBotRecipeList.html}">
-                    <button class="chatBotRecipeModify-cancelButton">취소</button>
-                </a>
-                <button id="updateButton" class="chatBotRecipeModify-writeButton">수정</button>
-            </div>
+            <div id="contsEditor"><input type="hidden" id="recipeTextHidden" th:utext="${recipeText}"></div>
+
+            <form id="chatBotRecipeModifyForm" th:action="@{/recipe/saveChatBotRecipeUpdate}" method="post">
+                <input type="hidden" name="recipeNumber" th:value="${recipeNumber}">
+                <input type="hidden" name="recipeTitle" id="hiddenrecipeTitle">
+                <input type="hidden" name="recipeText" id="hiddenrecipeText">
+                <input type="hidden" name="photoLocal" th:value="${photoLocal}">
+                <input type="hidden" name="photoOriginal" th:value="${photoOriginal}">
+
+                <div class="chatBotRecipeModify-write">
+                    <button type="button" class="chatBotRecipeModify-writeButton" id="updateButton">수정</button>
+                </div>
+            </form>
+
+            <form th:action="@{/recipe/chatBotRecipeList}" method="get">
+                <div class="chatBotRecipeModify-write">
+                    <button type="submit" class="chatBotRecipeModify-cancelButton">취소</button>
+                </div>
+            </form>
         </div>
     </div>
 </main>
@@ -97,40 +108,14 @@
         editor.setHTML(content);
     };
 
-    // 수정 버튼 클릭 시 AJAX 요청으로 데이터 전송
-    document.getElementById('updateButton').addEventListener('click', async function () {
-        const recipeNumber = document.getElementById('recipeNumberHidden').value;
-        const title = document.getElementById('recipeTitle').value;
-        const content = editor.getHTML();
+    document.getElementById('updateButton').addEventListener('click', function (event) {
+        // 제목과 에디터 내용을 hidden 필드에 저장
+        document.getElementById('hiddenrecipeTitle').value = document.getElementById('recipeTitle').value;
+        document.getElementById('hiddenrecipeText').value = editor.getHTML();
 
-        const formData = {
-            recipeNumber: recipeNumber,
-            recipeTitle: title,
-            recipeText: content
-        };
-
-        try {
-            const response = await fetch('/saveChatBotRecipeUpdate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-
-            // 성공 시에만 목록 페이지로 이동
-            if (response.ok) {
-                window.location.href = '/chatBotRecipeList';
-            } else {
-                // 실패 시 서버의 에러 페이지를 표시
-                throw new Error('서버 오류 발생');
-            }
-        } catch (error) {
-            // 예외가 발생하면 별도 alert 없이 그대로 종료하여 서버 에러 페이지 표시
-            console.error('수정 요청 실패:', error);
-        }
+        // 폼 제출
+        document.getElementById('chatBotRecipeModifyForm').submit();
     });
-
 </script>
 </body>
 
