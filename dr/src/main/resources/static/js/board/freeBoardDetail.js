@@ -153,9 +153,11 @@ $(function () {
 
     // 처음 20개 항목만 보이게 하고 나머지는 숨김
     items.hide().slice(0, 10).show(); // 첫 5개 항목만 표시
-
+    console.log(items + "확인1=======");
+    console.log(items.hide() + "확인2=======");
     // 페이지네이션 설정
     const container = $('#pagination');
+    console.log(container + "페이지네이션 container확인 ====== ");
     container.pagination({
         dataSource: items.toArray(), // 게시글 항목을 배열로 변환
         pageSize: 10, // 한 페이지에 보여줄 항목 수 (20개)
