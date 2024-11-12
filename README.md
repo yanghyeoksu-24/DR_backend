@@ -1,4 +1,4 @@
-# Spring Boot 프로젝트 맛있는재활용
+![image](https://github.com/user-attachments/assets/7efc9f1d-4263-4879-ad61-0590a6b6b921)# Spring Boot 프로젝트 맛있는재활용
 <br>
 
 > 음식물 쓰레기 감소를 위한 챗봇 레시피 추천 웹서비스 입니다
@@ -119,12 +119,30 @@
   
   ![소셜로그인2](https://github.com/user-attachments/assets/023b3ccc-0965-40b0-be83-e3bf14d8ea2f)
 
-  ![소셜로그인3](https://github.com/user-attachments/assets/2c1a89d5-12a2-49c7-b90c-99fe6460a23a)
+  ![소셜로그인3](https://github.com/user-attachments/assets/2c1a89d5-12a2-49c7-b90c-99fe6460a23a)<br>
+  처음 로그인을 한다면 OAuth2 동의 페이지가 나온뒤 동의하면 추가기입 페이지로 이동한다<br>
   
   ![소셜로그인4](https://github.com/user-attachments/assets/e3d93f58-8076-4f14-a8ef-e333222ee84f)<br>
-  메일과 이름은 OAuth2에서 자동으로 받아오고 추가정보(핸드폰인증) 만 간단하게 기입 후 가입한다
+  메일과 이름은 OAuth2에서 자동으로 받아오고 추가정보(핸드폰인증) 만 간단하게 기입 후 가입한다<br>
 
-  ![소셜로그인5](https://github.com/user-attachments/assets/cf65eeef-4889-44b9-87aa-dceaecfee857)<br>
+  ![소셜로그인5](https://github.com/user-attachments/assets/6e542ef4-5b02-4334-8131-539b1e231051)<br>
+  ![소셜로그인6](https://github.com/user-attachments/assets/1ff7b799-20d4-4166-a989-a7082378e764)<br>
+  형식에 맞지 않거나 이미 있는 전화번호는 가입이 불가능 하다<br>
+
+  ![소셜로그인8](https://github.com/user-attachments/assets/b7c24759-4936-4be9-84e0-68be14bc03a5)<br>
+  ![소셜로그인8-3](https://github.com/user-attachments/assets/41ac0724-f8f2-40e1-a149-2a80cd916daa)<br>
+  형식에 맞춰 중복없는 전화번호 입력 후 인증요청 버튼을 통해 문자로 인증번호를 전송받는다<br>
+  
+  ![소셜로그인8-4](https://github.com/user-attachments/assets/377fc488-89c2-4557-a321-7e1d5968d26f)<br>
+  ![소셜로그인8-2](https://github.com/user-attachments/assets/a1405017-979d-46f2-92ab-47ba921b821f)<br>
+  전송받은 인증번호와 다르다면 에러메세지가 나타난다<br>
+  
+  ![소셜로그인8-5](https://github.com/user-attachments/assets/6b5908cc-6bb3-4a91-8118-6df114a204aa)<br>
+  ![소셜로그인9-2](https://github.com/user-attachments/assets/07f7f9de-475b-47f6-93b2-6efb2898fa83)<br>
+  ![회원가입7](https://github.com/user-attachments/assets/839e5a28-1be2-4ff0-9a99-942a6ff99b21)<br>
+  올바른 번호 입력 후 가입버튼으로 최초 가입한다<br>
+
+  ![소셜로그인9](https://github.com/user-attachments/assets/cf65eeef-4889-44b9-87aa-dceaecfee857)<br>
   가입시 바로 로그인 되며 이후 카카오 로그인으로 간편 로그인이 가능하다<br>
   또한 카카오에 등록된 프로필사진과 이름이 세션에 자동으로 들어가게 설정하였다
   <br><br><br>
