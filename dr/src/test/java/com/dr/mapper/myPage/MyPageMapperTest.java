@@ -1,5 +1,6 @@
 package com.dr.mapper.myPage;
 
+import com.dr.dto.myPage.PointDetailDTO;
 import com.dr.dto.myPage.UserInfoDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -124,41 +128,57 @@ class MyPageMapperTest {
         // 로그로 출력하여 확인
         log.info("회원 탈퇴 처리 후, 유저 정보: {}", userInfoDTOAfter);
 
+
+
+
     }
 
+    @Test
+    void pointHistory() {
+        // given
+        Long userNumber = 1L; // 테스트할 유저 번호
 
+        // 예상 포인트 내역 설정 (PointDetailDTO 객체로 생성)
+        List<PointDetailDTO> expectedPointHistory = List.of(
+                new PointDetailDTO() {{
+                    setPointNumber(1);
+                    setPointNote("출석 포인트");
+                    setPointGet(200);
+                    setPointDate(LocalDateTime.of(2024, 1, 1, 0, 0));
+                    setTotalPoints(200);
+                }},
+                new PointDetailDTO() {{
+                    setPointNumber(2);
+                    setPointNote("리뷰 작성 포인트");
+                    setPointGet(150);
+                    setPointDate(LocalDateTime.of(2024, 1, 2, 0, 0));
+                    setTotalPoints(350);
+                }}
+        );
 
+        // when
+        // 실제 포인트 내역 조회
+        List<PointDetailDTO> actualPointHistory = myPageMapper.pointHistory(userNumber);
 
+        // then
+        // 예상 결과와 실제 결과의 크기 비교
+        assertNotNull(actualPointHistory, "포인트 내역이 null이 아님을 확인해야 합니다.");
+        assertEquals(expectedPointHistory.size(), actualPointHistory.size(), "포인트 내역의 항목 수가 일치해야 합니다.");
 
+        // 각 포인트 항목의 상세 내용 비교
+        for (int i = 0; i < expectedPointHistory.size(); i++) {
+            PointDetailDTO expected = expectedPointHistory.get(i);
+            PointDetailDTO actual = actualPointHistory.get(i);
 
+            assertEquals(expected.getPointNumber(), actual.getPointNumber(), "포인트 번호가 일치해야 합니다.");
+            assertEquals(expected.getPointNote(), actual.getPointNote(), "포인트 내용이 일치해야 합니다.");
+            assertEquals(expected.getPointGet(), actual.getPointGet(), "포인트 획득 값이 일치해야 합니다.");
+            assertEquals(expected.getFormattedPointDate(), actual.getFormattedPointDate(), "포인트 날짜가 포맷된 형식으로 일치해야 합니다.");
+            assertEquals(expected.getTotalPoints(), actual.getTotalPoints(), "총 포인트가 일치해야 합니다.");
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // 로그로 결과 출력
+        log.info("포인트 내역 테스트 결과: {}", actualPointHistory);
+    }
 
 }
