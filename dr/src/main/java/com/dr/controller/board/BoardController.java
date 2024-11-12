@@ -487,7 +487,7 @@ public class BoardController {
     }
 
 
-    //꿀팁게시판 수정
+    //자유게시판 수정
     @PostMapping("/updateHoneyBoard")
     public String updateHoneyBoard(@ModelAttribute HoneyBoardUpdateDTO honeyBoardUpdateDTO, RedirectAttributes redirectAttributes) {
         try {
