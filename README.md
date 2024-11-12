@@ -1,32 +1,36 @@
-# Spring Boot 프로젝트 맛있는재활용
-<br>
+Spring Boot 프로젝트 맛있는재활용
+=
 
-> 음식물 쓰레기 감소를 위한 챗봇 레시피 추천 웹서비스 입니다
+> 작업기간: 2024.09.27 ~ 2023.11.15 <br>
+> 참여 인원 : 5명 <br> <br>
+> 음식물 쓰레기 감소를 위한 챗봇 레시피 추천 웹서비스 입니다 <br>
 
 ![메인 페이지](https://github.com/user-attachments/assets/d48cbb34-572c-4d88-856d-2941d4dbb4c7)
 
-## 목차
-- [들어가며](#들어가며)
-  - [프로젝트 소개](#1-프로젝트-소개)    
-  - [프로젝트 기능](#2-프로젝트-기능)    
-  - [사용 기술](#3-사용-기술)   
+## 📚목차
+- [들어가며](#-들어가며)
+  - [프로젝트 소개](#1️⃣-프로젝트-소개)    
+  - [프로젝트 기능](#2️⃣-프로젝트-기능)    
+  - [사용 기술](#3️⃣-사용-기술)   
      - [백엔드](#3-1-백엔드)
      - [프론트엔드](#3-2-프론트엔드)
-  - [실행 화면](#4-실행-화면)   
+  - [실행 화면](#4️⃣-실행-화면)   
 
 
 - [구조 및 설계](#구조-및-설계)
-  - [패키지 구조](#1-패키지-구조)
-  - [DB 설계](#2-db-설계)
-  - [API 설계](#3-api-설계)
+  - [패키지 구조](#5️⃣-패키지-구조)
+  - [DB 설계](#6️⃣-db-설계)
+  - [API 설계](#7️⃣-api-설계)
+
 
 - [개발 내용](#개발-내용)
 
-- [마치며](#마치며)
-  - [프로젝트 보완사항](#1-프로젝트-보완사항)
-  - [후기](#2-후기)
 
-## 들어가며
+- [마치며](#마치며)
+  - [프로젝트 보완사항](#8️⃣-프로젝트-보완사항)
+  - [후기](#9️⃣-후기)
+
+## 💬들어가며
 ### 1️⃣ 프로젝트 소개
 
 국비지원 수업의 마지막 과정으로 프로젝트를 진행하게 되었습니다. <br>
@@ -68,63 +72,37 @@
 
 ### 4️⃣ 실행 화면
   <details>
-    <summary>회원 관련 (Click)</summary>
-     
-  **1. 회원가입 화면**
-  ![회원가입1](https://github.com/user-attachments/assets/495baa80-0da6-49ea-88e9-561f58661155)
-  
-  ![회원가입2](https://github.com/user-attachments/assets/9106347d-24a5-4c2c-b7cb-4e4f21a688ac)
+    <summary>OAuth2 회원 관련 (Click)</summary>
 
-  ![회원가입3](https://github.com/user-attachments/assets/6f0684bd-f97d-4a83-985a-815097a978bc)
-
-  ![회원가입4](https://github.com/user-attachments/assets/3592e07c-1ea8-4b6b-a86b-eb2445572dea)
-
-  ![회원가입4-2](https://github.com/user-attachments/assets/a4ee50b6-ebd7-4f3e-9b9f-48b98dc4ec2a)<br>
-  중복확인 버튼을 통해 중복검사를 실시 한다
-  
-  ![회원가입5](https://github.com/user-attachments/assets/352f10a6-b3ee-4ced-9fb3-de885099fca4)<br>
-  인증요청 버튼을 통해 인증번호를 받아 입력한다
-
-  ![회원가입5-2](https://github.com/user-attachments/assets/210b5b4b-0cef-4e34-9968-84941ce7cb8d)
-  
-  ![회원가입5-3](https://github.com/user-attachments/assets/9ec7b5bb-724e-45c2-9e90-28064b153ccc)
-
-  ![회원가입6](https://github.com/user-attachments/assets/5cecb39e-bb19-4176-bc51-5d63c3b84168)
-
-  ![회원가입7](https://github.com/user-attachments/assets/9e09b2a5-d8af-4920-9abf-9859ea8884dd)<br>
-  회원가입 시 유효성 검사 및 중복확인을 진행하며 완료시 회원 정보를 저장하고 로그인 화면으로 이동한다
-  <br><br><br>
-       
-  **2. 로그인 화면** 
-  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
-
-  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
-  입력 여부를 확인 후 안내창이 나온다
-
-  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
-
-  ![로그인4](https://github.com/user-attachments/assets/9d2e6fef-fd91-4311-b695-c9d1699ab772)<br>
-  잘못된 로그인 정보 입력시 안내창이 나온다
-
-  ![로그인5](https://github.com/user-attachments/assets/05797b3f-b51c-49ce-a4d7-10004c1ec2dd)
-
-  ![로그인6](https://github.com/user-attachments/assets/416284e5-f8d2-4b1a-8541-bff353873be9)
-
-  ![로그인7](https://github.com/user-attachments/assets/f8745e55-d7eb-48f7-9b8e-0ed62cf55815)<br>
-  로그인 성공시 안내창이 나오고 세션처리로 헤더가 변경되며 메인 화면으로 redirect 한다
-  <br><br><br>
-
-  **2-1. OAuth 2.0 소셜 로그인 화면**<br>
+  **1. OAuth 2.0 kakao 로그인 화면**<br>
   ![소셜로그인1](https://github.com/user-attachments/assets/f99456bd-e0b0-4e59-8343-e8f0b832ac01)
   
   ![소셜로그인2](https://github.com/user-attachments/assets/023b3ccc-0965-40b0-be83-e3bf14d8ea2f)
 
-  ![소셜로그인3](https://github.com/user-attachments/assets/2c1a89d5-12a2-49c7-b90c-99fe6460a23a)
+  ![소셜로그인3](https://github.com/user-attachments/assets/2c1a89d5-12a2-49c7-b90c-99fe6460a23a)<br>
+  처음 로그인을 한다면 OAuth2 동의 페이지가 나온뒤 동의하면 추가기입 페이지로 이동한다<br>
   
   ![소셜로그인4](https://github.com/user-attachments/assets/e3d93f58-8076-4f14-a8ef-e333222ee84f)<br>
-  메일과 이름은 OAuth2에서 자동으로 받아오고 추가정보(핸드폰인증) 만 간단하게 기입 후 가입한다
+  메일과 이름은 OAuth2에서 자동으로 받아오고 추가정보(핸드폰인증) 만 간단하게 기입 후 가입한다<br>
 
-  ![소셜로그인5](https://github.com/user-attachments/assets/cf65eeef-4889-44b9-87aa-dceaecfee857)<br>
+  ![소셜로그인5](https://github.com/user-attachments/assets/6e542ef4-5b02-4334-8131-539b1e231051)<br>
+  ![소셜로그인6](https://github.com/user-attachments/assets/1ff7b799-20d4-4166-a989-a7082378e764)<br>
+  형식에 맞지 않거나 이미 있는 전화번호는 가입이 불가능 하다<br>
+
+  ![소셜로그인8](https://github.com/user-attachments/assets/b7c24759-4936-4be9-84e0-68be14bc03a5)<br>
+  ![소셜로그인8-3](https://github.com/user-attachments/assets/41ac0724-f8f2-40e1-a149-2a80cd916daa)<br>
+  형식에 맞춰 중복없는 전화번호 입력 후 인증요청 버튼을 통해 문자로 인증번호를 전송받는다<br>
+  
+  ![소셜로그인8-4](https://github.com/user-attachments/assets/377fc488-89c2-4557-a321-7e1d5968d26f)<br>
+  ![소셜로그인8-2](https://github.com/user-attachments/assets/a1405017-979d-46f2-92ab-47ba921b821f)<br>
+  전송받은 인증번호와 다르다면 에러메세지가 나타난다<br>
+  
+  ![소셜로그인8-5](https://github.com/user-attachments/assets/6b5908cc-6bb3-4a91-8118-6df114a204aa)<br>
+  ![소셜로그인9-2](https://github.com/user-attachments/assets/07f7f9de-475b-47f6-93b2-6efb2898fa83)<br>
+  ![회원가입7](https://github.com/user-attachments/assets/839e5a28-1be2-4ff0-9a99-942a6ff99b21)<br>
+  올바른 번호 입력 후 가입버튼으로 최초 가입한다<br>
+
+  ![소셜로그인9](https://github.com/user-attachments/assets/cf65eeef-4889-44b9-87aa-dceaecfee857)<br>
   가입시 바로 로그인 되며 이후 카카오 로그인으로 간편 로그인이 가능하다<br>
   또한 카카오에 등록된 프로필사진과 이름이 세션에 자동으로 들어가게 설정하였다
   <br><br><br>
@@ -137,7 +115,7 @@
   
   **1. 메인페이지 공공데이터 섹션 화면**  
   ![메인공공데이터1](https://github.com/user-attachments/assets/80a652d0-5103-4d34-9ea0-3b2167322ded)<br>
-  기본값은 현재의 전달 공공데이터가 나오게 된다
+  기본값은 현재의 이전 달 공공데이터가 나오게 된다
 
   ![메인공공데이터2](https://github.com/user-attachments/assets/ea21360d-6452-45fb-ab21-b79f115ea3c4)<br>
   그래프 아래의 월 선택 버튼으로 다른 시기의 공공데이터를 선택할 수 있다
@@ -150,7 +128,7 @@
   ![메인음쓰계산기1](https://github.com/user-attachments/assets/30d7798e-b499-4027-a269-c6c6ed37b6ab)<br>
 
   ![메인음쓰계산기2](https://github.com/user-attachments/assets/9535c112-7b6f-4960-9f63-781c070e4731)<br>
-  입력창에 무게를 입력하면 소비된 에너지 및 비용등이 실시간 계산된다
+  입력창에 무게를 입력하면 소비된 에너지 및 비용 등이 실시간 계산된다
   <br><br><br>
 
   </details>
@@ -694,9 +672,12 @@
 
 ### 7️⃣ API 설계
 
-![게시글 관련 API 설계](https://user-images.githubusercontent.com/59757689/156749365-5e4cee67-1431-4e3a-9140-7b58b6e1fd53.PNG)
-![회원 관련 API 설계 (2)](https://user-images.githubusercontent.com/59757689/148911411-0cfb65ee-5782-4f04-a7c9-7dcc84abfed8.PNG)   
-![댓글 관련 API 설계v2](https://github.com/hojunnnnn/board/assets/59757689/fa9032f0-3ce1-4ec4-9dbd-f420fb4e6152)  
+![API_OAuth2](https://github.com/user-attachments/assets/729064a5-819a-4238-9d69-ad32e68335b3)<br><br>
+![API_main](https://github.com/user-attachments/assets/d36f32d5-fa89-4a79-bd57-dd4b398e2f72)<br><br>
+![API_publicData](https://github.com/user-attachments/assets/2d283c9d-39dd-4fa1-89a1-2bf31405cbe2)<br><br>
+![API_chatBot](https://github.com/user-attachments/assets/e52fb1c9-e513-4378-afa3-fb782227fd95)<br><br>
+![API_pointShop](https://github.com/user-attachments/assets/0a47721b-89a9-424f-9be5-9fb464579622)<br><br>
+![API_search](https://github.com/user-attachments/assets/2eefaaa5-02d8-4cab-b824-bc5080929449)<br><br>
 
 ## 개발 내용
 
