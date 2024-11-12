@@ -192,7 +192,7 @@ public class UserController {
     @PostMapping("/api/user/checkPhone")
     @ResponseBody
     public Map<String, Boolean> checkPhone(@RequestBody Map<String, String> request) {
-        String userPhone = request.get("phoneNumber");
+        String userPhone = request.get("userPhone");
         boolean exists = userService.isPhoneExists(userPhone);
         Map<String, Boolean> response = new HashMap<>();
         response.put("exists", exists);

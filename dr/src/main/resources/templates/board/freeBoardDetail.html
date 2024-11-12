@@ -43,11 +43,13 @@
                             <button class="freeBoardDetail-buttonTwo">신고</button>
                         </a>
                     </div>
+                    <br><br>
+                    <!-- 수정 및 삭제 버튼: 작성자에게만 표시 -->
                     <div class="freeBoardDetail-firstButton"
                          th:if="${userNickName != null and userNickName == freeBoardDetail.userNickName}">
                         <br><br>
                         <!-- 수정 및 삭제 버튼: 작성자에게만 표시 -->
-                        <form th:action="@{/board/updateFreeBoard}" method="post">
+                        <form th:action="@{/board/freeBoardModify}" method="get">
                             <input type="hidden" name="boardNumber3" id="boardNumber3"
                                    th:value="${freeBoardDetail.boardNumber}">
                             <input type="hidden" name="boardTitle" th:value="${freeBoardDetail.boardTitle}">
@@ -60,7 +62,6 @@
                                    th:value="${freeBoardDetail.boardNumber}">
                             <button id="deleteButton" class="freeBoardDetail-buttonOne">삭제</button>
                         </form>
-
                     </div>
                 </div>
             </div>

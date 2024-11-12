@@ -148,11 +148,45 @@ public class BoardService {
         boardMapper.freeBoardDeletePhoto(boardNumber);
     }
 
-    //자유게시판 게시글 수정
+    // 자유게시판 게시글 수정
     @Transactional
     public void freeBoardUpdateWriteAndPhoto(FreeBoardUpdateDTO freeBoardUpdateDTO) {
+        // 게시글 제목, 내용 수정
         boardMapper.freeBoardUpdateWrite(freeBoardUpdateDTO);
+
+        // 사진 정보 수정
         boardMapper.freeBoardUpdatePhoto(freeBoardUpdateDTO);
+    }
+
+    //꿀팁게시판 게시글 작성
+    @Transactional
+    public void saveHoneyBoard(HoneyBoardWriteDTO honeyBoardWriteDTO, HoneyBoardPhotoDTO honeyBoardPhotoDTO) {
+        //1. 게시글 내용 저장 (boardText에 이미지 URL이 포함됨)
+        boardMapper.honeyBoardInsertWrite(honeyBoardWriteDTO);  // 게시글 본문 저장
+
+        // 2. BOARD_NUMBER와 USER_NUMBER를 설정하여 FreeBoardPhotoDTO에 추가
+        Long boardNumber = honeyBoardWriteDTO.getBoardNumber();
+        Long userNumber = honeyBoardWriteDTO.getUserNumber();
+
+        honeyBoardPhotoDTO.setBoardNumber(boardNumber);   //BOARD_NUMBER 설정
+        honeyBoardPhotoDTO.setUserNumber(userNumber);    //USER_ NUMBER 설정
+
+        //3. 사진 정보 저장(PHOTO 테이블)
+        boardMapper.honeyBoardInsertPhoto(honeyBoardPhotoDTO);
+    }
+
+    //꿀팁게시판 게시글 삭제
+    @Transactional
+    public void honeyBoardDeleteWriteAndPhoto(Long boardNumber) {
+        boardMapper.honeyBoardDeleteWrite(boardNumber);
+        boardMapper.honeyBoardDeletePhoto(boardNumber);
+    }
+
+    //꿀팁게시판 게시글 수정
+    @Transactional
+    public void honeyBoardUpdateWriteAndPhoto(HoneyBoardUpdateDTO honeyBoardUpdateDTO) {
+        boardMapper.honeyBoardUpdateWrite(honeyBoardUpdateDTO);
+        boardMapper.honeyBoardUpdatePhoto(honeyBoardUpdateDTO);
     }
 
 }

@@ -25,12 +25,13 @@
             <div class="honeyBoardDetail-infobox">
                 <div class="honeyBoardDetail-infoFirst">
                     <div class="honeyBoardDetail-infoInBox1">
-                        <img th:src="@{/image/photo/} + ${honeyBoardDetail.photoLocal}" alt="User Photo">
+                        <img th:src="${honeyBoardDetail.photoLocal}" alt="User Photo">
                     </div>
                     <div class="honeyBoardDetail-infoInBox2">
                         <p class="honeyBoardDetail-writeName" th:text="${honeyBoardDetail.userNickName}">작성자</p>
                         <p class="honeyBoardDetail-foodTitle" th:text="${honeyBoardDetail.boardTitle}">제목</p>
                         <p class="honeyBoardDetail-date" th:text="${honeyBoardDetail.boardWriteDate}">날짜</p>
+                        <input type="hidden" name="userNumber2" th:value="${honeyBoardDetail.userNumber}"/>
                     </div>
                 </div>
 
@@ -45,15 +46,26 @@
                     <!-- 수정 및 삭제 버튼: 작성자에게만 표시 -->
                     <div class="honeyBoardDetail-firstButton"
                          th:if="${userNickName != null and userNickName == honeyBoardDetail.userNickName}">
-                        <button class="honeyBoardDetail-buttonOne">수정</button>
-                        <button id="deleteButton" class="honeyBoardDetail-buttonOne">삭제</button>
+                        <br><br>
+                        <!-- 수정 및 삭제 버튼: 작성자에게만 표시 -->
+                        <form th:action="@{/board/honeyBoardModify}" method="get">
+                            <input type="hidden" name="boardNumber3" id="boardNumber3"
+                                   th:value="${honeyBoardDetail.boardNumber}">
+                            <input type="hidden" name="boardTitle" th:value="${honeyBoardDetail.boardTitle}">
+                            <input type="hidden" name="boardText" th:value="${honeyBoardDetail.boardText}">
+                            <button id="updateButton" class="honeyBoardDetail-buttonOne">수정</button>
+                        </form>
+
+                        <form th:action="@{/board/deleteHoneyBoard}" method="post">
+                            <input type="hidden" name="boardNumber2" id="boardNumber2"
+                                   th:value="${honeyBoardDetail.boardNumber}">
+                            <button id="deleteButton" class="honeyBoardDetail-buttonOne">삭제</button>
+                        </form>
                     </div>
                 </div>
             </div>
-
             <div class="honeyBoardDetail-writetext">
-                <p class="honeyBoardDetail-texts" th:text="${honeyBoardDetail.boardText}">글 내용</p>
-                <img th:src="@{/image/photo/} + ${honeyBoardDetail.photoLocal}" alt="Board Image">
+                <p class="honeyBoardDetail-texts" th:utext="${honeyBoardDetail.boardText}">글 내용</p>
 
                 <div class="honeyBoardDetail-recommendImg">
                     <input type="hidden" id="boardNumber" name="boardNumber" th:value="${honeyBoardDetail.boardNumber}">
