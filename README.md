@@ -108,6 +108,7 @@ Spring Boot 프로젝트 맛있는재활용
   <br><br><br>
            
   </details>
+<<<<<<< HEAD
   <br>
 
   <details>
@@ -243,6 +244,118 @@ Spring Boot 프로젝트 맛있는재활용
   
   </details>
   <br>
+=======
+
+  <details>
+    <summary>관리자 관련</summary>
+     
+  **1. 관리자 대시보드**<br>
+  ![대시보드](https://github.com/user-attachments/assets/5c5f987d-1bca-4a49-85f0-1fce051ad778)<br>
+  로그인한 관리자의 이름이 왼쪽 상단에 뜨고 , 회원 수 , 신고 수 , 오늘 날짜 , 권리자 신원정보를 제공한다.
+  
+  <br><br><br>
+       
+  **2. 회원 관리**<br>
+  ![회원관리-1](https://github.com/user-attachments/assets/9cd79e20-15f9-4651-b7cd-0aa352ee7bf3)<br>
+  회원의 기본 정보와 현재 상태를 보여준다.<br><br>
+
+  ![회원관리-3](https://github.com/user-attachments/assets/c7834b8e-98bf-4fe1-8df8-1b781de204b5)<br>
+ 닉네임 4번 회원이 7일 정지된 모습<br><br>
+
+ ![회원관리-4](https://github.com/user-attachments/assets/8f87fafb-9190-4636-8091-9e3ef5bcc317)<br>
+ 닉네임 2번 회원이 탈퇴된 모습<br><br> 
+
+![회원관리-2](https://github.com/user-attachments/assets/64484cea-16d6-432f-b383-af32845a5a59)<br>
+ 닉네임 12번 회원을 검색한 모습
+ 
+<br><br><br>
+
+  **3. 게시글 관리** <br>
+  ![게시글 관리-1](https://github.com/user-attachments/assets/d1e5e9b2-7a5d-4244-b5f1-80fe8ff8e389)<br>
+  제목 , 작성자 , 추천수 , 작성일 , 게시글 종류를 보여준다.<br><br>
+
+  ![게시글 관리-2](https://github.com/user-attachments/assets/d475df98-f18d-4cb4-b2b4-183e5171af0e)<br>
+  30번 게시글의 모습<br><br>
+
+ ![게시글 관리-3](https://github.com/user-attachments/assets/a5381bd8-0bc2-4922-a860-ede5701b964f)<br>
+  10번 게시글 삭제된 모습
+
+  <br><br><br>
+
+  **4.레시피 관리** <br> 
+  ![레시피 관리-1](https://github.com/user-attachments/assets/73938b57-00f6-40ce-b43d-605397bcfae9)<br>
+  제목 , 작성자 , 추천수 , 작성일 , 레시피 종류를 보여준다.<br><br>
+
+ ![레시피 관리-2](https://github.com/user-attachments/assets/40fff5d6-47bb-4bf7-a23a-238f68ff0f7e)<br>
+  190번 게시글의 모습<br><br>
+
+ ![레시피 관리-3](https://github.com/user-attachments/assets/8f2a2c6e-f67c-4e06-b9e6-9aceb2db63b7)<br>
+  103번 게시글 삭제된 모습
+
+  <br><br><br>
+
+  **5.댓글 관리** <br>
+ ![댓글 관리-1](https://github.com/user-attachments/assets/a300f3ef-a05a-436e-a63e-cc765f6fef12)<br>
+  댓글내 , 작성자 ,전화번호 , 작성일을 보여준다.<br><br>
+
+ ![댓글 관리-2](https://github.com/user-attachments/assets/87239637-efc0-4cd5-acdb-714d2bdb8663)<br>
+  540번 글의 모습<br><br>
+
+![댓글 관리-3](https://github.com/user-attachments/assets/76bdf724-70a9-4f3a-8f51-af924c5f66fc)<br>
+  546번 댓글 삭제된 모습
+
+  <br><br><br>
+
+   **6.포인트 관리** <br>
+ ![포인트 관리-1](https://github.com/user-attachments/assets/edfad7f8-68e1-42ea-bf80-e19ede9ab886)<br>
+ 닉네임 , 이메일 , 포인트 내용 , 포인트 , 일시 , 포인트 합을 보여준다.<br><br>
+ 
+![포인트 관리-2](https://github.com/user-attachments/assets/55e47c05-a8e7-4e8c-894b-7201d6fbb876)<br>
+11월에 해당하는 포인트만 보여진다.<br><br>
+
+![포인트 관리-3](https://github.com/user-attachments/assets/869eea5e-b592-4ebb-a5c1-bdf46a8c6aa6)<br>
+닉네임 10을 검색한 모습  , 포인트내역을 쭉 부여준다.<br><br>
+
+![포인트 관리-4](https://github.com/user-attachments/assets/0e7aea38-8419-431a-a733-d118b7c8a37e)<br>
+50포인트를 회수 했을때의 모습 , 총 포인트 감소<br><br>
+
+![포인트 관리05](https://github.com/user-attachments/assets/00dbf392-a028-4fc1-aae3-325d104f004d)<br>
+3번 닉네임의 포인트가 사라진 모습
+
+<br><br><br>
+
+ **7.신고 관리** <br>
+ ![신고관리-1](https://github.com/user-attachments/assets/e31bfa34-afd6-4d3f-ab0e-aa9969277d83)<br>
+ 게시글 , 댓글 포함한 신고내역이 보여진다. (신고 내역의 번호를 보고 게시글과 , 댓글 관리로 가서 삭제하는 원리)<br><br>
+
+ ![신고관리-2](https://github.com/user-attachments/assets/da1bca4b-dde3-45c4-a88c-ae8baeb7569b)<br>
+  49번 번호 삭제
+
+  <br><br><br>
+
+   **8.상품 관리** <br>
+   
+![상품관리-3](https://github.com/user-attachments/assets/cd4feb1d-b394-4a20-884c-c1b66ca4c5b1)<br>
+ 상품이름 , 사진 , 가격 , 코드를 입력하고 등록하는 모습<br><br>
+ 
+![상품관리-1](https://github.com/user-attachments/assets/2dadfc4f-fc59-4046-a7aa-ba811a38d1c8)<br>
+  현재 등록된 상품을 보여준다.<br><br> 
+
+   ![상품관리-2](https://github.com/user-attachments/assets/e6ab9b98-d660-4946-a28d-a14282acfe22)<br>
+  팬케이크가 삭제된 모습<br><br> 
+
+   ![상품관리-4](https://github.com/user-attachments/assets/04d9920e-3d2f-44dd-a0c7-edfedf257693)<br>
+   상품 추가를 위해 코드를 더 입력하는 모습<br><br>
+
+   ![상품관리-5](https://github.com/user-attachments/assets/ddac0c86-6bfc-4a69-9c1d-151ffb4adc7b)<br>
+ 추가된 상품의 개수를 보여준다.
+
+  
+  <br><br><br>
+    
+  </details>
+     
+>>>>>>> 811da1c8372c1c27a49fc6a239bedcd23ec5d35e
   
 ## 구조 및 설계   
    

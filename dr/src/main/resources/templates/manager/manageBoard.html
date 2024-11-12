@@ -101,7 +101,7 @@
             <div id="pagination"></div>
         </div>
     </div>
-    <form class="manager-search-form" th:action="@{/manager/boardSearch}" method="post">
+    <form class="manager-search-form" th:action="@{/manager/boardSearch}" method="get">
         <input type="text" id="manager-input" name="boardNumber" placeholder="게시글 번호"/>
         <button class="manager-search">검색</button>
     </form>

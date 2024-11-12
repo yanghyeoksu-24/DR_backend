@@ -217,6 +217,9 @@ li {
 
 .con-con {
     width: 32%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .con-name {
