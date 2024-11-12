@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/7efc9f1d-4263-4879-ad61-0590a6b6b921)# Spring Boot 프로젝트 맛있는재활용
+# Spring Boot 프로젝트 맛있는재활용
 <br>
 
 > 음식물 쓰레기 감소를 위한 챗봇 레시피 추천 웹서비스 입니다
