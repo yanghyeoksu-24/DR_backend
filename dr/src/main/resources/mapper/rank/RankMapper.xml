@@ -57,4 +57,40 @@
         WHERE RANK_DATA.RANK <= 50
     ]]>
     </select>
+
+    <!-- 1등부터 5등까지 사용자 조회 -->
+    <select id="Top5Rank" resultType="RankDTO">
+        <![CDATA[
+        SELECT
+            RANK_DATA.RANK,               -- 사용자 순위
+            RANK_DATA.USER_NICKNAME,       -- 사용자 닉네임
+            RANK_DATA.PHOTO_LOCAL,         -- 사용자 프로필 사진
+            RANK_DATA.SCORE_GET,            -- 사용자 환경 기여 점수 합계
+            RANK_DATA.PROFILE_PIC,
+            RANK_DATA.USER_NUMBER
+        FROM (
+                 SELECT
+                     DENSE_RANK() OVER (ORDER BY SUM(S.SCORE_GET) DESC) AS RANK,  -- 점수 합계로 순위 계산
+                         U.USER_NICKNAME,    -- 사용자 닉네임
+                     P.PHOTO_LOCAL,                                              -- 프로필 사진
+                     SUM(S.SCORE_GET) AS SCORE_GET,                               -- 점수 합계
+                     U.USER_NUMBER,                                                -- 사용자 번호
+                     U.PROFILE_PIC
+                 FROM DR_USER U                                                    -- 사용자 테이블
+                          JOIN DR_SCORE S ON U.USER_NUMBER = S.USER_NUMBER                  -- 점수 테이블과 조인
+                          LEFT JOIN DR_PHOTO P ON U.USER_NUMBER = P.USER_NUMBER             -- 사용자와 프로필 사진 조인
+                 GROUP BY U.USER_NICKNAME, P.PHOTO_LOCAL, U.USER_NUMBER, U.PROFILE_PIC          -- 닉네임, 프로필 사진, 사용자 번호로 그룹화
+             ) RANK_DATA
+        WHERE RANK_DATA.RANK <= 5
+        ]]>
+    </select>
+
+    <!-- 월초 포인트 적립 (1등부터 5등까지) -->
+    <insert id="insertPoint" parameterType="PointCheckDTO">
+        INSERT INTO DR_POINT (POINT_NUMBER, POINT_GET, POINT_NOTE, POINT_DATE, USER_NUMBER)
+        VALUES (SEQ_POINT_NUMBER.NEXTVAL, #{pointGet}, #{pointNote}, SYSDATE, #{userNumber})
+    </insert>
+
+
+
 </mapper>
