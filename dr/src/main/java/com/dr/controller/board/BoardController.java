@@ -375,13 +375,14 @@ public class BoardController {
 
 
 
-
+    //자유게시판 수정
     @GetMapping("/freeBoardModify")
     public String freeBoardModify(@RequestParam("boardNumber3") Long boardNumber,
                                   @RequestParam("boardTitle") String boardTitle,
                                   @RequestParam("boardText") String boardText,
                                   @RequestParam(value = "photoLocal", required = false) String photoLocal, // 사진 파일 경로 추가
-                                  @RequestParam(value = "photoOriginal", required = false) String photoOriginal, // 사진 파일 경로 추가
+                                  @RequestParam(value = "photoOriginal", required = false) String photoOriginal,
+                                  @RequestParam(value = "photoSize", required = false) String photoSize,// 사진 파일 경로 추가
                                   Model model) {
         // 필요한 로직 처리 (예: 데이터베이스에서 게시글 정보 조회 등)
 
@@ -390,12 +391,13 @@ public class BoardController {
         model.addAttribute("boardText", boardText);
         model.addAttribute("photoLocal", photoLocal); // photoLocal 추가
         model.addAttribute("photoOriginal", photoOriginal); // photoOriginal 추가
+        model.addAttribute("photoSize", photoSize);
 
         return "/board/freeBoardModify"; // 수정 페이지의 템플릿 이름
     }
 
 
-
+    //자유게시판 수정
     @PostMapping("/updateFreeBoard")
     public String updateFreeBoard(@ModelAttribute FreeBoardUpdateDTO freeBoardUpdateDTO, RedirectAttributes redirectAttributes) {
         try {
@@ -459,29 +461,43 @@ public class BoardController {
 
 
 
-    // 꿀팁게시판 글 수정 이동
+    //꿀팁게시판 수정
     @GetMapping("/honeyBoardModify")
-    public String honeyBoardModifyPage() {
-        return "/board/honeyBoardModify";
-    }
-
-
-    //꿀팁게시판 게시글 수정
-    @PostMapping("/updateHoneyBoard")
-    public String updateHoneyBoard(@RequestParam("boardNumber3") Long boardNumber,
+    public String honeyBoardModify(@RequestParam("boardNumber") Long boardNumber,
                                   @RequestParam("boardTitle") String boardTitle,
                                   @RequestParam("boardText") String boardText,
-                                  Model model){
-        //필요한 로직 처리 ( 예 : 데이터베이스 업데이트)
-
-        // 수정 페이지로 이동하면서 데이터 전달
+                                  @RequestParam(value = "photoLocal", required = false) String photoLocal, // 사진 파일 경로 추가
+                                  @RequestParam(value = "photoOriginal", required = false) String photoOriginal,
+                                  @RequestParam(value = "photoSize", required = false) String photoSize,// 사진 파일 경로 추가
+                                  Model model) {
+        // 필요한 로직 처리 (예: 데이터베이스에서 게시글 정보 조회 등)
 
         model.addAttribute("boardNumber", boardNumber);
         model.addAttribute("boardTitle", boardTitle);
         model.addAttribute("boardText", boardText);
+        model.addAttribute("photoLocal", photoLocal); // photoLocal 추가
+        model.addAttribute("photoOriginal", photoOriginal); // photoOriginal 추가
+        model.addAttribute("photoSize", photoSize);
+
+        return "/board/honeyBoardModify"; // 수정 페이지의 템플릿 이름
+    }
 
 
-        return "/board/honeyBoardModify";//수정 페이지의 템플릿 이름
+    //꿀팁게시판 수정
+    @PostMapping("/updateHoneyBoard")
+    public String updateHoneyBoard(@ModelAttribute HoneyBoardUpdateDTO honeyBoardUpdateDTO, RedirectAttributes redirectAttributes) {
+        try {
+            System.out.println("photoLocal: " + honeyBoardUpdateDTO.getPhotoLocal());
+            System.out.println("photoOriginal: " + honeyBoardUpdateDTO.getPhotoOriginal());
+
+            boardService.honeyBoardUpdateWriteAndPhoto(honeyBoardUpdateDTO);
+            redirectAttributes.addAttribute("boardNumber", honeyBoardUpdateDTO.getBoardNumber());
+            return "redirect:/board/honeyBoardDetail";  // 수정된 글 상세 페이지로 이동
+        } catch (Exception e) {
+            // 에러 처리 (예: 에러 메시지 저장 후 수정 페이지로 이동)
+            redirectAttributes.addFlashAttribute("errorMessage", "게시글 수정에 실패했습니다.");
+            return "redirect:/board/honeyBoardModify"; // 실패 시 다시 수정 페이지로 이동
+        }
     }
 
 }

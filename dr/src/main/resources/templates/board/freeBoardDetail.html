@@ -43,6 +43,8 @@
                             <button class="freeBoardDetail-buttonTwo">신고</button>
                         </a>
                     </div>
+                    <br><br>
+                    <!-- 수정 및 삭제 버튼: 작성자에게만 표시 -->
                     <div class="freeBoardDetail-firstButton"
                          th:if="${userNickName != null and userNickName == freeBoardDetail.userNickName}">
                         <br><br>
