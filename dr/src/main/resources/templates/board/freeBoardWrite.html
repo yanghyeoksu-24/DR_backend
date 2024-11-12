@@ -27,10 +27,11 @@
                 <span class="freeboardwrite-text1">자유게시판</span>
                 <span class="freeboardwrite-text2">글쓰기</span>
             </div>
-
+            <br><br>
             <form action="/board/freeBoardWriteOk" method="post" id="freeBoardForm">
                 <div class="freeboardwrite-inputContainer">
-                    <input type="text" class="freeboardwrite-titleInput" name="boardTitle" placeholder="제목을 입력하세요" required>
+                    <input type="text" class="freeboardwrite-titleInput" name="boardTitle" placeholder="제목을 입력하세요"
+                           required>
                 </div>
 
                 <!-- Toast UI Editor Section -->
@@ -62,7 +63,7 @@
         el: document.querySelector('#contsEditor'),
         previewStyle: 'vertical',
         initialEditType: 'wysiwyg',
-        height: '500px',
+        height: '1200px',
         placeholder: '내용을 입력해 주세요.',
         hooks: {
             addImageBlobHook: async (blob, callback) => {
@@ -104,7 +105,7 @@
         event.preventDefault();
         document.getElementById('boardText').value = editor.getHTML();
 
-            document.getElementById('freeBoardForm').submit();
+        document.getElementById('freeBoardForm').submit();
 
     });
 </script>
