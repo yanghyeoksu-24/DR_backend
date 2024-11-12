@@ -25,7 +25,7 @@
             <div class="honeyBoardDetail-infobox">
                 <div class="honeyBoardDetail-infoFirst">
                     <div class="honeyBoardDetail-infoInBox1">
-                        <img th:src="${honeyBoardDetail.photoLocal}" alt="User Photo">
+                        <img th:src="@{/image/photo/} + ${honeyBoardDetail.photoLocal}" alt="User Image">
                     </div>
                     <div class="honeyBoardDetail-infoInBox2">
                         <p class="honeyBoardDetail-writeName" th:text="${honeyBoardDetail.userNickName}">작성자</p>
