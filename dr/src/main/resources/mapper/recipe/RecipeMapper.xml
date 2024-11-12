@@ -367,26 +367,26 @@
     <!-- 나만의 레시피 업데이트 -->
     <update id="updateRecipe" parameterType="MyRecipeUpdateDTO">
         UPDATE DR_RECIPE
-        SET RECIPE_TITLE = #{recipeTitle} AND RECIPE_TEXT = #{recipeText}
+        SET RECIPE_TITLE = #{recipeTitle}, RECIPE_TEXT = #{recipeText}
         WHERE RECIPE_NUMBER = #{recipeNumber}
     </update>
 
     <update id="updatePhoto" parameterType="MyRecipeUpdateDTO">
         UPDATE DR_PHOTO
-        SET PHOTO_ORIGIANL = #{photoOriginal} AND PHOTO_LOCAL = #{photoLocal} AND PHOTO_SIZE = #{photoSize}
+        SET PHOTO_ORIGINAL = #{photoOriginal}, PHOTO_LOCAL = #{photoLocal}, PHOTO_SIZE = #{photoSize}
         WHERE RECIPE_NUMBER = #{recipeNumber}
     </update>
 
 <!--    챗봇 레시피 업데이트-->
     <update id="updateChatBotRecipe" parameterType="ChatBotRecipeUpdateDTO">
         UPDATE DR_RECIPE
-        SET RECIPE_TITLE = #{recipeTitle} AND RECIPE_TEXT = #{recipeText}
+        SET RECIPE_TITLE = #{recipeTitle}, RECIPE_TEXT = #{recipeText}
         WHERE RECIPE_NUMBER = #{recipeNumber}
     </update>
 
     <update id="updateChatBotPhoto" parameterType="ChatBotRecipeUpdateDTO">
         UPDATE DR_PHOTO
-        SET PHOTO_ORIGIANL = #{photoOriginal} AND PHOTO_LOCAL = #{photoLocal} AND PHOTO_SIZE = #{photoSize}
+        SET PHOTO_ORIGINAL = #{photoOriginal}, PHOTO_LOCAL = #{photoLocal}, PHOTO_SIZE = #{photoSize}
         WHERE RECIPE_NUMBER = #{recipeNumber}
     </update>
 
