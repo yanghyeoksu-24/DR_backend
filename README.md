@@ -703,81 +703,57 @@
 
 ## 개발 내용
 
-
 - <a href="https://dev-coco.tistory.com/111" target="_blank">게시판 프로젝트 명세서 정리</a>
-- <a href="https://dev-coco.tistory.com/113" target="_blank">게시판 조회수 기능 추가</a>
-- <a href="https://dev-coco.tistory.com/114" target="_blank">게시판 페이징 처리 구현</a>
-- <a href="https://dev-coco.tistory.com/115" target="_blank">게시판 검색처리 및 페이징 구현</a>
-- <a href="https://dev-coco.tistory.com/117" target="_blank">생성, 수정시간 LocalDateTime format 변경</a>
-- <a href="https://dev-coco.tistory.com/120" target="_blank">Security 회원가입 및 로그인 구현</a>
-- <a href="https://dev-coco.tistory.com/121" target="_blank">Security Mustache CSRF 적용 및 문제해결</a>
-- <a href="https://dev-coco.tistory.com/122" target="_blank">커스텀 어노테이션을 통해 중복코드 개선</a>
-- <a href="https://dev-coco.tistory.com/124" target="_blank">회원가입 Validation 유효성 검사</a>
-- <a href="https://dev-coco.tistory.com/125" target="_blank">회원가입 Validation 커스터마이징 중복 검사</a>
-- <a href="https://dev-coco.tistory.com/126" target="_blank">Security 로그인 실패시 메시지 출력하기</a>
-- <a href="https://dev-coco.tistory.com/127" target="_blank">Security 회원정보 수정(ajax)</a>
-- <a href="https://dev-coco.tistory.com/128" target="_blank">OAuth 2.0 구글 로그인 구현</a>
-- <a href="https://dev-coco.tistory.com/129" target="_blank">OAuth 2.0 네이버 로그인 구현</a>
-- <a href="https://dev-coco.tistory.com/130" target="_blank">JPA 연관관계 매핑으로 글 작성자만 수정, 삭제 가능하게 하기</a>
-- <a href="https://dev-coco.tistory.com/133" target="_blank">JPA 양방향 순환참조 문제 및 해결</a>
-- <a href="https://dev-coco.tistory.com/132" target="_blank">게시판 댓글 작성 및 조회 구현</a>
-- <a href="https://dev-coco.tistory.com/134" target="_blank">게시판 댓글 수정 및 삭제 구현</a>
-- <a href="https://dev-coco.tistory.com/136" target="_blank">게시판 댓글 작성자만 수정, 삭제 가능하게 하기</a>
-- <a href="https://dev-coco.tistory.com/138" target="_blank">[리팩토링]Dto Class를 Inner Class로 한번에 관리하기</a>
+<br>,,,
 
 ## 마치며   
 ### 8️⃣ 프로젝트 보완사항   
 
-초기에 구상한 기능은 기본적인 CRUD 즉, 게시판에 올라오는 게시글을 대상으로 Create, Read, Update, Delete가 가능한 게시판이었습니다.   
-템플릿 엔진으로 Mustache를 선택했는데, 그 이유는 Mustache는 단순히 화면에 데이터를 렌더링 하는 엔진이고   
-Logic-less 하기 때문에 View의 역할과 서버의 역할이 명확하게 분리되어 OOP의 5원칙 중 하나인 SRP를 지킬 수 있어    
-MVC 설계에서 Model, View, Controller의 역할에 대한 구분도 명확하게 할 수 있겠다는 생각이 들었습니다.   
-또한, 다른 템플릿에 비해 빠른 로딩 속도를 자랑하며, xss를 기본적으로 이스케이프 할 수 있다는 장점들에 이끌려 Mustache를 사용하게 되었습니다.   
-그러나 게시판 CRUD 기능이 완성되어 갈 때 쯤, 아쉬운 부분이 계속해서 생겨 몇몇 기능들을 추가하게 되었습니다.   
-mustache는 로직을 넣을 수 없어 그 과정에 데이터를 렌더링 하기 전 서버에서 전처리를 하거나,    
-화면에 표시된 후에 자바스크립트로 후처리를 해줬지만 조금 아쉬운 부분이 몇 가지 남아있다고 생각합니다.   
-<details>
-  <summary>보완사항</summary>
-     
-  
-- 페이징 처리 및 검색 페이징에서 페이지 번호 활성화
-- 페이지 번호는 10페이지 단위로 보여주기
-- 페이지 처음, 끝으로 이동하는 버튼
-- 생성, 수정시간 format 설정 varchar > datetime
-- 다른 사용자와 자신의 댓글이 댓글란에 있을때 자신의 댓글만 수정,삭제 버튼 보이기
-  
-</details>   
+현재 구현한 챗봇은 DB에서 채팅방 세션 테이블을 따로 관리하여 정해진 채팅방이 있지만,<br>
+같은 채팅방이더라도 대화가 이어지는 느낌이 많이 떨어지는 부분에 있어서 아쉬웠습니다.<br>
+api가 답변해준 내용에 대해 추가적인 대화를 이어가려 해도 그것을 기억하지 못하는 부분에 대해<br>
+방법을 고민도 해 보고, api 문서도 찾아보았지만 아직까진 저의 한계로 인해 해결방법을 찾지 못하였는데<br>
+이 부분에 대해 이전 대화내용을 토대로 지속적으로 이어지는 채팅이 가능하도록 꼭 보완하고 싶습니다.<br>
+<br>
+또한, 메인페이지에 사용된 공공데이터는 api가 월마다 갱신이 되는 형태가 아니라<br>
+uddi 값을 case에 코드로 직접 추가해야하는 형태로 되어있어 매우 불편함을 느꼈습니다.<br>
+대체 가능한 공공데이터를 지속적으로 찾아 자동으로 업데이트가 가능하도록 보완하고 싶습니다.<br>
 
-추후에 브랜치를 나눠 Mustache에서 Thymeleaf로 조금씩 바꾸며 프로젝트 완성도를 높이고, 고도화 할 계획에 있습니다.   
+<details>
+  <summary>보완사항 (Click)</summary>
+     
+- 챗봇 api의 채팅 기억으로 추가적인 대화 지속
+- 공공데이터의 자동 업데이트
+  
+</details>
+<br>
    
    <details>
-  <summary>추가할 기능 </summary>
+  <summary>추가할 기능 (Click)</summary>
      
-  
 - 챗봇 사이드바 페이징 처리
-- 쿠키나 세션을 이용해 조회수 중복 카운트 방지
-- 파일 업로드 기능 추가
-- 좋아요 기능 추가
+- 우리 서비스에 맞는 챗봇 가이드라인, 자주 묻는 질문 등 api 튜닝
   
 </details>  
-
+<br>
 
 ### 9️⃣ 후기   
 
-혼자 독학하며 처음 만들어본 프로젝트이기 때문에,   
-공부한 내용을 사용해보는 설렘만큼이나 부족한 부분에 대한 아쉬움도 많이 남았습니다.   
-효율적인 설계를 위해 고민하고 찾아보며 실제로 많이 공부할 수 있었던 부분도 많았습니다.   
-책이나 블로그, 강의로 공부한 예제에서 납득했던 부분들은 실제로 코드를 짜면서 다양한 애로 사항을 마주했고   
-'이 로직은 이 단계에서 처리하는게 맞는가', '각 레이어간 데이터 전달은 어떤 방식이든 DTO로 하는게 맞는가' 등   
-여러 고민에 빠져 헤맨적도 있었지만, 다행히 결과는 대부분 최선을 찾았었던 것 같습니다.   
-그리고 내가 만든 코드를 남에게 보여줬을 때, 누군가 코드의 근거를 물어본다면   
-과연 자신 있게 나의 생각을 잘 얘기할 수 있을까 라는 생각을 굉장히 많이 하게 되었습니다.   
-그래서 하나를 구현할 때 '이렇게 구현 하는 것이 과연 최선인가', '더 나은 Best Practice는 없을까'   
-스스로 의심하고 고민하게 되는 습관을 가지게 되었습니다.   
-
-두 번째로 기술적인 부분에서 더 공부하고 싶은 '방향'을 찾을 수 있었습니다.   
-이번 프로젝트는 저에게 좋은 경험이 되었고, 저의 부족한 부분을 스스로 알 수 있는 좋은 계기가 되었습니다.   
-부족한 부분에 대해 스스로 인지하고 있고, 더 깊게 공부하며 스스로 발전할 수 있는 '방향'을 다시한번 찾을 수 있게 되었습니다.   
-이를 통해 더 나은 웹 애플리케이션을 만들 수 있을 것 같다는 자신감도 생겼습니다.   
-
+팀 프로젝트의 메인이 되는 파트를 주로 맡게되어 부담감이 가장 컸고,<br>  
+수업한 내용을 사용해보는 설렘도, 부족한 부분에 대한 아쉬움도 많이 남았습니다.<br> 
+실제로 코드를 구현하며 그저 따라하기 급급한 부분도 조금 있었습니다.<br>
+'이 로직은 이 단계에서 처리하는게 맞는가', '각 레이어간 데이터 전달은 어떤 방식이든 DTO로 하는게 맞는가' 등<br>  
+여러 고민에 빠져 헤맨적도 있었지만, 우선 현재 제가 할 수 있는 최선을 찾는것에 초점을 맞춰 보았습니다.<br>
+<br>
+그리고 내가 만든 코드를 남에게 보여줬을 때, 누군가 코드의 근거를 물어본다면<br> 
+과연 자신 있게 나의 생각을 잘 얘기할 수 있을까 라는 생각을 굉장히 많이 하게 되었습니다.<br>
+그래서 하나를 구현할 때 '이렇게 구현 하는 것이 과연 최선인가', '더 나은 방법은 없을까'<br>
+스스로 의심하고 고민하게 되는 습관을 가지게 되었습니다.<br>
+<br>
+두 번째로 기술적인 부분에서 더 공부하고 싶은 방향을 찾을 수 있었습니다.<br>  
+이번 프로젝트는 저에게 좋은 경험이 되었고, 저의 부족한 부분을 스스로 알 수 있는 좋은 계기가 되었습니다.<br>
+부족한 부분에 대해 스스로 인지하고 있고,<br>
+자바스크립트, 스프링 흐름에 대해 더 깊게 공부하며 개발자로서 수준을 더욱 더 올리고 싶어졌습니다.<br>   
+이를 통해 더 나은 웹 애플리케이션을 만들 수 있을 것 같다는 자신감도 생겼습니다.<br>
+<br>
 끝까지 읽어주셔서 감사합니다. 
