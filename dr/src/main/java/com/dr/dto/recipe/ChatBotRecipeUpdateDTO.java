@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class ChatBotRecipeUpdateDTO {
+public class ChatBotRecipeUpdateDTO{
     private Long recipeNumber;
     private String recipeTitle;
     private String recipeText;
