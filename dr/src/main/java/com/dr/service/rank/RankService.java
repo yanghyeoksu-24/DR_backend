@@ -1,6 +1,7 @@
 package com.dr.service.rank;
 
 import com.dr.dto.rank.RankDTO;
+import com.dr.dto.myPage.PointCheckDTO;
 import com.dr.mapper.rank.RankMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,8 @@ public class RankService {
     @Autowired
     private RankMapper rankMapper;
 
-    // 랭킹 리스트를 가져오는 메서드
+    // 특정 사용자의 랭킹 리스트를 가져오는 메서드
     public List<RankDTO> getRankList(Long userNumber) {
-        // RankMapper를 사용하여 DB에서 랭킹 데이터를 가져옴
         return rankMapper.getRankList(userNumber);
     }
 
@@ -29,5 +29,20 @@ public class RankService {
         return rankMapper.fiftyRankList();
     }
 
+    // 월초 1등부터 5등까지 사용자에게 200포인트를 지급하는 메서드
+    public void givePointsToTop5() {
+        // 1등부터 5등까지의 사용자 조회
+        List<RankDTO> top5RankList = rankMapper.Top5Rank();
 
+        // 각 사용자에게 200 포인트 적립
+        for (RankDTO user : top5RankList) {
+            PointCheckDTO pointCheckDTO = new PointCheckDTO();
+            pointCheckDTO.setUserNumber((long) user.getUserNumber());
+            pointCheckDTO.setPointGet(200);
+            pointCheckDTO.setPointNote("랭킹");
+
+            // 포인트 적립
+            rankMapper.insertPoint(pointCheckDTO);
+        }
+    }
 }

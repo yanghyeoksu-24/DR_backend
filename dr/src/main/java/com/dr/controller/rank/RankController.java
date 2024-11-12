@@ -1,8 +1,11 @@
 package com.dr.controller.rank;
 
+import com.dr.dto.myPage.PointCheckDTO;
 import com.dr.dto.rank.RankDTO;
+import com.dr.mapper.rank.RankMapper;
 import com.dr.service.rank.RankService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +22,7 @@ import java.util.List;
 public class RankController {
 
     private final RankService rankService;
+    private final RankMapper rankMapper;
 
     // 사용자 랭킹 페이지
     @GetMapping("/userRank")
@@ -34,4 +38,31 @@ public class RankController {
 
         return "rank/userRank";
     }
+
+
+    @Scheduled(cron = "0 5 8 * * *")  // UTC 기준으로 08:05
+    public void givePointsToTop5() {
+        System.out.println("시작조차 안되는거니?");
+        // 1등부터 5등까지의 사용자 조회
+
+        List<RankDTO> top5RankList = rankMapper.Top5Rank();
+        if (top5RankList.isEmpty()) {
+            System.out.println("No top 5 ranks found.");
+        } else {
+            System.out.println("Top 5 ranks found: " + top5RankList.size());
+        }
+
+        // 각 사용자에게 200 포인트 적립
+        for (RankDTO user : top5RankList) {
+            PointCheckDTO pointCheckDTO = new PointCheckDTO();
+            pointCheckDTO.setUserNumber((long) user.getUserNumber());
+            pointCheckDTO.setPointGet(200);
+            pointCheckDTO.setPointNote("랭킹");
+
+            // 포인트 적립
+            rankMapper.insertPoint(pointCheckDTO);
+        }
+    }
+
+
 }
