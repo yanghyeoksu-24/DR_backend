@@ -1,7 +1,6 @@
 package com.dr.controller.recipe;
 
-import com.dr.dto.board.BoardReportDTO;
-import com.dr.dto.board.FreeBoardDetailDTO;
+
 import com.dr.dto.recipe.*;
 import com.dr.service.recipe.RecipeService;
 import jakarta.servlet.http.HttpSession;
@@ -53,8 +52,6 @@ public class RecipeController {
 
         // 특정 레시피의 댓글 목록 조회
         List<MyRecipeCommentDTO> recipeComments = recipeService.selectMyRecipeComment(recipeNumber);
-        log.info(recipeDetail.toString());
-        log.info(recipeComments.toString());
 
         // 모델에 레시피 상세 정보 추가
         model.addAttribute("recipeDetail", recipeDetail);
@@ -122,17 +119,17 @@ public class RecipeController {
     @GetMapping("/chatBotRecipeList")
     public String chatBotRecipeList(Model model) {
         // 전체 레시피 목록 조회
-        List<ChatBotRecipeListDTO> recipeList = recipeService.findAllRecipes1();
+        List<ChatBotRecipeListDTO> chatBotRecipeList = recipeService.findAllRecipes1();
         // 모델에 레시피 목록 추가
-        model.addAttribute("recipeList", recipeList);
+        model.addAttribute("chatBotRecipeList", chatBotRecipeList);
         return "recipe/chatBotRecipeList";  // chatBotRecipeList.html로 데이터 전달
     }
 
     //    챗봇 레시피 추천순
     @GetMapping("/chatBotRecipeListGood")
     public String chatBotRecipeListGood(Model model) {
-        List<ChatBotRecipeListDTO> recipeListGood = recipeService.findAllRecipes1Good();
-        model.addAttribute("recipeList", recipeListGood);
+        List<ChatBotRecipeListDTO> chatBotRecipeListGood = recipeService.findAllRecipes1Good();
+        model.addAttribute("chatBotRecipeList", chatBotRecipeListGood);
         return "recipe/chatBotRecipeList";
     }
 
@@ -140,11 +137,11 @@ public class RecipeController {
     @GetMapping("/chatBotDetailPage")
     public String ChatBotDetailPage(@RequestParam("recipeNumber") Long recipeNumber,  @SessionAttribute(value = "userNickName", required = false) String userNickName ,  Model model) {
         // 특정 레시피의 상세 정보 조회
-        ChatBotRecipeDetailDTO recipeDetail = recipeService.findChatBotRecipeDetail(recipeNumber);
-        List<ChatBotRecipeCommentDTO> recipeComments = recipeService.selectChatBotRecipeComment(recipeNumber);
+        ChatBotRecipeDetailDTO chatBotRecipeDetail = recipeService.findChatBotRecipeDetail(recipeNumber);
+        List<ChatBotRecipeCommentDTO> chatBotRecipeComments = recipeService.selectChatBotRecipeComment(recipeNumber);
         // 모델에 레시피 상세 정보 추가
-        model.addAttribute("recipeDetail", recipeDetail);
-        model.addAttribute("recipeComments", recipeComments);
+        model.addAttribute("chatBotRecipeDetail", chatBotRecipeDetail);
+        model.addAttribute("chatBotRecipeComments", chatBotRecipeComments);
         model.addAttribute("userNickName",userNickName);
         return "recipe/chatBotDetailPage";  // ChatBotDetailPage.html로 데이터 전달
     }
@@ -159,11 +156,11 @@ public class RecipeController {
             throw new IllegalArgumentException("Recipe number is required.");
         }
 
-        ChatBotRecipeCommentDTO commentDTO = new ChatBotRecipeCommentDTO();
-        commentDTO.setRecipeNumber(recipeNumber);
-        commentDTO.setReplyText(replyText);
-        commentDTO.setUserNumber(userNumber);
-        recipeService.insertChatBotRecipeComment(commentDTO);
+        ChatBotRecipeCommentDTO chatBotRecipeCommentDTO = new ChatBotRecipeCommentDTO();
+        chatBotRecipeCommentDTO.setRecipeNumber(recipeNumber);
+        chatBotRecipeCommentDTO.setReplyText(replyText);
+        chatBotRecipeCommentDTO.setUserNumber(userNumber);
+        recipeService.insertChatBotRecipeComment(chatBotRecipeCommentDTO);
 
         redirectAttributes.addAttribute("recipeNumber", recipeNumber);
         return "redirect:/recipe/chatBotDetailPage";
@@ -329,7 +326,6 @@ public class RecipeController {
     public String recipeReportPage(@RequestParam("recipeNumber") Long recipeNumber,
                                    @RequestParam(value = "replyNumber", required = false) Long replyNumber,
                                    Model model) {
-        log.info(recipeNumber + "akldsnds");
         model.addAttribute("recipeNumber", recipeNumber);
         model.addAttribute("replyNumber", replyNumber);
         return "/recipe/report";
@@ -344,8 +340,8 @@ public class RecipeController {
                                  @RequestParam(value = "otherReasonText", required = false) String otherReasonText
     ) {
 
+        ChatBotRecipeDetailDTO chatBotRecipeDetailDTO = recipeService.findChatBotRecipeDetail(recipeNumber);
         RecipeReportDTO recipeReportDTO = new RecipeReportDTO();
-        ChatBotRecipeDetailDTO chatBotRecipeDetail = recipeService.findChatBotRecipeDetail(recipeNumber);
 
         // 1. 사유 지정
         if (otherReasonText != null && !otherReasonText.trim().isEmpty()) {
@@ -365,13 +361,12 @@ public class RecipeController {
 
         // 3. 유저넘버 지정
         recipeReportDTO.setUserNumber(userNumber);
-        log.info(recipeReportDTO + "wklesfdgfmrefdlfwqk;ew'egr");
 
         // 신고 처리
         recipeService.report(recipeReportDTO);
 
         // 4. 리디렉션 처리
-        if ("챗봇레시피".equals(chatBotRecipeDetail.getRecipeType())) {
+        if ("챗봇레시피".equals(chatBotRecipeDetailDTO.getRecipeType())) {
             return "redirect:/recipe/chatBotDetailPage?recipeNumber=" + recipeNumber;
         } else {
             return "redirect:/recipe/myDetailPage?recipeNumber=" + recipeNumber;
@@ -429,7 +424,7 @@ public class RecipeController {
     }
 
     //나만의 레시피 수정 이동
-    @PostMapping("/updateRecipe")
+    @GetMapping("/updateRecipe")
     public String updateRecipe(@RequestParam("recipeNumber3") Long recipeNumber,
                                @RequestParam("recipeTitle") String recipeTitle,
                                @RequestParam("recipeText") String recipeText,
@@ -447,7 +442,7 @@ public class RecipeController {
         model.addAttribute("photoOriginal", photoOriginal); // photoOriginal 추가
         model.addAttribute("photoSize", photoSize);
 
-        return "recipe/myRecipeModify"; // 수정 페이지의 템플릿 이름
+        return "/recipe/myRecipeModify"; // 수정 페이지의 템플릿 이름
     }
 
     // 나만의 레시피 수정 후 목록 페이지로 이동
@@ -466,16 +461,16 @@ public class RecipeController {
     }
 
     //챗봇의 레시피 수정 이동
-    @GetMapping("/updateChatBotRecipe")
-    public String updateChatBot(@RequestParam("recipeNumber4") Long recipeNumber,
-                               @RequestParam("recipeTitle") String recipeTitle,
-                               @RequestParam("recipeText") String recipeText,
-                                @RequestParam(value = "photoLocal", required = false) String photoLocal, // 사진 파일 경로 추가
-                                @RequestParam(value = "photoOriginal", required = false) String photoOriginal,
-                                @RequestParam(value = "photoSize", required = false) String photoSize,// 사진 파일 경로 추가
-                                Model model) {
+    @GetMapping("/chatBotRecipeModify")
+    public String chatBotRecipeModify(@RequestParam("recipeNumber4") Long recipeNumber,
+                                      @RequestParam("recipeTitle") String recipeTitle,
+                                      @RequestParam("recipeText") String recipeText,
+                                      @RequestParam(value = "photoLocal", required = false) String photoLocal, // 사진 파일 경로 추가
+                                      @RequestParam(value = "photoOriginal", required = false) String photoOriginal,
+                                      @RequestParam(value = "photoSize", required = false) String photoSize,// 사진 파일 경로 추가
+                                      Model model) {
         // 필요한 로직 처리 (예: 데이터베이스 업데이트)
-
+        log.info("a21321sfdafsdvxczvxv  Received recipeNumber: " + recipeNumber);
         // 수정 페이지로 이동하면서 데이터 전달
         model.addAttribute("recipeNumber", recipeNumber);
         model.addAttribute("recipeTitle", recipeTitle);
@@ -502,8 +497,6 @@ public class RecipeController {
             return "redirect:/recipe/chatBotRecipeModify";
         }
     }
-
-
 
 
 }

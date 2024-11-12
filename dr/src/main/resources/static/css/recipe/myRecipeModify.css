@@ -64,6 +64,7 @@ main {
   background-color: #ebaa39;
   border: none;
   color: white;
+  cursor: pointer;
   /* margin-right: 10px; */
 }
 .myRecipeModify-cancelButton {
@@ -74,6 +75,7 @@ main {
   border: none;
   color: white;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .myRecipeModify-inputContainer {
