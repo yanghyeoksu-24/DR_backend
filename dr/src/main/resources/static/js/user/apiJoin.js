@@ -70,7 +70,7 @@ $(document).ready(function () {
         });
     });
 
-
+    let phoneAlertShown = false; // 중복 전화번호에 대한 alert 표시 여부
     // 핸드폰 중복확인
     $('#phone').on('blur', function () {
         const phone = $('#phone').val().trim();
@@ -79,9 +79,12 @@ $(document).ready(function () {
             url: '/api/user/checkPhone',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({phoneNumber: phone}),
+            data: JSON.stringify({userPhone: phone}),
             success: function (response) {
                 if (response.exists) {
+                    if (!phoneAlertShown) {
+                        phoneAlertShown = true;
+                    }
                     $('#phoneError').text("전화번호가 이미 존재합니다.").css('color', 'red');
                     $('#sendCode').prop('disabled', true);
                 } else {
