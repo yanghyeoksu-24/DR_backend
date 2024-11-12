@@ -463,12 +463,12 @@ public class RecipeController {
     //챗봇의 레시피 수정 이동
     @GetMapping("/chatBotRecipeModify")
     public String chatBotRecipeModify(@RequestParam("recipeNumber4") Long recipeNumber,
-                               @RequestParam("recipeTitle") String recipeTitle,
-                               @RequestParam("recipeText") String recipeText,
-                                @RequestParam(value = "photoLocal", required = false) String photoLocal, // 사진 파일 경로 추가
-                                @RequestParam(value = "photoOriginal", required = false) String photoOriginal,
-                                @RequestParam(value = "photoSize", required = false) String photoSize,// 사진 파일 경로 추가
-                                Model model) {
+                                      @RequestParam("recipeTitle") String recipeTitle,
+                                      @RequestParam("recipeText") String recipeText,
+                                      @RequestParam(value = "photoLocal", required = false) String photoLocal, // 사진 파일 경로 추가
+                                      @RequestParam(value = "photoOriginal", required = false) String photoOriginal,
+                                      @RequestParam(value = "photoSize", required = false) String photoSize,// 사진 파일 경로 추가
+                                      Model model) {
         // 필요한 로직 처리 (예: 데이터베이스 업데이트)
         log.info("a21321sfdafsdvxczvxv  Received recipeNumber: " + recipeNumber);
         // 수정 페이지로 이동하면서 데이터 전달

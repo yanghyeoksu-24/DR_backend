@@ -98,7 +98,7 @@ public class ManagerController {
     }
 
     // 4-2. 게시글 검색
-    @PostMapping("/boardSearch")
+    @GetMapping("/boardSearch")
     public String boardSearch(@RequestParam("boardNumber") int boardNumber, Model model) {
         ManagerBoardDTO board = managerService.boardSearch(boardNumber);
         model.addAttribute("board", board);
@@ -114,7 +114,7 @@ public class ManagerController {
     }
 
     // 5-2. 레시피 검색
-    @PostMapping("/recipeSearch")
+    @GetMapping("/recipeSearch")
     public String recipeSearch(@RequestParam("recipeNumber") int recipeNumber, Model model) {
         ManagerRecipeDTO recipe = managerService.recipeSearch(recipeNumber);
         model.addAttribute("recipe", recipe);
@@ -132,7 +132,7 @@ public class ManagerController {
 
 
     // 6-2. 댓글 검색
-    @PostMapping("/replySearch")
+    @GetMapping("/replySearch")
     public String replySearch(@RequestParam("replyNumber") int replyNumber, Model model) {
         ManagerCommentDTO reply = managerService.replySearch(replyNumber);
         model.addAttribute("reply", reply);
