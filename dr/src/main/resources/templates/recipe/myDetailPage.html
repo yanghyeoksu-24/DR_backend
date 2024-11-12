@@ -27,7 +27,7 @@
             <div class="myDetailPage-infobox">
                 <div class="myDetailPage-infoFirst">
                     <div class="myDetailPage-infoInBox1">
-                        <img th:src="@{${recipeDetail.photoLocal}}" alt="유저 이미지">
+                        <img th:src="@{/image/photo/} + ${recipeDetail.photoLocal}" alt="User Image">
                     </div>
                     <div class="myDetailPage-infoInBox2">
                         <p class="myDetailPage-writeName" th:text="${recipeDetail.userNickName}">작성자</p>
@@ -54,9 +54,7 @@
                         </div>
                         <div class="myDetailPage-firstButton"
                              th:if="${userNickName != null and userNickName == recipeDetail.userNickName}">
-
-
-                            <form th:action="@{/recipe/updateRecipe}" method="post">
+                            <form th:action="@{/recipe/updateRecipe}" method="get">
                                 <input type="hidden" name="recipeNumber3" id="recipeNumber3"
                                        th:value="${recipeDetail.recipeNumber}">
                                 <input type="hidden" name="recipeTitle" th:value="${recipeDetail.recipeTitle}">

@@ -1,12 +1,12 @@
 package com.dr.mapper.recipe;
 
-import com.dr.dto.board.BoardReportDTO;
+
 import com.dr.dto.recipe.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
+
 
 @Mapper
 public interface RecipeMapper {
