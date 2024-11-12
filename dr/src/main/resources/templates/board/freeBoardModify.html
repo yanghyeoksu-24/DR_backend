@@ -41,7 +41,7 @@
 
             <!-- 수정 및 취소 버튼을 각각 폼 안에 넣기 -->
             <form id="freeBoardModifyForm" th:action="@{/board/updateFreeBoard}" method="post">
-                <input type="hidden" name="boardNumber" th:value="${boardNumber}">
+                <input type="hidden" name="boardNumber3" th:value="${boardNumber}">
                 <input type="hidden" name="boardTitle" id="hiddenBoardTitle">
                 <input type="hidden" name="boardText" id="hiddenBoardText">
                 <input type="hidden" name="photoLocal" th:value="${photoLocal}">

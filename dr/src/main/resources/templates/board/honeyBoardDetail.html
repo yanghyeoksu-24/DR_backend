@@ -49,7 +49,7 @@
                         <br><br>
                         <!-- 수정 및 삭제 버튼: 작성자에게만 표시 -->
                         <form th:action="@{/board/honeyBoardModify}" method="get">
-                            <input type="hidden" name="boardNumber"
+                            <input type="hidden" name="boardNumber3" id="boardNumber3"
                                    th:value="${honeyBoardDetail.boardNumber}">
                             <input type="hidden" name="boardTitle" th:value="${honeyBoardDetail.boardTitle}">
                             <input type="hidden" name="boardText" th:value="${honeyBoardDetail.boardText}">

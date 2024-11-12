@@ -463,7 +463,7 @@ public class BoardController {
 
     //꿀팁게시판 수정
     @GetMapping("/honeyBoardModify")
-    public String honeyBoardModify(@RequestParam("boardNumber") Long boardNumber,
+    public String honeyBoardModify(@RequestParam("boardNumber3") Long boardNumber,
                                   @RequestParam("boardTitle") String boardTitle,
                                   @RequestParam("boardText") String boardText,
                                   @RequestParam(value = "photoLocal", required = false) String photoLocal, // 사진 파일 경로 추가
