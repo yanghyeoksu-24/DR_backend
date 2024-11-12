@@ -138,6 +138,15 @@ public class RecipeService {
         recipeMapper.insertChatBotPhoto(recipePhotoDTO);
     }
 
+    // 챗봇 레시피 글 작성 시 환경기여 점수 10점 추가
+    public void insertScoreByRecipe(ScoreCheckDTO scoreCheckDTO) {
+        log.info("챗봇 레시피 작성 시 기여점수 올라가니?");
+        // 환경기여 점수 10점 추가
+        scoreCheckDTO.setScoreGet(10L);  // 점수를 10점으로 설정
+        recipeMapper.insertScoreByRecipe(scoreCheckDTO);  // DB에 점수 정보 저장
+    }
+
+
     // 나만의 레시피 추천 수 증가
     public void addGood(MyRecipeGoodDTO myRecipeGoodDTO) {
         recipeMapper.increaseGoodCount(myRecipeGoodDTO);
@@ -194,7 +203,7 @@ public class RecipeService {
         recipeMapper.updatePhoto(myRecipeUpdateDTO);
     }
 
-    // 챗봇 레시피 삭제
+    // 챗봇 레시피 수정
     @Transactional
     public void updateChatBot(ChatBotRecipeUpdateDTO chatBotRecipeUpdateDTO) {
         recipeMapper.updateChatBotRecipe(chatBotRecipeUpdateDTO);

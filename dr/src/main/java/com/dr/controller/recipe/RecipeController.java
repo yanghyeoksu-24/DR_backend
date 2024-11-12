@@ -260,7 +260,7 @@ public class RecipeController {
         chatBotRecipeWriteDTO.setRecipeTitle(recipeTitle);
         chatBotRecipeWriteDTO.setRecipeText(recipeText);
         chatBotRecipeWriteDTO.setUserNumber(userNumber);
-        chatBotRecipeWriteDTO.setRecipeType("나만의레시피");
+        chatBotRecipeWriteDTO.setRecipeType("챗봇레시피");
 
         log.info(chatBotRecipeWriteDTO.toString()+"aslknlksdnfvklsdnklgnkldgsnkl;bsd");
 
@@ -275,7 +275,15 @@ public class RecipeController {
         // 3. RecipeService 호출하여 레시피와 사진 저장
         recipeService.saveChatBotRecipe(chatBotRecipeWriteDTO, recipePhotoDTO);
 
-        // 4. 성공 메시지 전달 후, 리디렉션
+        // 4. 환경기여 점수 10점 추가
+        ScoreCheckDTO scoreCheckDTO = new ScoreCheckDTO();
+        scoreCheckDTO.setUserNumber(userNumber);  // 사용자 번호 설정
+        scoreCheckDTO.setScoreGet(10L);           // 10점 설정
+
+        recipeService.insertScoreByRecipe(scoreCheckDTO);  // 환경기여 점수 추가
+
+
+        // 5. 성공 메시지 전달 후, 리디렉션
         return "redirect:/recipe/chatBotRecipeList"; // 리디렉션 URL은 필요에 맞게 수정
     }
 
@@ -375,13 +383,11 @@ public class RecipeController {
     @PostMapping("/like")
     public ResponseEntity<Void> addLike(
             @SessionAttribute(value = "userNumber", required = false) Long userNumber, @RequestBody RecipeSteamDTO recipeSteamDTO) {
-
         log.info(recipeSteamDTO.toString()+" lkansfdlkj rwlkmner");
         log.info(userNumber + "ewlkjfnl");
         try {
             recipeSteamDTO.setUserNumber(userNumber);
             recipeSteamDTO.setRecipeNumber(recipeSteamDTO.getRecipeNumber());
-
             // 실제 찜 추가 로직을 호출
             recipeService.addSteam(recipeSteamDTO);
             return ResponseEntity.ok().build();  // 성공 시 200 OK 반환
@@ -440,7 +446,7 @@ public class RecipeController {
     }
 
     //챗봇의 레시피 수정 이동
-    @PostMapping("/updateChatBotRecipe")
+    @GetMapping("/updateChatBotRecipe")
     public String updateChatBot(@RequestParam("recipeNumber4") Long recipeNumber,
                                @RequestParam("recipeTitle") String recipeTitle,
                                @RequestParam("recipeText") String recipeText,
@@ -455,7 +461,19 @@ public class RecipeController {
         return "recipe/chatBotRecipeModify"; // 수정 페이지의 템플릿 이름
     }
 
-
+    // 챗봇 레시피 수정 후 목록 페이지로 이동
+    @PostMapping("/saveChatBotRecipeUpdate")
+    public String saveChatBotRecipeUpdate(@ModelAttribute ChatBotRecipeUpdateDTO chatBotRecipeUpdateDTO,RedirectAttributes redirectAttributes) {
+        try {
+            // 챗봇 레시피와 사진을 업데이트하는 서비스 메서드 호출
+            recipeService.updateChatBot(chatBotRecipeUpdateDTO);
+            // 수정이 완료되면 상세 페이지로 리다이렉트
+            return "redirect:/recipe/myDetailPage";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "게시글 수정에 실패했습니다.");
+            return "redirect:/recipe/chatBotRecipeModify";
+        }
+    }
 
 
 }
