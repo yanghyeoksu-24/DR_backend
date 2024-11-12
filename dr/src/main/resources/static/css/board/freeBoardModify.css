@@ -1,13 +1,12 @@
 * {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
 }
 
 /* 메인 넓이 수정 */
 .freeboardModify-mainContainer {
   width: 1100px;
-  display: flex;
+  /*display: flex;*/
   justify-content: center;
   align-items: center;
   margin: 0 auto;
@@ -34,6 +33,7 @@ main {
   justify-content: center;
   align-items: center;
 }
+
 
 .freeboardModify-text2 {
   font-size: 35px;
@@ -86,7 +86,7 @@ main {
 
 /* 제목 입력 필드 스타일 */
 .freeboardModify-inputContainer {
-  display: flex;
+  /*display: flex;*/
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
