@@ -124,7 +124,7 @@
   ![메인음쓰계산기1](https://github.com/user-attachments/assets/30d7798e-b499-4027-a269-c6c6ed37b6ab)<br>
 
   ![메인음쓰계산기2](https://github.com/user-attachments/assets/9535c112-7b6f-4960-9f63-781c070e4731)<br>
-  입력창에 무게를 입력하면 소비된 에너지 및 비용등이 실시간 계산된다
+  입력창에 무게를 입력하면 소비된 에너지 및 비용 등이 실시간 계산된다
   <br><br><br>
 
   </details>
