@@ -670,7 +670,7 @@
 
 ### 7️⃣ API 설계
 
-![API_OAuth2](https://github.com/user-attachments/assets/9a815517-21fd-49da-b18b-efc2d9e1deb4)<br><br>
+![API_OAuth2](https://github.com/user-attachments/assets/729064a5-819a-4238-9d69-ad32e68335b3)<br><br>
 ![API_main](https://github.com/user-attachments/assets/d36f32d5-fa89-4a79-bd57-dd4b398e2f72)<br><br>
 ![API_publicData](https://github.com/user-attachments/assets/2d283c9d-39dd-4fa1-89a1-2bf31405cbe2)<br><br>
 ![API_chatBot](https://github.com/user-attachments/assets/e52fb1c9-e513-4378-afa3-fb782227fd95)<br><br>
