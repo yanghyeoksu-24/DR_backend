@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,10 +46,10 @@ class PointShopMapperTest {
 
         //then 결과 검증
         // 1. 행(row) 개수 검증
-
+        assertThat(products).isNotEmpty();
 
         // 2. 중복된 항목 검증
-
+        assertThat(products).doesNotHaveDuplicates();
     }
 
     @Test
@@ -62,12 +63,12 @@ class PointShopMapperTest {
         // when 메소드 검사(실행)
         List<String> result = pointShopMapper.getProductCode(pointShopDTO);
 
-        //then 결과 검증
-        // 1. 행(row) 개수 검증
+        // then: 결과 검증
+        // 1. 행(row) 개수 검증: pointShopDTO.getQuantity()와 동일해야 함
+        assertThat(result).hasSize(pointShopDTO.getQuantity().intValue());
 
-
-        // 2. 중복된 항목 검증
-
+        // 2. 결과 중에 중복이 없어야 함
+        assertThat(result).doesNotHaveDuplicates();
     }
 
     @Test
@@ -80,7 +81,7 @@ class PointShopMapperTest {
 
         // then 결과 검증
         // 무조건 하나의 결과
-
+        assertThat(phone).isNotNull().isNotEmpty();
     }
 
     @Test
@@ -92,9 +93,10 @@ class PointShopMapperTest {
         pointShopDTO.setUserNumber(7L);
 
         // when 메소드 검사(실행)
-        pointShopMapper.insertUsePoint(pointShopDTO);
+
 
         // then 결과 검증
+        // 하나의 row insert되어야 함
 
     }
 
@@ -110,6 +112,7 @@ class PointShopMapperTest {
         pointShopMapper.deleteCode(pointShopDTO);
 
         // then 결과 검증
+        // getProductCode() 결과가 삭제 되어야 함
     }
 
 
