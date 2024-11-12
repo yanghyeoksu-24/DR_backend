@@ -71,7 +71,7 @@
 
 ### 4. 실행 화면
   <details>
-    <summary>회원 관련</summary>
+    <summary>회원 관련 (Click)</summary>
      
   **1. 회원가입 화면**
   ![회원가입1](https://github.com/user-attachments/assets/495baa80-0da6-49ea-88e9-561f58661155)
@@ -136,7 +136,7 @@
   <br>
 
   <details>
-    <summary>메인 관련</summary>     
+    <summary>메인 관련 (Click)</summary>     
   
   **1. 메인페이지 공공데이터 섹션 화면**  
   ![메인공공데이터1](https://github.com/user-attachments/assets/80a652d0-5103-4d34-9ea0-3b2167322ded)<br>
@@ -160,7 +160,7 @@
   <br>
 
   <details>
-    <summary>챗봇 관련</summary>
+    <summary>챗봇 관련 (Click)</summary>
 
   **1. 챗봇 접속시 화면**
   ![냉장봇1](https://github.com/user-attachments/assets/34cf3dca-73c9-404b-9621-8f3662a6bf70)
@@ -203,7 +203,7 @@
   <br>
 
   <details>
-    <summary>포인트샵 관련</summary>
+    <summary>포인트샵 관련 (Click)</summary>
 
   **1. 포인트샵 화면**
   ![포인트샵1](https://github.com/user-attachments/assets/83af5648-410f-41e0-89f1-cc8584b74bdb)
@@ -246,7 +246,7 @@
   <br>
 
   <details>
-    <summary>헤더 검색 관련</summary>
+    <summary>헤더 검색 관련 (Click)</summary>
 
   **1. 검색 화면**
   ![검색1](https://github.com/user-attachments/assets/fef1da74-a414-475f-a36a-40291a81c3a0)
@@ -275,7 +275,7 @@
    
 <details>
   
-<summary>패키지 구조 보기</summary>   
+<summary>패키지 구조 보기 (Click)</summary>   
  
 
 ```
