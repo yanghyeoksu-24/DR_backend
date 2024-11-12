@@ -281,18 +281,68 @@
         DELETE FROM DR_PHOTO WHERE BOARD_NUMBER = #{boardNumber}
     </delete>
 
-<!--    자유게시판 게시글 수정-->
+    <!-- 자유게시판 게시글 수정 -->
     <update id="freeBoardUpdateWrite" parameterType="FreeBoardUpdateDTO">
         UPDATE DR_BOARD
-        SET BOARD_TITLE = #{boardTitle} AND BOARD_TEXT = #{boardText}
+        SET BOARD_TITLE = #{boardTitle}, BOARD_TEXT = #{boardText}
         WHERE BOARD_NUMBER = #{boardNumber}
     </update>
 
     <update id="freeBoardUpdatePhoto" parameterType="FreeBoardUpdateDTO">
         UPDATE DR_PHOTO
+        SET PHOTO_ORIGINAL = #{photoOriginal}, PHOTO_LOCAL = #{photoLocal}, PHOTO_SIZE = #{photoSize}
+        WHERE BOARD_NUMBER = #{boardNumber}
+    </update>
+
+    <!--    꿀팁게시판 게시글 작성-->
+    <insert id="honeyBoardInsertWrite" parameterType="HoneyBoardWriteDTO">
+        <selectKey keyProperty="boardNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_BOARD_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_BOARD (
+        BOARD_NUMBER, USER_NUMBER, BOARD_TITLE, BOARD_TEXT,
+        BOARD_TYPE, BOARD_WRITE_DATE
+        ) VALUES (
+        #{boardNumber}, #{userNumber}, #{boardTitle}, #{boardText},
+        #{boardType}, SYSDATE
+        )
+    </insert>
+
+    <!-- 꿀팁게시판 사진 데이터 삽입 -->
+    <insert id="honeyBoardInsertPhoto" parameterType="HoneyBoardPhotoDTO">
+        <selectKey keyProperty="photoNumber" resultType="Long" order="BEFORE">
+            SELECT SEQ_PHOTO_NUMBER.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO DR_PHOTO (
+        PHOTO_NUMBER, PHOTO_ORIGINAL, PHOTO_LOCAL, PHOTO_SIZE, BOARD_NUMBER
+        ) VALUES (
+        #{photoNumber}, #{photoOriginal}, #{photoLocal}, #{photoSize}, #{boardNumber}
+        )
+    </insert>
+
+    <!--    꿀팁게시판 게시글 삭제-->
+    <delete id="honeyBoardDeleteWrite" parameterType="Long">
+        DELETE FROM DR_BOARD WHERE BOARD_NUMBER = #{boardNumber}
+    </delete>
+
+    <delete id="honeyBoardDeletePhoto" parameterType="Long">
+        DELETE FROM DR_PHOTO WHERE BOARD_NUMBER = #{boardNumber}
+    </delete>
+
+    <!--    꿀팁게시판 게시글 수정-->
+    <update id="honeyBoardUpdateWrite" parameterType="HoneyBoardUpdateDTO">
+        UPDATE DR_BOARD
+        SET BOARD_TITLE = #{boardTitle} AND BOARD_TEXT = #{boardText}
+        WHERE BOARD_NUMBER = #{boardNumber}
+    </update>
+
+    <update id="honeyBoardUpdatePhoto" parameterType="HoneyBoardUpdateDTO">
+        UPDATE DR_PHOTO
         SET PHOTO_ORIGINAL = #{photoOriginal} AND PHOTO_LOCAL = #{photoLocal} AND PHOTO_SIZE = #{photoSize}
         WHERE BOARD_NUMBER = #{boardNumber}
     </update>
+
+
 
 
 </mapper>

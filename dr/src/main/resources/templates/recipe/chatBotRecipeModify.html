@@ -20,40 +20,40 @@
 </head>
 <body>
 <header th:replace="~{/fragment/header :: header}"></header>
-    <main>
-        <div class="chatBotRecipeModify-mainContainer">
-            <div class="chatBotRecipeModify-mainBox">
-                <div class="chatBotRecipeModify-title">
-                    <span class="chatBotRecipeModify-text1">챗봇 레시피</span>
-                    <span class="chatBotRecipeModify-text2">수정</span>
-                </div>
+<main>
+    <div class="chatBotRecipeModify-mainContainer">
+        <div class="chatBotRecipeModify-mainBox">
+            <div class="chatBotRecipeModify-title">
+                <span class="chatBotRecipeModify-text1">챗봇 레시피</span>
+                <span class="chatBotRecipeModify-text2">수정</span>
+            </div>
 
-                <div class="chatBotRecipeModify-warning">
-                    <p class="chatBotRecipeModify-warningText">1. 챗봇 레시피는 챗봇 채팅 사진과 음식 완성 사진이 필요합니다</p>
-                    <p class="chatBotRecipeModify-warningText">2. 허위작성 적발시 적립한 환경기여점수,포인트에 불이익을 받을 수 있습니다</p>
-                    <p class="chatBotRecipeModify-warningText">3. 음식대표사진, 레시피사진 순으로 사진 등록하지 않으면 점수가 회수될 수 있습니다.</p>
-                </div>
+            <div class="chatBotRecipeModify-warning">
+                <p class="chatBotRecipeModify-warningText">1. 챗봇 레시피는 챗봇 채팅 사진과 음식 완성 사진이 필요합니다</p>
+                <p class="chatBotRecipeModify-warningText">2. 허위작성 적발시 적립한 환경기여점수,포인트에 불이익을 받을 수 있습니다</p>
+                <p class="chatBotRecipeModify-warningText">3. 음식대표사진, 레시피사진 순으로 사진 등록하지 않으면 점수가 회수될 수 있습니다.</p>
+            </div>
 
-                <div class="chatBotRecipeModify-inputContainer">
-                    <input type="hidden" id="recipeNumberHidden" th:value="${recipeNumber}">
-                    <input type="text" class="chatBotRecipeModify-titleInput" id="recipeTitle"
-                           th:value="${recipeTitle}" placeholder="제목을 입력하세요">
-                </div>
+            <div class="chatBotRecipeModify-inputContainer">
+                <input type="hidden" id="recipeNumberHidden" th:value="${recipeNumber}">
+                <input type="text" class="chatBotRecipeModify-titleInput" id="recipeTitle"
+                       th:value="${recipeTitle}" placeholder="제목을 입력하세요">
+            </div>
 
-                <input type="hidden" id="recipeTextHidden" th:value="${recipeText}">
+            <input type="hidden" id="recipeTextHidden" th:value="${recipeText}">
 
-                <div id="contsEditor"></div>
+            <div id="contsEditor"></div>
 
-                <div class="chatBotRecipeModify-write">
-                    <a href="./chatBotDetailPage.html">
-                        <button class="chatBotRecipeModify-cancelButton">취소</button>
-                    </a>
-                    <button id="updateButton" class="chatBotRecipeModify-writeButton">수정</button>
-                </div>
+            <div class="chatBotRecipeModify-write">
+                <a th:href="@{/recipe/chatBotRecipeList.html}">
+                    <button class="chatBotRecipeModify-cancelButton">취소</button>
+                </a>
+                <button id="updateButton" class="chatBotRecipeModify-writeButton">수정</button>
             </div>
         </div>
-    </main>
-    <footer th:replace="~{/fragment/footer :: footer}"></footer>
+    </div>
+</main>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
     const editor = new toastui.Editor({
@@ -89,15 +89,48 @@
             }
         }
     });
-    // 페이지 로드 시 데이터 설정
+    // 페이지 로드 시 기존 데이터 설정
     window.onload = function() {
         const title = document.getElementById('recipeTitle').value;
         const content = document.getElementById('recipeTextHidden').value;
-
-        // 입력 필드와 에디터에 값 설정
         document.getElementById('recipeTitle').value = title;
         editor.setHTML(content);
     };
+
+    // 수정 버튼 클릭 시 AJAX 요청으로 데이터 전송
+    document.getElementById('updateButton').addEventListener('click', async function () {
+        const recipeNumber = document.getElementById('recipeNumberHidden').value;
+        const title = document.getElementById('recipeTitle').value;
+        const content = editor.getHTML();
+
+        const formData = {
+            recipeNumber: recipeNumber,
+            recipeTitle: title,
+            recipeText: content
+        };
+
+        try {
+            const response = await fetch('/saveChatBotRecipeUpdate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            // 성공 시에만 목록 페이지로 이동
+            if (response.ok) {
+                window.location.href = '/chatBotRecipeList';
+            } else {
+                // 실패 시 서버의 에러 페이지를 표시
+                throw new Error('서버 오류 발생');
+            }
+        } catch (error) {
+            // 예외가 발생하면 별도 alert 없이 그대로 종료하여 서버 에러 페이지 표시
+            console.error('수정 요청 실패:', error);
+        }
+    });
+
 </script>
 </body>
 

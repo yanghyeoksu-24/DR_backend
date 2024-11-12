@@ -311,6 +311,13 @@
         )
     </insert>
 
+    <!-- 환경기여 점수 INSERT (글쓰기 시 10점 추가) -->
+    <insert id="insertScoreByRecipe" parameterType="ScoreCheckDTO">
+        INSERT INTO DR_SCORE (SCORE_NUMBER, USER_NUMBER, SCORE_GET)
+        VALUES (SEQ_SCORE_NUMBER.NEXTVAL, #{userNumber}, #{scoreGet})
+    </insert>
+
+
 
 
     <!-- 찜 추가 -->
@@ -370,6 +377,17 @@
         WHERE RECIPE_NUMBER = #{recipeNumber}
     </update>
 
+<!--    챗봇 레시피 업데이트-->
+    <update id="updateChatBotRecipe" parameterType="ChatBotRecipeUpdateDTO">
+        UPDATE DR_RECIPE
+        SET RECIPE_TITLE = #{recipeTitle} AND RECIPE_TEXT = #{recipeText}
+        WHERE RECIPE_NUMBER = #{recipeNumber}
+    </update>
 
+    <update id="updateChatBotPhoto" parameterType="ChatBotRecipeUpdateDTO">
+        UPDATE DR_PHOTO
+        SET PHOTO_ORIGIANL = #{photoOriginal} AND PHOTO_LOCAL = #{photoLocal} AND PHOTO_SIZE = #{photoSize}
+        WHERE RECIPE_NUMBER = #{recipeNumber}
+    </update>
 
 </mapper>

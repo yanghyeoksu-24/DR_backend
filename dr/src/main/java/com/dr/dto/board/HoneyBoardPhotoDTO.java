@@ -1,5 +1,4 @@
-package com.dr.dto.recipe;
-
+package com.dr.dto.board;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,13 +9,12 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class ChatBotRecipeUpdateDTO{
-    private Long recipeNumber;
-    private String recipeTitle;
-    private String recipeText;
-    private String recipeModifyDate;
+public class HoneyBoardPhotoDTO {
+    private Long photoNumber;
     private String photoOriginal;
     private String photoLocal;
     private String photoSize;
     private String photoUpload;
+    private Long userNumber;
+    private Long boardNumber;
 }

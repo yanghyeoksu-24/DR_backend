@@ -134,6 +134,97 @@
   **3. 회원정보 수정 화면**       
            
   </details>
+
+  <details>
+    <summary>관리자 관련</summary>
+     
+  **1. 관리자 대시보드**<br>
+  ![대시보드](https://github.com/user-attachments/assets/5c5f987d-1bca-4a49-85f0-1fce051ad778)<br>
+  로그인한 관리자의 이름이 왼쪽 상단에 뜨고 , 회원 수 , 신고 수 , 오늘 날짜 , 권리자 신원정보를 제공한다.
+  
+  <br><br><br>
+       
+  **2. 회원 관리**<br>
+  ![회원관리-1](https://github.com/user-attachments/assets/9cd79e20-15f9-4651-b7cd-0aa352ee7bf3)<br>
+  회원의 기본 정보와 현재 상태를 보여준다.<br><br>
+
+  ![회원관리-3](https://github.com/user-attachments/assets/c7834b8e-98bf-4fe1-8df8-1b781de204b5)<br>
+ 닉네임 4번 회원이 7일 정지된 모습<br><br>
+
+ ![회원관리-4](https://github.com/user-attachments/assets/8f87fafb-9190-4636-8091-9e3ef5bcc317)<br>
+ 닉네임 2번 회원이 탈퇴된 모습<br><br> 
+
+![회원관리-2](https://github.com/user-attachments/assets/64484cea-16d6-432f-b383-af32845a5a59)<br>
+ 닉네임 12번 회원을 검색한 모습
+ 
+<br><br><br>
+
+  **3. 게시글 관리** <br>
+  ![게시글 관리-1](https://github.com/user-attachments/assets/d1e5e9b2-7a5d-4244-b5f1-80fe8ff8e389)<br>
+  제목 , 작성자 , 추천수 , 작성일 , 게시글 종류를 보여준다.<br><br>
+
+  ![게시글 관리-2](https://github.com/user-attachments/assets/d475df98-f18d-4cb4-b2b4-183e5171af0e)<br>
+  30번 게시글의 모습<br><br>
+
+ ![게시글 관리-3](https://github.com/user-attachments/assets/a5381bd8-0bc2-4922-a860-ede5701b964f)<br>
+  10번 게시글 삭제된 모습
+
+  <br><br><br>
+
+  **4.레시피 관리** <br> 
+  ![레시피 관리-1](https://github.com/user-attachments/assets/73938b57-00f6-40ce-b43d-605397bcfae9)<br>
+  제목 , 작성자 , 추천수 , 작성일 , 레시피 종류를 보여준다.<br><br>
+
+ ![레시피 관리-2](https://github.com/user-attachments/assets/40fff5d6-47bb-4bf7-a23a-238f68ff0f7e)<br>
+  190번 게시글의 모습<br><br>
+
+ ![레시피 관리-3](https://github.com/user-attachments/assets/8f2a2c6e-f67c-4e06-b9e6-9aceb2db63b7)<br>
+  103번 게시글 삭제된 모습
+
+  <br><br><br>
+
+  **5.댓글 관리** <br>
+ ![댓글 관리-1](https://github.com/user-attachments/assets/a300f3ef-a05a-436e-a63e-cc765f6fef12)<br>
+  댓글내 , 작성자 ,전화번호 , 작성일을 보여준다.<br><br>
+
+ ![댓글 관리-2](https://github.com/user-attachments/assets/87239637-efc0-4cd5-acdb-714d2bdb8663)<br>
+  540번 글의 모습<br><br>
+
+![댓글 관리-3](https://github.com/user-attachments/assets/76bdf724-70a9-4f3a-8f51-af924c5f66fc)<br>
+  546번 댓글 삭제된 모습
+
+  <br><br><br>
+
+   **6.포인트 관리** <br>
+  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+
+  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
+  입력 여부를 확인 후 안내창이 나온다
+
+  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+  <br><br><br>
+
+ **7.신고 관리** <br>
+  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+
+  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
+  입력 여부를 확인 후 안내창이 나온다
+
+  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+  <br><br><br>
+
+   **8.상품 관리** <br>
+  ![로그인1](https://github.com/user-attachments/assets/aadbd937-44df-4bda-b5ff-aa8bd7a4cd63)
+
+  ![로그인2](https://github.com/user-attachments/assets/818e2b4d-b83b-44d2-b076-7ea11b9b4e05)<br>
+  입력 여부를 확인 후 안내창이 나온다
+
+  ![로그인3](https://github.com/user-attachments/assets/661a39cc-e851-4a0d-b2c6-1b133d8f1a96)
+  <br><br><br>
+    
+
+          
+  </details>
      
   
  

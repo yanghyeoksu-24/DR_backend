@@ -90,4 +90,22 @@ public interface BoardMapper {
     //자유게시판 게시글 사진 수정
     void freeBoardUpdatePhoto(FreeBoardUpdateDTO freeBoardUpdateDTO);
 
+    // 꿀팁게시판 게시글 작성
+    void honeyBoardInsertWrite(HoneyBoardWriteDTO honeyBoardWriteDTO);
+
+    // 꿀팁게시판 게시글 사진 등록
+    void honeyBoardInsertPhoto(HoneyBoardPhotoDTO honeyBoardPhotoDTO);
+
+    // 꿀팁게시판 게시글 삭제
+    void honeyBoardDeleteWrite(Long boardNumber);
+
+    // 꿀팁게시판 게시글 사진 삭제
+    void honeyBoardDeletePhoto(Long boardNumber);
+
+    //꿀팁게시판 게시글 수정
+    void honeyBoardUpdateWrite(HoneyBoardUpdateDTO honeyBoardUpdateDTO);
+
+    //꿀팁게시판 게시글 사진 수정
+    void honeyBoardUpdatePhoto(HoneyBoardUpdateDTO honeyBoardUpdateDTO);
+
 }
