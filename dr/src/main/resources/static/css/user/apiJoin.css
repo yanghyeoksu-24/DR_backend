@@ -21,6 +21,11 @@ main {
   margin: 0 auto;
 }
 
+.join-agree{
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .apijoin-title {
   text-align: center;
   margin-top: 100px;
