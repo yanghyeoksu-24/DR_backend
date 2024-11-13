@@ -95,7 +95,7 @@ main{
 .chatBotRecipeList-writer, .chatBotRecipeList-date, .chatBotRecipeList-select{
     /* color: lightgrey; */
     margin-top: 0px;
-    font-size: 10px;
+    font-size: 13px;
 }
 .chatBotRecipeList-listbox {
     width: 260px;
