@@ -11,9 +11,10 @@
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+
 }
 main{
-    height: 1000px;
+    height: 2000px;
 }
 
 /* 나만의 레시피 제목 */
@@ -103,9 +104,11 @@ main{
     overflow: hidden;
 }
 
-.myRecipeList-listbox img{
-    width: 260px;
+.aaaaaaa{
+    width: 230px;
+    height: 180px;
     border-radius: 5px;
+    overflow: hidden;
 }
 
 
