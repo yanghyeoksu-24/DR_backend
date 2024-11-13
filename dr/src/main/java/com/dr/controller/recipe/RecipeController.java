@@ -292,7 +292,17 @@ public class RecipeController {
                                         @SessionAttribute(value = "userNumber",required = false) Long userNumber) {
         myRecipeGoodDTO.setUserNumber(userNumber);
         recipeService.addGood(myRecipeGoodDTO);
+
+        // 4. 환경기여 점수 5점 추가
+        ScoreCheckDTO scoreCheckDTO = new ScoreCheckDTO();
+        scoreCheckDTO.setUserNumber(userNumber);  // 사용자 번호 설정
+        scoreCheckDTO.setScoreGet(5L);           // 5점 설정
+
+        recipeService.insertScorerecommand(scoreCheckDTO);  // 환경기여 점수 추가
+
         return new ResponseEntity<>(HttpStatus.OK);
+
+
     }
 
     // 나만의 레시피추천 수 감소
@@ -301,6 +311,12 @@ public class RecipeController {
                                            @SessionAttribute(value = "userNumber",required = false) Long userNumber) {
         myRecipeGoodDTO.setUserNumber(userNumber);
         recipeService.removeGood(myRecipeGoodDTO);
+
+        // 점수 차감: 추천이 해제된 경우 -5점 차감
+        ScoreCheckDTO scoreCheckDTO = new ScoreCheckDTO();
+        scoreCheckDTO.setUserNumber(userNumber);  // 유저 번호 설정
+        recipeService.deleteScorerecommand(scoreCheckDTO);  // 점수 차감 메서드 호출
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -322,6 +338,7 @@ public class RecipeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //신고페이지 이동
     @GetMapping("/report")
     public String recipeReportPage(@RequestParam("recipeNumber") Long recipeNumber,
                                    @RequestParam(value = "replyNumber", required = false) Long replyNumber,
@@ -331,14 +348,13 @@ public class RecipeController {
         return "/recipe/report";
     }
 
-
+    //신고 완료 후 페이지 이동
     @PostMapping("/reportOk")
     public String recipeReportOk(@RequestParam("recipeNumber") Long recipeNumber,
                                  @RequestParam(value = "replyNumber", required = false) Long replyNumber,
                                  @SessionAttribute(value = "userNumber", required = false) Long userNumber,
                                  @RequestParam("reason") String reason,
-                                 @RequestParam(value = "otherReasonText", required = false) String otherReasonText
-    ) {
+                                 @RequestParam(value = "otherReasonText", required = false) String otherReasonText) {
 
         ChatBotRecipeDetailDTO chatBotRecipeDetailDTO = recipeService.findChatBotRecipeDetail(recipeNumber);
         RecipeReportDTO recipeReportDTO = new RecipeReportDTO();
@@ -359,14 +375,14 @@ public class RecipeController {
             recipeReportDTO.setReplyNumber(replyNumber);
         }
 
-        // 3. 유저넘버 지정
+        // 3. 유저 넘버 지정
         recipeReportDTO.setUserNumber(userNumber);
 
         // 신고 처리
         recipeService.report(recipeReportDTO);
 
         // 4. 리디렉션 처리
-        if ("챗봇레시피".equals(chatBotRecipeDetailDTO.getRecipeType())) {
+        if (chatBotRecipeDetailDTO != null && "챗봇레시피".equals(chatBotRecipeDetailDTO.getRecipeType())) {
             return "redirect:/recipe/chatBotDetailPage?recipeNumber=" + recipeNumber;
         } else {
             return "redirect:/recipe/myDetailPage?recipeNumber=" + recipeNumber;

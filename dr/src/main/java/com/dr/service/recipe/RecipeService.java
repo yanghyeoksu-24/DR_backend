@@ -145,6 +145,16 @@ public class RecipeService {
         recipeMapper.insertScoreByRecipe(scoreCheckDTO);  // DB에 점수 정보 저장
     }
 
+    //나만의 레시피 추천받았을 시 점수 5점추가
+    public void insertScorerecommand(ScoreCheckDTO scoreCheckDTO) {
+        scoreCheckDTO.setScoreGet(5L);  // 점수를 5점으로 설정
+        recipeMapper.insertScorerecommand(scoreCheckDTO);  // DB에 점수 정보 저장
+    }
+
+    //나만의 레시피 추천해제 시 점수 5점 제거
+    public void deleteScorerecommand(ScoreCheckDTO scoreCheckDTO) {
+        recipeMapper.deleteScorerecommand(scoreCheckDTO);  // DB에 점수 정보 저장
+    }
 
     // 나만의 레시피 추천 수 증가
     public void addGood(MyRecipeGoodDTO myRecipeGoodDTO) {
@@ -161,7 +171,7 @@ public class RecipeService {
         recipeMapper.decreaseGoodCount(myRecipeGoodDTO);
     }
 
-    // 나만의 레시피 추천 수 감소
+    // 챗봇 레시피 추천 수 감소
     public void ChatBotRemoveGood(ChatBotRecipeGoodDTO chatBotRecipeGoodDTO) {
         recipeMapper.ChatBotdecreaseGoodCount(chatBotRecipeGoodDTO);
     }
@@ -176,7 +186,7 @@ public class RecipeService {
         recipeMapper.removeSteam(recipeSteamDTO);
     }
 
-    // 신고
+    // 신고를 위한 메서드
     public void report(RecipeReportDTO reportDTO) {
         recipeMapper.report(reportDTO);
     }

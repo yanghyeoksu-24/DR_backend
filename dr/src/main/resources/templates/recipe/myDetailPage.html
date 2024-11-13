@@ -62,7 +62,7 @@
                                 <button id="updateButton" class="myDetailPage-buttonOne">수정</button>
                             </form>
 
-                            <form th:action="@{/recipe/deleteRecipe}" method="post">
+                            <form th:action="@{/recipe/deleteRecipe}" method="post" onsubmit="return confirmDelete()">
                                 <input type="hidden" name="recipeNumber2" id="recipeNumber2"
                                        th:value="${recipeDetail.recipeNumber}">
                                 <button id="deleteButton" class="myDetailPage-buttonOne">삭제</button>
