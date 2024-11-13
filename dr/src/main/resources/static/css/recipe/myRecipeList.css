@@ -87,6 +87,7 @@ main{
     gap: 20px;
     width: 1150px;
     align-items: center;
+    margin-right: 0px;
 }
 .myRecipeList-foodTitle{
     margin-bottom: 0px;
@@ -96,7 +97,7 @@ main{
 .myRecipeList-writer, .myRecipeList-date, .myRecipeList-select{
     /* color: lightgrey; */
     margin-top: 0px;
-    font-size: 10px;
+    font-size: 13px;
 }
 .myRecipeList-listbox {
     width: 260px;
