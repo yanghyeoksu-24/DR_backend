@@ -48,7 +48,8 @@
             U.USER_NICKNAME,                                           -- 작성자
             P.PHOTO_LOCAL,                                             -- 작성자 프로필 사진 경로
             COUNT(G.GOOD_NUMBER) AS goodCount,                         -- 좋아요 수
-            R.USER_NUMBER                                              -- 작성자 번호
+            R.USER_NUMBER,                                              -- 작성자 번호
+            U.PROFILE_PIC
         FROM
             DR_RECIPE R
                 JOIN
@@ -74,7 +75,8 @@
             R.RECIPE_WRITE_DATE,
             U.USER_NICKNAME,
             P.PHOTO_LOCAL,
-            R.USER_NUMBER
+            R.USER_NUMBER,
+            U.PROFILE_PIC
     </select>
 
 
@@ -103,7 +105,8 @@
                RP.REPLY_MODIFY_DATE AS replyModifyDate,
                RP.REPLY_TEXT        AS replyText,
 --                P.PHOTO_ORIGINAL    AS photoOriginal,
-               P.PHOTO_LOCAL        AS photoLocal
+               P.PHOTO_LOCAL        AS photoLocal,
+               U.PROFILE_PIC
         FROM DR_REPLY RP
                  JOIN
              DR_USER U ON RP.USER_NUMBER = U.USER_NUMBER
@@ -165,7 +168,7 @@
                U.USER_NICKNAME                            AS userNickName,
                TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
                P.PHOTO_LOCAL                              AS photoLocal,
-               P.PHOTO_ORIGINAL
+               P.PHOTO_ORIGINAL,
                COUNT(G.GOOD_NUMBER)                       AS goodCount
         FROM DR_RECIPE R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
@@ -186,7 +189,8 @@
                U.USER_NICKNAME,                                               -- 작성자
                P.PHOTO_LOCAL,                                                 -- 작성자 프로필 사진
                COUNT(G.GOOD_NUMBER)                       AS goodCount,       -- 좋아요 수
-               R.USER_NUMBER
+               R.USER_NUMBER,
+               U.PROFILE_PIC
         FROM DR_RECIPE R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
                  LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
@@ -200,7 +204,8 @@
                  R.RECIPE_WRITE_DATE,
                  U.USER_NICKNAME,
                  P.PHOTO_LOCAL,
-                 R.USER_NUMBER
+                 R.USER_NUMBER,
+                 U.PROFILE_PIC
     </select>
 
     <!--   챗봇 레시피 상세페이지 추천 수 증가-->
@@ -228,7 +233,8 @@
                RP.REPLY_MODIFY_DATE AS replyModifyDate,
                RP.REPLY_TEXT        AS replyText,
 --                P.PHOTO_ORIGINAL    AS photoOriginal,
-               P.PHOTO_LOCAL        AS photoLocal
+               P.PHOTO_LOCAL        AS photoLocal,
+               U.PROFILE_PIC
         FROM DR_REPLY RP
                  JOIN
              DR_USER U ON RP.USER_NUMBER = U.USER_NUMBER

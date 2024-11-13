@@ -19,5 +19,6 @@ public class ChatBotRecipeCommentDTO {
     private Long recipeNumber;              // 레시피 번호 (ID 대신 사용)
     private Long userNumber;
     private String userNickName;            // 작성자
+    private String profilePic;
 
 }
