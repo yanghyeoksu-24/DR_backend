@@ -61,7 +61,7 @@
                                 <button id="updateButton" class="chatBotDetailPage-buttonOne">수정</button>
                             </form>
 
-                            <form th:action="@{/recipe/deleteChatBotRecipe}" method="post">
+                            <form th:action="@{/recipe/deleteChatBotRecipe}" method="post" onsubmit="return confirmDelete()">
                                 <input type="hidden" name="recipeNumber5" id="recipeNumber5"
                                        th:value="${chatBotRecipeDetail.recipeNumber}">
                                 <button id="deleteButton" class="chatBotDetailPage-buttonOne">삭제</button>

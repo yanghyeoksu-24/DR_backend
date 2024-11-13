@@ -8,13 +8,14 @@
         U.USER_NICKNAME AS userNickName,
         TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
         P.PHOTO_LOCAL AS photoLocal,
+        P.PHOTO_ORIGINAL AS photoOriginal,
         COUNT(G.GOOD_NUMBER) AS goodCount -- 추천수 조회
         FROM DR_RECIPE R
         JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
         LEFT JOIN DR_PHOTO P ON R.RECIPE_NUMBER = P.RECIPE_NUMBER
         LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '나만의레시피' -- 나만의 레시피 필터링
-        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
+        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL,P.PHOTO_ORIGINAL
         ORDER BY R.RECIPE_WRITE_DATE DESC -- 최신순 정렬
     </select>
 
@@ -25,13 +26,14 @@
                U.USER_NICKNAME                            AS userNickName,
                TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
                P.PHOTO_LOCAL                              AS photoLocal,
+               P.PHOTO_ORIGINAL AS photoOriginal,
                COUNT(G.GOOD_NUMBER)                       AS goodCount
         FROM DR_RECIPE R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
                  LEFT JOIN DR_PHOTO P ON R.RECIPE_NUMBER = P.RECIPE_NUMBER
                  LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '나만의레시피'
-        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
+        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL,P.PHOTO_ORIGINAL
         ORDER BY goodCount DESC -- goodCount를 기준으로 정렬
     </select>
 
@@ -145,13 +147,14 @@
         U.USER_NICKNAME AS userNickName,
         TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
         P.PHOTO_LOCAL AS photoLocal,
+        P.PHOTO_ORIGINAL AS photoOriginal,
         COUNT(G.GOOD_NUMBER) AS goodCount -- 추천수 조회
         FROM DR_RECIPE R
         JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
         LEFT JOIN DR_PHOTO P ON R.RECIPE_NUMBER = P.RECIPE_NUMBER
         LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '챗봇레시피' -- 나만의 레시피 필터링
-        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
+        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL,P.PHOTO_ORIGINAL
         ORDER BY R.RECIPE_WRITE_DATE DESC-- 최신순 정렬
     </select>
 
@@ -162,13 +165,14 @@
                U.USER_NICKNAME                            AS userNickName,
                TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
                P.PHOTO_LOCAL                              AS photoLocal,
+               P.PHOTO_ORIGINAL
                COUNT(G.GOOD_NUMBER)                       AS goodCount
         FROM DR_RECIPE R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
                  LEFT JOIN DR_PHOTO P ON R.RECIPE_NUMBER = P.RECIPE_NUMBER
                  LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '챗봇레시피'
-        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
+        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL,P.PHOTO_ORIGINAL
         ORDER BY goodCount DESC -- goodCount를 기준으로 정렬
     </select>
 
@@ -317,8 +321,23 @@
         VALUES (SEQ_SCORE_NUMBER.NEXTVAL, #{userNumber}, #{scoreGet})
     </insert>
 
+<!--    나만의 레시피 추천받았을 시 점수 5점추가-->
+    <insert id="insertScorerecommand" parameterType="ScoreCheckDTO">
+        INSERT INTO DR_SCORE (SCORE_NUMBER, USER_NUMBER, SCORE_GET)
+        VALUES (SEQ_SCORE_NUMBER.NEXTVAL, #{userNumber}, #{scoreGet})
+    </insert>
 
-
+<!--     나만의 레시피 추천해제 시 점수 5점 제거 (삭제)-->
+    <delete id="deleteScorerecommand" parameterType="ScoreCheckDTO">
+        DELETE FROM DR_SCORE
+        WHERE SCORE_NUMBER = (
+            SELECT MAX(SCORE_NUMBER)
+            FROM DR_SCORE
+            WHERE USER_NUMBER = #{userNumber} AND SCORE_GET = 5
+        )
+          AND USER_NUMBER = #{userNumber}
+          AND SCORE_GET = 5
+    </delete>
 
     <!-- 찜 추가 -->
     <insert id="addSteam" parameterType="RecipeSteamDTO">
@@ -337,6 +356,7 @@
           AND USER_NUMBER = #{userNumber}
     </delete>
 
+<!--    신고페이지-->
     <insert id="report" parameterType="RecipeReportDTO">
         <selectKey keyProperty="sirenNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_SIREN_NUMBER.nextval FROM DUAL
