@@ -20,8 +20,8 @@ import java.util.UUID;
 public class FileApiController {    
 
     // 이미지가 저장될 디렉토리 경로 설정
-//    private final String uploadDir = Paths.get("C:", "backend", "SpringBoot", "Spring Project", "dr", "src", "main", "resources", "static", "image", "photo").toString();
-    private final String uploadDir = Paths.get("C:", "upload").toString();
+    private final String uploadDir = Paths.get("C:", "DR", "dr", "src", "main", "resources", "static", "image", "photo").toString();
+//    private final String uploadDir = Paths.get("C:", "upload").toString();
     // 이미지 업로드 처리 후 JSON 응답 보내기
     @PostMapping("/image-upload")
     public ResponseEntity<Map<String, Object>> uploadEditorImage(@RequestParam("image") final MultipartFile image) {
