@@ -42,7 +42,7 @@ public class SecurityConfig {
                     }
                     // 카카오 로그아웃 URL로 리다이렉트
                     String clientId = "abf507166ba07ff6370d66306018dbcd";
-                    String logoutRedirectUri = "http://localhost:9000/main";
+                    String logoutRedirectUri = "http://localhost:8888/main";
                     String kakaoLogoutUrl = "https://kauth.kakao.com/oauth/logout?client_id=" +
                             clientId + "&logout_redirect_uri=" + logoutRedirectUri;
                     response.sendRedirect(kakaoLogoutUrl);
