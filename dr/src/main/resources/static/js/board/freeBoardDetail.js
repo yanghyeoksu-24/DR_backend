@@ -172,3 +172,8 @@ $(function () {
     // 처음 로드 시 첫 번째 페이지의 항목만 보여주기
     container.pagination('goToPage', 1);
 });
+
+
+function confirmDelete() {
+    return confirm("정말 삭제하시겠습니까?");
+}
