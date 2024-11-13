@@ -57,7 +57,7 @@
                         </form>
 
 
-                        <form th:action="@{/board/deleteHoneyBoard}" method="post">
+                        <form th:action="@{/board/deleteHoneyBoard}" method="post" onsubmit="return confirmDelete()">
                             <input type="hidden" name="boardNumber2" id="boardNumber2"
                                    th:value="${honeyBoardDetail.boardNumber}">
                             <button id="deleteButton" class="honeyBoardDetail-buttonOne">삭제</button>

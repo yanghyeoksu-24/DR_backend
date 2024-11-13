@@ -73,7 +73,7 @@ public class BoardController {
         boardService.report(boardReportDTO);
 
         // 4. 리디렉션 처리
-        if ("자유게시판".equals(freeBoardDetailDTO.getBoardType())) {
+        if (freeBoardDetailDTO != null && "자유게시판".equals(freeBoardDetailDTO.getBoardType())) {
             return "redirect:/board/freeBoardDetail?boardNumber=" + boardNumber;
         } else {
             return "redirect:/board/honeyBoardDetail?boardNumber=" + boardNumber;
@@ -472,9 +472,6 @@ public class BoardController {
                                    Model model) {
         // 필요한 로직 처리 (예: 데이터베이스에서 게시글 정보 조회 등)
 
-        System.out.println("Received boardNumber: " + boardNumber);
-        System.out.println("Received boardTitle: " + boardTitle);
-        System.out.println("Received boardText: " + boardText);
 
         model.addAttribute("boardNumber", boardNumber);
         model.addAttribute("boardTitle", boardTitle);
