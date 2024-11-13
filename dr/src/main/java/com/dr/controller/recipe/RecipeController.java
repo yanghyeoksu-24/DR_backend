@@ -389,7 +389,6 @@ public class RecipeController {
         }
     }
 
-
     // 찜 추가 메서드 (좋아요)
     @PostMapping("/like")
     public ResponseEntity<Void> addLike(
