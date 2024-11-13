@@ -337,8 +337,7 @@ public class RecipeController {
                                  @RequestParam(value = "replyNumber", required = false) Long replyNumber,
                                  @SessionAttribute(value = "userNumber", required = false) Long userNumber,
                                  @RequestParam("reason") String reason,
-                                 @RequestParam(value = "otherReasonText", required = false) String otherReasonText
-    ) {
+                                 @RequestParam(value = "otherReasonText", required = false) String otherReasonText) {
 
         ChatBotRecipeDetailDTO chatBotRecipeDetailDTO = recipeService.findChatBotRecipeDetail(recipeNumber);
         RecipeReportDTO recipeReportDTO = new RecipeReportDTO();
@@ -359,19 +358,20 @@ public class RecipeController {
             recipeReportDTO.setReplyNumber(replyNumber);
         }
 
-        // 3. 유저넘버 지정
+        // 3. 유저 넘버 지정
         recipeReportDTO.setUserNumber(userNumber);
 
         // 신고 처리
         recipeService.report(recipeReportDTO);
 
         // 4. 리디렉션 처리
-        if ("챗봇레시피".equals(chatBotRecipeDetailDTO.getRecipeType())) {
+        if (chatBotRecipeDetailDTO != null && "챗봇레시피".equals(chatBotRecipeDetailDTO.getRecipeType())) {
             return "redirect:/recipe/chatBotDetailPage?recipeNumber=" + recipeNumber;
         } else {
             return "redirect:/recipe/myDetailPage?recipeNumber=" + recipeNumber;
         }
     }
+
 
     // 찜 추가 메서드 (좋아요)
     @PostMapping("/like")

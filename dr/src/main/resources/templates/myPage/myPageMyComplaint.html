@@ -66,14 +66,7 @@
                         <li>
                             <span class="myPage-myComplaintTitleNumberZero" th:text="${start.index + 1}"></span>
                             <div class="vertical-barSecond"></div>
-
-                            <!-- 제목에 링크 추가 -->
-                            <a th:href="${siren.sirenType == '레시피' ? '/recipe/chatBotDetailPage?recipeNumber=' + siren.recipeNumber :
-                        siren.sirenType == '게시글' ? '/board/freeBoardDetail?boardNumber=' + siren.boardNumber :
-                        siren.sirenType == '댓글' ? '/board/freeBoardDetail?boardNumber=' + siren.boardNumber :
-                        ''}"
-                               class="myPage-myComplaintTitleContentOne" th:text="${siren.titleAndContent}"></a>
-
+                            <div class= "myPage-myComplaintTitleContentOne" th:text="${siren.titleAndContent}"></div>
                             <div class="vertical-barSecond"></div>
                             <span class="myPage-myComplaintTitleContentTypeTwo" th:text="${siren.sirenType}"></span>
                             <div class="vertical-barSecond"></div>
@@ -83,10 +76,9 @@
                         </li>
                     </ul>
                 </div>
-
             </div>
         </div>
-        <!-- 페이지 네이션 -->
+
         <div id="pagination"></div>
     </main>
 <!-- 푸터 -->
