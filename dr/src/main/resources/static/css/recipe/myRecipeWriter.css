@@ -51,6 +51,7 @@ main{
     background-color: #EBAA39;
     border: none;
     color: white;
+    cursor: pointer;
   }
 
   .myRecipeWriter-inputContainer {
