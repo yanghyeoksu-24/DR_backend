@@ -8,13 +8,14 @@
         U.USER_NICKNAME AS userNickName,
         TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
         P.PHOTO_LOCAL AS photoLocal,
+        P.PHOTO_ORIGINAL AS photoOriginal,
         COUNT(G.GOOD_NUMBER) AS goodCount -- 추천수 조회
         FROM DR_RECIPE R
         JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
         LEFT JOIN DR_PHOTO P ON R.RECIPE_NUMBER = P.RECIPE_NUMBER
         LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '나만의레시피' -- 나만의 레시피 필터링
-        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
+        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL,P.PHOTO_ORIGINAL
         ORDER BY R.RECIPE_WRITE_DATE DESC -- 최신순 정렬
     </select>
 
@@ -25,13 +26,14 @@
                U.USER_NICKNAME                            AS userNickName,
                TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
                P.PHOTO_LOCAL                              AS photoLocal,
+               P.PHOTO_ORIGINAL AS photoOriginal,
                COUNT(G.GOOD_NUMBER)                       AS goodCount
         FROM DR_RECIPE R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
                  LEFT JOIN DR_PHOTO P ON R.RECIPE_NUMBER = P.RECIPE_NUMBER
                  LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '나만의레시피'
-        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
+        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL,P.PHOTO_ORIGINAL
         ORDER BY goodCount DESC -- goodCount를 기준으로 정렬
     </select>
 
@@ -145,13 +147,14 @@
         U.USER_NICKNAME AS userNickName,
         TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
         P.PHOTO_LOCAL AS photoLocal,
+        P.PHOTO_ORIGINAL AS photoOriginal,
         COUNT(G.GOOD_NUMBER) AS goodCount -- 추천수 조회
         FROM DR_RECIPE R
         JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
         LEFT JOIN DR_PHOTO P ON R.RECIPE_NUMBER = P.RECIPE_NUMBER
         LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '챗봇레시피' -- 나만의 레시피 필터링
-        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
+        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL,P.PHOTO_ORIGINAL
         ORDER BY R.RECIPE_WRITE_DATE DESC-- 최신순 정렬
     </select>
 
@@ -162,13 +165,14 @@
                U.USER_NICKNAME                            AS userNickName,
                TO_CHAR(R.RECIPE_WRITE_DATE, 'YYYY-MM-DD') AS recipeWriteDate,
                P.PHOTO_LOCAL                              AS photoLocal,
+               P.PHOTO_ORIGINAL
                COUNT(G.GOOD_NUMBER)                       AS goodCount
         FROM DR_RECIPE R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
                  LEFT JOIN DR_PHOTO P ON R.RECIPE_NUMBER = P.RECIPE_NUMBER
                  LEFT JOIN DR_GOOD G ON R.RECIPE_NUMBER = G.RECIPE_NUMBER
         WHERE R.RECIPE_TYPE = '챗봇레시피'
-        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL
+        GROUP BY R.RECIPE_NUMBER, R.RECIPE_TITLE, U.USER_NICKNAME, R.RECIPE_WRITE_DATE, P.PHOTO_LOCAL,P.PHOTO_ORIGINAL
         ORDER BY goodCount DESC -- goodCount를 기준으로 정렬
     </select>
 
