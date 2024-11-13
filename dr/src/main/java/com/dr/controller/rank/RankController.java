@@ -41,24 +41,7 @@ public class RankController {
     }
 
 
-    @Scheduled(cron = "0 30 8 * * *")  // UTC 기준으로 08:05
-    public void givePointsToTop5() {
-        System.out.println("시작조차 안되는거니?");
-        // 1등부터 5등까지의 사용자 조회
 
-        List<RankDTO> top5RankList = rankMapper.Top5Rank();
-
-        // 각 사용자에게 200 포인트 적립
-        for (RankDTO user : top5RankList) {
-            PointCheckDTO pointCheckDTO = new PointCheckDTO();
-            pointCheckDTO.setUserNumber((long) user.getUserNumber());
-            pointCheckDTO.setPointGet(200);
-            pointCheckDTO.setPointNote("랭킹");
-
-            // 포인트 적립
-            rankMapper.insertPoint(pointCheckDTO);
-        }
-    }
 
 
 }
