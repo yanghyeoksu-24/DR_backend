@@ -51,6 +51,7 @@ $(function () {
 document.getElementById('memberOut').addEventListener('click', function() {
     // 체크된 체크박스들의 value 값 수집
     const selectedBoardNumbers = Array.from(document.querySelectorAll('#manage-memberUl input[type="checkbox"]:checked'))
+        .filter(checkbox => checkbox.value !== "전체선택") // 전체 선택 체크박스를 제외
         .map(checkbox => checkbox.value);
 
     if (selectedBoardNumbers.length === 0) {
