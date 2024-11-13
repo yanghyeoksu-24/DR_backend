@@ -13,7 +13,7 @@ public interface RecipeMapper {
     // 나만의 레시피 목록 조회 (최신순)
     List<MyRecipeListDTO> selectAllPages();
 
-    // 나만의 레시피 목록 조회 (추천순)
+    // 나만의 레시피 목록 조회 (추천순)v
     List<MyRecipeListDTO> selectRecipesGood();
 
     //    챗봇레시피 목록 조회 (최신순)
@@ -68,6 +68,11 @@ public interface RecipeMapper {
     // 챗봇 레시피 글 작성시, 환경기여 점수 10점
     void insertScoreByRecipe(ScoreCheckDTO scoreCheckDTO);
 
+    //나만의 레시피 추천 1회당 환경기여 점수 5점
+    void insertScorerecommand(ScoreCheckDTO scoreCheckDTO);
+
+    // 나만의 레시피 추천 해제 시 환경기여 점수 5점 감점
+    void deleteScorerecommand(ScoreCheckDTO scoreCheckDTO);
 
     // 나만의 레시피 추천 수 증가
     void increaseGoodCount(MyRecipeGoodDTO myRecipeGoodDTO);
@@ -87,6 +92,7 @@ public interface RecipeMapper {
     // 찜 삭제 메서드
     void removeSteam(RecipeSteamDTO recipeSteamDTO);
 
+    //신고를 위한 메서드
     void report(RecipeReportDTO recipeReportDTO);
 
 

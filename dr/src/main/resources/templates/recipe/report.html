@@ -16,7 +16,7 @@
 </head>
 <body>
 <header th:replace="~{/fragment/header :: header}"></header>
-    <main>
+<main>
     <div class="report-mainContainer">
         <div class="report-mainBox">
             <!-- 제목 부분 -->
@@ -39,7 +39,7 @@
                     <label for="falseInfo">
                         <input type="radio" name="reason" value="허위 광고" id="falseInfo"> <span class="report-text">허위 정보 내용을 포함하고 있습니다.</span>
                     </label><br>
-                    
+
                     <!-- 기타 체크박스 및 입력 필드 -->
                     <label for="other"><input type="radio" name="reason" value="기타" id="other" > <span class="report-text">기타</span></label>
                     <input type="text" name="otherReasonText" class="report-inputText" placeholder="신고 내용을 작성해주세요">

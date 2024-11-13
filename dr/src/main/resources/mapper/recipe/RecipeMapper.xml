@@ -317,8 +317,23 @@
         VALUES (SEQ_SCORE_NUMBER.NEXTVAL, #{userNumber}, #{scoreGet})
     </insert>
 
+<!--    나만의 레시피 추천받았을 시 점수 5점추가-->
+    <insert id="insertScorerecommand" parameterType="ScoreCheckDTO">
+        INSERT INTO DR_SCORE (SCORE_NUMBER, USER_NUMBER, SCORE_GET)
+        VALUES (SEQ_SCORE_NUMBER.NEXTVAL, #{userNumber}, #{scoreGet})
+    </insert>
 
-
+<!--     나만의 레시피 추천해제 시 점수 5점 제거 (삭제)-->
+    <delete id="deleteScorerecommand" parameterType="ScoreCheckDTO">
+        DELETE FROM DR_SCORE
+        WHERE SCORE_NUMBER = (
+            SELECT MAX(SCORE_NUMBER)
+            FROM DR_SCORE
+            WHERE USER_NUMBER = #{userNumber} AND SCORE_GET = 5
+        )
+          AND USER_NUMBER = #{userNumber}
+          AND SCORE_GET = 5
+    </delete>
 
     <!-- 찜 추가 -->
     <insert id="addSteam" parameterType="RecipeSteamDTO">
@@ -337,6 +352,7 @@
           AND USER_NUMBER = #{userNumber}
     </delete>
 
+<!--    신고페이지-->
     <insert id="report" parameterType="RecipeReportDTO">
         <selectKey keyProperty="sirenNumber" resultType="Long" order="BEFORE">
             SELECT SEQ_SIREN_NUMBER.nextval FROM DUAL

@@ -208,4 +208,15 @@ $(function () {
   container.pagination('goToPage', 1);
 });
 
+function confirmDelete() {
+  // 첫 번째 알림창: 삭제 확인
+  if (confirm("챗봇 레시피를 삭제하시겠습니까?")) {
+    // 두 번째 알림창: 삭제 완료 메시지
+    alert("챗봇레시피가 삭제되었습니다.");
+    return true; // 폼 제출 진행
+  } else {
+    return false; // 폼 제출 중단
+  }
+}
+
 

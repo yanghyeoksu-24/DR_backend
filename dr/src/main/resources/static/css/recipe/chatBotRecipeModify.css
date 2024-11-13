@@ -11,9 +11,10 @@
     justify-content: center; 
     align-items: center;     
     margin: 0 auto;
+    height: 900px;
 }
 main{
-    margin-top: 100px;
+    margin-top: 50px;
     margin-bottom: 30px;
 }
 
@@ -54,26 +55,31 @@ main{
     margin-top: 40px;
     display: flex;
     justify-content: flex-end;
+    position: relative;
   }
   .chatBotRecipeModify-writeButton{
-    width: 100px;
-    height: 50px;
-    border-radius: 5px;
-    background-color: #ebaa39;
-    border: none;
-    color: white;
-    /* margin-right: 10px; */
-    cursor: pointer;
+      width: 100px;
+      height: 50px;
+      border-radius: 5px;
+      background-color: #ebaa39;
+      border: none;
+      color: white;
+      cursor: pointer;
+      position: absolute;
+      right: 120px;
+      margin-top: 40px;
   }
   .chatBotRecipeModify-cancelButton{
-    width: 100px;
-    height: 50px;
-    border-radius: 5px;
-    background-color: #ebaa39;
-    border: none;
-    color: white;
-    margin-right: 10px;
-    cursor: pointer;
+      width: 100px;
+      height: 50px;
+      border-radius: 5px;
+      background-color: #ebaa39;
+      border: none;
+      color: white;
+      margin-right: 10px;
+      cursor: pointer;
+      position: absolute;
+      margin-bottom: 50px;
   }
 
   .chatBotRecipeModify-inputContainer {

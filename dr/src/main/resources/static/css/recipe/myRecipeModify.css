@@ -11,9 +11,10 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  height: 800px;
 }
 main {
-  margin-top: 100px;
+  margin-top: 50px;
   margin-bottom: 30px;
 }
 
@@ -56,6 +57,7 @@ main {
   margin-top: 40px;
   display: flex;
   justify-content: flex-end;
+  position: relative;
 }
 .myRecipeModify-writeButton {
   width: 100px;
@@ -65,7 +67,10 @@ main {
   border: none;
   color: white;
   cursor: pointer;
-  /* margin-right: 10px; */
+  position: absolute;
+  right: 120px;
+  margin-top: 40px;
+
 }
 .myRecipeModify-cancelButton {
   width: 100px;
@@ -76,6 +81,8 @@ main {
   color: white;
   margin-right: 10px;
   cursor: pointer;
+  position: absolute;
+  margin-bottom: 50px;
 }
 
 .myRecipeModify-inputContainer {
