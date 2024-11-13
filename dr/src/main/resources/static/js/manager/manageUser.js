@@ -52,6 +52,7 @@
   document.getElementById('memberOut').addEventListener('click', function() {
     // 관리 페이지의 체크된 체크박스들을 찾아 그 value 값(사용자 번호)을 배열로 수집
     const selectedUserNumbers = Array.from(document.querySelectorAll('#manage-memberUl input[type="checkbox"]:checked'))
+        .filter(checkbox => checkbox.value !== "전체선택") // 전체 선택 체크박스를 제외
         .map(checkbox => checkbox.value); // 체크된 체크박스의 value 값만 추출하여 배열로 만듦
 
     // 선택된 사용자가 없을 경우 경고 메시지를 출력하고 함수 종료
@@ -83,12 +84,20 @@
   document.getElementById('memberPause').addEventListener('click', function() {
     // 체크된 체크박스들의 value 값 수집
     const selectedUserNumbers = Array.from(document.querySelectorAll('#manage-memberUl input[type="checkbox"]:checked'))
+        .filter(checkbox => checkbox.value !== "전체선택") // 전체 선택 체크박스를 제외
         .map(checkbox => checkbox.value);
 
     if (selectedUserNumbers.length === 0) {
       alert("정지할 사용자를 선택하세요.");
       return;
     }
+
+    document.getElementById('title-check').addEventListener('change', function() {
+      const checkboxes = document.querySelectorAll('#manage-memberUl input[type="checkbox"]');
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = this.checked; // 전체 선택 체크박스의 상태에 따라 개별 체크박스 체크
+      });
+    });
 
     // AJAX 요청을 통해 체크된 userNumber 값들을 서버에 전송
     $.ajax({
