@@ -222,8 +222,6 @@ public class MyPageController {
             @SessionAttribute(value = "userNumber", required = false) Long userNumber,
             @RequestParam(value = "date", required = false) String date) {
 
-        System.out.println("출석 체크 요청 받음, userNumber: " + userNumber + ", date: " + date);
-
         try {
             boolean isCheckedIn = myPageService.todayCheck(userNumber);
 
