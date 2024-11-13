@@ -57,7 +57,7 @@
                             <button id="updateButton" class="freeBoardDetail-buttonOne">수정</button>
                         </form>
 
-                        <form th:action="@{/board/deleteFreeBoard}" method="post">
+                        <form th:action="@{/board/deleteFreeBoard}" method="post" onsubmit="return confirmDelete()">
                             <input type="hidden" name="boardNumber2" id="boardNumber2"
                                    th:value="${freeBoardDetail.boardNumber}">
                             <button id="deleteButton" class="freeBoardDetail-buttonOne">삭제</button>

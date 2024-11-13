@@ -338,7 +338,7 @@
 
     <update id="honeyBoardUpdatePhoto" parameterType="HoneyBoardUpdateDTO">
         UPDATE DR_PHOTO
-        SET PHOTO_ORIGINAL = #{photoOriginal}, PHOTO_LOCAL = #{photoLocal} AND PHOTO_SIZE = #{photoSize}
+        SET PHOTO_ORIGINAL = #{photoOriginal}, PHOTO_LOCAL = #{photoLocal} , PHOTO_SIZE = #{photoSize}
         WHERE BOARD_NUMBER = #{boardNumber}
     </update>
 
