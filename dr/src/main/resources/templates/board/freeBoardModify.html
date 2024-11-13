@@ -27,10 +27,10 @@
                 <span class="freeboardModify-text1">자유게시판</span>
                 <span class="freeboardModify-text2">글 수정</span>
             </div>
-
+            <br><br>
             <div class="freeboardModify-inputContainer">
                 <!-- 글 번호와 기존 값을 hidden으로 전달 -->
-                <input type="hidden" id="boardNumberHidden" th:value="${boardNumber}">
+                <input type="hidden" id="boardNumberHidden" name="boardNumber3" th:value="${boardNumber}">
                 <input type="text" class="freeboardModify-titleInput" id="boardTitle"
                        th:value="${boardTitle}" placeholder="제목을 입력하세요" required>
             </div>
@@ -120,13 +120,27 @@
     };
 
     document.getElementById('updateButton').addEventListener('click', function (event) {
-        // 제목과 에디터 내용을 hidden 필드에 저장
-        document.getElementById('hiddenBoardTitle').value = document.getElementById('boardTitle').value;
-        document.getElementById('hiddenBoardText').value = editor.getHTML();
+        // 제목과 에디터 내용 가져오기
+        const title = document.getElementById('boardTitle').value.trim();
+        const content = editor.getHTML().trim();
 
-        // 폼 제출
-        document.getElementById('freeBoardModifyForm').submit();
+        // 입력값 유효성 검사
+        if (title === "" || content === "") { // 제목이나 내용 중 하나라도 비어 있으면
+            alert("변경할 내용을 입력해주세요.");
+            return;
+        }
+
+        // 수정 확인 알림
+        if (confirm("정말 수정하시겠습니까?")) {
+            // 제목과 에디터 내용을 hidden 필드에 저장
+            document.getElementById('hiddenBoardTitle').value = title;
+            document.getElementById('hiddenBoardText').value = content;
+
+            // 폼 제출
+            document.getElementById('freeBoardModifyForm').submit();
+        }
     });
+
 </script>
 </body>
 </html>
