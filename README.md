@@ -102,7 +102,7 @@ Spring Boot 프로젝트 맛있는재활용
   ![회원가입7](https://github.com/user-attachments/assets/839e5a28-1be2-4ff0-9a99-942a6ff99b21)<br>
   올바른 번호 입력 후 가입버튼으로 최초 가입한다<br>
 
-  ![소셜로그인9](https://github.com/user-attachments/assets/cf65eeef-4889-44b9-87aa-dceaecfee857)<br>
+  ![소셜로그인9](https://github.com/user-attachments/assets/d98f2d3b-428e-4c9e-8e50-8e13a0cf2d48)<br>
   가입시 바로 로그인 되며 이후 카카오 로그인으로 간편 로그인이 가능하다<br>
   또한 카카오에 등록된 프로필사진과 이름이 세션에 자동으로 들어가게 설정하였다
   <br><br><br>
