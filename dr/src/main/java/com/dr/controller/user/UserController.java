@@ -129,8 +129,6 @@ public class UserController {
 
 
 
-
-
     //drjoin 회원가입 요청 컨트롤러
     @PostMapping("/user/drJoin")
     public String join(@ModelAttribute UserDTO userDTO) {
