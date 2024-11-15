@@ -20,4 +20,5 @@ public class HoneyBoardDetailDTO {
     private String userNickName;
     private Long goodCount;
     private String photoLocal;
+    private String profilePic;
 }

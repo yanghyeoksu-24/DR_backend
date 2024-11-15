@@ -45,7 +45,8 @@
                U.USER_NUMBER,
                U.USER_NICKNAME,
                P.PHOTO_LOCAL,
-               COUNT(G.GOOD_NUMBER) AS goodCount
+               COUNT(G.GOOD_NUMBER) AS goodCount,
+               U.PROFILE_PIC
         FROM DR_BOARD B
                  JOIN DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
                  LEFT JOIN DR_PHOTO P ON U.USER_NUMBER = P.USER_NUMBER
@@ -59,7 +60,8 @@
                  B.BOARD_WRITE_DATE,
                  U.USER_NUMBER,
                  U.USER_NICKNAME,
-                 P.PHOTO_LOCAL
+                 P.PHOTO_LOCAL,
+                 U.PROFILE_PIC
     </select>
 
 
@@ -70,7 +72,8 @@
                R.REPLY_WRITE_DATE,
                R.REPLY_MODIFY_DATE,
                R.REPLY_TEXT,
-               P.PHOTO_LOCAL
+               P.PHOTO_LOCAL,
+               U.PROFILE_PIC
         FROM DR_REPLY R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
                  JOIN DR_BOARD B ON R.BOARD_NUMBER = B.BOARD_NUMBER
@@ -166,7 +169,8 @@
                U.USER_NUMBER,
                U.USER_NICKNAME,
                P.PHOTO_LOCAL,
-               COUNT(G.GOOD_NUMBER) AS goodCount
+               COUNT(G.GOOD_NUMBER) AS goodCount,
+               U.PROFILE_PIC
         FROM DR_BOARD B
                  JOIN DR_USER U ON B.USER_NUMBER = U.USER_NUMBER
                  LEFT JOIN DR_PHOTO P ON U.USER_NUMBER = P.USER_NUMBER
@@ -174,7 +178,7 @@
         WHERE B.BOARD_NUMBER = #{boardNumber}
           AND B.BOARD_TYPE = '꿀팁게시판'
         GROUP BY B.BOARD_NUMBER, B.BOARD_TITLE, B.BOARD_TYPE, B.BOARD_TEXT, B.BOARD_WRITE_DATE, U.USER_NUMBER,
-                 U.USER_NICKNAME, P.PHOTO_LOCAL
+                 U.USER_NICKNAME, P.PHOTO_LOCAL,U.PROFILE_PIC
     </select>
 
 
@@ -185,7 +189,8 @@
                R.REPLY_WRITE_DATE,
                R.REPLY_MODIFY_DATE,
                R.REPLY_TEXT,
-               P.PHOTO_LOCAL
+               P.PHOTO_LOCAL,
+               U.PROFILE_PIC
         FROM DR_REPLY R
                  JOIN DR_USER U ON R.USER_NUMBER = U.USER_NUMBER
                  JOIN DR_BOARD B ON R.BOARD_NUMBER = B.BOARD_NUMBER
