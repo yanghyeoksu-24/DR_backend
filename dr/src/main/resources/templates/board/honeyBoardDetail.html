@@ -25,7 +25,8 @@
             <div class="honeyBoardDetail-infobox">
                 <div class="honeyBoardDetail-infoFirst">
                     <div class="honeyBoardDetail-infoInBox1">
-                        <img th:src="@{/image/photo/} + ${honeyBoardDetail.photoLocal}" alt="User Image">
+                        <img th:src="@{/image/photo/} + ${honeyBoardDetail.photoLocal}" th:if="${honeyBoardDetail.photoLocal != null && honeyBoardDetail.profilePic == null}" alt="User Image">
+                        <img th:src="${honeyBoardDetail.profilePic}" th:if="${honeyBoardDetail.photoLocal == null && honeyBoardDetail.profilePic != null}" alt="User Image">
                     </div>
                     <div class="honeyBoardDetail-infoInBox2">
                         <p class="honeyBoardDetail-writeName" th:text="${honeyBoardDetail.userNickName}">작성자</p>
@@ -91,7 +92,8 @@
                 <div th:each="honeyBoardComments : ${honeyBoardComments}">
                     <div class="honeyBoardDetail-comment" id="comment${honeyBoardComments.replyNumber}">
                         <div class="honeyBoardDetail-commentUserImg">
-                            <img th:src="@{/image/photo/} + ${honeyBoardComments.photoLocal}" alt="User Image">
+                            <img th:src="@{/image/photo/} + ${honeyBoardComments.photoLocal}" th:if="${honeyBoardComments.photoLocal != null && honeyBoardComments.profilePic == null}" alt="User Image">
+                            <img th:src="${honeyBoardComments.profilePic}" th:if="${honeyBoardComments.photoLocal == null && honeyBoardComments.profilePic != null}" alt="User Image">
                         </div>
 
                         <div class="honeyBoardDetail-commentContent">
