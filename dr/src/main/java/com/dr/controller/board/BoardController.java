@@ -120,7 +120,8 @@ public class BoardController {
 
     //자유게시판 상세페이지(게시글 상세 + 댓글 조회)
     @GetMapping("/freeBoardDetail")
-    public String freeBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model, @SessionAttribute(value = "userNickName", required = false) String userNickName) {
+    public String freeBoardDetail(@RequestParam("boardNumber") Long boardNumber, Model model,
+                                  @SessionAttribute(value = "userNickName", required = false) String userNickName) {
 
 
         FreeBoardDetailDTO freeBoardDetail = boardService.freeBoardDetail(boardNumber);
@@ -131,8 +132,6 @@ public class BoardController {
         model.addAttribute("freeBoardComments", freeBoardComments);
         model.addAttribute("userNickName", userNickName);
 
-        log.info(userNickName + "아아dkfsjgaljsdkgjng");
-        log.info("===== BoardController 확인 : " + freeBoardComments);
 
         return "/board/freeBoardDetail";
     }
@@ -347,7 +346,6 @@ public class BoardController {
         freeBoardWriteDTO.setUserNumber(userNumber);
         freeBoardWriteDTO.setBoardType("자유게시판");
 
-        log.info(freeBoardWriteDTO.toString() + "잘 왔나나나ㅏ나나아아아아아");
 
         //2. FreeBoardPhotoDTO 생성(사진 정보)
         FreeBoardPhotoDTO freeBoardPhotoDTO = new FreeBoardPhotoDTO();
@@ -355,7 +353,6 @@ public class BoardController {
         freeBoardPhotoDTO.setPhotoLocal(photoLocal);
         freeBoardPhotoDTO.setPhotoSize(photoSize);
 
-        log.info(freeBoardPhotoDTO.toString() + "sldfjldsakfjldakfjlskd");
 
         //3. BoardService 호출하여 게시판과 사진 저장
         boardService.saveFreeBoard(freeBoardWriteDTO, freeBoardPhotoDTO);

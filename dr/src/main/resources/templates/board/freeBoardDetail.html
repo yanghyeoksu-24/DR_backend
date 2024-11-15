@@ -25,7 +25,8 @@
             <div class="freeBoardDetail-infobox">
                 <div class="freeBoardDetail-infoFirst">
                     <div class="freeBoardDetail-infoInBox1">
-                        <img th:src="@{/image/photo/} + ${freeBoardDetail.photoLocal}" alt="User Image">
+                        <img th:src="@{/image/photo/} + ${freeBoardDetail.photoLocal}" th:if="${freeBoardDetail.photoLocal != null && freeBoardDetail.profilePic == null}" alt="User Image">
+                        <img th:src="${freeBoardDetail.profilePic}" th:if="${freeBoardDetail.photoLocal == null && freeBoardDetail.profilePic != null}" alt="User Image">
                     </div>
                     <div class="freeBoardDetail-infoInBox2">
                         <p class="freeBoardDetail-writeName" th:text="${freeBoardDetail.userNickName}">작성자</p>
@@ -91,7 +92,8 @@
                 <div th:each="freeBoardComments : ${freeBoardComments}">
                     <div class="freeBoardDetail-comment" id="comment${freeBoardComments.replyNumber}">
                         <div class="freeBoardDetail-commentUserImg">
-                            <img th:src="@{/image/photo/} + ${freeBoardComments.photoLocal}" alt="User Image">
+                            <img th:src="@{/image/photo/} + ${freeBoardComments.photoLocal}" th:if="${freeBoardComments.photoLocal != null && freeBoardComments.profilePic == null}" alt="User Image">
+                            <img th:src="${freeBoardComments.profilePic}" th:if="${freeBoardComments.photoLocal == null && freeBoardComments.profilePic != null}" alt="User Image">
                         </div>
 
                         <div class="freeBoardDetail-commentContent">

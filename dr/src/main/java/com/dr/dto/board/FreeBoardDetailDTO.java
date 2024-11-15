@@ -23,4 +23,5 @@ public class FreeBoardDetailDTO {
     private Long userNumber;
     private Long goodCount;
     private String photoLocal;
+    private String profilePic;
 }
