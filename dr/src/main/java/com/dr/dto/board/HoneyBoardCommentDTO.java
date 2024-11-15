@@ -17,6 +17,6 @@ public class HoneyBoardCommentDTO {
     private String photoLocal;
     private Long userNumber;
     private Long boardNumber;
-    private Long recipeNumber;
     private String userNickName;
+    private String profilePic;
 }
