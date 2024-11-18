@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController // JSON 형태로 데이터를 반환 하기 위해 주로 REST API를 구현할 때 사용
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/chatbot")
 public class ChatBotController {
@@ -110,7 +110,6 @@ public class ChatBotController {
         Long sessionNumber = nangjangbotDTO.getSessionNumber();
         List<NangjangbotDTO> chatList = nangjangbotService.getChatContents(sessionNumber);
 
-        System.out.println("아 뒷목아파"+chatList);
         return ResponseEntity.ok(chatList);
     }
 }

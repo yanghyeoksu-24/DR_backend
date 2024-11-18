@@ -37,7 +37,7 @@ $(document).ready(function () {
             success: function (response) {
                 $('#loading-spinner').css('display', 'none'); // 로딩중 숨김
 
-                //sessionNumber가 0이라면 번호 변경
+                //처음 보냈던 sessionNumber를 응답에 같이 담겨온 세션 번호로 저장
                 if (response.sessionNumber != 0) {
                     // AJAX 응답에서 sessionNumber 업데이트
                     $('#sessionNumber').val(response.sessionNumber);
@@ -141,18 +141,14 @@ $(document).on('click', '.nangjangbot-lastChat', function () {
 
             // 처음부터 이전 채팅 불러올 때 요소 숨기기
             $('.nangjangbot-pageTitle, #nangjangbot-text').css('display', 'none');
-
             $('.nangjangbot-block, .nangjangbot-myMsg, .nangjangbot-chatBotMsg').css('display', 'block');
 
             chatList.forEach(chat => {
-
                 // userMsg를 추가
                 if (chat.userMsg) {
                     //현재 방 번호 최신화
                     $('#sessionNumber').val(chat.sessionNumber);
-
                     const userMessageElement = `<div class="nangjangbot-myMsg">${chat.userMsg}</div>`;
-
                     $('#nangjangbot-conversationContainer').append(userMessageElement);
                 }
 
@@ -160,8 +156,7 @@ $(document).on('click', '.nangjangbot-lastChat', function () {
                 if (chat.botReply) {
                     const botReplyHtml = `
                         <img src="/image/nangjangbot/apple.png" class="nangjangbot-mascot" alt="챗봇 마스코트">
-                        <div class="botMsgBox">${chat.botReply}</div>
-                    `;
+                        <div class="botMsgBox">${chat.botReply}</div>`;
                     $('#nangjangbot-conversationContainer').append(botReplyHtml);
                 }
             });
@@ -217,9 +212,6 @@ $(document).on('click', '.nangjangbot-imgFrame', function (e) {
                 data: JSON.stringify({sessionNumber: sessionNumber}),
                 success: function () {
                     alert("삭제되었습니다.");
-                    $('#sessionNumber').val(0); // 세션번호 초기화
-                    $('#nangjangbot-conversationContainer').empty(); // 기존 대화 내용 초기화
-                    $('.nangjangbot-pageTitle, #nangjangbot-text').css('display', 'block'); // 타이틀 다시 보이게
 
                     // 삭제한 항목만 제거
                     $(`input.lastChatSession[value="${sessionNumber}"]`).closest('.nangjangbot-lastChat').remove();
