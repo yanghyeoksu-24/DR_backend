@@ -209,26 +209,42 @@
         VALUES (SEQ_DAILY_NUMBER.NEXTVAL, #{userNumber}, SYSDATE)
     </insert>
 
-    <!-- 3. 개근 여부 확인 (한 달간 개근 시 개근 인정) -->
+<!--    &lt;!&ndash; 3. 개근 여부 확인 (한 달간 개근 시 개근 인정) &ndash;&gt;-->
+<!--    <select id="monthFullCheck" parameterType="long" resultType="int">-->
+<!--    <![CDATA[--><!--        SELECT-->
+<!--            CASE-->
+<!--                WHEN COUNT(DISTINCT TRUNC(DAILY_DATE)) =-->
+<!--                     (SELECT COUNT(*)-->
+<!--                      FROM (-->
+<!--                               SELECT TRUNC(SYSDATE, 'MM') + LEVEL - 1 AS day-->
+<!--                               FROM DUAL-->
+<!--                               CONNECT BY LEVEL <= TO_CHAR(LAST_DAY(TRUNC(SYSDATE, 'MM')), 'DD')-->
+<!--                           ))-->
+<!--                    THEN 1  &#45;&#45; 개근-->
+<!--                ELSE 0  &#45;&#45; 개근 아님-->
+<!--                END AS full_attendance-->
+<!--        FROM-->
+<!--            DR_DAILY-->
+<!--        WHERE-->
+<!--            USER_NUMBER = #{userNumber}-->
+<!--          AND TRUNC(DAILY_DATE) BETWEEN TRUNC(SYSDATE, 'MM') AND LAST_DAY(SYSDATE)-->
+<!--        GROUP BY USER_NUMBER-->
+<!--        ]]>-->
+<!--    </select>-->
+
+    <!-- 3. 개근 여부 확인 (시연 테스트 : 15일 개근 시 개근 인정) -->
     <select id="monthFullCheck" parameterType="long" resultType="int">
     <![CDATA[
         SELECT
             CASE
-                WHEN COUNT(DISTINCT TRUNC(DAILY_DATE)) =
-                     (SELECT COUNT(*)
-                      FROM (
-                               SELECT TRUNC(SYSDATE, 'MM') + LEVEL - 1 AS day
-                               FROM DUAL
-                               CONNECT BY LEVEL <= TO_CHAR(LAST_DAY(TRUNC(SYSDATE, 'MM')), 'DD')
-                           ))
-                    THEN 1  -- 개근
+                WHEN COUNT(DISTINCT TRUNC(DAILY_DATE)) = 14 THEN 1  -- 개근 (15일 연속 출석)
                 ELSE 0  -- 개근 아님
                 END AS full_attendance
         FROM
             DR_DAILY
         WHERE
             USER_NUMBER = #{userNumber}
-          AND TRUNC(DAILY_DATE) BETWEEN TRUNC(SYSDATE, 'MM') AND LAST_DAY(SYSDATE)
+          AND TRUNC(DAILY_DATE) BETWEEN TRUNC(SYSDATE - 13) AND TRUNC(SYSDATE)
         GROUP BY USER_NUMBER
         ]]>
     </select>
